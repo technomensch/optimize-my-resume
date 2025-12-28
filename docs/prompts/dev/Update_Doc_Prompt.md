@@ -7,6 +7,7 @@
 - v1.3: Added Rule 4 for Version History Consolidation <!-- v1.3 Change -->
 - v1.4: Added `docs/plans/*.md` to target documents list (Step 1, item 7). Part of v4.2.1 documentation reorganization. <!-- v1.4 Change -->
 - v1.5: Added Step 5.5 'Branch Prompt Testing' workflow and tmp/ directory usage <!-- v1.5 Change -->
+- v1.6: Updated Step 3 to use standard Semantic Versioning (MAJOR.MINOR.PATCH) terminology instead of custom "Major/Minor" terms <!-- v1.6 Change -->
 
 ## Purpose
 This prompt defines the standard operating procedure for updating project documentation to ensure consistency, version tracking, and accurate reference for future development. Use this prompt whenever code, logic, or UI changes are made that affect the system's behavior.
@@ -38,7 +39,12 @@ Before making any changes, present the proposed plan to the user:
 
 ### Step 3: Version Strategy (INTERACTIVE)
 For each document confirmed in Step 2, ask:
-> "Should the update for [Doc Name] be a **Minor** (x.x.1) or **Major** (x.1.0) version bump?"
+> "Should the update for [Doc Name] be a **PATCH** (X.Y.Z → X.Y.Z+1), **MINOR** (X.Y.Z → X.Y+1.0), or **MAJOR** (X.Y.Z → X+1.0.0) version bump?"
+>
+> **Semantic Versioning Guide:**
+> - **PATCH (Z)**: Bug fixes, typos, clarifications (backward-compatible)
+> - **MINOR (Y)**: New features, new functionality (backward-compatible)
+> - **MAJOR (X)**: Breaking changes, incompatible API changes
 
 ### Step 4: Apply Updates
 Once confirmed, apply the updates to the files adhering to these strict formatting rules:

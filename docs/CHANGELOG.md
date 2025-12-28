@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v5.1.0 - Remote Work Classification for Job Analysis (2025-12-28) <!-- v5.1.0 Change -->
+> **Branch:** `main`
+
+#### Added
+- **Location-Based Job Filtering:** Mode 3 (JD Comparison) now evaluates work location requirements as part of preliminary fit assessment
+  - Extracts work arrangement constraints from job descriptions (Remote, Hybrid, On-site, geographic restrictions)
+  - Categorizes location red flags (state residency requirements, "fake remote" indicators)
+  - New Step 5 "location_blocking_gate" stops analysis early for fundamental location mismatches
+  - Location alignment now weighted in core qualifications scoring (50% weight category)
+  - Saves time by preventing resume optimization for geographically incompatible positions
+
+#### Changed
+- **Scoring Methodology:** Core qualifications now includes "Work location/arrangement alignment (remote/hybrid/on-site compatibility)"
+- **Matching Criteria:** Added `location_match` and `location_mismatch` criteria to job history comparison
+
+#### Impact
+- ✅ Early-exit logic prevents wasted effort on location-incompatible jobs
+- ✅ Detects "fake remote" job postings (e.g., "Remote during training, then on-site")
+- ✅ Geographic restriction validation (state residency requirements)
+- ✅ Tiered blocking: Critical (immediate stop) vs High/Moderate (score reduction)
+
+---
+
 ### v4.12.5 - Metrics & Analysis Hotfix (2025-12-21)
 > **Branch:** `v4.12.5-hotfix-metrics-analysis`
 
