@@ -1,0 +1,39 @@
+{
+  "_comment": "Local user-specific settings - copy to settings.local.json to customize",
+  "_usage": "This file allows you to override settings.json without modifying the repository",
+
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "comment": "Override export script path if needed (workspace variable works for most users)",
+            "command": "${workspaceFolder}/scripts/auto-export-transcript.sh"
+          }
+        ]
+      }
+    ]
+  },
+
+  "customPaths": {
+    "_comment": "Optional: customize paths for different environments",
+    "archiveDirectory": "${workspaceFolder}/chat-history",
+    "exportScript": "${workspaceFolder}/scripts/auto-export-transcript.sh"
+  },
+
+  "exportSettings": {
+    "_comment": "Optional: customize export behavior",
+    "maxFileSizeMB": 100,
+    "minDiskSpaceMB": 500,
+    "enabledFormats": ["jsonl", "txt"]
+  },
+
+  "_instructions": [
+    "1. Copy this file to .claude/settings.local.json",
+    "2. Modify values as needed for your environment",
+    "3. settings.local.json is gitignored and won't be committed",
+    "4. Restart VS Code after making changes"
+  ]
+}
