@@ -1,0 +1,29 @@
+# Resume Optimizer .gitignore
+# Version History:
+# v1.4 - Fixed encoding format from "UTF-16/ Binary to UTF-8 plain text".  
+
+# README - Gemini is having issues generating the ".gitignore" file in the AI Studio environment.
+
+## UPDATE INSTRUCTIONS
+# 1. If running locally: Rename this file to .gitignore in the root directory.
+# 2. If on GitHub: Copy the contents of this file into a new file named .gitignore in the root.
+
+# Runtime Configuration (CRITICAL: Do not commit actual keys)
+local_auth.json
+
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build Output
+dist/
+build/
+out/
+
+# System Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
