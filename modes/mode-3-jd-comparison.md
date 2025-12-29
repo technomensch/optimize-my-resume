@@ -1,6 +1,7 @@
 # Mode 3: JD Comparison
 
-<!-- Version: 5.1.0 --> <!-- v5.1.0 Change: Added remote work classification logic -->
+<!-- Version: 6.0.2 --> <!-- v6.0.2 Change: Added 17-point JD parser, evidence matching, blocking gates -->
+<!-- Previous: 5.1.0 --> <!-- v5.1.0 Change: Added remote work classification logic -->
 <!-- Purpose: Compare job description to user's experience and generate tailored bullets -->
 <!-- Last Updated: December 2024 -->
 
@@ -54,8 +55,25 @@
 <phase_1_initial_fit_assessment>
   
   <step number="1" name="extract_critical_requirements">
+    <!-- v6.0.2 Change: Use 17-point JD parser for complete extraction -->
+
+    <jd_parsing>
+      Use the 17-point parsing schema from shared/phase-1/jd-parsing-17-point.md
+
+      Extract all 17 fields:
+      - company, job_title, location, work_lifestyle
+      - remote_restrictions, employee_type, travel_required, clearance
+      - salary_range, required_experience, required_education, job_responsibilities
+      - skills_needed, skills_wanted (HARD skills - required/preferred)
+      - soft_skills_needed, soft_skills_wanted (SOFT skills - required/preferred)
+      - qualifications_needed, qualifications_wanted
+      - certifications_needed, certifications_wanted
+
+      IMPORTANT: Use the hard vs soft skill classification rules from jd-parsing-17-point.md
+    </jd_parsing>
+
     <purpose>Identify non-negotiable or heavily emphasized requirements from JD</purpose>
-    
+
     <what_to_extract>
       <domain_expertise>
         Industry-specific knowledge (e.g., "power management", "energy systems", "healthcare", "financial services")
@@ -113,14 +131,36 @@
   </step>
 
   <step number="2" name="compare_against_job_history">
-    <purpose>Check if user has the critical requirements in their background</purpose>
-    
-    <process>
-      1. Search /mnt/project/claude_generated_job_history_summaries.txt for each critical requirement
-      2. Flag requirements NOT found in job history
-      3. Note strength of match for requirements that ARE found (tangential vs direct)
-    </process>
-    
+    <!-- v6.0.2 Change: Use evidence-based matching with requirement-by-requirement analysis -->
+
+    <job_history_loading>
+      <!-- Check for v2.0 first, fallback to v1.0 -->
+      IF file exists: claude_generated_job_history_summaries_v2.txt:
+        LOAD v2.0 format
+      ELSE IF file exists: claude_generated_job_history_summaries.txt:
+        LOAD v1.0 format
+      ELSE:
+        ERROR: "No job history found. Run Mode 1 first."
+    </job_history_loading>
+
+    <requirement_by_requirement_gap_analysis>
+      Use shared/phase-2/evidence-matching.md to analyze EVERY requirement from the parsed JD.
+
+      For EACH requirement:
+      1. Search job history v2.0 for evidence (exact or semantic match)
+      2. Determine status (Matched/Partial/Missing)
+      3. Collect evidence citations with sources ("Company | Job Title")
+      4. Check keyword presence (ATS optimization)
+      5. Provide gap rationale
+
+      OUTPUT using color-coded format:
+      - KEY legend at top: [MATCHED] (Green) | [PARTIAL] (Yellow) | [MISSING] (Red)
+      - Section headers: [HARD SKILLS - REQUIRED], [HARD SKILLS - PREFERRED], [SOFT SKILLS - REQUIRED], etc.
+      - Within each section: Matched → Partial → Missing sorting
+      - Evidence citations in "Company | Job Title" format
+      - Gap rationale for each requirement
+    </requirement_by_requirement_gap_analysis>
+
     <matching_criteria>
       <direct_match>Exact technology/domain/platform mentioned in job history</direct_match>
       <tangential_match>Related but not identical (e.g., "Google Workspace" when JD wants "Microsoft 365")</tangential_match>
@@ -191,7 +231,75 @@
     </decision_tree>
   </step>
 
+  <!-- ========================================================================== -->
+  <!-- v6.0.2 Change: Added blocking gates for hard skill deficit and low match -->
+  <!-- ========================================================================== -->
+
+  <blocking_gates>
+    <overview>
+      After gap analysis, check blocking gates (soft block with warning, user can override).
+      These gates run BEFORE location gate to catch critical skill mismatches early.
+    </overview>
+
+    <gate_1_hard_skill_deficit>
+      <condition>
+        IF count(Missing Hard Skills - Required) > count(Matched Hard Skills - Required):
+          DISPLAY WARNING
+      </condition>
+
+      <warning_message>
+        "⚠ WARNING: Poor Job Fit Detected
+
+        Hard Skills Required by JD:
+          [MATCHED] {list matched skills}
+          [MISSING] {list missing skills}
+
+        You are missing {X} of {Y} required hard skills.
+
+        Proceeding will use tokens to generate recommendations that are unlikely
+        to be useful. This is not advised.
+
+        Do you want to proceed anyway? (yes/no)"
+      </warning_message>
+
+      <action>
+        IF user says "no":
+          STOP analysis, save tokens
+        IF user says "yes":
+          CONTINUE to recommendations (user accepted risk)
+      </action>
+    </gate_1_hard_skill_deficit>
+
+    <gate_2_low_match_score>
+      <condition>
+        IF match_score < 30:
+          DISPLAY WARNING
+      </condition>
+
+      <warning_message>
+        "⚠ LOW MATCH SCORE DETECTED (<30)
+
+        Final Match Score: {score}/100
+
+        Based on the analysis, this position has significant gaps compared to your profile.
+        Optimization is unlikely to bridge this gap effectively.
+
+        Recommendation: Focus on roles with 50+ match scores where optimization can be strategic.
+
+        Do you want to proceed anyway? (yes/no)"
+      </warning_message>
+
+      <action>
+        IF user says "no":
+          STOP analysis
+        IF user says "yes":
+          CONTINUE to recommendations
+      </action>
+    </gate_2_low_match_score>
+  </blocking_gates>
+
   <step number="5" name="location_blocking_gate">
+    <!-- v5.1.0 existing gate preserved -->
     <purpose>Block early if fundamental location mismatch exists</purpose>
 
     <blocking_conditions>
@@ -437,6 +545,34 @@ See `/core/format-rules.md` for detailed formatting requirements including:
     </rule>
   </rebalancing_application_rules>
 </section_5_plain_text_file_generation>
+```
+
+---
+
+## Per-JD Summary Customization (Placeholder for v6.0.4)
+
+<!-- v6.0.2 Change: Added per-JD summary placeholder (full implementation in v6.0.4) -->
+
+```xml
+<per_jd_summary_placeholder>
+  <trigger>
+    After gap analysis completes, if match_score >= 50:
+      OFFER: "Would you like me to generate a customized professional summary for this JD?"
+  </trigger>
+
+  <current_status>
+    Per-JD summary generation will be implemented in v6.0.4.
+    For now, users should use their master summary from job history v2.0.
+  </current_status>
+
+  <future_implementation>
+    v6.0.4 will add:
+    - Master summary extraction from job history
+    - JD-specific keyword insertion
+    - Industry/domain term customization
+    - Achievement highlighting based on JD requirements
+  </future_implementation>
+</per_jd_summary_placeholder>
 ```
 
 ---

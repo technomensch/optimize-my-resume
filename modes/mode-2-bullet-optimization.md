@@ -1,7 +1,9 @@
 # Mode 2: Bullet Optimization
 
-**Version:** 5.0  
+**Version:** 6.0.2
+**Previous:** 5.0
 **Purpose:** Optimize individual resume bullets
+**v6.0.2 Changes:** Added backward compatibility for v1.0 and v2.0 job histories
 
 ---
 
@@ -28,8 +30,50 @@
   - Parse and diagnose each bullet
   - Ask follow-up questions if metrics missing
   - Generate before/after with alternates
-  - Check job history if company/position mentioned
+  - Check job history if company/position mentioned (see job_history_loading below)
 </behavior>
+```
+
+---
+
+## Job History Loading
+
+<!-- v6.0.2 Change: Added backward compatibility for v1.0 and v2.0 job histories -->
+
+```xml
+<job_history_loading>
+  <purpose>
+    Load job history for context when optimizing bullets. Supports both v1.0 and v2.0 formats.
+  </purpose>
+
+  <loading_logic>
+    <!-- Check v2.0 first, fallback to v1.0 -->
+
+    IF file exists: claude_generated_job_history_summaries_v2.txt:
+      LOAD v2.0 format
+      USE hard_skills_demonstrated and soft_skills_demonstrated arrays (separated)
+      USE professional_summary for context
+      USE tools_technologies for specific tool mentions
+
+    ELSE IF file exists: claude_generated_job_history_summaries.txt:
+      LOAD v1.0 format
+      USE skills_demonstrated array (combined hard/soft)
+      DISPLAY RECOMMENDATION: "I see you have v1.0 job history. Consider re-running Mode 1 to upgrade to v2.0 for better keyword matching with separated hard/soft skills."
+
+    ELSE:
+      ERROR: "No job history found. Please run Mode 1 first to analyze your resume."
+  </loading_logic>
+
+  <keyword_insertion_logic>
+    IF using v2.0 job history:
+      - Use hard_skills_demonstrated for technical keyword insertion (Python, SQL, AWS, etc.)
+      - Use soft_skills_demonstrated for behavioral keyword insertion (Leadership, Communication, etc.)
+      - Use tools_technologies for specific tool/platform mentions
+
+    ELSE IF using v1.0 job history:
+      - Use skills_demonstrated array (combined hard/soft)
+  </keyword_insertion_logic>
+</job_history_loading>
 ```
 
 ---
