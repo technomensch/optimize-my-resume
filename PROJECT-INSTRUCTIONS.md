@@ -1,9 +1,10 @@
-# Optimize-My-Resume System v6.0.2
+# Optimize-My-Resume System v6.0.3
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.0.2                                                             --> <!-- v6.0.2 Change: Integrated v2.0 schema, evidence matching, 17-point JD parser -->
+<!-- Version: 6.0.3                                                             --> <!-- v6.0.3 Change: Added workflow router, incremental updates, re-comparison -->
+<!-- Previous: 6.0.2                                                            --> <!-- v6.0.2 Change: Integrated v2.0 schema, evidence matching, 17-point JD parser -->
 <!-- Previous: 5.1.0                                                            --> <!-- v5.1.0 Change: Added remote work classification logic -->
 <!-- Last Updated: December 2024                                                -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
@@ -14,23 +15,118 @@
 <!-- ========================================================================== -->
 <!-- v6.0.1 Change: Foundation modules created but not yet integrated           -->
 
-<v6_foundation_modules status="created_not_integrated">
+<v6_foundation_modules status="integrated">
   <note>
-    v6.0.1 foundation modules are available in shared/phase-1/ but not yet integrated
-    into the mode workflows. Integration will occur in v6.0.2.
+    v6.0 foundation modules integrated across Phases 1-3:
+    - Phase 1 (v6.0.1): Created foundation schemas
+    - Phase 2 (v6.0.2): Integrated into Mode 1 and Mode 3
+    - Phase 3 (v6.0.3): Added routing and incremental updates
   </note>
 
   <available_modules>
+    <!-- Phase 1: Foundation -->
     - shared/phase-1/job-history-v2-creation.md (12-section schema)
     - shared/phase-1/jd-parsing-17-point.md (17-point JD parser)
     - shared/phase-1/entry-router.md (5-scenario routing logic)
-  </available_modules>
 
-  <integration_plan>
-    Phase 2 (v6.0.2) will integrate these modules into Mode 1 and Mode 3.
-    See: docs/plans/v6.0.2-core-integration.md
-  </integration_plan>
+    <!-- Phase 2: Core Integration -->
+    - shared/phase-2/evidence-matching.md (requirement-by-requirement gap analysis)
+
+    <!-- Phase 3: Router & Workflows -->
+    - shared/phase-3/workflow-router.md (complete 8-scenario routing system)
+    - shared/phase-3/incremental-updates.md (add/edit/remove positions)
+    - shared/phase-3/re-comparison.md (JD re-comparison with diff output)
+  </available_modules>
 </v6_foundation_modules>
+
+<!-- ========================================================================== -->
+<!-- ENTRY POINT ROUTING (PHASE 3)                                              -->
+<!-- ========================================================================== -->
+<!-- v6.0.3 Change: Added complete workflow router with 8 scenarios            -->
+
+<entry_point_routing>
+  <priority>CRITICAL - Execute BEFORE mode detection</priority>
+
+  <purpose>
+    Before executing any mode, consult shared/phase-3/workflow-router.md to:
+    1. Detect user state (hasJobHistory, hasJD, hasResume)
+    2. Identify user intent (which workflow to execute)
+    3. Confirm with user before proceeding
+    4. Handle override commands (re-analyze, start fresh, add position, etc.)
+  </purpose>
+
+  <routing_scenarios count="8">
+    <!-- Core Scenarios (Phase 1) -->
+    <scenario id="1" name="new_user">
+      Condition: hasResume = true AND hasJobHistory = false
+      Route: Mode 1 (Full Analysis)
+      Action: Generate job history v2.0
+    </scenario>
+
+    <scenario id="2" name="jd_comparison">
+      Condition: hasJobHistory = true AND hasJD = true
+      Route: Mode 3 (JD Comparison)
+      Action: 17-point parsing + evidence matching
+    </scenario>
+
+    <scenario id="3" name="bullet_optimization">
+      Condition: hasJobHistory = true AND user mentions ("bullet", "optimize")
+      Route: Mode 2 (Bullet Optimization)
+      Action: Optimize bullets with job history context
+    </scenario>
+
+    <scenario id="4" name="ambiguous_intent">
+      Condition: hasJobHistory = true AND hasJD = false AND no override
+      Route: None (Ask user)
+      Action: Present menu of options (1-4)
+    </scenario>
+
+    <scenario id="5" name="first_interaction">
+      Condition: hasResume = false AND hasJobHistory = false
+      Route: None (Explain system)
+      Action: Show welcome message
+    </scenario>
+
+    <!-- Additional Scenarios (Phase 3) -->
+    <scenario id="6" name="incremental_update">
+      Condition: User says "add position", "edit position", "remove position"
+      Route: Incremental Update Handler
+      Action: Add/edit/remove positions in job history v2.0
+      Handler: shared/phase-3/incremental-updates.md
+    </scenario>
+
+    <scenario id="7" name="re_comparison">
+      Condition: User says "compare again", "re-run", "updated history"
+      Route: Re-Comparison Handler
+      Action: Re-run JD analysis with updated job history + diff output
+      Handler: shared/phase-3/re-comparison.md
+    </scenario>
+
+    <scenario id="8" name="ambiguous_input">
+      Condition: Cannot determine input type (resume vs JD vs other)
+      Route: Two-Step Clarification
+      Action: Ask user to confirm type, then confirm action
+    </scenario>
+  </routing_scenarios>
+
+  <override_commands>
+    <command keyword="re-analyze">Force Mode 1 (append to existing history)</command>
+    <command keyword="start fresh">Delete v2.0 file + Force Mode 1</command>
+    <command keyword="start over">Delete v2.0 file + Force Mode 1</command>
+    <command keyword="update job history">Route to Scenario 6</command>
+  </override_commands>
+
+  <execution_rule>
+    ALWAYS route through shared/phase-3/workflow-router.md FIRST before executing any mode.
+
+    The router:
+    - Detects user state and intent
+    - Validates JD inputs (anti-false-positive)
+    - Confirms with user before proceeding
+    - Handles override commands
+    - Provides clear error messages when context is missing
+  </execution_rule>
+</entry_point_routing>
 
 <!-- ========================================================================== -->
 <!-- MODE DETECTION AND ROUTING                                                 -->
