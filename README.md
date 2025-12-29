@@ -8,9 +8,9 @@
 
 This system helps you improve your resume in three ways:
 
-1. **Full Resume Analysis (Mode 1)** - Upload your complete resume and get a detailed analysis with scores and suggestions
-2. **Bullet Point Improvement (Mode 2)** - Take 1-5 bullet points from your resume and make them stronger with better wording and metrics
-3. **Job Description Matching (Mode 3)** - Compare your resume to a specific job posting and see what matches, what's missing, and get customized bullets
+1. **Full Resume Analysis (Phase 1)** - Upload your complete resume and get a detailed analysis with scores and suggestions
+2. **Bullet Point Improvement (Phase 2)** - Take 1-5 bullet points from your resume and make them stronger with better wording and metrics
+3. **Job Description Matching (Phase 3)** - Compare your resume to a specific job posting and see what matches, what's missing, and get customized bullets
 
 The system is smart enough to figure out what you need based on what you upload or ask for.
 
@@ -27,7 +27,7 @@ The system is smart enough to figure out what you need based on what you upload 
   - Microsoft Copilot (copilot.microsoft.com)
   - Or any other AI chat tool
 
-### Optional (Makes Mode 3 much better):
+### Optional (Makes Phase 3 much better):
 - **A job posting** you want to apply for (copy the full text from the company website)
 
 ---
@@ -62,9 +62,9 @@ The system is smart enough to figure out what you need based on what you upload 
 
 5. **Start chatting:**
    - Open a new conversation in your project
-   - Type: "Analyze my resume" (for Mode 1)
-   - Or type: "Optimize this bullet: [paste your bullet]" (for Mode 2)
-   - Or paste a job description and type: "How well do I match this job?" (for Mode 3)
+   - Type: "Analyze my resume" (for Phase 1)
+   - Or type: "Optimize this bullet: [paste your bullet]" (for Phase 2)
+   - Or paste a job description and type: "How well do I match this job?" (for Phase 3)
 
 **That's it!** Claude will automatically figure out what you need and guide you through the process.
 
@@ -249,26 +249,37 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 💡 Tips for Best Results
 
-### 1. **Start with Mode 1 (Full Analysis) First**
+### 1. **Start with Phase 1 (Full Analysis) First**
    - Upload your complete resume first
    - Let the system analyze it and create a "job history" file
-   - This makes Mode 2 and Mode 3 work much better
+   - This makes Phase 2 and Phase 3 work much better
 
-### 2. **Be Specific with Mode 2 (Bullet Optimization)**
+### 2. **Be Specific with Phase 2 (Bullet Optimization)**
    - Only paste 1-5 bullets at a time (not your whole resume)
    - Include context like: "This bullet is for my Product Manager role at Google"
    - If you have metrics (numbers), include them
 
-### 3. **Paste the FULL Job Description for Mode 3**
+### 3. **Paste the FULL Job Description for Phase 3**
    - Copy the entire job posting from the company website
    - Include everything: requirements, responsibilities, nice-to-haves
    - The more detail you provide, the better the analysis
 
 ### 4. **Save Your Job History File**
-   - After Mode 1 analyzes your resume, it creates a file called `claude_generated_job_history_summaries_v2.txt`
-   - **Save this file!** You'll need it for Mode 3 to work properly
+   - After Phase 1 analyzes your resume, it creates a file called `claude_generated_job_history_summaries_v2.txt`
+   - **Save this file!** You'll need it for Phase 3 to work properly
    - For Claude Projects: It's automatically saved in your project
    - For other tools: Copy the output and save it as a text file
+
+### 5. **Use Job Summary Generation for Applications**
+   - After Phase 3 analyzes a job description, ask: "Create a professional summary for this job"
+   - The system generates TWO types of summaries:
+     - **Master Summary:** Comprehensive overview of your entire career (stored in job history)
+     - **Per-JD Summary:** Customized version optimized for the specific job posting (ephemeral)
+   - **Use cases:**
+     - Cover letters: Lead with the per-JD summary
+     - LinkedIn applications: Paste customized summary in "Why are you interested?" section
+     - Email applications: Include in the body to show tailored interest
+   - **Pro tip:** The per-JD summary includes JD keywords for ATS optimization
 
 ---
 
@@ -280,12 +291,12 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 - Don't edit or skip any sections
 - Try starting a completely new conversation
 
-### Problem: "Mode 3 says it can't find my job history"
+### Problem: "Phase 3 says it can't find my job history"
 **Solution:**
-- You need to run Mode 1 first (full resume analysis)
-- Mode 1 creates the job history file that Mode 3 needs
+- You need to run Phase 1 first (full resume analysis)
+- Phase 1 creates the job history file that Phase 3 needs
 - For Claude: Make sure your resume is uploaded to the Project
-- For other tools: Make sure you ran Mode 1 in the same conversation
+- For other tools: Make sure you ran Phase 1 in the same conversation
 
 ### Problem: "The file is too large to paste"
 **Solution:**
@@ -296,14 +307,14 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 ### Problem: "I keep getting generic advice, not specific to my resume"
 **Solution:**
 - Make sure you actually uploaded your resume file (don't just describe it)
-- For Mode 2 and 3, make sure Mode 1 ran successfully first
+- For Phase 2 and 3, make sure Phase 1 ran successfully first
 - Check that the AI confirmed it received and understood your resume
 
 ---
 
-## 📊 What Each Mode Does (Detailed)
+## 📊 What Each Phase Does (Detailed)
 
-### Mode 1: Full Resume Analysis
+### Phase 1: Full Resume Analysis
 **When to use:** You want comprehensive feedback on your entire resume
 
 **What happens:**
@@ -323,11 +334,11 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
    - Team scope
 3. Scores your resume on ATS compatibility, content quality, metrics, and keywords
 4. Gives you specific recommendations for improvement
-5. Saves everything so Mode 2 and Mode 3 can use it
+5. Saves everything so Phase 2 and Phase 3 can use it
 
 **Time:** 3-5 minutes
 
-### Mode 2: Bullet Point Optimization
+### Phase 2: Bullet Point Optimization
 **When to use:** You have specific bullet points that need improvement
 
 **What happens:**
@@ -340,11 +351,11 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 3. Asks follow-up questions if metrics are missing
 4. Generates 2-3 improved versions of each bullet
 5. Shows before/after comparison
-6. Checks your job history file for context (if you ran Mode 1)
+6. Checks your job history file for context (if you ran Phase 1)
 
 **Time:** 1-2 minutes per bullet
 
-### Mode 3: Job Description Matching
+### Phase 3: Job Description Matching
 **When to use:** You have a specific job you want to apply for
 
 **What happens:**
@@ -375,28 +386,28 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ---
 
-## 🔄 Workflow: How to Use All Three Modes Together
+## 🔄 Workflow: How to Use All Three Phases Together
 
 **Recommended process for job seekers:**
 
-1. **Run Mode 1 once** (when you first set up the system)
+1. **Run Phase 1 once** (when you first set up the system)
    - Upload your complete resume
    - Get comprehensive feedback
    - Let it create your job history file
    - Fix any major issues it found
 
-2. **Update individual bullets with Mode 2** (as needed)
+2. **Update individual bullets with Phase 2** (as needed)
    - When you add a new position
    - When you want to strengthen weak bullets
    - When you're tailoring for a specific industry
 
-3. **Use Mode 3 for each job application** (repeatedly)
+3. **Use Phase 3 for each job application** (repeatedly)
    - Paste the job description
    - Check your match score
    - Get customized bullets for that specific role
    - Use the generated professional summary in your application
 
-4. **Re-run Mode 1 periodically** (every 3-6 months or after major career changes)
+4. **Re-run Phase 1 periodically** (every 3-6 months or after major career changes)
    - Updates your job history file
    - Catches new trends in resume best practices
    - Refreshes your baseline analysis
@@ -405,10 +416,17 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 6.0.0 (MAJOR RELEASE)
+**Current Version:** 6.1.0 (MINOR RELEASE)
 **Released:** December 29, 2025
 
-### What's New in v6.0:
+### What's New in v6.1:
+- **Enhanced Documentation** - Consistent phase terminology across all docs
+- **Job Summary Usage Guide** - Clear instructions for professional summary generation
+- **Visual Wireframes** - 10 comprehensive workflow diagrams (ASCII + Mermaid)
+- **Improved File Structure** - `/phases/` folder for clearer organization
+- **Expanded Test Coverage** - 30+ new test cases for Phases 2-4
+
+### What Was New in v6.0:
 - **Smart Routing System** - Automatically detects what you need and confirms before proceeding (8 different scenarios)
 - **Job History v2.0** - Expanded from 8 to 12 categories for better analysis
 - **Hard vs. Soft Skills Separation** - Better matching for technical vs. interpersonal skills
@@ -489,12 +507,12 @@ Yes! In Claude Projects, create separate projects for each resume. In other tool
 No - the system uses YOUR actual work experience and just makes the wording stronger, adds metrics, and optimizes for keywords. It's still your authentic experience.
 
 ### "How often should I update my resume with this system?"
-- Run Mode 1: Once every 3-6 months or after major role changes
-- Run Mode 2: Whenever you add new bullets or want to improve existing ones
-- Run Mode 3: For every job application (the customization matters!)
+- Run Phase 1: Once every 3-6 months or after major role changes
+- Run Phase 2: Whenever you add new bullets or want to improve existing ones
+- Run Phase 3: For every job application (the customization matters!)
 
 ### "Can I see examples of before/after?"
-Yes! The system shows before/after comparisons in real-time. Mode 2 especially provides multiple alternatives for each bullet.
+Yes! The system shows before/after comparisons in real-time. Phase 2 especially provides multiple alternatives for each bullet.
 
 ### "What if the AI gives me bad advice?"
 The system is a tool to help you, not replace your judgment. Always review suggestions and use what makes sense for your specific situation. You know your experience best.

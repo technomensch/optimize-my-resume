@@ -9,6 +9,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.1.0 - Documentation Enhancement & Job Summary Guide (2025-12-29)
+> **Branch:** `v6.1.0`
+
+#### Added
+- **Job Summary Usage Guide** - New tip section in README explaining how to use professional summary generation
+  - Master summary vs per-JD summary differences
+  - Use cases (cover letters, LinkedIn, email applications)
+  - ATS keyword optimization tip
+- **Comprehensive Wireframes** - 10 visual workflow guides (5 ASCII + 5 Mermaid)
+  - Phase 1: Foundation (job history v2.0, JD parser, entry router)
+  - Phase 2: Core Integration (evidence matching, blocking gates)
+  - Phase 3: Router & Workflows (8-scenario routing, incremental updates)
+  - Phase 4: Summary & Polish (professional summary generation)
+  - Complete Workflow: End-to-end user journey
+- **Test Case Expansion** - 30+ new test cases for Phases 2-4
+  - Integration flow tests (Phase 1 → Phase 3)
+  - Incremental update edge cases
+  - Re-comparison diff accuracy validation
+  - Professional summary quality checks
+
+#### Changed
+- **Terminology Consistency** - "Mode 1/2/3" → "Phase 1/2/3" across all user-facing documentation
+  - README.md: 28 occurrences updated
+  - quick-start-mode.md: Updated to use phase terminology
+  - Consistent with internal architecture (`/phases/` folder structure)
+- **Folder Structure** - Renamed `/shared/` → `/phases/` for clearer naming
+  - Updated all references in PROJECT-INSTRUCTIONS.md, README.md, CHANGELOG.md, ROADMAP.md
+- **Version Numbering** - Updated README from v6.0.0 → v6.1.0
+
+#### Removed
+- **Obsolete v5.0 Files** - Archived to `/docs/legacy/`
+  - `/modes/` directory → `/docs/legacy/modes-v5/`
+  - `/wireframes/` (v5.0) → `/docs/legacy/wireframes-v5/`
+  - `/phases/v5-legacy/` → `/docs/legacy/shared-v5/`
+  - Root `CHANGELOG.md` (duplicate) → `/docs/legacy/CHANGELOG-v5.md`
+  - `ADD_REMOTE_WORK_LOGIC.md` → `/docs/legacy/implementation-prompts/`
+
+#### Impact
+- ✅ Clearer user experience with consistent terminology
+- ✅ Better onboarding with Job Summary usage guide
+- ✅ Improved developer experience with visual wireframes
+- ✅ Cleaner repository structure with legacy files archived
+
+---
+
 ### v6.0.0 - Complete Workflow System (2025-12-29) <!-- v6.0.0 Change -->
 > **Branches:** `v6.0.1-foundation`, `v6.0.2-core-integration`, `v6.0.3-router-workflows`, `v6.0.4-summary-polish`
 
