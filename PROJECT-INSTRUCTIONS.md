@@ -9,6 +9,29 @@
 <!-- ========================================================================== -->
 
 <!-- ========================================================================== -->
+<!-- V6.0 FOUNDATION MODULES (IN DEVELOPMENT)                                   -->
+<!-- ========================================================================== -->
+<!-- v6.0.1 Change: Foundation modules created but not yet integrated           -->
+
+<v6_foundation_modules status="created_not_integrated">
+  <note>
+    v6.0.1 foundation modules are available in shared/phase-1/ but not yet integrated
+    into the mode workflows. Integration will occur in v6.0.2.
+  </note>
+
+  <available_modules>
+    - shared/phase-1/job-history-v2-creation.md (12-section schema)
+    - shared/phase-1/jd-parsing-17-point.md (17-point JD parser)
+    - shared/phase-1/entry-router.md (5-scenario routing logic)
+  </available_modules>
+
+  <integration_plan>
+    Phase 2 (v6.0.2) will integrate these modules into Mode 1 and Mode 3.
+    See: docs/plans/v6.0.2-core-integration.md
+  </integration_plan>
+</v6_foundation_modules>
+
+<!-- ========================================================================== -->
 <!-- MODE DETECTION AND ROUTING                                                 -->
 <!-- ========================================================================== -->
 

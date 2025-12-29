@@ -1,0 +1,127 @@
+# Optimize My Resume - Roadmap
+
+## Current Version: v5.1.0
+## In Development: v6.0.0
+
+---
+
+## v6.0.0 - Complete Workflow System (In Progress)
+
+**Branch:** `v6.0-complete_workflow_system`
+
+**Implementation Approach:** Split into 4 phases due to token budget constraints (241K → 203K tokens)
+
+### Phase Breakdown
+
+#### ✅ v6.0.1 - Foundation (COMPLETE)
+**Branch:** `v6.0.1-foundation` | **Status:** Complete | **Date:** 2025-12-28
+
+**Files Created:**
+- [x] `shared/phase-1/job-history-v2-creation.md` - 12-section schema
+- [x] `shared/phase-1/jd-parsing-17-point.md` - 17-point JD parser with hard/soft skill classification
+- [x] `shared/phase-1/entry-router.md` - 5-scenario routing logic
+
+**Notes:** Foundation modules created but not yet integrated into modes.
+
+---
+
+#### ⏳ v6.0.2 - Core Integration (NEXT)
+**Branch:** `v6.0.2-core-integration` | **Status:** Planned
+
+**Files to Create:**
+- [ ] `shared/phase-2/evidence-matching.md` - Requirement-by-requirement gap analysis
+
+**Files to Modify:**
+- [ ] `PROJECT-INSTRUCTIONS.md` - Mode 1 enhancement (use v2.0 schema)
+- [ ] `modes/mode-3-jd-comparison.md` - 17-point parser integration
+- [ ] `modes/mode-2-bullet-optimization.md` - v2.0 backward compatibility
+
+---
+
+#### 📋 v6.0.3 - Router & Workflows (PLANNED)
+**Branch:** `v6.0.3-router-workflows` | **Status:** Planned
+
+**Files to Create:**
+- [ ] Integration of entry-router.md into PROJECT-INSTRUCTIONS.md
+
+**Features:**
+- [ ] Incremental updates (add/edit/remove positions)
+- [ ] JD re-comparison with diff output
+
+---
+
+#### 📋 v6.0.4 - Summary & Polish (PLANNED)
+**Branch:** `v6.0.4-summary-polish` | **Status:** Planned
+
+**Files to Create:**
+- [ ] `shared/phase-4/summary-generation.md` - Master + per-JD summaries
+
+**Files to Modify:**
+- [ ] `docs/CHANGELOG.md` - v6.0.0 entry
+- [ ] `settings.json` - v6.0 configuration
+
+---
+
+**Test Coverage Required:**
+- JD missing fields handling (8 tests)
+- Ambiguous skills classification (10 tests)
+- Location parsing (7 tests)
+- Router intent detection (6 tests)
+
+---
+
+## v6.1.0 - Polish & Edge Cases (Future)
+
+**Planned Features:**
+- [ ] Summary generator edge cases
+- [ ] Enhanced error messages (E001-E008)
+- [ ] Output specification templates (ensure consistent output across LLMs)
+  - Exact templates for each output type
+  - Formatting rules (no emojis, bullet styles, spacing)
+  - Required vs optional sections
+  - Character limits where applicable
+
+**Removed from scope:**
+- ~~State recovery (checkpoints, undo)~~ - Not possible without environment control. File-based persistence only.
+
+---
+
+## v6.2.0+ - Resume Generation (Future)
+
+**Planned Features:**
+- [ ] Generate tailored resume from job history based on JD
+- [ ] Job board-specific resume formats (Indeed, LinkedIn, etc.)
+- [ ] Role-specific resume generation (select which roles to include)
+
+**Architecture Decision (2025-12-28):**
+> Multi-track career support was considered for v6.0 but deferred. Instead of maintaining separate "tracks" (PM resume vs Analyst resume), the system will dynamically pull relevant bullets from the complete job history based on JD requirements. This is a cleaner architecture that avoids track management complexity.
+
+---
+
+## Backlog (Unprioritized)
+
+- [ ] Batch JD comparison (compare resume to multiple JDs at once)
+- [ ] Keyword frequency analysis (after 3+ JD comparisons, show most-requested skills)
+- [ ] Incremental position updates (add/edit/remove single positions)
+- [ ] JD re-comparison with diff output (show changes after updating job history)
+- [ ] Export job history to different formats (JSON, PDF, etc.)
+
+---
+
+## Completed
+
+### v5.1.0 - Remote Work Validation
+- [x] Remote/Hybrid/On-Site classification
+- [x] Fake-remote detection
+- [x] State residency restrictions
+- [x] Location mismatch blocking gate
+
+### v5.0.0 - Initial System
+- [x] Mode 1: Full Resume Analysis
+- [x] Mode 2: Bullet Optimization
+- [x] Mode 3: JD Comparison
+- [x] Job History Schema v1.0
+
+---
+
+**Last Updated:** 2025-12-29 (Added v6.0 phase tracking, marked v6.0.1 complete)
