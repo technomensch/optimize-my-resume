@@ -1,7 +1,45 @@
 # Format Rules Configuration
 
-**Version:** 5.0  
-**Applies to:** All Modes
+**Version:** 6.1.7  
+**Applies to:** All Phases
+
+---
+
+## Technical Quality Assurance Rules
+
+```xml
+<quality_assurance_rules>
+  <phrase_variation_rule>
+    <priority>high</priority>
+    <instruction>Vary phrasing for repeated metrics/achievements (max 2 exact repetitions).</instruction>
+  </phrase_variation_rule>
+
+  <symbol_consistency_rule>
+    <priority>high</priority>
+    <instruction>Use ~ for approximation; no escaped characters (\~, \%, \+).</instruction>
+  </symbol_consistency_rule>
+
+  <verb_tense_rule>
+    <priority>critical</priority>
+    <instruction>All bullets must start with past-tense action verbs; no gerunds as main verbs.</instruction>
+  </verb_tense_rule>
+
+  <keyword_diversity_rule>
+    <priority>high</priority>
+    <instruction>Avoid repeating summary keywords in bullets unless critical for ATS.</instruction>
+  </keyword_diversity_rule>
+
+  <pre_output_quality_checklist>
+    <priority>high</priority>
+    <instruction>Final scan for formatting, grammar, and keyword duplication.</instruction>
+  </pre_output_quality_checklist>
+
+  <secondary_grammar_check_rule> <!-- v6.1.7 Change: Added mandatory secondary grammar check warning -->
+    <priority>high</priority>
+    <instruction>Include "[RECOMMENDED] Perform a secondary grammar check..." warning in all output.</instruction>
+  </secondary_grammar_check_rule>
+</quality_assurance_rules>
+```
 
 ---
 
@@ -129,3 +167,4 @@
 | Min 2 bullets per position | ≥2 | High |
 | Copy-paste ready | Code blocks used | High |
 | Reasoning included | Why this matches | High |
+| Secondary Grammar Check | "[RECOMMENDED]..." warning included | High | <!-- v6.1.7 Change: Added secondary grammar check requirement -->

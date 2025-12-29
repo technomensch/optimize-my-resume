@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 1.0
+**Version:** 1.1.0 <!-- v1.1.0 Change: Added mandatory secondary grammar check warning -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 
@@ -438,6 +438,9 @@ IMPORTANT: This summary is optimized for this specific JD. Copy it to your resum
 
 Do NOT use this summary for other applications - use your master summary or generate a new customized summary for each JD.
 
+---
+[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM before pasting these bullets into your final resume and submitting. <!-- v1.1.0 Change: Added mandatory secondary grammar check warning -->
+
 ========================================
 ```
 
@@ -640,6 +643,7 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 
 **Version History:**
 - v1.0 (2025-12-28): Initial summary generation (master + per-JD customization)
+- v1.1.0 (2025-12-29): Added mandatory secondary grammar check warning as per v6.1.7 update <!-- v1.1.0 Change -->
 
 ---
 
