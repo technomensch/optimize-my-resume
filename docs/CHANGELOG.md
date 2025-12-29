@@ -7,6 +7,219 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [Released]
+
+### v6.0.0 - Complete Workflow System (2025-12-29) <!-- v6.0.0 Change -->
+> **Branches:** `v6.0.1-foundation`, `v6.0.2-core-integration`, `v6.0.3-router-workflows`, `v6.0.4-summary-polish`
+
+#### 🎉 Major Release: Complete v6.0 Workflow System
+
+This major release transforms the system from a simple 3-mode analyzer into a complete, intelligent resume management platform with smart routing, incremental updates, and change tracking.
+
+**Breaking Changes:**
+- **Job History Schema v2.0:** New 12-section schema (up from 8 sections in v1.0)
+  - Hard/soft skills separated into distinct arrays
+  - Education and certifications added
+  - Professional summary per role
+  - Tools/technologies granular listing
+  - v1.0 files preserved for reference (`claude_generated_job_history_summaries.txt`)
+  - v2.0 files created automatically (`claude_generated_job_history_summaries_v2.txt`)
+  - Mode 2 backward compatible (works with both v1.0 and v2.0)
+
+---
+
+#### Phase 1 (v6.0.1) - Foundation
+
+**Added:**
+- **Job History Schema v2.0** (`shared/phase-1/job-history-v2-creation.md`)
+  - 12 sections: metadata, professional_summary, core_responsibilities, key_achievements, hard_skills_demonstrated, soft_skills_demonstrated, education, certifications, tools_technologies, impact_metrics, industry_domain, team_scope
+  - Structured format for evidence-based matching
+  - Version tracking (schema_version field)
+
+- **17-Point JD Parser** (`shared/phase-1/jd-parsing-17-point.md`)
+  - Complete extraction schema: company, job_title, location, work_lifestyle, remote_restrictions, employee_type, travel_required, clearance, salary_range, required_experience, required_education, job_responsibilities
+  - **Hard vs Soft Skill Classification:** Decision tree logic for accurate categorization
+  - Skills separated: skills_needed/wanted (HARD), soft_skills_needed/wanted (SOFT)
+  - Qualifications: qualifications_needed/wanted, certifications_needed/wanted
+  - Dual extraction strategy: structured JDs (high confidence) vs conversational JDs (fallback)
+  - Inference for missing fields ("Not specified" vs empty arrays)
+
+- **Entry Point Router** (`shared/phase-1/entry-router.md`)
+  - 5 core routing scenarios with context detection
+  - JD validation heuristics (length, keywords, structure checks)
+  - Anti-false-positive measures for LinkedIn posts/articles
+  - User confirmation before mode execution
+
+**Impact:**
+- ✅ Foundation for evidence-based gap analysis
+- ✅ Accurate hard/soft skill separation prevents blocking gate errors
+- ✅ Complete JD extraction (all fields from legacy system restored)
+
+---
+
+#### Phase 2 (v6.0.2) - Core Integration
+
+**Added:**
+- **Evidence-Based Matching** (`shared/phase-2/evidence-matching.md`)
+  - **Requirement-by-requirement analysis:** Every JD requirement gets individual status
+  - **Two-part check system:** Evidence match + keyword presence (ATS optimization)
+  - **Status determination:** [MATCHED], [PARTIAL], [MISSING] with color-coding
+  - **Evidence citations:** Standardized format ("Company | Job Title")
+  - **Gap rationale:** Specific explanation for each requirement
+  - **Special cases:** Contractor, freelance, multiple roles at same company
+  - **Diff generation:** Track improvements over time (for re-comparison)
+
+- **Blocking Gates** (Mode 3 enhancements)
+  - **Gate 1 - Hard Skill Deficit:** Warns if Missing Hard Skills > Matched Hard Skills
+  - **Gate 2 - Low Match Score:** Warns if match score < 30
+  - **Gate 3 - Location Mismatch:** Preserved from v5.1 (on-site/remote conflicts)
+  - **Soft blocking:** User can override with "yes/no" confirmation
+  - **Token savings:** Prevents wasted analysis on poor-fit positions
+
+**Changed:**
+- **Mode 1 (Full Analysis):**
+  - Generates job history v2.0 with all 12 sections
+  - Hard/soft skill categorization using classification rules
+  - Professional summary per role (master summary)
+  - Next steps guidance after completion
+
+- **Mode 3 (JD Comparison):**
+  - Uses 17-point JD parser (all fields extracted)
+  - Evidence matcher with citations for every requirement
+  - Color-coded output ([MATCHED]/[PARTIAL]/[MISSING])
+  - 3 blocking gates with override option
+  - Per-JD summary placeholder (full implementation in v6.0.4)
+
+- **Mode 2 (Bullet Optimization):**
+  - **Backward compatible:** Checks v2.0 first, falls back to v1.0
+  - Upgrade recommendation for v1.0 users
+  - Keyword insertion logic (hard vs soft skills)
+
+**Impact:**
+- ✅ Users see exactly where they match/don't match (with proof)
+- ✅ Blocking gates save time on poor-fit applications
+- ✅ Mode 2 works for all users (v1.0 and v2.0)
+
+---
+
+#### Phase 3 (v6.0.3) - Router & Workflows
+
+**Added:**
+- **Complete Workflow Router** (`shared/phase-3/workflow-router.md`)
+  - **8 routing scenarios:**
+    1. New user (no job history) → Mode 1
+    2. JD comparison (has job history + JD) → Mode 3
+    3. Bullet optimization (has job history + wants optimization) → Mode 2
+    4. Ambiguous intent (has job history, unclear) → Ask user
+    5. First interaction (no context) → Welcome message
+    6. Incremental update (add/edit/remove position) → Incremental handler
+    7. Re-comparison (re-run JD analysis) → Re-comparison handler
+    8. Ambiguous input (cannot determine type) → Two-step clarification
+  - **JD validation heuristics:** Prevents false positives (LinkedIn posts, articles)
+  - **Override commands:** "re-analyze", "start fresh", "add position", "update job history"
+  - **Context detection:** Checks hasJobHistory, hasJD, hasResume
+  - **User confirmation:** Always confirms before executing mode
+
+- **Incremental Updates** (`shared/phase-3/incremental-updates.md`)
+  - **Add position:** Collect v2.0 fields → Insert chronologically → Recalculate aggregates
+  - **Edit position:** Select → Show current values → Update → Recalculate
+  - **Remove position:** Select → Confirm → Remove → Recalculate
+  - **Automatic recalculation:** Years of experience, skills aggregation
+
+- **JD Re-Comparison** (`shared/phase-3/re-comparison.md`)
+  - **JD caching:** Saves parsed JDs for future reference (`jd_parsed/` directory)
+  - **Version tracking:** v1, v2, v3 comparisons stored
+  - **Diff output:**
+    - **Improvements:** Missing → Matched, Partial → Matched
+    - **No change:** Still Matched, Still Missing
+    - **Score delta:** 72% → 81% (+9 points)
+  - **Cache management:** "List saved JDs", "Delete [Company] JD", "Clear JD cache"
+
+**Changed:**
+- **PROJECT-INSTRUCTIONS.md:**
+  - Entry point routing section (CRITICAL priority)
+  - All 8 scenarios documented
+  - Override commands listed
+  - v6_foundation_modules status updated to "integrated"
+
+- **.gitignore:**
+  - Added jd_parsed/ patterns (excludes cached JDs, keeps README)
+
+**Impact:**
+- ✅ System feels intelligent (auto-detects user intent)
+- ✅ Users can maintain job history without full re-analysis
+- ✅ Track improvement over time with diff output
+
+---
+
+#### Phase 4 (v6.0.4) - Summary & Polish
+
+**Added:**
+- **Professional Summary Generator** (`shared/phase-4/summary-generation.md`)
+  - **Master summary (Mode 1):** Comprehensive 3-4 sentence summary
+    - Sentence 1: Role + Scope (title, years, industry)
+    - Sentence 2: Achievements + Metrics (quantified results)
+    - Sentence 3: Hard Skills (2-3 technical skills)
+    - Sentence 4: Soft Skills (1-2 interpersonal skills)
+    - Aggregates career data (total years, companies, team sizes)
+    - Stored in job history v2.0 (master_summary field)
+  - **Per-JD summary (Mode 3):** Customized, ephemeral (not stored)
+    - Replaces generic hard skills with JD-specific keywords
+    - Maintains metrics and achievements from master
+    - Offered after gap analysis if match score ≥ 50
+
+**Impact:**
+- ✅ Users get polished professional summaries
+- ✅ Per-JD summaries optimize ATS keyword matching
+- ✅ Evidence-based (only includes demonstrated skills)
+
+---
+
+#### Total Changes
+
+**Files Created:** 9 files (5,595 lines)
+- Phase 1: 3 files (job-history-v2-creation.md, jd-parsing-17-point.md, entry-router.md)
+- Phase 2: 1 file (evidence-matching.md)
+- Phase 3: 3 files (workflow-router.md, incremental-updates.md, re-comparison.md)
+- Phase 4: 1 file (summary-generation.md)
+- Infrastructure: 1 directory (jd_parsed/)
+
+**Files Modified:** 5 files
+- PROJECT-INSTRUCTIONS.md (v5.1.0 → v6.0.3)
+- mode-3-jd-comparison.md (v5.1.0 → v6.0.2)
+- mode-2-bullet-optimization.md (v5.0 → v6.0.2)
+- ROADMAP.md (tracked all 4 phases)
+- .gitignore (added jd_parsed/)
+
+**Commits:**
+- v6.0.1: `4b82fd3` - Foundation (2,580 lines)
+- v6.0.2: `ff677fe` - Core Integration (1,000 lines)
+- v6.0.3: `157a833` - Router & Workflows (2,015 lines)
+- v6.0.4: TBD - Summary & Polish
+
+---
+
+#### Migration Guide (v5.1 → v6.0)
+
+**For Existing Users:**
+1. **Job History:** v1.0 files preserved, v2.0 created automatically on next Mode 1 run
+2. **Mode 2:** Backward compatible - works with v1.0, recommends upgrade to v2.0
+3. **No data loss:** All existing files remain intact
+
+**Recommended Actions:**
+1. Run Mode 1 to generate v2.0 job history (if you have new positions)
+2. Try incremental updates ("add position", "edit position")
+3. Re-run previous JD comparisons to see diff output
+
+**Benefits of Upgrading:**
+- Evidence-based matching (see exactly where you match/don't match)
+- Blocking gates (save time on poor-fit applications)
+- Incremental updates (no need to re-analyze entire resume)
+- Change tracking (see how your profile improves)
+- Professional summaries (master + per-JD customization)
+
+---
+
 ### v5.1.0 - Remote Work Classification for Job Analysis (2025-12-28) <!-- v5.1.0 Change -->
 > **Branch:** `main`
 

@@ -1,10 +1,12 @@
-# Optimize-My-Resume System v6.0.3
+# Optimize-My-Resume System v6.0.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.0.3                                                             --> <!-- v6.0.3 Change: Added workflow router, incremental updates, re-comparison -->
+<!-- Version: 6.0.0                                                             --> <!-- v6.0.0 Release: Complete workflow system with smart routing and change tracking -->
+<!-- Previous: 6.0.3                                                            --> <!-- v6.0.3 Change: Added workflow router, incremental updates, re-comparison -->
 <!-- Previous: 6.0.2                                                            --> <!-- v6.0.2 Change: Integrated v2.0 schema, evidence matching, 17-point JD parser -->
+<!-- Previous: 6.0.1                                                            --> <!-- v6.0.1 Change: Foundation modules (job history v2.0, 17-point JD parser, entry router) -->
 <!-- Previous: 5.1.0                                                            --> <!-- v5.1.0 Change: Added remote work classification logic -->
 <!-- Last Updated: December 2024                                                -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
@@ -36,7 +38,21 @@
     - shared/phase-3/workflow-router.md (complete 8-scenario routing system)
     - shared/phase-3/incremental-updates.md (add/edit/remove positions)
     - shared/phase-3/re-comparison.md (JD re-comparison with diff output)
+
+    <!-- Phase 4: Summary & Polish -->
+    - shared/phase-4/summary-generation.md (master + per-JD summary customization)
   </available_modules>
+
+  <v6_0_0_release_notes>
+    Complete workflow system with 4 major phases:
+    - v6.0.1: Foundation schemas (job history v2.0, 17-point JD parser, entry router)
+    - v6.0.2: Core integration (evidence matching, blocking gates, mode enhancements)
+    - v6.0.3: Router & workflows (8-scenario routing, incremental updates, re-comparison)
+    - v6.0.4: Summary & polish (professional summary generation, documentation)
+
+    Total additions: 9 files, 5,595+ lines of new functionality
+    Breaking changes: Job history v2.0 schema (backward compatible Mode 2)
+  </v6_0_0_release_notes>
 </v6_foundation_modules>
 
 <!-- ========================================================================== -->
