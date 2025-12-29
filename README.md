@@ -1,4 +1,4 @@
-# Optimize My Resume v6.0
+# Optimize My Resume v6.1
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -6,11 +6,14 @@
 
 ## 🎯 What This System Does (In Plain English)
 
-This system helps you improve your resume in three ways:
+This system helps you improve your resume in four ways:
 
 1. **Full Resume Analysis (Phase 1)** - Upload your complete resume and get a detailed analysis with scores and suggestions
 2. **Bullet Point Improvement (Phase 2)** - Take 1-5 bullet points from your resume and make them stronger with better wording and metrics
 3. **Job Description Matching (Phase 3)** - Compare your resume to a specific job posting and see what matches, what's missing, and get customized bullets
+4. **Professional Summary Generation (Phase 4)** - Create comprehensive job summaries that capture all your metrics and achievements, which can be used to generate customized bullets for any job application without needing your full resume
+
+**How it works:** The system creates a structured "job summary" from your work history that contains all the information needed to generate tailored resume bullets. This summary can cover your entire career or a single position, and serves as a reusable master document—eliminating the need to maintain multiple resume versions.
 
 The system is smart enough to figure out what you need based on what you upload or ask for.
 
