@@ -58,7 +58,7 @@
     <!-- v6.0.2 Change: Use 17-point JD parser for complete extraction -->
 
     <jd_parsing>
-      Use the 17-point parsing schema from shared/phase-1/jd-parsing-17-point.md
+      Use the 17-point parsing schema from phases/phase-1/jd-parsing-17-point.md
 
       Extract all 17 fields:
       - company, job_title, location, work_lifestyle
@@ -144,7 +144,7 @@
     </job_history_loading>
 
     <requirement_by_requirement_gap_analysis>
-      Use shared/phase-2/evidence-matching.md to analyze EVERY requirement from the parsed JD.
+      Use phases/phase-2/evidence-matching.md to analyze EVERY requirement from the parsed JD.
 
       For EACH requirement:
       1. Search job history v2.0 for evidence (exact or semantic match)

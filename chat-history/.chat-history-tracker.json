@@ -1,0 +1,14 @@
+{
+  "exports": [
+    {
+      "timestamp": "2025-12-28T18:30:00Z",
+      "filename": "2025_12_28-18_30_00-chat_history.txt",
+      "messageCount": 0,
+      "exportType": "manual",
+      "notes": "v6.0 planning discussion - Opus deep dive on test cases"
+    }
+  ],
+  "lastExportTimestamp": "2025-12-28T18:30:00Z",
+  "totalExports": 1,
+  "version": "1.0"
+}

@@ -686,10 +686,10 @@ Flow:
 
 ## Related Protocols
 
-- **Job History Creation:** `shared/phase-1/job-history-v2-creation.md`
+- **Job History Creation:** `phases/phase-1/job-history-v2-creation.md`
 - **Skills Categorization:** Use classification rules from phase-1 docs
-- **Re-Comparison:** `shared/phase-3/re-comparison.md`
-- **Summary Generation:** `shared/phase-4/summary-generation.md` (future)
+- **Re-Comparison:** `phases/phase-3/re-comparison.md`
+- **Summary Generation:** `phases/phase-4/summary-generation.md` (future)
 
 ---
 

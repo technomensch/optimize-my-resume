@@ -27,20 +27,20 @@
 
   <available_modules>
     <!-- Phase 1: Foundation -->
-    - shared/phase-1/job-history-v2-creation.md (12-section schema)
-    - shared/phase-1/jd-parsing-17-point.md (17-point JD parser)
-    - shared/phase-1/entry-router.md (5-scenario routing logic)
+    - phases/phase-1/job-history-v2-creation.md (12-section schema)
+    - phases/phase-1/jd-parsing-17-point.md (17-point JD parser)
+    - phases/phase-1/entry-router.md (5-scenario routing logic)
 
     <!-- Phase 2: Core Integration -->
-    - shared/phase-2/evidence-matching.md (requirement-by-requirement gap analysis)
+    - phases/phase-2/evidence-matching.md (requirement-by-requirement gap analysis)
 
     <!-- Phase 3: Router & Workflows -->
-    - shared/phase-3/workflow-router.md (complete 8-scenario routing system)
-    - shared/phase-3/incremental-updates.md (add/edit/remove positions)
-    - shared/phase-3/re-comparison.md (JD re-comparison with diff output)
+    - phases/phase-3/workflow-router.md (complete 8-scenario routing system)
+    - phases/phase-3/incremental-updates.md (add/edit/remove positions)
+    - phases/phase-3/re-comparison.md (JD re-comparison with diff output)
 
     <!-- Phase 4: Summary & Polish -->
-    - shared/phase-4/summary-generation.md (master + per-JD summary customization)
+    - phases/phase-4/summary-generation.md (master + per-JD summary customization)
   </available_modules>
 
   <v6_0_0_release_notes>
@@ -64,7 +64,7 @@
   <priority>CRITICAL - Execute BEFORE mode detection</priority>
 
   <purpose>
-    Before executing any mode, consult shared/phase-3/workflow-router.md to:
+    Before executing any mode, consult phases/phase-3/workflow-router.md to:
     1. Detect user state (hasJobHistory, hasJD, hasResume)
     2. Identify user intent (which workflow to execute)
     3. Confirm with user before proceeding
@@ -108,14 +108,14 @@
       Condition: User says "add position", "edit position", "remove position"
       Route: Incremental Update Handler
       Action: Add/edit/remove positions in job history v2.0
-      Handler: shared/phase-3/incremental-updates.md
+      Handler: phases/phase-3/incremental-updates.md
     </scenario>
 
     <scenario id="7" name="re_comparison">
       Condition: User says "compare again", "re-run", "updated history"
       Route: Re-Comparison Handler
       Action: Re-run JD analysis with updated job history + diff output
-      Handler: shared/phase-3/re-comparison.md
+      Handler: phases/phase-3/re-comparison.md
     </scenario>
 
     <scenario id="8" name="ambiguous_input">
@@ -133,7 +133,7 @@
   </override_commands>
 
   <execution_rule>
-    ALWAYS route through shared/phase-3/workflow-router.md FIRST before executing any mode.
+    ALWAYS route through phases/phase-3/workflow-router.md FIRST before executing any mode.
 
     The router:
     - Detects user state and intent
@@ -163,7 +163,7 @@
   <current_version>2.0</current_version>
 
   <schema_location>
-    Job History Schema v2.0 is defined in: shared/phase-1/job-history-v2-creation.md
+    Job History Schema v2.0 is defined in: phases/phase-1/job-history-v2-creation.md
   </schema_location>
 
   <key_changes_from_v1_0>
@@ -208,13 +208,13 @@
   <job_history_creation>
     <!-- v6.0.2 Change: Added v2.0 schema job history generation -->
 
-    After extracting resume data, generate job history in v2.0 format per shared/phase-1/job-history-v2-creation.md:
+    After extracting resume data, generate job history in v2.0 format per phases/phase-1/job-history-v2-creation.md:
 
     FOR EACH position in resume:
       1. Extract metadata (job_title, company, dates)
       2. Extract core_responsibilities (3-5 bullets)
       3. Extract key_achievements (3-5 bullets with metrics)
-      4. Categorize skills using shared/phase-1/jd-parsing-17-point.md classification rules:
+      4. Categorize skills using phases/phase-1/jd-parsing-17-point.md classification rules:
          - Run each skill through hard vs soft categorization logic
          - Separate into hard_skills_demonstrated and soft_skills_demonstrated arrays
       5. Extract education (if mentioned in context of this role)

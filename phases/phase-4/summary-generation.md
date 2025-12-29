@@ -631,9 +631,9 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 
 ## Related Protocols
 
-- **Job History Creation:** `shared/phase-1/job-history-v2-creation.md`
-- **JD Parsing:** `shared/phase-1/jd-parsing-17-point.md`
-- **Evidence Matching:** `shared/phase-2/evidence-matching.md`
+- **Job History Creation:** `phases/phase-1/job-history-v2-creation.md`
+- **JD Parsing:** `phases/phase-1/jd-parsing-17-point.md`
+- **Evidence Matching:** `phases/phase-2/evidence-matching.md`
 - **Mode 3 Integration:** `modes/mode-3-jd-comparison.md`
 
 ---

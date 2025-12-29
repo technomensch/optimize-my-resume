@@ -696,8 +696,8 @@ IF quality < 0.5:
 
 ## Related Protocols
 
-- **JD Parsing:** `shared/phase-1-jd-parsing-17-point.md`
-- **Job History Creation:** `shared/phase-1-job-history-v2-creation.md`
+- **JD Parsing:** `phases/phase-1-jd-parsing-17-point.md`
+- **Job History Creation:** `phases/phase-1-job-history-v2-creation.md`
 - **Mode 3 Integration:** `modes/mode-3-jd-comparison.md`
 - **Blocking Gates:** Defined in Mode 3
 

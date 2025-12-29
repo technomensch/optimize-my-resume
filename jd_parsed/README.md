@@ -3,7 +3,7 @@
 **Purpose:** Stores parsed job descriptions for re-comparison workflow
 
 **Created:** Phase 3 (v6.0.3)
-**Used by:** shared/phase-3/re-comparison.md
+**Used by:** phases/phase-3/re-comparison.md
 
 ---
 
