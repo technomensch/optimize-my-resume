@@ -31,12 +31,12 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 1 (v6.0.1) - Foundation
 
 **Added:**
-- **Job History Schema v2.0** (`shared/phase-1/job-history-v2-creation.md`)
+- **Job History Schema v2.0** (`phases/phase-1/job-history-v2-creation.md`)
   - 12 sections: metadata, professional_summary, core_responsibilities, key_achievements, hard_skills_demonstrated, soft_skills_demonstrated, education, certifications, tools_technologies, impact_metrics, industry_domain, team_scope
   - Structured format for evidence-based matching
   - Version tracking (schema_version field)
 
-- **17-Point JD Parser** (`shared/phase-1/jd-parsing-17-point.md`)
+- **17-Point JD Parser** (`phases/phase-1/jd-parsing-17-point.md`)
   - Complete extraction schema: company, job_title, location, work_lifestyle, remote_restrictions, employee_type, travel_required, clearance, salary_range, required_experience, required_education, job_responsibilities
   - **Hard vs Soft Skill Classification:** Decision tree logic for accurate categorization
   - Skills separated: skills_needed/wanted (HARD), soft_skills_needed/wanted (SOFT)
@@ -44,7 +44,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
   - Dual extraction strategy: structured JDs (high confidence) vs conversational JDs (fallback)
   - Inference for missing fields ("Not specified" vs empty arrays)
 
-- **Entry Point Router** (`shared/phase-1/entry-router.md`)
+- **Entry Point Router** (`phases/phase-1/entry-router.md`)
   - 5 core routing scenarios with context detection
   - JD validation heuristics (length, keywords, structure checks)
   - Anti-false-positive measures for LinkedIn posts/articles
@@ -60,7 +60,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 2 (v6.0.2) - Core Integration
 
 **Added:**
-- **Evidence-Based Matching** (`shared/phase-2/evidence-matching.md`)
+- **Evidence-Based Matching** (`phases/phase-2/evidence-matching.md`)
   - **Requirement-by-requirement analysis:** Every JD requirement gets individual status
   - **Two-part check system:** Evidence match + keyword presence (ATS optimization)
   - **Status determination:** [MATCHED], [PARTIAL], [MISSING] with color-coding
@@ -105,7 +105,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 3 (v6.0.3) - Router & Workflows
 
 **Added:**
-- **Complete Workflow Router** (`shared/phase-3/workflow-router.md`)
+- **Complete Workflow Router** (`phases/phase-3/workflow-router.md`)
   - **8 routing scenarios:**
     1. New user (no job history) → Mode 1
     2. JD comparison (has job history + JD) → Mode 3
@@ -120,13 +120,13 @@ This major release transforms the system from a simple 3-mode analyzer into a co
   - **Context detection:** Checks hasJobHistory, hasJD, hasResume
   - **User confirmation:** Always confirms before executing mode
 
-- **Incremental Updates** (`shared/phase-3/incremental-updates.md`)
+- **Incremental Updates** (`phases/phase-3/incremental-updates.md`)
   - **Add position:** Collect v2.0 fields → Insert chronologically → Recalculate aggregates
   - **Edit position:** Select → Show current values → Update → Recalculate
   - **Remove position:** Select → Confirm → Remove → Recalculate
   - **Automatic recalculation:** Years of experience, skills aggregation
 
-- **JD Re-Comparison** (`shared/phase-3/re-comparison.md`)
+- **JD Re-Comparison** (`phases/phase-3/re-comparison.md`)
   - **JD caching:** Saves parsed JDs for future reference (`jd_parsed/` directory)
   - **Version tracking:** v1, v2, v3 comparisons stored
   - **Diff output:**
@@ -155,7 +155,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 4 (v6.0.4) - Summary & Polish
 
 **Added:**
-- **Professional Summary Generator** (`shared/phase-4/summary-generation.md`)
+- **Professional Summary Generator** (`phases/phase-4/summary-generation.md`)
   - **Master summary (Mode 1):** Comprehensive 3-4 sentence summary
     - Sentence 1: Role + Scope (title, years, industry)
     - Sentence 2: Achievements + Metrics (quantified results)

@@ -17,9 +17,9 @@
 **Branch:** `v6.0.1-foundation` | **Status:** Complete | **Date:** 2025-12-28
 
 **Files Created:**
-- [x] `shared/phase-1/job-history-v2-creation.md` - 12-section schema
-- [x] `shared/phase-1/jd-parsing-17-point.md` - 17-point JD parser with hard/soft skill classification
-- [x] `shared/phase-1/entry-router.md` - 5-scenario routing logic
+- [x] `phases/phase-1/job-history-v2-creation.md` - 12-section schema
+- [x] `phases/phase-1/jd-parsing-17-point.md` - 17-point JD parser with hard/soft skill classification
+- [x] `phases/phase-1/entry-router.md` - 5-scenario routing logic
 
 **Notes:** Foundation modules created but not yet integrated into modes.
 
@@ -29,7 +29,7 @@
 **Branch:** `v6.0.2-core-integration` | **Status:** Complete | **Date:** 2025-12-29
 
 **Files Created:**
-- [x] `shared/phase-2/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
+- [x] `phases/phase-2/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
 - [x] `PROJECT-INSTRUCTIONS.md` - Mode 1 enhancement (v2.0 schema generation, next steps guidance)
@@ -44,9 +44,9 @@
 **Branch:** `v6.0.3-router-workflows` | **Status:** Complete | **Date:** 2025-12-29
 
 **Files Created:**
-- [x] `shared/phase-3/workflow-router.md` - Complete 8-scenario routing system
-- [x] `shared/phase-3/incremental-updates.md` - Add/edit/remove positions (created by Opus)
-- [x] `shared/phase-3/re-comparison.md` - JD re-comparison with diff output (created by Opus)
+- [x] `phases/phase-3/workflow-router.md` - Complete 8-scenario routing system
+- [x] `phases/phase-3/incremental-updates.md` - Add/edit/remove positions (created by Opus)
+- [x] `phases/phase-3/re-comparison.md` - JD re-comparison with diff output (created by Opus)
 - [x] `jd_parsed/` - Cache directory for parsed JDs
 
 **Files Modified:**
@@ -68,7 +68,7 @@
 **Branch:** `v6.0.4-summary-polish` | **Status:** Complete | **Date:** 2025-12-29 <!-- v6.0.0 Change -->
 
 **Files Created:** <!-- v6.0.0 Change -->
-- [x] `shared/phase-4/summary-generation.md` - Master + per-JD summaries (created by Opus, 646 lines) <!-- v6.0.0 Change -->
+- [x] `phases/phase-4/summary-generation.md` - Master + per-JD summaries (created by Opus, 646 lines) <!-- v6.0.0 Change -->
 
 **Files Modified:** <!-- v6.0.0 Change -->
 - [x] `docs/CHANGELOG.md` - Complete v6.0.0 release entry with 4-phase documentation <!-- v6.0.0 Change -->

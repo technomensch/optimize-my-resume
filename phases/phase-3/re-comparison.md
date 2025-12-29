@@ -217,7 +217,7 @@ EXTRACT:
 ### Step 4: Run Evidence Matching
 
 ```
-Use evidence matching protocol (shared/phase-2/evidence-matching.md):
+Use evidence matching protocol (phases/phase-2/evidence-matching.md):
 
 FOR EACH requirement in cached_jd.jd_parsed:
   1. Search current_job_history for evidence
@@ -628,10 +628,10 @@ System:
 
 ## Related Protocols
 
-- **JD Parsing:** `shared/phase-1/jd-parsing-17-point.md`
-- **Evidence Matching:** `shared/phase-2/evidence-matching.md`
-- **Incremental Updates:** `shared/phase-3/incremental-updates.md`
-- **Summary Generation:** `shared/phase-4/summary-generation.md` (future)
+- **JD Parsing:** `phases/phase-1/jd-parsing-17-point.md`
+- **Evidence Matching:** `phases/phase-2/evidence-matching.md`
+- **Incremental Updates:** `phases/phase-3/incremental-updates.md`
+- **Summary Generation:** `phases/phase-4/summary-generation.md` (future)
 
 ---
 

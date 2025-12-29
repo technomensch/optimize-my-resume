@@ -3,7 +3,7 @@
 **Version:** 1.0
 **Created:** 2025-12-29
 **Purpose:** Complete routing system that detects user intent and routes to appropriate workflow
-**Extends:** shared/phase-1/entry-router.md
+**Extends:** phases/phase-1/entry-router.md
 
 ---
 
@@ -21,7 +21,7 @@ This protocol extends the Phase 1 entry router with additional routing scenarios
 
 ## Core Routing (from Phase 1)
 
-**See:** shared/phase-1/entry-router.md for complete implementation
+**See:** phases/phase-1/entry-router.md for complete implementation
 
 ### Scenario 1: New User (Mode 1)
 - **Condition:** hasResume = true AND hasJobHistory = false
@@ -89,7 +89,7 @@ What would you like to do?
 Please select 1-3 or describe the change."
 ```
 
-**Handler:** See shared/phase-3/incremental-updates.md for complete workflow
+**Handler:** See phases/phase-3/incremental-updates.md for complete workflow
 
 **Workflow Summary:**
 - **Add:** Collect all v2.0 fields → Insert chronologically → Recalculate aggregates → Save
@@ -130,7 +130,7 @@ If you previously analyzed a JD (e.g., 'Google Product Manager'), I can reuse it
 Otherwise, please paste the job description."
 ```
 
-**Handler:** See shared/phase-3/re-comparison.md for complete workflow
+**Handler:** See phases/phase-3/re-comparison.md for complete workflow
 
 **Workflow Summary:**
 - Check for cached JD → Load if exists, ask to paste if not
@@ -395,7 +395,7 @@ Add to PROJECT-INSTRUCTIONS.md before mode detection section:
 
 ```xml
 <entry_point_routing>
-  Before executing any mode, consult shared/phase-3/workflow-router.md to:
+  Before executing any mode, consult phases/phase-3/workflow-router.md to:
   1. Detect user state (hasJobHistory, hasJD, hasResume)
   2. Identify user intent (which workflow to execute)
   3. Confirm with user before proceeding
@@ -413,7 +413,7 @@ Add to PROJECT-INSTRUCTIONS.md before mode detection section:
 
   ALWAYS route through workflow-router.md first before executing any mode.
 
-  NOTE: This router extends shared/phase-1/entry-router.md (5 core scenarios)
+  NOTE: This router extends phases/phase-1/entry-router.md (5 core scenarios)
         with 3 additional scenarios from Phase 3.
 </entry_point_routing>
 ```
@@ -458,11 +458,11 @@ Add to PROJECT-INSTRUCTIONS.md before mode detection section:
 
 ## Related Files
 
-- **Core Routing (Phase 1):** shared/phase-1/entry-router.md
-- **Incremental Updates:** shared/phase-3/incremental-updates.md
-- **Re-Comparison:** shared/phase-3/re-comparison.md
-- **JD Parsing:** shared/phase-1/jd-parsing-17-point.md
-- **Evidence Matching:** shared/phase-2/evidence-matching.md
+- **Core Routing (Phase 1):** phases/phase-1/entry-router.md
+- **Incremental Updates:** phases/phase-3/incremental-updates.md
+- **Re-Comparison:** phases/phase-3/re-comparison.md
+- **JD Parsing:** phases/phase-1/jd-parsing-17-point.md
+- **Evidence Matching:** phases/phase-2/evidence-matching.md
 
 ---
 
