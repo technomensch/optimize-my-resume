@@ -50,7 +50,7 @@ This protocol guides the creation of a comprehensive job history file that serve
 - Key achievements or differentiators]
 ```
 
-**Purpose:** Master summary that can be customized per-JD in Mode 3.
+**Purpose:** Master summary that can be customized per-JD in Phase 3.
 
 **Guidelines:**
 - Keep factual and evidence-based
@@ -473,9 +473,9 @@ When unclear, default to HARD because:
 
 ---
 
-## Creation Workflow (Mode 1)
+## Creation Workflow (Phase 1)
 
-When creating a job history file in Mode 1, follow this sequence:
+When creating a job history file in Phase 1, follow this sequence:
 
 ### Step 1: Personal Information
 - Collect name, location, contact info
@@ -604,7 +604,7 @@ Before marking job history as complete:
 
 ---
 
-## Usage in Gap Analysis (Mode 3)
+## Usage in Gap Analysis (Phase 3)
 
 When comparing job history to JD:
 
@@ -830,10 +830,10 @@ Evidence: "Developed ETL pipelines for 3 enterprise clients"
 
 ## Related Protocols
 
-- **JD Parsing (17-point):** `shared/jd-parsing-17-point.md`
-- **Entry Router (5-scenario):** `shared/entry-router.md`
-- **Gap Analysis:** `prompts/mode3-jd-comparison.md`
-- **Summary Customization:** `prompts/mode3-summary-customization.md`
+- **JD Parsing (17-point):** `phases/phase-1/jd-parsing-17-point.md`
+- **Entry Router (5-scenario):** `phases/phase-1/entry-router.md`
+- **Evidence Matching:** `phases/phase-2/evidence-matching.md`
+- **Summary Generation:** `phases/phase-4/summary-generation.md`
 
 ---
 

@@ -11,12 +11,12 @@
 This protocol generates two types of professional summaries:
 
 1. **Master Summary** - Comprehensive, stored in job history v2.0
-   - Created during Mode 1 (job history creation)
+   - Created during Phase 1 (job history creation)
    - Aggregates entire career
    - Used as baseline for customization
 
 2. **Per-JD Summary** - Customized, ephemeral (not stored)
-   - Generated during Mode 3 (JD comparison)
+   - Generated during Phase 3 (JD comparison)
    - Optimized with JD-specific keywords
    - User copies to their resume for that application
 
@@ -28,11 +28,11 @@ This protocol generates two types of professional summaries:
 
 ---
 
-## Master Summary Generation (Mode 1)
+## Master Summary Generation (Phase 1)
 
 ### Trigger
 
-After Mode 1 extracts all positions, before saving job history v2.0:
+After Phase 1 extracts all positions, before saving job history v2.0:
 
 ```
 Position extraction complete → Aggregate career data → Generate master summary → Save to job history
@@ -226,11 +226,11 @@ Display during generation (no time estimates):
 
 ---
 
-## Per-JD Summary Customization (Mode 3)
+## Per-JD Summary Customization (Phase 3)
 
 ### Trigger
 
-After Mode 3 gap analysis completes:
+After Phase 3 gap analysis completes:
 
 ```
 IF match_score >= 50:
@@ -563,10 +563,10 @@ Before finalizing summary:
 
 ## Integration with Other Workflows
 
-### After Mode 1 → Master Summary → Next Steps
+### After Phase 1 → Master Summary → Next Steps
 
 ```
-Mode 1 completes → Master summary generated → Save job history
+Phase 1 completes → Master summary generated → Save job history
 
 DISPLAY:
   "✅ Analysis complete! Your job history has been saved.
@@ -577,14 +577,14 @@ DISPLAY:
   - Professional summary generated
 
   Next steps - What would you like to do?
-  1. Optimize specific resume bullets (Mode 2)
-  2. Check fit for a job description (Mode 3)
+  1. Optimize specific resume bullets (Phase 2)
+  2. Check fit for a job description (Phase 3)
   3. Export job history for review"
 ```
 
 ---
 
-### After Mode 3 Gap Analysis → Offer Per-JD Summary
+### After Phase 3 Gap Analysis → Offer Per-JD Summary
 
 ```
 Gap analysis completes → match_score >= 50
@@ -634,7 +634,7 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 - **Job History Creation:** `phases/phase-1/job-history-v2-creation.md`
 - **JD Parsing:** `phases/phase-1/jd-parsing-17-point.md`
 - **Evidence Matching:** `phases/phase-2/evidence-matching.md`
-- **Mode 3 Integration:** `modes/mode-3-jd-comparison.md`
+- **Phase 3 Integration:** `phases/phase-3/workflow-router.md`
 
 ---
 

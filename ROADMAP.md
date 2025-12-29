@@ -32,11 +32,11 @@
 - [x] `phases/phase-2/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
-- [x] `PROJECT-INSTRUCTIONS.md` - Mode 1 enhancement (v2.0 schema generation, next steps guidance)
-- [x] `modes/mode-3-jd-comparison.md` - 17-point parser integration, evidence matching, blocking gates
-- [x] `modes/mode-2-bullet-optimization.md` - v2.0 backward compatibility with upgrade recommendations
+- [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (v2.0 schema generation, next steps guidance)
+- [x] `phases/phase-2/` - 17-point parser integration, evidence matching, blocking gates
+- [x] `phases/phase-3/` - v2.0 backward compatibility with upgrade recommendations
 
-**Notes:** Core integration complete. Modes 1 and 3 now use v2.0 schema. Mode 2 supports both v1.0 and v2.0 formats.
+**Notes:** Core integration complete. Phases 1 and 3 now use v2.0 schema. Phase 2 supports both v1.0 and v2.0 formats.
 
 ---
 
@@ -60,7 +60,7 @@
 - [x] Override commands (re-analyze, start fresh, add position)
 - [x] Two-step clarification for ambiguous input
 
-**Notes:** Router & workflows complete. System now auto-detects user intent and confirms before executing. Users can incrementally update job history and re-run JD comparisons with change tracking.
+**Notes:** Router & workflows complete. System now auto-detects user intent and confirms before executing. Users can incrementally update job history and re-run JD comparisons with change tracking. (Note: These features were previously in the backlog and are now fully implemented).
 
 ---
 
@@ -148,8 +148,6 @@
 
 - [ ] Batch JD comparison (compare resume to multiple JDs at once)
 - [ ] Keyword frequency analysis (after 3+ JD comparisons, show most-requested skills)
-- [ ] Incremental position updates (add/edit/remove single positions)
-- [ ] JD re-comparison with diff output (show changes after updating job history)
 - [ ] Export job history to different formats (JSON, PDF, etc.)
 
 ---
@@ -170,4 +168,4 @@
 
 ---
 
-**Last Updated:** 2025-12-29 (v6.0.0 MAJOR RELEASE - Complete workflow system with 4 phases) <!-- v6.0.0 Change: Updated from v6.0.3 note -->
+**Last Updated:** 2025-12-29 (v6.1.0 MINOR RELEASE - Documentation enhancement and folder restructure)

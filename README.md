@@ -79,32 +79,32 @@ The system is smart enough to figure out what you need based on what you upload 
 
 #### Step-by-Step:
 
-1. **Go to [chat.openai.com](https://chat.openai.com) and sign in**
+1.  **Go to [chat.openai.com](https://chat.openai.com) and sign in**
 
-2. **Open the quick-start file:**
-   - Find the file `quick-start-mode.md` in the main folder
-   - Open it with any text editor (Notepad, TextEdit, etc.)
-   - Copy the **entire contents** of the file
+2.  **Open the quick-start file:**
+    - Find the file `quick-start-phase.md` in the main folder
+    - Open it with any text editor (Notepad, TextEdit, etc.)
+    - Copy the **entire contents** of the file
 
-3. **Start a new chat:**
-   - Click "+ New chat" in ChatGPT
-   - Paste the entire contents of `quick-start-mode.md` into the message box
-   - Press Enter to send it
+3.  **Start a new chat:**
+    - Click "+ New chat" in ChatGPT
+    - Paste the entire contents of `quick-start-phase.md` into the message box
+    - Press Enter to send it
 
-4. **Wait for ChatGPT to confirm:**
-   - ChatGPT will say something like "I'm ready to help optimize your resume"
-   - This means it understood the instructions
+4.  **Wait for ChatGPT to confirm:**
+    - ChatGPT will say something like "I'm ready to help optimize your resume"
+    - This means it understood the instructions
 
-5. **Upload your resume:**
-   - Click the paperclip icon (📎) or "Attach" button
-   - Upload your resume file
-   - Type: "Analyze my resume"
+5.  **Upload your resume:**
+    - Click the paperclip icon (📎) or "Attach" button
+    - Upload your resume file
+    - Type: "Analyze my resume"
 
-6. **For other tasks:**
-   - To improve bullets: Type "Optimize this bullet: [paste your bullet]"
-   - To check job fit: Paste the job description and type "How well do I match this job?"
+6.  **For other tasks:**
+    - To improve bullets: Type "Optimize this bullet: [paste your bullet]"
+    - To check job fit: Paste the job description and type "How well do I match this job?"
 
-**Important:** You'll need to paste the `quick-start-mode.md` contents at the start of **every new chat**. ChatGPT doesn't remember between conversations.
+**Important:** You'll need to paste the `quick-start-phase.md` contents at the start of **every new chat**. ChatGPT doesn't remember between conversations.
 
 ---
 
@@ -114,29 +114,29 @@ The system is smart enough to figure out what you need based on what you upload 
 
 #### Step-by-Step:
 
-1. **Go to [gemini.google.com](https://gemini.google.com) and sign in with your Google account**
+1.  **Go to [gemini.google.com](https://gemini.google.com) and sign in with your Google account**
 
-2. **Open the quick-start file:**
-   - Find the file `quick-start-mode.md` in the main folder
-   - Open it with any text editor
-   - Copy the **entire contents** of the file
+2.  **Open the quick-start file:**
+    - Find the file `quick-start-phase.md` in the main folder
+    - Open it with any text editor
+    - Copy the **entire contents** of the file
 
-3. **Start a new conversation:**
-   - Click "New chat" in Gemini
-   - Paste the entire contents of `quick-start-mode.md` into the message box
-   - Press Enter
+3.  **Start a new conversation:**
+    - Click "New chat" in Gemini
+    - Paste the entire contents of `quick-start-phase.md` into the message box
+    - Press Enter
 
-4. **Wait for Gemini to confirm:**
-   - Gemini will confirm it's ready to help with resume optimization
+4.  **Wait for Gemini to confirm:**
+    - Gemini will confirm it's ready to help with resume optimization
 
-5. **Upload your resume:**
-   - Click the file upload icon
-   - Upload your resume file
-   - Type: "Analyze my resume"
+5.  **Upload your resume:**
+    - Click the file upload icon
+    - Upload your resume file
+    - Type: "Analyze my resume"
 
-6. **For other tasks:**
-   - To improve bullets: "Optimize this bullet: [paste your bullet]"
-   - To check job fit: Paste the job description and type "How well do I match this job?"
+6.  **For other tasks:**
+    - To improve bullets: "Optimize this bullet: [paste your bullet]"
+    - To check job fit: Paste the job description and type "How well do I match this job?"
 
 **Note:** Like ChatGPT, you'll need to paste the instructions at the start of each new conversation.
 
@@ -148,27 +148,27 @@ The system is smart enough to figure out what you need based on what you upload 
 
 #### Step-by-Step:
 
-1. **Go to [copilot.microsoft.com](https://copilot.microsoft.com) and sign in**
+1.  **Go to [copilot.microsoft.com](https://copilot.microsoft.com) and sign in**
 
-2. **Open the quick-start file:**
-   - Find the file `quick-start-mode.md` in the main folder
-   - Copy the **entire contents**
+2.  **Open the quick-start file:**
+    - Find the file `quick-start-phase.md` in the main folder
+    - Copy the **entire contents**
 
-3. **Start a new conversation:**
-   - Click "New topic" or start a new chat
-   - Paste the entire contents of `quick-start-mode.md`
-   - Press Enter
+3.  **Start a new conversation:**
+    - Click "New topic" or start a new chat
+    - Paste the entire contents of `quick-start-phase.md`
+    - Press Enter
 
-4. **Wait for confirmation:**
-   - Copilot will acknowledge it's ready to help
+4.  **Wait for confirmation:**
+    - Copilot will acknowledge it's ready to help
 
-5. **Upload your resume:**
-   - Use the upload button to attach your resume
-   - Type: "Analyze my resume"
+5.  **Upload your resume:**
+    - Use the upload button to attach your resume
+    - Type: "Analyze my resume"
 
-6. **For other tasks:**
-   - To improve bullets: "Optimize this bullet: [paste your bullet]"
-   - To check job fit: Paste the job description and type "How well do I match this job?"
+6.  **For other tasks:**
+    - To improve bullets: "Optimize this bullet: [paste your bullet]"
+    - To check job fit: Paste the job description and type "How well do I match this job?"
 
 ---
 
@@ -176,21 +176,22 @@ The system is smart enough to figure out what you need based on what you upload 
 
 #### Step-by-Step:
 
+
 1. **Open your AI chatbot**
 
 2. **Copy the quick-start instructions:**
-   - Open `quick-start-mode.md` from the main folder
-   - Copy the entire contents
+    - Open `quick-start-phase.md` from the main folder
+    - Copy the entire contents
 
 3. **Paste into the chat:**
-   - Start a new conversation
-   - Paste the instructions
-   - Wait for the AI to confirm it's ready
+    - Start a new conversation
+    - Paste the instructions
+    - Wait for the AI to confirm it's ready
 
 4. **Upload or paste your resume:**
-   - If the chatbot allows file uploads, upload your resume
-   - If not, copy/paste your resume text into the chat
-   - Type: "Analyze my resume"
+    - If the chatbot allows file uploads, upload your resume
+    - If not, copy/paste your resume text into the chat
+    - Type: "Analyze my resume"
 
 5. **Use the system:**
    - The AI will automatically detect what you need based on what you provide
@@ -206,22 +207,22 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 │
 ├── README.md                          ← You're reading this file
 ├── PROJECT-INSTRUCTIONS.md            ← Use this for Claude Projects ONLY
-├── quick-start-mode.md                ← Use this for ChatGPT, Gemini, Copilot, and other AI tools
+├── quick-start-phase.md               ← Use this for ChatGPT, Gemini, Copilot, and other AI tools
 │
 ├── /docs/                             ← Documentation folder
 │   ├── CHANGELOG.md                   ← What changed in each version
-│   └── ROADMAP.md                     ← Upcoming features
+│   ├── ROADMAP.md                     ← Upcoming features
+│   └── /legacy/                       ← Archived v5.0 files
 │
-├── /modes/                            ← Individual mode files (advanced users)
-│   ├── mode-1-workflow.md             ← Full resume analysis instructions
-│   ├── mode-2-bullet-optimization.md  ← Bullet improvement instructions
-│   └── mode-3-jd-comparison.md        ← Job description matching instructions
+├── /wireframes/                       ← Visual workflow guides (new!)
+│   ├── phase-1-foundation-ascii.md
+│   └── [Other ASCII/Mermaid files]
 │
-├── /shared/                           ← Shared components (advanced users)
-│   ├── /phase-1/                      ← Foundation schemas
-│   ├── /phase-2/                      ← Evidence matching
-│   ├── /phase-3/                      ← Workflow routing
-│   └── /phase-4/                      ← Summary generation
+├── /phases/                           ← Core logic modules
+│   ├── /phase-1/                      ← Foundation: Job History v2.0 & JD Parser
+│   ├── /phase-2/                      ← Core: Evidence Matching & Blocking Gates
+│   ├── /phase-3/                      ← Router: Scenario Routing & Incremental Updates
+│   └── /phase-4/                      ← Polish: Professional Summary Generation
 │
 └── /core/                             ← Configuration files (advanced users)
     ├── fit-thresholds.md              ← Job fit percentage rules
@@ -232,7 +233,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 **For most users, you only need:**
 - `PROJECT-INSTRUCTIONS.md` (if using Claude)
-- `quick-start-mode.md` (if using ChatGPT, Gemini, Copilot, or other tools)
+- `quick-start-phase.md` (if using ChatGPT, Gemini, Copilot, or other tools)
 
 ---
 
@@ -243,7 +244,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 - ✅ You want to set it up **once** and have it remember everything
 - ✅ You plan to use this system regularly (multiple conversations)
 
-### Use `quick-start-mode.md` if:
+### Use `quick-start-phase.md` if:
 - ✅ You're using **ChatGPT, Gemini, Copilot, or any other AI tool**
 - ✅ You're okay pasting instructions at the start of each conversation
 - ✅ You want a single file that has everything in it
@@ -290,7 +291,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ### Problem: "The AI isn't following the instructions"
 **Solution:**
-- Make sure you pasted the **entire** contents of `quick-start-mode.md` or `PROJECT-INSTRUCTIONS.md`
+- Make sure you pasted the **entire** contents of `quick-start-phase.md` or `PROJECT-INSTRUCTIONS.md`
 - Don't edit or skip any sections
 - Try starting a completely new conversation
 
@@ -305,7 +306,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 **Solution:**
 - If using ChatGPT/Gemini/Copilot and the quick-start file is too long:
   - Use Claude instead (it has a larger context window)
-  - Or use the individual mode files from the `/modes/` folder (advanced)
+  - Or use the expert modules from the `/phases/` folder (advanced)
 
 ### Problem: "I keep getting generic advice, not specific to my resume"
 **Solution:**
@@ -449,13 +450,13 @@ See `docs/CHANGELOG.md` for complete version history.
 ### Custom Configuration
 If you want to change how the system works:
 - Edit files in `/core/` folder to adjust thresholds and rules
-- Edit files in `/modes/` folder to modify specific mode behavior
-- Edit files in `/shared/` folder to change schemas and workflows
+- Edit files in `/phases/` folder to change schemas and workflows
+- Edit files in `/docs/legacy/modes-v5/` folder to reference legacy v5.0 logic
 
 ### Modular Loading
 If you have context window limitations:
-- Load individual mode files from `/modes/` instead of quick-start
-- Combine only the modules you need from `/shared/`
+- Load individual mode files from `/docs/legacy/modes-v5/` instead of quick-start
+- Combine only the modules you need from `/phases/`
 - Reference specific components as needed
 
 ### Job History Management

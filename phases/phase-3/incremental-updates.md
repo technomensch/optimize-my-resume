@@ -8,7 +8,7 @@
 
 ## Overview
 
-This protocol enables users to incrementally update their job history v2.0 without re-running the full Mode 1 analysis. Users can add new positions, edit existing positions, or remove outdated positions while maintaining data integrity.
+This protocol enables users to incrementally update their job history v2.0 without re-running the full Phase 1 analysis. Users can add new positions, edit existing positions, or remove outdated positions while maintaining data integrity.
 
 **Key Features:**
 - Add single position with full v2.0 schema
@@ -213,7 +213,7 @@ CONFIRM to user:
   - New soft skills added: [list if any]
 
   Would you like to:
-  1. Compare to a job description (Mode 3)
+  1. Compare to a job description (Phase 3)
   2. Add another position
   3. Export updated job history"
 ```
@@ -388,7 +388,7 @@ CONFIRM:
 
   Would you like to:
   1. Edit another position
-  2. Compare to a job description (Mode 3)
+  2. Compare to a job description (Phase 3)
   3. Export updated job history"
 ```
 
@@ -507,7 +507,7 @@ CONFIRM:
 
   Would you like to:
   1. Remove another position
-  2. Compare to a job description (Mode 3)
+  2. Compare to a job description (Phase 3)
   3. Export updated job history"
 ```
 
@@ -591,7 +591,7 @@ WARN:
   "⚠️  This is your only position in job history. Removing it will leave your
       job history empty.
 
-  Are you sure? You'll need to add a new position or re-run Mode 1 to rebuild
+  Are you sure? You'll need to add a new position or re-run Phase 1 to rebuild
   your job history.
 
   Type 'yes' to confirm or 'no' to cancel."
