@@ -1,7 +1,7 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.0.0 <!-- v6.0.0 Change: Updated from v5.1.0 -->
-## In Development: v6.1.0 <!-- v6.0.0 Change: Updated from v6.0.0 -->
+## Current Version: v6.1.0 <!-- v6.1.0 Change: Updated from v6.0.0 -->
+## In Development: v6.2.0 <!-- v6.1.0 Change: Updated from v6.1.0 -->
 
 ---
 
@@ -91,9 +91,32 @@
 - Location parsing (7 tests)
 - Router intent detection (6 tests)
 
+
 ---
 
-## v6.1.0 - Polish & Edge Cases (Future)
+## v6.1.0 - Documentation Enhancement (COMPLETE)
+
+**Branch:** `v6.1.0` | **Status:** Complete | **Date:** 2025-12-29
+
+### Sub-Versions
+- ✅ v6.1.1 - Folder restructure (`/shared/` → `/phases/`)
+- ✅ v6.1.2 - Documentation updates (terminology + Job Summary guide)
+- ✅ v6.1.3 - Wireframe creation (10 files)
+- ✅ v6.1.4 - Legacy archival
+- ✅ v6.1.5 - Test case gap-filling
+
+### Features
+- [x] Job Summary usage guide in README
+- [x] Terminology consistency (Mode → Phase)
+- [x] 10 comprehensive wireframes (ASCII + Mermaid)
+- [x] 30+ new test cases for Phases 2-4
+- [x] Legacy file archival to /docs/legacy/
+
+**Notes:** Documentation-focused release improving user experience and developer onboarding. Completes terminology alignment started with `/phases/` folder rename.
+
+---
+
+## v6.2.0 - Polish & Edge Cases (Future)
 
 **Planned Features:**
 - [ ] Summary generator edge cases
@@ -109,7 +132,7 @@
 
 ---
 
-## v6.2.0+ - Resume Generation (Future)
+## v6.3.0+ - Resume Generation (Future)
 
 **Planned Features:**
 - [ ] Generate tailored resume from job history based on JD
