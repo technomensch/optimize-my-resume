@@ -103,12 +103,12 @@ This loads the patch workflow protocol and guides you through the process.
 
 **Steps:**
 1. **Create Branch Plan Document**
-   - Location: `docs/plans/v[X.Y.Z]_[patch-name]_plan.md`
+   - Location: `docs/plans/v[X.Y.Z]-[patch-name].md` (Automatically created)
    - Follow naming convention: patch version (x.y.Z)
    - Examples:
-     - `v4.6.1_export_bugfix_plan.md`
-     - `v4.6.2_pdf_optimization_plan.md`
-     - `v4.6.3_refactor_state_plan.md`
+     - `docs/plans/v4.6.1-export-bugfix.md`
+     - `docs/plans/v4.6.2-pdf-optimization.md`
+     - `docs/plans/v4.6.3-refactor-state.md`
 
 2. **Analyze Solution Approaches**
    - List multiple possible approaches
@@ -126,7 +126,7 @@ This loads the patch workflow protocol and guides you through the process.
    - Are there backwards compatibility concerns?
    - Do we need to update documentation?
 
-**Output:** Written plan document in `docs/plans/`
+**Output:** Automatic creation of plan document in `docs/plans/v[Major.Minor.Patch]-[name].md`
 
 **Don't move to Phase 3 until:** Plan is documented and approved
 

@@ -1,7 +1,7 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.1.0 <!-- v6.1.0 Change: Updated from v6.0.0 -->
-## In Development: v6.2.0 <!-- v6.1.0 Change: Updated from v6.1.0 -->
+## Current Version: v6.1.7
+## In Development: v6.2.0
 
 ---
 
@@ -104,6 +104,8 @@
 - ✅ v6.1.3 - Wireframe creation (10 files)
 - ✅ v6.1.4 - Legacy archival
 - ✅ v6.1.5 - Test case gap-filling
+- ✅ v6.1.6 - Gemini grammar tips & quality assurance
+- ✅ v6.1.7 - Mandatory secondary grammar check warning
 
 ### Features
 - [x] Job Summary usage guide in README
@@ -111,8 +113,10 @@
 - [x] 10 comprehensive wireframes (ASCII + Mermaid)
 - [x] 30+ new test cases for Phases 2-4
 - [x] Legacy file archival to /docs/legacy/
+- [x] Comprehensive Quality Assurance Rules (phrase variation, symbol consistency, verb tense, keyword diversity)
+- [x] Automated implementation plan workflow
 
-**Notes:** Documentation-focused release improving user experience and developer onboarding. Completes terminology alignment started with `/phases/` folder rename.
+**Notes:** Documentation-focused release improving user experience and developer onboarding. Completes terminology alignment started with `/phases/` folder rename. v6.1.7 adds critical grammar, quality assurance standards, and mandatory proofreading warnings.
 
 ---
 

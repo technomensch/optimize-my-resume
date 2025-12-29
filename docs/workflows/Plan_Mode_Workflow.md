@@ -62,12 +62,11 @@ Assistant: [Uses EnterPlanMode tool]
 - Document steps, considerations, risks
 - Claude Code creates plan in `.claude/plans/[auto-name].md` by default
 
-### Step 3: Move Plan to Proper Location
-**Before exiting plan mode:**
-```bash
-# Copy plan to docs/plans with proper naming
-cp .claude/plans/[auto-name].md docs/plans/v[X.Y]_[feature-name]_plan.md
-```
+### Step 3: Automatic Plan Finalization
+**The assistant will automatically:**
+1. Identify the target branch name (e.g., `v6.1.6-gemini-grammar-tips`).
+2. Save the implementation plan as `docs/plans/v[BranchName].md`.
+3. Ensure the plan is tracked in git.
 
 **Naming Convention:**
 - Format: `v[X.Y]_[feature-name]_plan.md`
@@ -134,10 +133,9 @@ v6.0_ai_model_switching_plan.md
 ```
 
 **Rules:**
-- Always include version number (must match branch version)
-- Use underscores instead of hyphens in feature name
+- Use underscores or hyphens as per branch naming convention
 - Use lowercase for feature name
-- Keep under 60 characters total
+- Keep under 80 characters total
 - Be descriptive but concise
 
 ### Ad Hoc Plans: `.claude/plans/[auto-generated].md`

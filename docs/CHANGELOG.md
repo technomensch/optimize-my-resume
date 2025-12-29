@@ -9,6 +9,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.1.7 - Gemini Grammar Tips & Quality Assurance (2025-12-29)
+> **Branch:** `v6.1.7-gemini-grammar-tips`
+
+#### Added
+- **Quality Assurance Rules** - Integrated comprehensive grammar, consistency, and variation rules into core instructions
+  - **Phrase Variation Rule**: Prevents exact repetition of metrics/achievements (max 2 occurrences)
+  - **Symbol Consistency Rule**: Standardizes use of tildes (~), percentages (%), and hpyhenated ranges; prohibits escaped characters (\~, \%, \+)
+  - **Verb Tense Rule**: Enforces past-tense action verbs at the start of all bullets (prohibits gerunds)
+  - **Keyword Diversity Rule**: Optimizes keyword distribution between professional summary and position bullets
+  - **Pre-output Quality Checklist**: Automated scan patterns for common formatting and grammar issues
+- **Workflow Automation** - Implementation plans are now automatically named and saved to `/docs/plans/v[BranchName].md`
+
+#### Changed
+- **System Instructions** - `PROJECT-INSTRUCTIONS.md` and `quick-start-phase.md` updated with new `<quality_assurance_rules>` section and mandatory secondary grammar check warning
+- **Core Configuration** - `core/format-rules.md` updated to v6.1.7 with technical QA standards
+
+#### Impact
+- ✅ Improved resume content quality and professional tone
+- ✅ Better ATS compatibility through consistent symbol usage
+- ✅ Enhanced keyword coverage without unnecessary redundancy
+- ✅ Streamlined developer workflow for implementation planning
+
+---
+
 ### v6.1.0 - Documentation Enhancement & Job Summary Guide (2025-12-29)
 > **Branch:** `v6.1.0`
 
