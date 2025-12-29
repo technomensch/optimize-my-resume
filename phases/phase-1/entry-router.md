@@ -1,4 +1,4 @@
-# Entry Point Router - User Intent Detection & Mode Routing
+# Entry Point Router - User Intent Detection & Phase Routing
 
 **Version:** 1.0
 **Created:** 2025-12-28
@@ -8,12 +8,12 @@
 
 ## Overview
 
-This protocol defines the entry point router that analyzes user input and context to determine which mode to execute. It uses a hybrid auto-detect + confirmation approach to ensure the right workflow runs every time.
+This protocol defines the entry point router that analyzes user input and context to determine which phase to execute. It uses a hybrid auto-detect + confirmation approach to ensure the right workflow runs every time.
 
 **Key Features:**
 - Context-aware detection (checks for existing job history, JD, resume)
 - 5 core routing scenarios + ambiguous input handling
-- User confirmation before executing (no surprise mode switches)
+- User confirmation before executing (no surprise phase switches)
 - Override commands for force-routing
 - Graceful handling of unclear intent (Decision 7)
 
@@ -38,7 +38,7 @@ ELSE:
   state.hasJobHistory = false
 ```
 
-**Purpose:** Determines if user has completed Mode 1 (resume analysis)
+**Purpose:** Determines if user has completed Phase 1 (resume analysis)
 
 ---
 
@@ -74,7 +74,7 @@ ELSE:
   state.hasJD = false
 ```
 
-**Purpose:** Detects if user pasted a job description for Mode 3 comparison
+**Purpose:** Detects if user pasted a job description for Phase 3 comparison
 
 **Anti-false-positive measures:**
 - Length check: Prevents short snippets from being detected as JDs
@@ -103,7 +103,7 @@ OR IF user pastes text:
     state.hasResume = false
 ```
 
-**Purpose:** Detects if user provided resume for Mode 1 analysis
+**Purpose:** Detects if user provided resume for Phase 1 analysis
 
 ---
 
@@ -111,15 +111,15 @@ OR IF user pastes text:
 
 ```
 OVERRIDE_KEYWORDS = {
-  "re-analyze": {action: "force_mode_1", deleteHistory: false},
-  "start over": {action: "force_mode_1", deleteHistory: true},
-  "start fresh": {action: "force_mode_1", deleteHistory: true},
-  "analyze my resume": {action: "force_mode_1", deleteHistory: false},
-  "optimize bullet": {action: "force_mode_2"},
-  "optimize bullets": {action: "force_mode_2"},
-  "improve wording": {action: "force_mode_2"},
-  "check fit": {action: "force_mode_3"},
-  "compare to jd": {action: "force_mode_3"}
+  "re-analyze": {action: "force_phase_1", deleteHistory: false},
+  "start over": {action: "force_phase_1", deleteHistory: true},
+  "start fresh": {action: "force_phase_1", deleteHistory: true},
+  "analyze my resume": {action: "force_phase_1", deleteHistory: false},
+  "optimize bullet": {action: "force_phase_2"},
+  "optimize bullets": {action: "force_phase_2"},
+  "improve wording": {action: "force_phase_2"},
+  "check fit": {action: "force_phase_3"},
+  "compare to jd": {action: "force_phase_3"}
 }
 
 IF user message matches OVERRIDE_KEYWORDS:
@@ -127,7 +127,7 @@ IF user message matches OVERRIDE_KEYWORDS:
   state.skipConfirmation = false (still confirm with user)
 ```
 
-**Purpose:** Allows users to explicitly request a specific mode
+**Purpose:** Allows users to explicitly request a specific phase
 
 ---
 
@@ -142,7 +142,7 @@ After context detection, match against these scenarios in priority order:
 state.hasResume = true AND state.hasJobHistory = false
 ```
 
-**Route:** Mode 1 (Full Resume Analysis)
+**Route:** Phase 1 (Full Resume Analysis)
 
 **Confirmation Message:**
 ```
@@ -156,14 +156,14 @@ This analysis will:
 - Prepare your profile for job description comparisons
 
 After analysis, you can:
-- Optimize specific bullets (Mode 2)
-- Check fit for a job description (Mode 3)
+- Optimize specific bullets (Phase 2)
+- Check fit for a job description (Phase 3)
 
 Proceed with full analysis?
 ```
 
 **User Response:**
-- **yes** → Execute Mode 1
+- **yes** → Execute Phase 1
 - **no** → Ask "What would you like me to do instead?"
 
 ---
@@ -175,7 +175,7 @@ Proceed with full analysis?
 state.hasJobHistory = true AND state.hasJD = true
 ```
 
-**Route:** Mode 3 (JD Gap Analysis)
+**Route:** Phase 3 (JD Gap Analysis)
 
 **Confirmation Message:**
 ```
@@ -198,7 +198,7 @@ Proceed with JD fit analysis?
 ```
 
 **User Response:**
-- **yes** → Execute Mode 3
+- **yes** → Execute Phase 3
 - **no** → Ask "Would you like to do something else instead?"
 
 ---
@@ -210,7 +210,7 @@ Proceed with JD fit analysis?
 state.hasJobHistory = true AND user mentions ("bullet", "optimize", "improve wording", "rewrite")
 ```
 
-**Route:** Mode 2 (Bullet Optimization)
+**Route:** Phase 2 (Bullet Optimization)
 
 **Confirmation Message:**
 ```
@@ -231,7 +231,7 @@ Please provide the bullets or resume.
 ```
 
 **User Response:**
-- **Provides bullets/resume** → Execute Mode 2
+- **Provides bullets/resume** → Execute Phase 2
 - **Unclear** → Ask for clarification
 
 ---
@@ -249,13 +249,13 @@ state.hasJobHistory = true AND state.hasJD = false AND state.hasResume = false A
 ```
 I see you have a job history on file. What would you like to do?
 
-1. **Check fit for a job description** (Mode 3)
+1. **Check fit for a job description** (Phase 3)
    → Paste a job description and I'll analyze your match
 
-2. **Optimize resume bullets** (Mode 2)
+2. **Optimize resume bullets** (Phase 2)
    → Paste bullets or upload your resume for improvement
 
-3. **Re-analyze my resume** (Mode 1)
+3. **Re-analyze my resume** (Phase 1)
    → Provide updated resume for fresh analysis
 
 4. **Update my job history**
@@ -265,9 +265,9 @@ Please select 1-4 or describe what you need.
 ```
 
 **User Response:**
-- **1** → Wait for JD, then execute Mode 3
-- **2** → Wait for bullets, then execute Mode 2
-- **3** → Wait for resume, then execute Mode 1
+- **1** → Wait for JD, then execute Phase 3
+- **2** → Wait for bullets, then execute Phase 2
+- **3** → Wait for resume, then execute Phase 1
 - **4** → Ask which position to modify (not in v6.0.1, placeholder for v6.0.3)
 
 ---
@@ -287,17 +287,17 @@ Welcome to the Resume Analyzer & Optimizer!
 
 I can help you:
 
-1. **Analyze your resume** (Mode 1)
+1. **Analyze your resume** (Phase 1)
    - Comprehensive feedback on achievements, skills, and wording
    - Creates a structured job history for future comparisons
    - Generates professional summary
 
-2. **Optimize bullets** (Mode 2)
+2. **Optimize bullets** (Phase 2)
    - Improve specific resume lines with stronger verbs and metrics
    - Ensure CAR format (Context-Action-Result)
    - Insert relevant keywords
 
-3. **Check job fit** (Mode 3)
+3. **Check job fit** (Phase 3)
    - Compare your resume to a job description
    - Identify gaps and provide strategic recommendations
    - Get customized professional summary for specific JDs
@@ -306,7 +306,7 @@ I can help you:
 
 **To get started:**
 
-- Upload your resume (PDF, DOCX, or paste text) for Mode 1
+- Upload your resume (PDF, DOCX, or paste text) for Phase 1
 - If you have a specific job description, include that too!
 
 ---
@@ -364,8 +364,8 @@ Ask user to verify your interpretation:
 ```
 
 **User Response:**
-- **1** → Route to Mode 1 or Mode 2 (depending on whether full resume or bullets)
-- **2** → Route to Mode 3 (JD comparison)
+- **1** → Route to Phase 1 or Phase 2 (depending on whether full resume or bullets)
+- **2** → Route to Phase 3 (JD comparison)
 - **3** → Ask user to describe their need
 
 ---
@@ -383,7 +383,7 @@ Match against 5 scenarios (priority order)
   YES → Present confirmation message
     ↓
     [User confirms?]
-      YES → Execute mode
+      YES → Execute phase
       NO → Ask "What would you like instead?"
   NO → [Ambiguous input]
     ↓
@@ -417,7 +417,7 @@ hasJD = false
 - Displays confirmation message
 - Waits for user "yes/no"
 
-**User confirms:** → Execute Mode 1
+**User confirms:** → Execute Phase 1
 
 ---
 
@@ -450,7 +450,7 @@ jdConfidence = "high"
 - Displays confirmation message
 - Waits for user "yes/no"
 
-**User confirms:** → Execute Mode 3
+**User confirms:** → Execute Phase 3
 
 ---
 
@@ -478,7 +478,7 @@ override = "optimize bullets" detected
 - Displays confirmation message
 - User already provided bullets, so no need to wait
 
-**User confirms:** → Execute Mode 2 with provided bullets
+**User confirms:** → Execute Phase 2 with provided bullets
 
 ---
 
@@ -502,7 +502,7 @@ no override detected
 - Displays clarification message with 4 options
 - Waits for user to select 1-4
 
-**User responds "1":** → Wait for JD, then execute Mode 3
+**User responds "1":** → Wait for JD, then execute Phase 3
 
 ---
 
@@ -527,29 +527,29 @@ jdConfidence = "low"
 
 **User says "yes":**
 - Step 2a: "Would you like me to optimize it?"
-  - **User says "yes"** → Execute Mode 2 (treat as bullet to optimize)
+  - **User says "yes"** → Execute Phase 2 (treat as bullet to optimize)
 
 **User says "no":**
 - Step 2b: "Got it. Is this:
    1. Part of a resume (I'll analyze it)
    2. Part of a JD (I'll compare against your job history)
    3. Something else"
-  - **User says "2"** → Execute Mode 3 (JD comparison)
+  - **User says "2"** → Execute Phase 3 (JD comparison)
 
 ---
 
 ## Error Handling
 
-### Error 1: User Confirms Mode but Lacks Required Input
+### Error 1: User Confirms Phase but Lacks Required Input
 
-**Problem:** User confirms Mode 3 (JD comparison) but didn't provide JD
+**Problem:** User confirms Phase 3 (JD comparison) but didn't provide JD
 
 **Solution:**
 ```
 "I'll need the job description to analyze your fit. Please paste the JD text or upload the JD file."
 ```
 
-Wait for JD, then proceed with Mode 3.
+Wait for JD, then proceed with Phase 3.
 
 ---
 
@@ -578,7 +578,7 @@ Or just paste your resume or JD, and I'll detect what you need."
 "I'll check your fit for a job description. Please paste the JD text below."
 ```
 
-Wait for JD, then proceed with Mode 3.
+Wait for JD, then proceed with Phase 3.
 
 ---
 
@@ -625,14 +625,14 @@ IF user doesn't respond to confirmation within timeout:
 
 ---
 
-## Mode Execution
+## Phase Execution
 
-After routing and confirmation, execute the appropriate mode:
+After routing and confirmation, execute the appropriate phase:
 
-### Execute Mode 1
+### Execute Phase 1
 
 ```
-LOAD: PROJECT-INSTRUCTIONS.md → Mode 1 section
+LOAD: PROJECT-INSTRUCTIONS.md → Phase 1 section
 EXECUTE: Full resume analysis workflow
   - Extract positions, achievements, skills
   - Categorize hard/soft skills
@@ -642,10 +642,13 @@ EXECUTE: Full resume analysis workflow
 OUTPUT: Completion message + next steps
 ```
 
-### Execute Mode 2
+### Execute Phase 2
 
 ```
-LOAD: PROJECT-INSTRUCTIONS.md → Mode 2 section
+### Execute Phase 2
+
+```
+LOAD: PROJECT-INSTRUCTIONS.md → Phase 2 section
 LOAD: Job history v2.0 (for context)
 EXECUTE: Bullet optimization workflow
   - Strengthen verbs
@@ -655,10 +658,10 @@ EXECUTE: Bullet optimization workflow
 OUTPUT: Optimized bullets
 ```
 
-### Execute Mode 3
+### Execute Phase 3
 
 ```
-LOAD: PROJECT-INSTRUCTIONS.md → Mode 3 section
+LOAD: PROJECT-INSTRUCTIONS.md → Phase 3 section
 LOAD: Job history v2.0
 LOAD: JD parsing protocol (17-point)
 EXECUTE: JD comparison workflow
@@ -680,7 +683,7 @@ OUTPUT: Gap analysis + recommendations
 2. Router detects: hasResume=true, hasJobHistory=false
 3. Matches Scenario 1, shows confirmation
 4. User says "yes"
-5. ✅ Mode 1 executes
+5. ✅ Phase 1 executes
 
 ---
 
@@ -690,7 +693,7 @@ OUTPUT: Gap analysis + recommendations
 2. Router detects: hasJobHistory=true, hasJD=true (high confidence)
 3. Matches Scenario 2, shows confirmation
 4. User says "yes"
-5. ✅ Mode 3 executes
+5. ✅ Phase 3 executes
 
 ---
 
@@ -703,7 +706,7 @@ OUTPUT: Gap analysis + recommendations
 5. User says "yes"
 6. Step 2a: "Would you like me to optimize it?"
 7. User says "yes"
-8. ✅ Mode 2 executes
+8. ✅ Phase 2 executes
 
 ---
 
@@ -713,7 +716,7 @@ OUTPUT: Gap analysis + recommendations
 2. Router detects override keyword
 3. Matches Scenario 3, shows confirmation
 4. User confirms (or auto-confirms since bullets already provided)
-5. ✅ Mode 2 executes
+5. ✅ Phase 2 executes
 
 ---
 
@@ -724,17 +727,17 @@ OUTPUT: Gap analysis + recommendations
 3. User says "no"
 4. Router asks "What would you like me to do instead?"
 5. User says "Just check this one bullet"
-6. ✅ Router re-routes to Mode 2
+6. ✅ Router re-routes to Phase 2
 
 ---
 
 ## Related Protocols
 
-- **Mode 1:** `PROJECT-INSTRUCTIONS.md` → Mode 1 section
-- **Mode 2:** `modes/mode-2-bullet-optimization.md`
-- **Mode 3:** `modes/mode-3-jd-comparison.md`
-- **JD Parsing:** `shared/jd-parsing-17-point.md`
-- **Job History Creation:** `shared/job-history-v2-creation.md`
+- **Phase 1:** `PROJECT-INSTRUCTIONS.md` → Phase 1 section
+- **Phase 2:** See `PROJECT-INSTRUCTIONS.md` → Core Process (Phase 2)
+- **Phase 3:** `phases/phase-3/workflow-router.md`
+- **JD Parsing:** `phases/phase-1/jd-parsing-17-point.md`
+- **Job History Creation:** `phases/phase-1/job-history-v2-creation.md`
 
 ---
 

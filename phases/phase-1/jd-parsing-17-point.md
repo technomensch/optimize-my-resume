@@ -799,7 +799,7 @@ Before finalizing JD parse:
 
 ---
 
-## Usage in Gap Analysis (Mode 3)
+## Usage in Gap Analysis (Phase 3)
 
 After parsing JD, the 17-point output feeds into evidence matching:
 
@@ -821,10 +821,10 @@ After parsing JD, the 17-point output feeds into evidence matching:
 
 ## Related Protocols
 
-- **Job History Creation:** `shared/job-history-v2-creation.md`
+- **Job History Creation:** `phases/phase-1/job-history-v2-creation.md`
 - **Skills Categorization:** Use classification rules from this document
-- **Evidence Matching:** `shared/modules/evidence-matching.md` (v6.0.2)
-- **Entry Router:** `shared/entry-router.md`
+- **Evidence Matching:** `phases/phase-2/evidence-matching.md` (v6.0.2)
+- **Entry Router:** `phases/phase-1/entry-router.md`
 
 ---
 

@@ -23,19 +23,19 @@ This protocol extends the Phase 1 entry router with additional routing scenarios
 
 **See:** phases/phase-1/entry-router.md for complete implementation
 
-### Scenario 1: New User (Mode 1)
+### Scenario 1: New User (Phase 1)
 - **Condition:** hasResume = true AND hasJobHistory = false
-- **Route:** Mode 1 (Full Analysis)
+- **Route:** Phase 1 (Full Analysis)
 - **Action:** Generate job history v2.0
 
-### Scenario 2: JD Comparison (Mode 3)
+### Scenario 2: JD Comparison (Phase 3)
 - **Condition:** hasJobHistory = true AND hasJD = true
-- **Route:** Mode 3 (JD Comparison)
+- **Route:** Phase 3 (JD Comparison)
 - **Action:** 17-point parsing + evidence matching
 
-### Scenario 3: Bullet Optimization (Mode 2)
+### Scenario 3: Bullet Optimization (Phase 2)
 - **Condition:** hasJobHistory = true AND user mentions ("bullet", "optimize", "improve wording")
-- **Route:** Mode 2 (Bullet Optimization)
+- **Route:** Phase 2 (Bullet Optimization)
 - **Action:** Optimize bullets with job history context
 
 ### Scenario 4: Ambiguous Intent
@@ -113,7 +113,7 @@ IF user message matches RE_COMPARISON_KEYWORDS:
   state.workflowType = "re_comparison"
 
   IF hasJobHistory = false:
-    ERROR: "No job history found. Run Mode 1 first."
+    ERROR: "No job history found. Run Phase 1 first."
   ELSE IF hasJD = true:
     state.jdSource = "current_message"
   ELSE:
@@ -176,15 +176,15 @@ Example:
 "Would you like me to [APPROPRIATE_ACTION]? (yes/no)"
 
 Examples:
-- Resume → "Would you like me to analyze it? (Mode 1)"
-- JD → "Would you like me to compare it to your job history? (Mode 3)"
+- Resume → "Would you like me to analyze it? (Phase 1)"
+- JD → "Would you like me to compare it to your job history? (Phase 3)"
 ```
 
 **Step 2b: If No, Present Options**
 ```
 "Got it. Is this:
-1. Part of a resume (I'll analyze it with Mode 1)
-2. Part of a JD (I'll compare against your job history with Mode 3)
+1. Part of a resume (I'll analyze it with Phase 1)
+2. Part of a JD (I'll compare against your job history with Phase 3)
 3. Something else (tell me what you'd like me to do)"
 ```
 
@@ -192,18 +192,18 @@ Examples:
 
 ## Override Commands (Force Routing)
 
-These commands bypass normal routing logic and force a specific mode:
+These commands bypass normal routing logic and force a specific phase:
 
 ### Re-Analyze Resume
-**Keywords:** "re-analyze", "analyze again", "re-run mode 1"
-**Action:** Force Mode 1 (append to existing job history)
+**Keywords:** "re-analyze", "analyze again", "re-run phase 1"
+**Action:** Force Phase 1 (append to existing job history)
 **Use Case:** User updated their resume and wants to add new positions
 
 ### Start Fresh
 **Keywords:** "start fresh", "start over", "reset"
 **Action:**
 1. Confirm: "This will delete your existing job history. Are you sure?"
-2. If yes: Delete v2.0 file → Force Mode 1
+2. If yes: Delete v2.0 file → Force Phase 1
 **Use Case:** User wants to completely re-do their job history
 
 ### Update Job History
@@ -233,7 +233,7 @@ These commands bypass normal routing logic and force a specific mode:
                 "re_comparison" | "ambiguous_input",
 
   // Override detection
-  forceMode: null | "mode_1" | "mode_2" | "mode_3" | "incremental_update",
+  forcePhase: null | "phase_1" | "phase_2" | "phase_3" | "incremental_update",
 
   // Additional context
   updateAction: "add" | "edit" | "remove" | "clarify" | null,
@@ -250,8 +250,8 @@ These commands bypass normal routing logic and force a specific mode:
 USER INPUT
     |
     ├─> Check Override Commands
-    |   ├─> "re-analyze" → Force Mode 1
-    |   ├─> "start fresh" → Delete + Force Mode 1
+    |   ├─> "re-analyze" → Force Phase 1
+    |   ├─> "start fresh" → Delete + Force Phase 1
     |   └─> "add/edit/remove position" → Scenario 6
     |
     ├─> Detect Context
@@ -356,13 +356,13 @@ What would you like to do? (1/2/3)"
 
 ## Error Handling
 
-### No Job History for Mode 2/3
+### No Job History for Phase 1/2/3
 ```
 "I don't have a job history file for you yet.
 
-You need to run Mode 1 (Full Resume Analysis) first to create your job history.
+You need to run Phase 1 (Full Resume Analysis) first to create your job history.
 
-Would you like to upload your resume and run Mode 1? (yes/no)"
+Would you like to upload your resume and run Phase 1? (yes/no)"
 ```
 
 ### Invalid Override Command
@@ -380,9 +380,9 @@ Would you like to:
 "I'm not sure I understand. Could you describe what you'd like me to do?
 
 For reference, I can:
-- Analyze a resume (Mode 1)
-- Optimize resume bullets (Mode 2)
-- Compare you to a job description (Mode 3)
+- Analyze a resume (Phase 1)
+- Optimize resume bullets (Phase 2)
+- Compare you to a job description (Phase 3)
 - Update your job history (add/edit/remove positions)
 - Re-run a previous JD comparison"
 ```
@@ -391,27 +391,27 @@ For reference, I can:
 
 ## Integration with PROJECT-INSTRUCTIONS.md
 
-Add to PROJECT-INSTRUCTIONS.md before mode detection section:
+Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ```xml
 <entry_point_routing>
-  Before executing any mode, consult phases/phase-3/workflow-router.md to:
+  Before executing any phase, consult phases/phase-3/workflow-router.md to:
   1. Detect user state (hasJobHistory, hasJD, hasResume)
   2. Identify user intent (which workflow to execute)
   3. Confirm with user before proceeding
   4. Handle override commands (re-analyze, start fresh, add position, etc.)
 
   The router handles 8 scenarios:
-  - New user (no job history) → Mode 1
-  - JD comparison (has job history + JD) → Mode 3
-  - Bullet optimization (has job history + wants optimization) → Mode 2
+  - New user (no job history) → Phase 1
+  - JD comparison (has job history + JD) → Phase 3
+  - Bullet optimization (has job history + wants optimization) → Phase 2
   - Ambiguous intent (has job history, unclear) → Ask user
   - First interaction (no context) → Welcome message
   - Incremental update (add/edit/remove position) → Incremental handler
   - Re-comparison (re-run JD analysis) → Re-comparison handler
   - Ambiguous input (cannot determine type) → Two-step clarification
 
-  ALWAYS route through workflow-router.md first before executing any mode.
+  ALWAYS route through workflow-router.md first before executing any phase.
 
   NOTE: This router extends phases/phase-1/entry-router.md (5 core scenarios)
         with 3 additional scenarios from Phase 3.
@@ -424,11 +424,11 @@ Add to PROJECT-INSTRUCTIONS.md before mode detection section:
 
 ### Scenario 1: New User Upload
 **Input:** User uploads resume.pdf
-**Expected:** Detect hasResume=true, hasJobHistory=false → Route to Mode 1 with confirmation
+**Expected:** Detect hasResume=true, hasJobHistory=false → Route to Phase 1 with confirmation
 
 ### Scenario 2: JD Comparison
 **Input:** User pastes job description, has v2.0 job history
-**Expected:** Validate JD → Detect hasJD=true, hasJobHistory=true → Route to Mode 3
+**Expected:** Validate JD → Detect hasJD=true, hasJobHistory=true → Route to Phase 3
 
 ### Scenario 3: False Positive (LinkedIn Post)
 **Input:** User pastes 800-word LinkedIn article about job hunting
@@ -448,7 +448,7 @@ Add to PROJECT-INSTRUCTIONS.md before mode detection section:
 
 ### Scenario 7: Override Command
 **Input:** User says "start fresh" with existing v2.0 file
-**Expected:** Confirm deletion → Delete file → Force Mode 1
+**Expected:** Confirm deletion → Delete file → Force Phase 1
 
 ### Scenario 8: No Context
 **Input:** User's first message is "hello"

@@ -9,7 +9,7 @@
 
 ## How It Works
 
-When you run Mode 3 (JD Comparison), the system:
+When you run Phase 3 (JD Comparison), the system:
 1. Parses the job description using the 17-point schema
 2. Saves the parsed JD to this directory for future reference
 3. Stores versioned comparisons (v1, v2, v3) as you update your job history
