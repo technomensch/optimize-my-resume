@@ -40,15 +40,27 @@
 
 ---
 
-#### 📋 v6.0.3 - Router & Workflows (PLANNED)
-**Branch:** `v6.0.3-router-workflows` | **Status:** Planned
+#### ✅ v6.0.3 - Router & Workflows (COMPLETE)
+**Branch:** `v6.0.3-router-workflows` | **Status:** Complete | **Date:** 2025-12-29
 
-**Files to Create:**
-- [ ] Integration of entry-router.md into PROJECT-INSTRUCTIONS.md
+**Files Created:**
+- [x] `shared/phase-3/workflow-router.md` - Complete 8-scenario routing system
+- [x] `shared/phase-3/incremental-updates.md` - Add/edit/remove positions (created by Opus)
+- [x] `shared/phase-3/re-comparison.md` - JD re-comparison with diff output (created by Opus)
+- [x] `jd_parsed/` - Cache directory for parsed JDs
+
+**Files Modified:**
+- [x] `PROJECT-INSTRUCTIONS.md` - Added entry point routing section with 8 scenarios
+- [x] `.gitignore` - Added jd_parsed/ to ignore cached JDs
 
 **Features:**
-- [ ] Incremental updates (add/edit/remove positions)
-- [ ] JD re-comparison with diff output
+- [x] Intelligent routing with JD validation (anti-false-positive)
+- [x] Incremental updates (add/edit/remove positions without full re-analysis)
+- [x] JD re-comparison with diff output (improvements, regressions, score delta)
+- [x] Override commands (re-analyze, start fresh, add position)
+- [x] Two-step clarification for ambiguous input
+
+**Notes:** Router & workflows complete. System now auto-detects user intent and confirms before executing. Users can incrementally update job history and re-run JD comparisons with change tracking.
 
 ---
 
@@ -126,4 +138,4 @@
 
 ---
 
-**Last Updated:** 2025-12-29 (Marked v6.0.2 complete - core integration with evidence matching and blocking gates)
+**Last Updated:** 2025-12-29 (Marked v6.0.3 complete - workflow router with incremental updates and re-comparison)

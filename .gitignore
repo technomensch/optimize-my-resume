@@ -1,1 +1,9 @@
 docs/prompts/legacy-prompts/
+
+# JD Cache (Phase 3) - Cache parsed JDs locally, don't commit
+jd_parsed/*.json
+jd_parsed/*_parsed.json
+jd_parsed/*_v*_parsed.json
+
+# Keep the README
+!jd_parsed/README.md
