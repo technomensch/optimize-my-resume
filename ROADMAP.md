@@ -148,6 +148,33 @@
 
 ---
 
+## v6.1.8 - Location Red Flag Update with State Abbreviation Expansion (COMPLETE)
+
+**Branch:** `v6.1.8-location_red_flag_update` | **Status:** Complete | **Date:** 2025-12-30
+
+**Changes:**
+- [x] Enhanced location_red_flags to detect state-specific remote payroll restrictions
+- [x] Added state abbreviation mapping (50 states + DC) with auto-expansion
+- [x] Updated location_mismatch instruction to reference state mapping
+- [x] Improved blocking gate accuracy for location mismatches
+
+**Impact:**
+- Users get explicit warnings for jobs with payroll compliance restrictions
+- State abbreviations automatically expanded to full names (e.g., "AL" → "Alabama (AL)")
+- Better user experience - no need to decode state codes manually
+
+---
+
+## v7.0.0 - Multi-Agent Architecture (Future)
+
+**Planned Features:**
+- [ ] Convert Phase files into independent agents with specialized identities
+- [ ] Implement Orchestrator/Manager agent logic using `workflow-router.md`
+- [ ] Standardize context hand-offs (Write/Select/Compress) between agents
+- [ ] Reference Architecture: [Lessons_learned-Context_Engineering_Template.txt](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/docs/lessons-learned/Lessons_learned-Context_Engineering_Template.txt)
+
+---
+
 ## Backlog (Unprioritized)
 
 - [ ] Batch JD comparison (compare resume to multiple JDs at once)
