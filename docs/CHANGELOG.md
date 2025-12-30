@@ -33,6 +33,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+### v6.1.8 - Location Red Flag Update with State Abbreviation Expansion (2025-12-30)
+> **Branch:** `v6.1.8-location_red_flag_update`
+
+#### Added
+- **State Abbreviation Mapping** - Complete mapping of all 50 US states + DC for automatic state code expansion
+  - Auto-expands state abbreviations: "AL, AK, MT" → "Alabama (AL), Alaska (AK), Montana (MT)"
+  - Applies to all location parsing: payroll restrictions, residency requirements, excluded states
+  - Improves user experience by showing full state names alongside codes
+  - Reduces confusion for users unfamiliar with all state abbreviations
+
+#### Changed
+- **Enhanced `location_red_flags` detection** - Added explicit pattern for state-specific remote payroll restrictions
+  - New pattern: "The following states are not approved for remote payroll at this time: [list]"
+  - Improves blocking gate accuracy for location mismatches during Phase 1 JD parsing
+  - Prevents wasted effort on applications where user's state is excluded due to payroll compliance
+- **Enhanced `location_mismatch` instruction** - Now references state_abbreviation_mapping for clearer output
+  - Example: "Excluded: Alabama (AL), Alaska (AK)" instead of just "AL, AK"
+
+#### Impact
+- ✅ Better detection of payroll compliance restrictions during JD parsing (Phase 1)
+- ✅ More accurate location blocking gate warnings (Phase 2)
+- ✅ Improved user experience - no manual state code lookup needed
+- ✅ Clearer, more accessible location warnings for all users
+- ✅ No breaking changes - additive enhancement only
+
+---
+
 ### v6.1.0 - Documentation Enhancement & Job Summary Guide (2025-12-29)
 > **Branch:** `v6.1.0`
 

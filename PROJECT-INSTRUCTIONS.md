@@ -336,12 +336,34 @@
         <yellow_flag priority="moderate">Preferred, nice to have, mentioned once or twice</yellow_flag>
         <location_red_flags priority="critical">
           - "Must be located in [specific state/city]" when user is elsewhere
+          <!-- v6.1.8 Change: Added payroll restriction detection -->
+          - "The following states are not approved for remote payroll at this time: [list]" when user's state is excluded
           - "On-site required" when user seeks remote
           - "Hybrid X days/week" when user seeks fully remote
           - "Remote - [state] residents only" when user is in different state
           - "Relocation required" without relocation assistance mentioned
           - "Fake remote" indicators: "Remote during training, then on-site", "Remote but must come to office weekly"
         </location_red_flags>
+
+        <!-- v6.1.8 Enhancement: State abbreviation expansion for payroll restrictions -->
+        <state_abbreviation_mapping>
+          <instruction>When location requirements contain state abbreviations (e.g., "AL, AK, MT"), expand them to full state names for clarity in output.</instruction>
+          <usage>
+            - When parsing payroll restrictions: "States: AL, AK, MT" → "Alabama, Alaska, Montana"
+            - When displaying location warnings: Show both formats - "Excluded states: Alabama (AL), Alaska (AK), Montana (MT)"
+            - Apply to all location-related parsing: remote restrictions, residency requirements, excluded states
+          </usage>
+          <mapping>
+            AL=Alabama, AK=Alaska, AZ=Arizona, AR=Arkansas, CA=California, CO=Colorado, CT=Connecticut,
+            DE=Delaware, FL=Florida, GA=Georgia, HI=Hawaii, ID=Idaho, IL=Illinois, IN=Indiana, IA=Iowa,
+            KS=Kansas, KY=Kentucky, LA=Louisiana, ME=Maine, MD=Maryland, MA=Massachusetts, MI=Michigan,
+            MN=Minnesota, MS=Mississippi, MO=Missouri, MT=Montana, NE=Nebraska, NV=Nevada, NH=New Hampshire,
+            NJ=New Jersey, NM=New Mexico, NY=New York, NC=North Carolina, ND=North Dakota, OH=Ohio,
+            OK=Oklahoma, OR=Oregon, PA=Pennsylvania, RI=Rhode Island, SC=South Carolina, SD=South Dakota,
+            TN=Tennessee, TX=Texas, UT=Utah, VT=Vermont, VA=Virginia, WA=Washington, WV=West Virginia,
+            WI=Wisconsin, WY=Wyoming, DC=District of Columbia
+          </mapping>
+        </state_abbreviation_mapping>
       </categorization>
     </step>
 
@@ -353,7 +375,8 @@
       </process>
       <matching_criteria>
         <location_match>User's location preferences align with JD requirements (remote vs on-site, geographic restrictions)</location_match>
-        <location_mismatch>JD requires on-site/hybrid when user needs remote, OR geographic restrictions user cannot meet</location_mismatch>
+        <!-- v6.1.8 Enhancement: Reference state abbreviation mapping for location mismatches -->
+        <location_mismatch>JD requires on-site/hybrid when user needs remote, OR geographic restrictions user cannot meet. When displaying state-specific restrictions, use state_abbreviation_mapping to expand abbreviations (e.g., "Excluded: Alabama (AL), Alaska (AK), Montana (MT)" instead of just "AL, AK, MT").</location_mismatch>
       </matching_criteria>
     </step>
 
