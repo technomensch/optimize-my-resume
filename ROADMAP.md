@@ -1,6 +1,6 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.1.7
+## Current Version: v6.1.9
 ## In Development: v6.2.0
 
 ---
@@ -106,6 +106,8 @@
 - ✅ v6.1.5 - Test case gap-filling
 - ✅ v6.1.6 - Gemini grammar tips & quality assurance
 - ✅ v6.1.7 - Mandatory secondary grammar check warning
+- ✅ v6.1.8 - Location red flag update with state abbreviation expansion
+- ✅ v6.1.9 - Skill priority weights (3:2:1 model) & test case expansion (79 tests)
 
 ### Features
 - [x] Job Summary usage guide in README
@@ -165,6 +167,36 @@
 
 ---
 
+## v6.1.9 - Skill Priority Weights & Test Case Expansion (COMPLETE) <!-- v6.1.9 Change -->
+
+**Branch:** `v6.1.9-gap-analysis_test-cases` | **Status:** Complete | **Date:** 2025-12-30
+
+**Changes:**
+- [x] Added 3:2:1 skill priority weights (Required=1.5x, Preferred=1.0x, Optional=0.5x)
+- [x] Updated scoring formula in `evidence-matching.md` with priority-weighted calculation
+- [x] Added `<skill_priority_scoring>` to PROJECT-INSTRUCTIONS.md and quick-start-phase.md
+- [x] Expanded test suite: 79 tests for Phases 2-4 (Sonnet baseline + Opus expansion)
+- [x] Created FIX series correcting 4 Sonnet logic errors
+- [x] Reorganized testing folder: `v6.1.5-testing/` → `testing/`
+
+**Files Modified:**
+- `core/fit-thresholds.md` (v5.0 → v5.1)
+- `phases/phase-2/evidence-matching.md` (v1.0 → v1.1)
+- `PROJECT-INSTRUCTIONS.md` (v6.1.7 → v6.1.9)
+- `quick-start-phase.md` (v6.1.7 → v6.1.9)
+
+**Test Files:**
+- `docs/plans/testing/phase-1-test-cases.md` (95+ Phase 1 tests)
+- `docs/plans/testing/phase-2-4-test-cases.md` (79 Phase 2-4 tests)
+- `docs/plans/testing/test-results.md` (execution results)
+
+**Impact:**
+- More accurate match scoring that reflects recruiter evaluation priorities
+- Missing a Required skill now has 1.5x the negative impact of missing a Preferred skill
+- Comprehensive test coverage for all phases
+
+---
+
 ## v7.0.0 - Multi-Agent Architecture (Future)
 
 **Planned Features:**
@@ -199,4 +231,4 @@
 
 ---
 
-**Last Updated:** 2025-12-29 (v6.1.0 MINOR RELEASE - Documentation enhancement and folder restructure)
+**Last Updated:** 2025-12-30 (v6.1.9 - Skill priority weights & test case expansion) <!-- v6.1.9 Change -->
