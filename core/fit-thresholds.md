@@ -38,6 +38,8 @@
 
 ## Scoring Methodology
 
+### Category-Level Weights
+
 ```xml
 <scoring_methodology>
   <core_qualifications weight="50%">
@@ -45,13 +47,13 @@
     - Years of experience alignment
     - Role type match (BA, TW, PM, etc.)
   </core_qualifications>
-  
+
   <critical_requirements weight="30%">
     - Domain expertise requirements
     - Specialized platforms/technologies
     - Industry experience
   </critical_requirements>
-  
+
   <preferred_qualifications weight="20%">
     - Nice-to-have skills
     - Bonus certifications
@@ -59,6 +61,44 @@
   </preferred_qualifications>
 </scoring_methodology>
 ```
+
+### Skill-Level Priority Weights (v6.1.9)
+
+Based on industry ATS scoring best practices (Rezi.ai, Jobscan, Recruiterflow):
+
+```xml
+<skill_priority_scoring>
+  <!-- 3:2:1 Priority Model -->
+  <required_skills priority="3" weight="1.5x">
+    Skills explicitly marked as "Required", "Must have", or "Essential"
+    Missing a required skill has 1.5x the negative impact of missing a preferred skill
+  </required_skills>
+
+  <preferred_skills priority="2" weight="1.0x">
+    Skills marked as "Preferred", "Nice to have", or "Bonus"
+    Baseline weight for gap calculations
+  </preferred_skills>
+
+  <optional_skills priority="1" weight="0.5x">
+    Skills mentioned but not emphasized, inferred from context
+    Half the impact of preferred skills
+  </optional_skills>
+</skill_priority_scoring>
+```
+
+**Example Calculation:**
+
+| Skill | Status | Priority | Impact |
+|-------|--------|----------|--------|
+| Python (Required) | MISSING | 3 | -15 points |
+| SQL (Required) | MATCHED | 3 | +15 points |
+| AWS (Preferred) | MISSING | 2 | -10 points |
+| Kubernetes (Optional) | MISSING | 1 | -5 points |
+
+**Sources:**
+- Rezi.ai ATS Resume Checker (3:2:1 priority scoring)
+- Recruiterflow: "10% change in weighting can shift scores by 5-8 points"
+- Jobscan: 80% match rate target for resume optimization
 
 ---
 
