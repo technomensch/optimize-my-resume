@@ -1,9 +1,9 @@
-# Optimize-My-Resume System v6.1.7
+# Optimize-My-Resume System v6.1.9
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - QUICK START (SINGLE FILE)                     -->
 <!-- ========================================================================== -->
-<!-- Version: 6.1.7                                                             -->
+<!-- Version: 6.1.9                                                             -->
 <!-- Last Updated: December 2025                                                -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
@@ -126,11 +126,20 @@
 
     <step number="3" name="calculate_preliminary_fit">
       <scoring_methodology>
+        <!-- Category-Level Weights -->
         <core_qualifications weight="50%">Required qualifications, years of experience, role type match</core_qualifications>
         <critical_requirements weight="30%">Domain expertise, platforms, industry</critical_requirements>
         <preferred_qualifications weight="20%">Nice-to-have skills, bonus certifications</preferred_qualifications>
       </scoring_methodology>
-      
+
+      <!-- v6.1.9: Skill-Level Priority Weights (3:2:1 Model) -->
+      <skill_priority_scoring>
+        <required_skills priority="3" weight="1.5x">Skills marked "Required", "Must have", "Essential"</required_skills>
+        <preferred_skills priority="2" weight="1.0x">Skills marked "Preferred", "Nice to have", "Bonus"</preferred_skills>
+        <optional_skills priority="1" weight="0.5x">Skills inferred from context, not emphasized</optional_skills>
+        <note>Missing a Required skill has 1.5x the negative impact of missing a Preferred skill.</note>
+      </skill_priority_scoring>
+
       <fit_thresholds>
         <excellent range="90-100%">Strong match, proceed automatically</excellent>
         <good range="80-89%">Good match, FLAG gaps and ASK user (full gap analysis)</good>

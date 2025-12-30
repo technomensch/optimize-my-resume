@@ -1,9 +1,10 @@
-# Optimize-My-Resume System v6.1.7
+# Optimize-My-Resume System v6.1.9
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.1.7                                                             --> <!-- v6.1.7 Release: Gemini grammar tips, Quality Assurance rules, and secondary check warning -->
+<!-- Version: 6.1.9                                                             --> <!-- v6.1.9 Release: Skill priority weights (3:2:1 model), test case expansion (79 tests) -->
+<!-- Previous: 6.1.7                                                            --> <!-- v6.1.7 Release: Gemini grammar tips, Quality Assurance rules, and secondary check warning -->
 <!-- Previous: 6.1.0                                                            --> <!-- v6.1.0 Release: Terminology alignment (Mode -> Phase) and Job Summary guide -->
 <!-- Previous: 6.0.4                                                            --> <!-- v6.0.4 Change: Added summary generation, documentation finalization -->
 <!-- Previous: 6.0.3                                                            --> <!-- v6.0.3 Change: Added workflow router, incremental updates, re-comparison -->
@@ -382,11 +383,20 @@
 
     <step number="3" name="calculate_preliminary_fit">
       <scoring_methodology>
+        <!-- Category-Level Weights -->
         <core_qualifications weight="50%">Required qualifications, years of experience, role type match, work location/arrangement alignment (remote/hybrid/on-site compatibility)</core_qualifications>
         <critical_requirements weight="30%">Domain expertise, platforms, industry</critical_requirements>
         <preferred_qualifications weight="20%">Nice-to-have skills, bonus certifications</preferred_qualifications>
       </scoring_methodology>
-      
+
+      <!-- v6.1.9: Skill-Level Priority Weights (3:2:1 Model) -->
+      <skill_priority_scoring>
+        <required_skills priority="3" weight="1.5x">Skills marked "Required", "Must have", "Essential"</required_skills>
+        <preferred_skills priority="2" weight="1.0x">Skills marked "Preferred", "Nice to have", "Bonus"</preferred_skills>
+        <optional_skills priority="1" weight="0.5x">Skills inferred from context, not emphasized</optional_skills>
+        <note>Missing a Required skill has 1.5x the negative impact of missing a Preferred skill. See core/fit-thresholds.md for full methodology.</note>
+      </skill_priority_scoring>
+
       <fit_thresholds>
         <excellent range="90-100%">Strong match, proceed automatically</excellent>
         <good range="80-89%">Good match, FLAG gaps and ASK user (full gap analysis)</good>

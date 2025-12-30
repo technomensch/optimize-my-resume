@@ -9,6 +9,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.1.9 - Skill Priority Weights & Test Case Expansion (2025-12-30)
+> **Branch:** `v6.1.9-gap-analysis_test-cases`
+
+#### Added
+- **Skill Priority Weights (3:2:1 Model)** - Industry-standard ATS scoring methodology based on Rezi.ai, Jobscan, and Recruiterflow best practices
+  - **Required skills**: 1.5x weight (priority 3) - "Required", "Must have", "Essential"
+  - **Preferred skills**: 1.0x weight (priority 2) - "Preferred", "Nice to have", "Bonus"
+  - **Optional skills**: 0.5x weight (priority 1) - Inferred from context, not emphasized
+  - Missing a Required skill now has 1.5x the negative impact of missing a Preferred skill
+- **Expanded Test Suite** - 79 total test cases for Phases 2-4 (47 new Opus tests + 32 Sonnet baseline)
+  - **INTX (8)**: Complex integration (contractors, freelance, stale skills)
+  - **INCX (10)**: Advanced position manipulation (batch, merge, undo)
+  - **DIFFX (7)**: Complex diff scenarios (batch, regression, stale cache)
+  - **SUMX (8)**: Advanced summary (executive, entry-level, pivots)
+  - **GATE (7)**: Blocking gate combinations and edge cases
+  - **ERR (7)**: Error recovery and system resilience
+  - **FIX (12)**: Logic corrections and gap-filling tests
+
+#### Changed
+- **Scoring Formula** - `phases/phase-2/evidence-matching.md` updated with priority-weighted calculation
+- **System Instructions** - `PROJECT-INSTRUCTIONS.md` and `quick-start-phase.md` updated with skill priority weights
+- **Core Configuration** - `core/fit-thresholds.md` now includes skill-level priority weights alongside category weights
+
+#### Fixed
+- **Sonnet Test Logic Errors** - Corrected 4 issues in original test definitions:
+  - INC-004: Index direction corrected from "shifted up" to "shifted DOWN"
+  - SUM-005: Threshold corrected from 42 to 30 (actual blocking gate value)
+  - INT-007: Added explicit weight ratio (Required = 1.5x Preferred)
+  - INT-006: Clarified confidence boundary as ">= 0.5" (inclusive)
+
+#### Impact
+- ✅ More accurate job fit scoring that reflects recruiter evaluation patterns
+- ✅ Better test coverage for edge cases and error scenarios
+- ✅ Improved blocking gate reliability at boundary conditions
+- ✅ No breaking changes - additive enhancement only
+
+---
+
 ### v6.1.7 - Gemini Grammar Tips & Quality Assurance (2025-12-29)
 > **Branch:** `v6.1.7-gemini-grammar-tips`
 
