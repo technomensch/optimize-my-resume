@@ -1,8 +1,9 @@
 # Fit Thresholds Configuration
 
-<!-- Version: 5.0 -->
+<!-- Version: 5.1 (v6.1.9 update) -->
 <!-- Purpose: Define fit percentage thresholds for Mode 3 (JD Comparison) -->
-<!-- Last Updated: December 2024 -->
+<!-- Last Updated: December 2025 -->
+<!-- v6.1.9 Change: Added skill-level priority weights (3:2:1 model) -->
 
 ---
 

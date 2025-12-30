@@ -380,12 +380,28 @@ Total Requirements: 16
 
 **Final Match Score: 72/100**
 
-Scoring Method:
-- Matched = 100% weight
-- Partial = 50% weight
-- Missing = 0% weight
+Scoring Method (v6.1.9 - Priority-Weighted):
+- Matched = 100% of skill weight
+- Partial = 50% of skill weight
+- Missing = 0% of skill weight
 
-Calculation: (10 * 1.0 + 3 * 0.5 + 3 * 0.0) / 16 = 0.72 = 72%
+Skill Priority Weights (3:2:1 Model):
+- Required skills: 1.5x weight (priority 3)
+- Preferred skills: 1.0x weight (priority 2)
+- Optional/Inferred skills: 0.5x weight (priority 1)
+
+Example Calculation:
+| Skill | Status | Priority | Base Points | Weighted |
+|-------|--------|----------|-------------|----------|
+| Python (Required) | MATCHED | 3 | 10 | 15 pts |
+| SQL (Required) | MATCHED | 3 | 10 | 15 pts |
+| AWS (Preferred) | PARTIAL | 2 | 5 | 5 pts |
+| Kubernetes (Preferred) | MISSING | 2 | 0 | 0 pts |
+| Leadership (Required) | MATCHED | 3 | 10 | 15 pts |
+
+Formula: (Sum of Weighted Points) / (Max Possible Weighted Points) × 100
+
+See `core/fit-thresholds.md` for complete scoring methodology.
 
 ========================================
 BLOCKING GATES CHECK
@@ -704,6 +720,7 @@ IF quality < 0.5:
 ---
 
 **Version History:**
+- v1.1 (2025-12-30): Added priority-weighted scoring formula (3:2:1 model for Required/Preferred/Optional skills)
 - v1.0 (2025-12-28): Initial evidence matching with two-part check, citation formatting, diff generation
 
 ---
