@@ -9,6 +9,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.1.11 - Keyword Evidence Principle & Enhanced Quality Controls (2025-12-31)
+> **Branch:** `v6.1.11-various_fixes`
+
+#### Added
+- **Keyword Evidence Principle** - Critical principle preventing keyword stuffing without backing evidence
+  - Added `<keyword_evidence>` principle to core_principles (priority: critical)
+  - Cross-references keywords against job history positions before optimization
+  - Only includes keywords evidenced in: tools_technologies, hard_skills_demonstrated, soft_skills_demonstrated, key_achievements
+  - Ignores keywords from master_skills_inventory without position evidence
+  - Exception: User can explicitly confirm unevidenced skills ("I have Confluence experience")
+- **Keyword Input Handling** - Comprehensive workflow for keyword optimization requests
+  - Added `<keyword_input_handling>` section after Phase 3 definition
+  - Handles two scenarios: keywords WITH JD, keywords AFTER bullet generation
+  - Categorizes keywords: ✓ EVIDENCED, ✗ NOT EVIDENCED, ? UNCLEAR
+  - Outputs keyword coverage report showing incorporated, skipped, and clarification-needed keywords
+  - Prevents fabricating context for unevidenced keywords
+- **Keyword Coverage Report** - Transparent reporting of keyword optimization
+  - Shows which keywords were incorporated (with position and bullet references)
+  - Lists skipped keywords with reasons (not evidenced in job history)
+  - Flags keywords requiring user clarification
+
+#### Changed
+- **PROJECT-INSTRUCTIONS.md** - Added keyword_evidence_principle and keyword_input_handling sections (v6.1.10 → v6.1.11)
+- **quick-start-phase.md** - Added keyword_evidence_principle and keyword_input_handling sections (v6.1.9 → v6.1.11)
+- **core/format-rules.md** - Updated version (v6.1.10 → v6.1.11)
+- **Phase 3 behavior** - Added "Handle keyword input according to keyword_input_handling rules"
+
+#### Impact
+- ✅ Prevents keyword stuffing and maintains resume authenticity
+- ✅ Ensures keywords only included when backed by actual job history
+- ✅ Transparent reporting shows users which keywords could/couldn't be incorporated
+- ✅ User confirmation required for unevidenced keywords
+- ✅ Better alignment between resume content and actual experience
+- ✅ No breaking changes - additive enhancement only
+
+#### Philosophy
+- Better to omit a keyword than to invent context for it
+- Keywords without evidence will seem forced if hiring manager investigates
+- Fabricating keyword context creates inauthentic resumes
+
+---
+
 ### v6.1.10 - Automatic Quality Gate & Plain Text Export (2025-12-31)
 > **Branch:** `v6.1.10-fix_2nd_pass`
 
