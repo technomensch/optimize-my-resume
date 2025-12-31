@@ -9,6 +9,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.1.10 - Automatic Quality Gate & Plain Text Export (2025-12-31)
+> **Branch:** `v6.1.10-fix_2nd_pass`
+
+#### Added
+- **Automatic Quality Gate with Regeneration Loop** - Mandatory quality enforcement before output presentation
+  - **Step 1**: Run `pre_output_quality_checklist` automated scans
+    - Escaped characters (\~, \%, \+) detection and correction
+    - Gerund detection (bullets starting with -ing verbs)
+    - Repeated phrase detection (>2 exact occurrences)
+    - Keyword duplication checking (summary vs bullets)
+  - **Step 2**: Verb diversity validation
+    - All 5 verb categories must be represented (Built, Lead, Managed, Improved, Collaborate)
+    - No category can appear 0 times across bullets
+    - No category can repeat within same position
+    - Balanced distribution preferred (13-27% per category)
+  - **Step 3**: Automatic regeneration if issues found
+    - Identifies affected positions and specific issues
+    - Regenerates bullets using missing categories
+    - Re-runs quality checklist
+    - Repeats until all checks pass (max 3 iterations)
+  - **Step 4**: Triggers plain text export after passing
+- **Automatic Plain Text Export** - Auto-generated clean copy-paste format after quality validation
+  - Plain text file created in `/mnt/user-data/outputs/[job-title]-bullets.txt`
+  - Clean format: No markdown, no escaped characters, proper bullet points (•)
+  - Includes metadata: character counts, word counts, verb category distribution
+  - Auto-displayed in response with copy-paste code block
+  - Directory auto-created if doesn't exist
+
+#### Changed
+- **PROJECT-INSTRUCTIONS.md** - Added `<automatic_quality_gate>` and `<automatic_plain_text_export>` sections after `pre_output_quality_checklist`
+- **core/format-rules.md** - Added validation requirements for quality gate and plain text export
+- **Version number** - Updated from 6.1.9 to 6.1.10 across all files
+
+#### Impact
+- ✅ Zero quality issues in final output (escaped chars, gerunds, missing verb diversity)
+- ✅ All 5 verb categories guaranteed to be represented in every resume
+- ✅ No repeated verb categories within same position
+- ✅ Plain text export auto-generated for easy copy-paste
+- ✅ Reduced manual formatting work for users
+- ✅ Transparent verb category distribution in metadata
+- ✅ No breaking changes - additive enhancement only
+
+#### Technical Details
+- **Blocking gate**: Output cannot be presented until quality checks pass
+- **Max iterations**: 3 regeneration attempts to prevent infinite loops
+- **Fallback**: If issues persist after 3 iterations, present best attempt with warning
+- **Smart regeneration**: Only regenerates affected bullets, not entire resume
+- **Category-aware**: Regeneration prioritizes missing verb categories
+
+---
+
 ### v6.1.9 - Skill Priority Weights & Test Case Expansion (2025-12-30)
 > **Branch:** `v6.1.9-gap-analysis_test-cases`
 

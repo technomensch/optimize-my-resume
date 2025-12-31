@@ -1,9 +1,10 @@
-# Optimize-My-Resume System v6.1.9
+# Optimize-My-Resume System v6.1.10
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.1.9                                                             --> <!-- v6.1.9 Release: Skill priority weights (3:2:1 model), test case expansion (79 tests) -->
+<!-- Version: 6.1.10                                                            --> <!-- v6.1.10 Release: Automatic quality gate with regeneration loop, plain text auto-export -->
+<!-- Previous: 6.1.9                                                            --> <!-- v6.1.9 Release: Skill priority weights (3:2:1 model), test case expansion (79 tests) -->
 <!-- Previous: 6.1.7                                                            --> <!-- v6.1.7 Release: Gemini grammar tips, Quality Assurance rules, and secondary check warning -->
 <!-- Previous: 6.1.0                                                            --> <!-- v6.1.0 Release: Terminology alignment (Mode -> Phase) and Job Summary guide -->
 <!-- Previous: 6.0.4                                                            --> <!-- v6.0.4 Change: Added summary generation, documentation finalization -->
@@ -644,6 +645,176 @@
       - Search: common achievements (version control, style guides, etc.) → Verify appears only in strongest position
     </automated_scan_patterns>
   </pre_output_quality_checklist>
+
+  <automatic_quality_gate> <!-- v6.1.10 Change: Added automatic quality enforcement with regeneration loop -->
+    <priority>critical</priority>
+    <trigger>After generating bullets, BEFORE presenting output</trigger>
+
+    <instruction>
+      Execute this mandatory quality gate sequence before presenting ANY bullet output.
+      This is a BLOCKING gate - output cannot be presented until all checks pass.
+    </instruction>
+
+    <step_1_run_quality_checklist>
+      <action>Run pre_output_quality_checklist automated scans</action>
+      <scans>
+        - Escaped characters: Search for \~, \%, \+ and flag for correction
+        - Gerunds: Search for "ing " at start of bullet and flag for correction
+        - Repeated phrases: Search for exact phrases appearing >2 times and flag for variation
+        - Keyword duplication: Check summary keywords against bullet keywords
+        - Common achievements: Verify version control, style guides appear only in strongest position
+      </scans>
+    </step_1_run_quality_checklist>
+
+    <step_2_check_verb_diversity>
+      <action>Verify all 5 verb categories are represented across bullets</action>
+      <categories_required>
+        - Built (Blue): Creates new systems/products/processes
+        - Lead (Orange): Drives initiatives, guides teams
+        - Managed (Purple): Oversees resources, coordinates operations
+        - Improved (Green): Optimizes and enhances existing systems
+        - Collaborate (Pink): Partners cross-functionally, works with teams
+      </categories_required>
+
+      <validation_rules>
+        <rule priority="critical">
+          IF any category = 0 occurrences across ALL bullets:
+          FLAG as "Incomplete diversity" and REGENERATE
+        </rule>
+        <rule priority="high">
+          IF same category repeats within same position (e.g., Position 1 has 3 "Built" bullets):
+          FLAG as "Repeated verb category" and REGENERATE
+        </rule>
+        <rule priority="moderate">
+          PREFER balanced distribution (13-27% per category)
+          If distribution is heavily skewed (>40% in one category), consider rebalancing
+        </rule>
+      </validation_rules>
+    </step_2_check_verb_diversity>
+
+    <step_3_regenerate_if_needed>
+      <trigger>IF any flags from step 1 or step 2 are raised</trigger>
+
+      <regeneration_process>
+        1. Identify affected positions and specific issues
+        2. For missing verb categories: Select bullets that can naturally use missing category
+        3. For repeated categories within position: Rewrite one bullet using different category
+        4. For escaped characters: Remove backslashes (~ not \~)
+        5. For gerunds: Convert to past-tense verbs (Authored not Authoring)
+        6. For repeated phrases: Apply variation strategies from phrase_variation_rule
+        7. Regenerate affected bullets maintaining all requirements (character limits, metrics, etc.)
+        8. Re-run steps 1 and 2 on regenerated bullets
+        9. Repeat until ALL checks pass
+      </regeneration_process>
+
+      <max_iterations>
+        <limit>3 iterations maximum to prevent infinite loops</limit>
+        <fallback>If issues persist after 3 iterations, present best attempt with warning to user</fallback>
+      </max_iterations>
+
+      <if_no_issues>
+        Proceed to step 4 (automatic plain text export)
+      </if_no_issues>
+    </step_3_regenerate_if_needed>
+
+    <step_4_export_plain_text>
+      <action>Auto-generate plain text export</action>
+      <reference>See automatic_plain_text_export section below</reference>
+    </step_4_export_plain_text>
+
+    <critical_note>
+      This quality gate ensures ZERO quality issues reach final output.
+      Never skip or bypass this gate - it is mandatory for all bullet generation.
+    </critical_note>
+  </automatic_quality_gate>
+
+  <automatic_plain_text_export> <!-- v6.1.10 Change: Added automatic plain text file generation -->
+    <priority>high</priority>
+    <trigger>After automatic_quality_gate passes and all bullets finalized</trigger>
+
+    <instruction>
+      Automatically generate a plain text export file after quality validation passes.
+      This provides users with clean, copy-paste ready bullets without markdown formatting.
+    </instruction>
+
+    <format_specification>
+      <structure>
+        [Professional Summary]
+
+        POSITION 1: [Title] at [Company] | [Date Range]
+        • [Bullet 1]
+        • [Bullet 2]
+        • [Bullet 3]
+
+        POSITION 2: [Title] at [Company] | [Date Range]
+        • [Bullet 1]
+        • [Bullet 2]
+        ...
+
+        ---
+        METADATA:
+        Total Positions: X
+        Total Bullets: X
+        Character Count Per Bullet: X-X (target: 100-210)
+        Total Word Count: X (target: 350-500)
+        Verb Category Distribution:
+          - Built (Blue): X bullets (X%)
+          - Lead (Orange): X bullets (X%)
+          - Managed (Purple): X bullets (X%)
+          - Improved (Green): X bullets (X%)
+          - Collaborate (Pink): X bullets (X%)
+      </structure>
+
+      <formatting_rules>
+        - Use plain text bullet character: •
+        - NO markdown formatting (no **, no _, no code blocks)
+        - NO escaped characters (use ~ not \~)
+        - Include date ranges for each position
+        - Include verb category distribution for transparency
+        - Character counts should be per-bullet ranges (e.g., "120-180")
+      </formatting_rules>
+    </format_specification>
+
+    <output_location>
+      <path>/mnt/user-data/outputs/[job-title-slug]-bullets.txt</path>
+      <naming_convention>
+        - Use job title from JD, convert to lowercase-with-hyphens
+        - Example: "Senior Technical Writer" → "senior-technical-writer-bullets.txt"
+        - If no JD, use: "optimized-resume-bullets.txt"
+      </naming_convention>
+      <directory_creation>
+        If /mnt/user-data/outputs/ does not exist, create it before writing file
+      </directory_creation>
+    </output_location>
+
+    <presentation>
+      <method>Display plain text content in response</method>
+      <format>Use code block for easy copy-paste</format>
+      <message>
+        Include this message after presenting bullets:
+
+        "✅ Plain text export generated: [filename]
+
+        This file contains your bullets in clean, copy-paste ready format with:
+        - No markdown formatting
+        - Proper bullet points (•)
+        - Character/word count metadata
+        - Verb category distribution
+
+        You can copy directly from above or access the file at: /mnt/user-data/outputs/[filename]"
+      </message>
+    </presentation>
+
+    <no_markdown_instruction>
+      CRITICAL: Plain text export must NOT contain:
+      - Bold/italic markdown (**, *, _, etc.)
+      - Code blocks (```)
+      - Heading markers (#)
+      - Escaped characters (\~, \%, \+)
+
+      Plain text should be completely clean and ready to paste into any resume builder or document.
+    </no_markdown_instruction>
+  </automatic_plain_text_export>
 
   <secondary_grammar_check_rule> <!-- v6.1.7 Change: Added mandatory secondary grammar check warning -->
     <priority>high</priority>

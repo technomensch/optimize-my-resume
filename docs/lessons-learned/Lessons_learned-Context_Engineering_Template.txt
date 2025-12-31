@@ -1,0 +1,165 @@
+# CONTEXT ENGINEERING PROMPT TEMPLATE & BEST PRACTICES
+
+This document provides a technical template for "Context Engineering"—structuring system instructions to transform a standard LLM into a highly specialized Agent. 
+
+## 1. TECHNICAL PROMPT TEMPLATE (XML-STRUCTURED)
+
+Use this structure when transforming PROJECT-INSTRUCTIONS.md into an Agent-ready system prompt.
+
+```xml
+<agent_identity>
+  <role>Define EXACTLY who the agent is (e.g., "Senior Resume Architect & ATS Specialist").</role>
+  <persona>Define the tone, perspective, and level of expertise.</persona>
+  <agent_capabilities>Define high-level skills and specialized functions the agent can perform.</agent_capabilities> <!-- Mapped: Capabilities -->
+</agent_identity>
+
+<context_boundaries> <!-- Mapped: Scope / Environment -->
+  <primary_objective>What is the single most important mission?</primary_objective>
+  <project_background>Key information about the repository/system state.</project_background>
+</context_boundaries>
+
+<task_specification> <!-- Mapped: Tasks -->
+  <standard_operating_procedures>High-level workflow logic (e.g., "Always search before answering").</standard_operating_procedures>
+  <step_by_step_instructions>Detailed task breakdown and execution order.</step_by_step_instructions>
+</task_specification>
+
+<input_schemas> <!-- Mapped: Inputs -->
+  <provided_data>Define expected user inputs, file types, and data structures.</provided_data>
+</input_schemas>
+
+<output_specification> <!-- Mapped: Outputs -->
+  <format_type>Specify XML, JSON, or Markdown (XML or JSON preferred for data persistence).</format_type>
+  <output_formatting_rules>  <!-- Mapped: Where output rules go -->
+    Define strict layout requirements, headers, separators, and character escaping rules.
+  </output_formatting_rules>
+</output_specification>
+
+<constraints_and_guardrails> <!-- Mapped: Constraints (Distinct from Boundaries) -->
+  <negative_constraints>Explicit "DO NOT" rules and prohibited behaviors.</negative_constraints>
+  <safety_limits>Privacy, redaction, and security constraints.</safety_limits>
+</constraints_and_guardrails>
+
+<tool_definitions>
+  <tool id="[ToolName]">
+    <purpose>When and why to use this tool.</purpose>
+    <usage_rules>Strict constraints on inputs/outputs.</usage_rules>
+  </tool>
+</tool_definitions>
+
+<reasoning_protocol>
+  <step_by_step>
+    1. Analyze user intent.
+    2. Search relevant documentation.
+    3. Plan the execution steps.
+    4. Verify against quality rules.
+  </step_by_step>
+  <self_criticism>Instruction to check its own work before outputting.</self_criticism>
+  <critical_reminders>Ongoing reminders of primary mission and high-priority rules.</critical_reminders> <!-- Mapped: Reminders -->
+</reasoning_protocol>
+
+<error_handling_and_recovery> <!-- Mapped: Error Handling / Correction -->
+  <error_detection>Patterns or triggers that indicate a failure (e.g., "Empty tool response", "Schema mismatch").</error_detection>
+  <recovery_strategies>
+    - Retry Logic: When to attempt the task again.
+    - Fallback Patterns: Alternative actions if primary tools fail.
+    - User Escalation: Specific criteria for when to stop and ask the user for clarification.
+  </recovery_strategies>
+  <error_reporting_format>
+    Standardized format for reporting errors (e.g., "ERROR [Code]: Descriptive message").
+  </error_reporting_format>
+</error_handling_and_recovery>
+
+<context_management_instructions> <!-- Multi-Agent Discussion -->
+  <write_context>Rules for how the agent should document its own work or state for other agents.</write_context>
+  <select_context>Rules for identifying which pieces of information are high-signal vs noise.</select_context>
+  <compress_context>Instruction to summarize or truncate history to save token space while preserving intent.</compress_context>
+  <isolate_context>Instruction to focus ONLY on specific files or sub-problems to avoid crosstalk.</isolate_context>
+</context_management_instructions>
+
+<quality_assurance_rules>
+  <!-- Insert specific rules like v6.1.7 grammar tips here -->
+  <formatting_guardrails>Bullet length, character limits, prohibited characters.</formatting_guardrails>
+  <logic_guardrails>No fabrication, reverse chronological order only.</logic_guardrails>
+</quality_assurance_rules>
+
+<output_templates>
+  <format id="[TemplateName]">
+    Define the EXACT layout, headers, and separators.
+  </format>
+</output_templates>
+
+<few_shot_examples>
+  <example id="1">
+    <user_input>...</user_input>
+    <agent_thought>Reasoning process...</agent_thought>
+    <optimized_output>...</optimized_output>
+  </example>
+</few_shot_examples>
+```
+
+---
+
+## 2. CONTEXT ENGINEERING BEST PRACTICES
+
+### A. Information Hierarchy
+*   **XML/Markdown Tagging**: LLMs are highly responsive to structural tags (like <rule> or ## Section). This prevents the "lost in the middle" phenomenon.
+*   **High-Signal Tokens**: Every line must have a purpose. Remove fluff; use dense, command-oriented language.
+
+### B. Tool Discipline
+*   **Single Responsibility**: Design tool instructions so the agent uses one specific tool for one specific job.
+*   **Validation Gating**: Force the agent to check tool output before proceeding to the next step.
+
+### C. Logic & Reasoning
+*   **Chain-of-Thought (CoT)**: Explicitly instruct the agent to "think" inside tags before generating the final output. This significantly raises accuracy for complex tasks like gap analysis.
+*   **Explicit Constraints**: State what NOT to do as clearly as what to do (Negative Constraints).
+
+### D. Memory & State Management
+*   **Stable Prefixes**: Keep core instructions at the very top of the context window.
+*   **Iterative Refinement**: Start with a "Skeleton" prompt and add specific rules (like grammar tips) only when failures are observed.
+
+### E. Example Diversity
+*   **Canonical vs. Edge Case**: Provide standard examples for clarity, and specific "Negative Examples" to illustrate where the agent might fail (e.g., "Do NOT do this...").
+
+---
+
+## 3. MULTI-AGENT BEST PRACTICES
+
+When leveraging this context engineering across multiple agents, follow these patterns to ensure state stability and cross-agent collaboration:
+
+### A. Context Isolation (The "Sandbox" Pattern)
+Each agent should only have read/write access to the specific context files relevant to its task. For example:
+*   **Role A (Drafting Agent)**: Access to job history and initial draft.
+*   **Role B (QA Agent)**: Access to draft and fine-grained grammar rules (v6.1.7).
+*   **Benefit**: Minimizes cross-talk and "hallucination leak" between agent stages.
+
+### B. Shared Context Summaries (The "Relay" Pattern)
+Instead of passing the entire raw history between agents, use a **Compress Context** instruction:
+1. Agent A generates a `task_summary` or `state_checkpoint`.
+2. Agent B reads ONLY that summary to initialize its session.
+3. This preserves the token window and focuses on high-signal data.
+
+### C. Write-Once, Read-Many (The "Immutable Archive" Pattern)
+Encourage agents to **Write Context** to dedicated log files or `.json` artifacts rather than modifying the original project instructions. 
+*   **Rule**: Project instructions are the "Source of Truth."
+*   **Strategy**: New observations are written to a sidecar file (`memory.json`) and retrieved by subsequent agents.
+
+### D. Selective Context Loading
+Use a handler to **Select Context** based on the current trigger. 
+*   If Phase 1 is triggered: Load `<job_history_schemas>`.
+*   If Phase 4 is triggered: Load `<output_templates>`.
+*   **Benefit**: Keeps the prompt "dense" and relevant to the immediate task.
+
+### E. Phase Files as Agents (Architecture Recommendation)
+The files in the `/phases` directory (e.g., `jd-parsing-17-point.md`, `evidence-matching.md`) should be treated as **proto-agents**. To fully transform them into independent agents:
+1.  **Assign Identity**: Give each phase its own `<agent_identity>` and specific `<role>`.
+2.  **Define Hand-offs**: Use `<write_context>` to standardize the output summary of one phase as the `<provided_data>` input for the next.
+3.  **Orchestration**: Utilize `workflow-router.md` as the **Orchestrator/Manager Agent** that delegates work, handles `<error_handling_and_recovery>`, and manages the global state.
+
+---
+
+## 4. NEXT STEPS FOR PROJECT-INSTRUCTIONS.MD
+To transform PROJECT-INSTRUCTIONS.md into a multi-agent system:
+1.  Wrap existing sections in the mapped `<xml_tags>` defined above.
+2.  Define the `task_specification` to distinguish between Phase 1, 2, 3, and 4.
+3.  Establish an `output_specification` that mandates JSON for intermediate states and XML/Markdown for final user reports.
+4.  Implement the `context_management_instructions` to handle history compression between phases.

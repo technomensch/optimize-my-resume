@@ -1,6 +1,6 @@
 # Format Rules Configuration
 
-**Version:** 6.1.7  
+**Version:** 6.1.10
 **Applies to:** All Phases
 
 ---
@@ -33,6 +33,16 @@
     <priority>high</priority>
     <instruction>Final scan for formatting, grammar, and keyword duplication.</instruction>
   </pre_output_quality_checklist>
+
+  <automatic_quality_gate> <!-- v6.1.10 Change: Added automatic quality enforcement with regeneration loop -->
+    <priority>critical</priority>
+    <instruction>Mandatory quality gate before output - checks quality, verb diversity, regenerates if issues found.</instruction>
+  </automatic_quality_gate>
+
+  <automatic_plain_text_export> <!-- v6.1.10 Change: Added automatic plain text file generation -->
+    <priority>high</priority>
+    <instruction>Auto-generate plain text export after quality gate passes.</instruction>
+  </automatic_plain_text_export>
 
   <secondary_grammar_check_rule> <!-- v6.1.7 Change: Added mandatory secondary grammar check warning -->
     <priority>high</priority>
@@ -168,3 +178,7 @@
 | Copy-paste ready | Code blocks used | High |
 | Reasoning included | Why this matches | High |
 | Secondary Grammar Check | "[RECOMMENDED]..." warning included | High | <!-- v6.1.7 Change: Added secondary grammar check requirement -->
+| Quality Gate Passed | All checks pass before output | Critical | <!-- v6.1.10 Change: Added quality gate validation -->
+| Verb Diversity Complete | All 5 categories represented | Critical | <!-- v6.1.10 Change: Added verb diversity validation -->
+| No Repeated Verbs in Position | Different categories per position | High | <!-- v6.1.10 Change: Added verb repetition check -->
+| Plain Text Export Generated | Auto-created after quality gate | High | <!-- v6.1.10 Change: Added plain text export requirement -->

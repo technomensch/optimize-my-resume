@@ -1,6 +1,6 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.1.9
+## Current Version: v6.1.10
 ## In Development: v6.2.0
 
 ---
@@ -194,6 +194,43 @@
 - More accurate match scoring that reflects recruiter evaluation priorities
 - Missing a Required skill now has 1.5x the negative impact of missing a Preferred skill
 - Comprehensive test coverage for all phases
+
+---
+
+## v6.1.10 - Automatic Quality Gate & Plain Text Export (COMPLETE) <!-- v6.1.10 Change -->
+
+**Branch:** `v6.1.10-fix_2nd_pass` | **Status:** Complete | **Date:** 2025-12-31
+
+**Changes:**
+- [x] Added `<automatic_quality_gate>` section to PROJECT-INSTRUCTIONS.md with 4-step enforcement
+- [x] Added `<automatic_plain_text_export>` section to PROJECT-INSTRUCTIONS.md
+- [x] Updated core/format-rules.md with new validation requirements
+- [x] Version bump: v6.1.9 → v6.1.10
+
+**Files Modified:**
+- `PROJECT-INSTRUCTIONS.md` (v6.1.9 → v6.1.10)
+- `core/format-rules.md` (v6.1.7 → v6.1.10)
+- `docs/CHANGELOG.md` (added v6.1.10 entry)
+- `ROADMAP.md` (current version update)
+
+**Quality Gate Features:**
+- Step 1: Run quality checklist (escaped chars, gerunds, repeated phrases)
+- Step 2: Verify verb diversity (all 5 categories represented)
+- Step 3: Auto-regenerate bullets if issues found (max 3 iterations)
+- Step 4: Trigger plain text export after passing
+
+**Plain Text Export Features:**
+- Auto-generates `/mnt/user-data/outputs/[job-title]-bullets.txt`
+- Clean format: No markdown, proper bullet points (•)
+- Includes metadata: character/word counts, verb distribution
+- Auto-displayed in response with copy-paste code block
+
+**Impact:**
+- Zero quality issues in final output (escaped chars, gerunds, missing verb diversity)
+- All 5 verb categories guaranteed in every resume
+- No repeated verb categories within same position
+- Plain text export auto-generated for easy copy-paste
+- Reduced manual formatting work for users
 
 ---
 
