@@ -1,6 +1,6 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.1.10
+## Current Version: v6.1.11
 ## In Development: v6.2.0
 
 ---
@@ -194,6 +194,44 @@
 - More accurate match scoring that reflects recruiter evaluation priorities
 - Missing a Required skill now has 1.5x the negative impact of missing a Preferred skill
 - Comprehensive test coverage for all phases
+
+---
+
+## v6.1.11 - Keyword Evidence Principle & Enhanced Quality Controls (COMPLETE) <!-- v6.1.11 Change -->
+
+**Branch:** `v6.1.11-various_fixes` | **Status:** Complete | **Date:** 2025-12-31
+
+**Changes:**
+- [x] Added keyword_evidence_principle to core_principles (critical priority)
+- [x] Added keyword_input_handling section for WITH-JD and AFTER-bullets scenarios
+- [x] Updated PROJECT-INSTRUCTIONS.md (v6.1.10 → v6.1.11)
+- [x] Updated quick-start-phase.md (v6.1.9 → v6.1.11)
+- [x] Updated core/format-rules.md (v6.1.10 → v6.1.11)
+
+**Files Modified:**
+- `PROJECT-INSTRUCTIONS.md` - Added keyword_evidence and keyword_input_handling
+- `quick-start-phase.md` - Added keyword_evidence and keyword_input_handling
+- `core/format-rules.md` - Version bump
+- `docs/CHANGELOG.md` - Added v6.1.11 entry
+- `ROADMAP.md` - Current version update
+
+**Keyword Evidence Features:**
+- Cross-references keywords against job history before optimization
+- Only includes keywords evidenced in position tools/skills/achievements
+- Exception: User can explicitly confirm unevidenced skills
+- Prevents keyword stuffing without backing evidence
+
+**Keyword Input Handling Features:**
+- Handles keywords provided WITH JD or AFTER bullet generation
+- Categorizes keywords: ✓ EVIDENCED, ✗ NOT EVIDENCED, ? UNCLEAR
+- Outputs keyword coverage report
+- Asks user confirmation for unevidenced keywords
+
+**Impact:**
+- Prevents keyword stuffing and maintains resume authenticity
+- Ensures keywords only included when backed by actual job history
+- Transparent reporting of which keywords were/weren't incorporated
+- Better alignment between resume content and actual experience
 
 ---
 

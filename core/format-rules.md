@@ -1,6 +1,6 @@
 # Format Rules Configuration
 
-**Version:** 6.1.10
+**Version:** 6.1.11
 **Applies to:** All Phases
 
 ---
