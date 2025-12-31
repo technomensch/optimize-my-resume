@@ -29,12 +29,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Shows which keywords were incorporated (with position and bullet references)
   - Lists skipped keywords with reasons (not evidenced in job history)
   - Flags keywords requiring user clarification
+- **Chronological Order Verification** - Ensures plain text export maintains reverse chronological order
+  - Added step_1_verify_chronological_order to automatic_plain_text_export
+  - Verifies positions ordered newest → oldest before file creation
+  - Uses dates, tenure duration, or context clues to confirm ordering
+  - Enforces standard resume conventions (most recent job first)
 
 #### Changed
-- **PROJECT-INSTRUCTIONS.md** - Added keyword_evidence_principle and keyword_input_handling sections (v6.1.10 → v6.1.11)
+- **PROJECT-INSTRUCTIONS.md** - Added keyword_evidence_principle, keyword_input_handling, and chronological order verification (v6.1.10 → v6.1.11)
 - **quick-start-phase.md** - Added keyword_evidence_principle and keyword_input_handling sections (v6.1.9 → v6.1.11)
 - **core/format-rules.md** - Updated version (v6.1.10 → v6.1.11)
 - **Phase 3 behavior** - Added "Handle keyword input according to keyword_input_handling rules"
+- **Automatic Plain Text Export** - Added step_1_verify_chronological_order before file creation
 
 #### Impact
 - ✅ Prevents keyword stuffing and maintains resume authenticity

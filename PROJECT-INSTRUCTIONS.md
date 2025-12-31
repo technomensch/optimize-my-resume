@@ -823,6 +823,25 @@
       This provides users with clean, copy-paste ready bullets without markdown formatting.
     </instruction>
 
+    <step_1_verify_chronological_order> <!-- v6.1.11 Change: Added chronological order verification -->
+      <action>BEFORE creating plain text file, verify position ordering</action>
+      <verification_process>
+        1. Verify positions are in REVERSE CHRONOLOGICAL ORDER (newest first)
+        2. If dates are unclear, use tenure duration or context clues
+        3. Most recent position should appear first in the export
+        4. Oldest position should appear last in the export
+      </verification_process>
+      <critical_rule>
+        Plain text export MUST maintain reverse chronological order (most recent job first).
+        This matches standard resume conventions and user expectations.
+      </critical_rule>
+    </step_1_verify_chronological_order>
+
+    <step_2_format_and_export> <!-- v6.1.11 Change: Restructured as step 2 -->
+      <action>Format plain text with positions ordered newest → oldest</action>
+      <output>Create file in /mnt/user-data/outputs/</output>
+    </step_2_format_and_export>
+
     <format_specification>
       <structure>
         [Professional Summary]
