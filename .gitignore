@@ -1,4 +1,14 @@
+# macOS system files
+.DS_Store
+**/.DS_Store
+
 docs/prompts/legacy-prompts/
+
+# Chat History - Local conversation logs and job history summaries
+chat-history/
+
+# Keep the .gitkeep file to maintain the directory structure
+!chat-history/.gitkeep
 
 # JD Cache (Phase 3) - Cache parsed JDs locally, don't commit
 jd_parsed/*.json
