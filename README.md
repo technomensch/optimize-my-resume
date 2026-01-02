@@ -1,4 +1,4 @@
-# Optimize My Resume v6.1
+# Optimize My Resume v6.2 <!-- v6.2.0 Change -->
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -284,6 +284,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
      - LinkedIn applications: Paste customized summary in "Why are you interested?" section
      - Email applications: Include in the body to show tailored interest
    - **Pro tip:** The per-JD summary includes JD keywords for ATS optimization
+   - **Template system:** Job summaries now use a standardized template ensuring consistent structure across all AI tools (Claude, ChatGPT, Gemini, Copilot). Available in both XML (.txt) and Markdown (.md) formats. <!-- v6.2.0 Change -->
 
 ---
 

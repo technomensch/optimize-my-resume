@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v6.1.11
+# Optimize-My-Resume System v6.2.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - QUICK START (SINGLE FILE)                     -->
 <!-- ========================================================================== -->
-<!-- Version: 6.1.11                                                            -->
-<!-- Last Updated: December 2025                                                -->
+<!-- Version: 6.2.0                                                             -->
+<!-- Last Updated: January 2, 2026                                              -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
 <!-- ========================================================================== -->
@@ -35,8 +35,69 @@
     - Analyze EVERY position using position-by-position loop
     - Score resume across 4 categories (ATS Format, Content Quality, Quantifiable Impact, Skills & Keywords)
     - Output comprehensive analysis report
+    - Generate job history following template system (see below)
   </behavior>
 </phase>
+
+<!-- ========================================================================== -->
+<!-- JOB HISTORY TEMPLATE SYSTEM (v6.2.0)                                      -->
+<!-- ========================================================================== -->
+
+<job_history_template_system>
+  <overview>
+    Template system ensuring ALL LLMs generate job history with identical structure.
+    Dual-format: .txt (XML for LLMs) + .md (Markdown for humans).
+  </overview>
+
+  <critical_rules>
+    - ALWAYS use exact tag names from templates (no synonyms)
+    - NEVER skip sections (use "Not applicable" if no data)
+    - ALWAYS maintain section order as defined
+    - Use standardized date format: "Month Year" or "Present"
+    - Balance all XML tags (proper opening/closing)
+  </critical_rules>
+
+  <required_structure>
+    <position id="N">
+      <metadata>job_title, company, dates, duration, location</metadata>
+      <professional_summary>2-4 sentences</professional_summary>
+      <core_responsibilities>3-5 bullets</core_responsibilities>
+      <key_achievements>CONTEXT/ACTION/RESULT/IMPACT format</key_achievements>
+      <hard_skills_demonstrated>Technical skills list</hard_skills_demonstrated>
+      <soft_skills_demonstrated>Soft skills list</soft_skills_demonstrated>
+      <tools_technologies>Tools and platforms used</tools_technologies>
+      <impact_metrics>Quantified business results</impact_metrics>
+      <industry_domain>sector, domain</industry_domain>
+      <methodology>Agile, Waterfall, etc.</methodology>
+      <strategic_decisions>Key decisions made</strategic_decisions>
+      <team_scope>direct_reports, team_size, stakeholders</team_scope>
+      <honest_limitations>What you don't know or can't claim</honest_limitations>
+    </position>
+  </required_structure>
+
+  <workflow>
+    1. Generate job_history_vX.txt (XML structure)
+    2. Validate: python3 scripts/validate_job_history.py job_history_vX.txt
+    3. Convert: python3 scripts/convert_job_history_to_md.py job_history_vX.txt
+    4. Deliver both .txt and .md formats
+  </workflow>
+
+  <template_files>
+    Reference templates/LLM_GENERATION_INSTRUCTIONS.md for complete guidance.
+    See templates/job_history_template.xml for exact schema.
+  </template_files>
+
+  <version_management>
+    - MAJOR (v7.0 → v8.0): New/removed position
+    - MINOR (v7.0 → v7.1): Added achievements, skills, metrics
+    - PATCH (v7.1 → v7.1.1): Typos, clarifications
+  </version_management>
+
+  <best_practice>
+    Keep .txt as source of truth, generate .md for presentations.
+    Always validate before converting.
+  </best_practice>
+</job_history_template_system>
 
 <!-- ========================================================================== -->
 <!-- PHASE 2: BULLET OPTIMIZATION                                                -->

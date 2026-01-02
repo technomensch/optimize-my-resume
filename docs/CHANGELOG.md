@@ -9,6 +9,117 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.2.0 - Job History Template System & Workflow Automation (2026-01-02) <!-- v6.2.0 Addition -->
+> **Branch:** `v6.2.0-job-history-templates`
+
+#### Added
+- **Job History Template System** - Comprehensive template infrastructure ensuring cross-LLM consistency
+  - **XML Schema Template** (`templates/job_history_template.xml`) - Defines exact structure all LLMs must follow
+    - 13 required sections per position (metadata, professional_summary, core_responsibilities, key_achievements, etc.)
+    - Standardized tag names (no synonyms allowed)
+    - Mandatory section ordering
+    - Standardized date formats ("Month Year" or "Present")
+  - **Markdown Template** (`templates/job_history_template.md`) - Presentation format structure
+    - Emoji headers (🎯, 🏢, 📊, 💼)
+    - Markdown tables for metrics
+    - Hierarchical organization
+  - **LLM Generation Instructions** (`templates/LLM_GENERATION_INSTRUCTIONS.md`) - 3,500+ word comprehensive guide
+    - Exact schema enforcement rules
+    - Tag name requirements with EXACT MATCH table
+    - Section order mandates
+    - Achievement structure (CONTEXT/ACTION/RESULT/IMPACT)
+    - Style & tone guidelines
+    - Common mistakes to avoid
+  - **Template System README** (`templates/README.md`) - Complete system documentation
+    - Template system overview and purpose
+    - File descriptions and usage
+    - Workflow diagrams
+    - Quick start guide
+    - Format comparison (.txt vs .md)
+    - Best practices and troubleshooting
+
+- **Python Automation Tools** - Validation and conversion infrastructure
+  - **Validation Script** (`scripts/validate_job_history.py`) - 226 lines, ensures schema compliance
+    - Header format validation
+    - Version history presence checking
+    - Required global sections verification (education, certifications, master_skills_inventory)
+    - Required position sections validation (13 sections per position)
+    - Metadata completeness checks (job_title, company, dates, duration)
+    - Professional summary length validation (minimum 2 sentences)
+    - XML tag balance verification (all tags properly opened/closed)
+  - **Conversion Script** (`scripts/convert_job_history_to_md.py`) - 400+ lines, converts .txt to .md
+    - XML parsing with regex
+    - Emoji header generation
+    - Markdown table formatting for metrics
+    - Hierarchical structure creation
+    - Achievement expansion (CONTEXT/ACTION/RESULT/IMPACT)
+    - Professional summary formatting
+    - Skills list conversion
+
+- **Workflow Skills** - Automated workflow management
+  - **`/md-job-history` Skill** (`.claude/skills/md-job-history.md`) - Convert job history to Markdown
+    - Context-aware file detection
+    - Automatic validation before conversion
+    - User-friendly error messages
+    - Integration with /update-history workflow
+  - **`/update-history` Skill** (`.claude/skills/update-history.md`) - Intelligent version management
+    - Analyzes chat context to identify updates
+    - Determines version increment (MAJOR/MINOR/PATCH)
+    - Applies surgical updates (preserves existing content)
+    - Validates and converts to both formats
+    - Provides summary of changes
+
+- **Dual-Format Architecture** - Optimized for both machines and humans
+  - **.txt format (XML structure)** - Source of truth for LLM consumption
+    - XML-like tag structure for semantic clarity
+    - Explicit section markers
+    - Schema validation compatible
+    - Optimized for LLM parsing
+  - **.md format (Markdown)** - Presentation format for human viewing
+    - Generated automatically from .txt
+    - Emoji headers and professional formatting
+    - Markdown tables
+    - Do NOT edit directly (regenerate from .txt)
+
+#### Changed
+- **PROJECT-INSTRUCTIONS.md** - Added comprehensive `<job_history_template_system>` section (v6.1.11 → v6.2.0)
+  - 385 lines of template system documentation
+  - Dual-format architecture explanation
+  - Validation and conversion workflows
+  - Workflow skills documentation
+  - Best practices and cross-LLM consistency guarantees
+  - Integration with Phases 1, 2, and 3
+- **quick-start-phase.md** - Added condensed `<job_history_template_system>` section (v6.1.11 → v6.2.0)
+  - Quick reference for template system
+  - Critical rules and required structure
+  - Validation and conversion workflow
+  - Version management guidelines
+
+#### Impact
+- ✅ **Cross-LLM Consistency** - Claude, Gemini, ChatGPT, Copilot all generate identical structure
+- ✅ **Automated Validation** - Schema violations caught immediately
+- ✅ **Dual-Format Output** - .txt for LLMs, .md for humans
+- ✅ **Workflow Automation** - /md-job-history and /update-history skills streamline management
+- ✅ **Version Management** - Clear MAJOR/MINOR/PATCH increment rules
+- ✅ **Surgical Updates** - Preserve existing content, enhance specific sections
+- ✅ **Template System** - Prevents structural drift as LLM technology evolves
+- ✅ **Comprehensive Documentation** - 3,500+ word guide ensures consistency
+
+#### Philosophy
+- Keep .txt as source of truth, generate .md for presentations
+- Always validate before converting
+- Use surgical updates only - preserve existing content, add/enhance specific sections
+- Template system ensures consistency across all LLMs now and in the future
+
+#### Files Created (6,452 lines total)
+- Templates: 4 files (~1,515 lines)
+- Scripts: 2 files (~626 lines)
+- Skills: 2 files (~697 lines)
+- Job history: v7.0, v7.1 with .txt and .md formats (~2,714 lines)
+- Plans: Implementation plan (~900 lines)
+
+---
+
 ### v6.1.11 - Keyword Evidence Principle & Enhanced Quality Controls (2025-12-31)
 > **Branch:** `v6.1.11-various_fixes`
 
