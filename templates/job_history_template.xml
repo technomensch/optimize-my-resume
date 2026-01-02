@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+JOB HISTORY XML TEMPLATE
+Version: 1.0
+Purpose: Standardized schema for LLM-generated job history summaries
+Usage: All LLMs (Claude, Gemini, ChatGPT, Copilot) MUST follow this exact structure
+
+IMPORTANT: This template ensures consistency across different LLMs
+-->
+
+<!-- File Header Format -->
+================================================================================
+COMPREHENSIVE JOB HISTORY SUMMARIES - VERSION X.X (BRIEF VERSION DESCRIPTION)
+================================================================================
+
+<!-- Version History:
+vX.X: Brief description of this version (Date)
+  - Change 1
+  - Change 2
+  - Change 3
+-->
+
+Format: v2.0 Schema (12-section structure per role)
+Last Updated: [Month Year]
+Total Jobs: [Number] ([breakdown description])
+
+================================================================================
+GLOBAL PROFILE INFORMATION
+================================================================================
+
+<education>
+  <degree type="[masters|bachelors|associate|doctorate]">
+    <title>[Degree Name]</title>
+    <institution>[University Name]</institution>
+    <location>[City, State]</location>
+    <graduation_date>[Date or "Not specified"]</graduation_date>
+  </degree>
+  <!-- Repeat for additional degrees -->
+</education>
+
+<certifications>
+  <certification status="[active|inactive]">
+    <name>[Certification Name]</name>
+    <issuer>[Issuing Organization]</issuer>
+    <date_earned>[MM/YYYY]</date_earned>
+    <expiration>[Date or "Present (No expiration)"]</expiration>
+  </certification>
+  <!-- Repeat for additional certifications -->
+</certifications>
+
+<clearances>
+  <clearance status="[active|inactive]">
+    <level>[Clearance Level]</level>
+    <agency>[Agency Name]</agency>
+    <date_obtained>[Date]</date_obtained>
+    <date_expired>[Date or "Active"]</date_expired>
+  </clearance>
+  <!-- Repeat for additional clearances -->
+</clearances>
+
+<master_skills_inventory>
+  <!-- Aggregated from all positions below -->
+  [Comma-separated list of all skills across all positions]
+</master_skills_inventory>
+
+<!-- Position Template - Repeat for each position -->
+================================================================================
+POSITION [N]: [Job Title/Company Short Name]
+================================================================================
+
+<position id="[N]">
+  <metadata>
+    <job_title>[Full Job Title]</job_title>
+    <company>[Company Name (Additional Context)]</company>
+    <contract_type>[Contractor|Employee|Temporary Contractor|etc.]</contract_type>
+    <dates>
+      <start>[Month Year]</start>
+      <end>[Month Year or "Present"]</end>
+      <duration>[X months/years]</duration>
+    </dates>
+    <location>[Location or "Not specified"]</location>
+    <work_arrangement>[Remote|Hybrid|On-site|"Not specified"]</work_arrangement>
+  </metadata>
+
+  <professional_summary>
+    [2-4 sentence summary of role, key achievements, and impact. Should include:
+    - Role descriptor
+    - Major accomplishments with metrics
+    - Key responsibilities
+    - Notable impact/outcomes]
+  </professional_summary>
+
+  <core_responsibilities>
+    - [Responsibility 1]
+    - [Responsibility 2]
+    - [Responsibility 3]
+    - [Continue as needed]
+  </core_responsibilities>
+
+  <key_achievements>
+    <!-- For structured achievements (preferred): -->
+    <achievement id="[N]" metric_type="[category]">
+      <context>[What was the situation/problem?]</context>
+      <action>[What did you do?]</action>
+      <result>[What was the measurable outcome?]</result>
+      <impact>[What was the broader significance?]</impact>
+    </achievement>
+
+    <!-- OR for simple bullet achievements: -->
+    - [Achievement 1 with metrics]
+    - [Achievement 2 with metrics]
+    - [Continue as needed]
+  </key_achievements>
+
+  <hard_skills_demonstrated>
+    - [Skill 1]
+    - [Skill 2 (with clarification if needed)]
+    - [Continue as needed]
+  </hard_skills_demonstrated>
+
+  <soft_skills_demonstrated>
+    - [Soft Skill 1]
+    - [Soft Skill 2]
+    - [Continue as needed]
+  </soft_skills_demonstrated>
+
+  <tools_technologies>
+    - [Tool/Technology 1 (with context if helpful)]
+    - [Tool/Technology 2]
+    - [Continue as needed]
+  </tools_technologies>
+
+  <impact_metrics>
+    - [Metric 1: Value/description]
+    - [Metric 2: Value/description]
+    - [Continue as needed]
+  </impact_metrics>
+
+  <industry_domain>
+    <sector>[Industry/Sector]</sector>
+    <domain>[Specific domain/focus area]</domain>
+  </industry_domain>
+
+  <methodology>
+    [Description of methodologies, processes, or frameworks used.
+    Can include phases, approaches, or specific practices.]
+  </methodology>
+
+  <strategic_decisions>
+    - [Key decision 1 and rationale]
+    - [Key decision 2 and rationale]
+    - [Continue as needed]
+  </strategic_decisions>
+
+  <team_scope>
+    <direct_reports>[Number or "N/A"]</direct_reports>
+    <team_size>[Description]</team_size>
+    <stakeholder_groups>[List of stakeholder types]</stakeholder_groups>
+  </team_scope>
+
+  <honest_limitations>
+    - [Unknown 1]
+    - [Unknown 2]
+    - [Continue as needed]
+  </honest_limitations>
+</position>
+
+<!-- Repeat <position> block for each job -->
