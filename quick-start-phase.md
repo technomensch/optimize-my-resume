@@ -564,6 +564,7 @@
 <position_ordering>
   <critical_rule>Positions MUST be displayed in REVERSE CHRONOLOGICAL ORDER</critical_rule>
   <definition>Reverse chronological = Most recent job FIRST (Position 1), oldest job LAST</definition>
+  <guardrail_reference>Guardrail #2 (Chronological Integrity): Verify date sanity and sequence.</guardrail_reference> <!-- v6.3.0 Change -->
 </position_ordering>
 
 <!-- ========================================================================== -->
