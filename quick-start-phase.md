@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v6.2.0
+# Optimize-My-Resume System v6.3.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - QUICK START (SINGLE FILE)                     -->
 <!-- ========================================================================== -->
-<!-- Version: 6.2.0                                                             -->
-<!-- Last Updated: January 2, 2026                                              -->
+<!-- Version: 6.3.0 (January 2026)                                              --> <!-- v6.3.0 Release: 27 Quality Guardrails -->
+<!-- Last Updated: January 3, 2026                                              -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
 <!-- ========================================================================== -->
@@ -504,6 +504,20 @@
       "[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM before pasting these bullets into your final resume and submitting."
     </instruction>
   </secondary_grammar_check_rule>
+
+  <master_guardrail_checklist> <!-- v6.3.0 Change: Added 27 Guardrail Compliance Checklist -->
+    <priority>critical</priority>
+    <instruction>Consult this checklist during all phases to ensure system integrity.</instruction>
+    <check_list>
+      1. Metric Isolation | 2. Chronological Integrity | 3. Summary Abstraction | 4. Metric Compatibility
+      5. Honest Limitations | 6. Data Loss Prevention | 7. Skill Classification | 8. Budget Compliance
+      9. Verb Diversity | 10. Keyword Quality | 11. Plausibility Filter | 12. Recency Weighting
+      13. Metric Reconciliation | 14. Iteration Limit | 15. Phrase Repetition | 16. Inventory Protection
+      17. Scope Attribution | 18. Conflict Resolution | 19. Fit Consistency | 20. Acronym Expansion
+      21. Skill Context | 22. Symbol Validation | 23. State Persistence | 24. Alternatives Diversity
+      25. Confirmation Tracking | 26. Output Order | 27. Input Detection
+    </check_list>
+  </master_guardrail_checklist>
 </quality_assurance_rules>
 
 <!-- ========================================================================== -->
