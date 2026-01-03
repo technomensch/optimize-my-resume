@@ -1,0 +1,53 @@
+#!/bin/bash
+# Post-commit hook for Memory System
+# Suggests documentation based on commit message keywords
+
+COMMIT_MSG=$(git log -1 --pretty=%B)
+COMMIT_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD)
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "📚 Memory System Suggestion"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Keyword-based triggers (no line/file count thresholds)
+LESSON_KEYWORDS="fix|solved|debug|implement|refactor|pattern|architecture|design"
+ADR_KEYWORDS="architecture|design|decision|adr|pattern"
+GOTCHA_KEYWORDS="gotcha|pitfall|surprising|unexpected|workaround"
+
+if echo "$COMMIT_MSG" | grep -iEq "$LESSON_KEYWORDS"; then
+    echo "💡 Lesson-worthy commit detected"
+    echo "   Consider: /lesson-learned"
+    echo "   Reason: Commit message suggests problem-solving or implementation"
+    echo ""
+fi
+
+if echo "$COMMIT_MSG" | grep -iEq "$ADR_KEYWORDS"; then
+    echo "🏛️  Architectural commit detected"
+    echo "   Consider: Create ADR in docs/decisions/"
+    echo "   Reason: Design decision may need formalization"
+    echo ""
+fi
+
+if echo "$COMMIT_MSG" | grep -iEq "$GOTCHA_KEYWORDS"; then
+    echo "⚠️  Gotcha detected"
+    echo "   Consider: Update docs/knowledge/gotchas.md"
+    echo "   Reason: Surprising behavior worth documenting"
+    echo ""
+fi
+
+# Link to related lessons
+COMMIT_KEYWORDS=$(echo "$COMMIT_MSG" | tr '[:upper:]' '[:lower:]' | grep -oE '\w{5,}' | head -5)
+RELATED_LESSONS=$(grep -rl "$COMMIT_KEYWORDS" docs/lessons-learned/ 2>/dev/null | head -3)
+
+if [ -n "$RELATED_LESSONS" ]; then
+    echo "📖 Related lessons:"
+    echo "$RELATED_LESSONS" | while read -r lesson; do
+        LESSON_NAME=$(basename "$lesson" .md | sed 's/Lessons_Learned_//')
+        echo "   - $LESSON_NAME"
+    done
+    echo "   Tip: /recall <topic> to review"
+    echo ""
+fi
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
