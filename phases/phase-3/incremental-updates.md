@@ -1,6 +1,6 @@
 # Incremental Job History Updates Protocol - Phase 3
 
-**Version:** 1.0
+**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #6, #16, #21 -->
 **Created:** 2025-12-28
 **Purpose:** Add, edit, or remove positions from job history without full re-analysis
 
@@ -612,6 +612,73 @@ For required fields (job_title, company, dates):
 For optional fields (achievements, education):
   → Allow user to skip
   "That's optional. Type 'skip' if you don't have this information."
+```
+
+---
+
+## Incremental Update Quality Gates (Guardrails)
+
+### Guardrail #6: Data Loss Prevention
+
+> **Implementation Target:** Add to [phases/phase-3/incremental-updates.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/incremental-updates.md).
+
+**Instruction Text:**
+```xml
+<data_loss_prevention_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    Ensure that adding or editing a position does not overwrite or delete unrelated existing data.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE saving finalized job history:
+    1. LOAD original file.
+    2. PERFORM 'Integrity Check':
+       - count_before = total_positions
+       - count_after = (total_positions + 1) [for Add] OR (total_positions) [for Edit]
+       - IF count_after is unexpected:
+         ABORT save.
+         RE-SYNC with original file and RETRY update logic.
+    3. SEARCH for "Placeholder" text or empty [brackets] in fields that were NOT part of the current update.
+       IF found:
+         BLOCK save and restore from backup.
+  </validation_logic>
+</data_loss_prevention_guardrail>
+```
+
+### Guardrail #16: Master Skills Inventory Protection
+
+> **Implementation Target:** Add to [phases/phase-3/incremental-updates.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/incremental-updates.md) (primary) and [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (secondary).
+
+**Instruction Text:**
+```xml
+<inventory_protection_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Never add a skill to the <master_skills_inventory> unless it is explicitly and literally supported by a <key_achievement> or <core_responsibility> in the Job History.
+  </instruction>
+  
+  <validation_logic>
+    WHEN user adds/edits a skill:
+      SCAN position achievements for that skill keyword.
+      IF NOT found:
+        PROMPT: "I see you're adding [Skill], but I don't see matching achievements. Should we add an achievement that demonstrates this skill first?"
+        BLOCK addition to master inventory until evidence is provided.
+  </validation_logic>
+</inventory_protection_guardrail>
+```
+
+### Guardrail #21: Skill Inventory Context (Secondary)
+
+> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [phases/phase-3/incremental-updates.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/incremental-updates.md) (secondary).
+
+**Instruction Text:**
+```xml
+<incremental_skill_context_check>
+  <instruction>
+    When updating a position, verify that newly added skills match the professional level and domain of that specific role.
+  </instruction>
+</incremental_skill_context_check>
 ```
 
 ---
