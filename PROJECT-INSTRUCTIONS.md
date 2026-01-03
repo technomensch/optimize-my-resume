@@ -1,9 +1,10 @@
-# Optimize-My-Resume System v6.2.0
+# Optimize-My-Resume System v6.3.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.2.0                                                             --> <!-- v6.2.0 Release: Job History Template System & Workflow Automation -->
+<!-- Version: 6.3.0 (December 2025)                                             --> <!-- v6.3.0 Release: 27 Quality Guardrails & Multi-Phase Integrity Checks -->
+<!-- Previous: 6.2.0                                                             --> <!-- v6.2.0 Release: Job History Template System & Workflow Automation -->
 <!-- Previous: 6.1.11                                                           --> <!-- v6.1.11 Release: Keyword evidence principle, keyword input handling, quality gate, plain text export -->
 <!-- Previous: 6.1.10                                                           --> <!-- v6.1.10 Release: Automatic quality gate with regeneration loop, plain text auto-export -->
 <!-- Previous: 6.1.9                                                            --> <!-- v6.1.9 Release: Skill priority weights (3:2:1 model), test case expansion (79 tests) -->
@@ -1317,6 +1318,43 @@
       "[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM before pasting these bullets into your final resume and submitting."
     </instruction>
   </secondary_grammar_check_rule>
+
+  <master_guardrail_checklist> <!-- v6.3.0 Change: Added 27 Guardrail Compliance Checklist -->
+    <priority>critical</priority>
+    <instruction>
+      Consult this checklist during all phases to ensure system integrity.
+    </instruction>
+    
+    <check_list>
+      1.  Metric Isolation: Metrics must be uniquely tied to specific positions and traceable to source.
+      2.  Chronological Integrity: Positions MUST be in reverse chronological order (newest first).
+      3.  Summary Abstraction: Summaries should be high-level and not duplicate bullet wording.
+      4.  Metric Compatibility: Metrics must be plausible and appropriate for the role context.
+      5.  Honest Limitations: Claims must respect stated user limitations (no overstatement).
+      6.  Data Loss Prevention: Updates must not overwrite unrelated existing data.
+      7.  Skill Classification: Skill terms cannot exist in both hard and soft arrays simultaneously.
+      8.  Budget Compliance: Bullets 100-210 chars; Section word count 350-500.
+      9.  Verb Diversity: No repeating verb category within a single position.
+      10. Keyword Quality: Weight keywords based on JD frequency and section emphasis.
+      11. Plausibility Filter: Common-sense validation of all numeric claims.
+      12. Recency Weighting: Prioritize bullet count/metrics for the most recent position.
+      13. Metric Reconciliation: Summary metrics MUST have supporting bullets in job history.
+      14. Iteration Limit: Max 3 quality gate loops; diagnostic output on failure.
+      15. Phrase Repetition: Scan for 3+ word phrases repeated 3+ times across resume.
+      16. Inventory Protection: Skills in master inventory MUST be backed by achievements.
+      17. Scope Attribution: Distinguish individual contribution from team-wide effort.
+      18. Conflict Resolution: Resolve JD-History contradictions before processing.
+      19. Fit Consistency: Fit score must match the volume and severity of gaps.
+      20. Acronym Expansion: Spell out domain-specific acronyms on first use.
+      21. Skill Context: Suggested skills must match the professional level of the role.
+      22. Symbol Validation: Use consistent symbols; no forbidden unicode/em-dashes (—).
+      23. State Persistence: Preserve user context and preferences across workflows.
+      24. Alternatives Diversity: Offer exactly 3 distinct verb-category alternatives.
+      25. Confirmation Tracking: Log user approvals; do not repeat clarifying questions.
+      26. Output Order: Enforce strict section sequence in optimized outputs.
+      27. Input Detection: Classify user input (Resume vs JD vs Keywords) with confidence.
+    </check_list>
+  </master_guardrail_checklist>
 </quality_assurance_rules>
 
 <!-- ========================================================================== -->
