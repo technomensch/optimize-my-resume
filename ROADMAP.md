@@ -1,7 +1,7 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.2.0 <!-- v6.2.0 Change -->
-## In Development: v6.3.0 <!-- v6.2.0 Change -->
+## Current Version: v6.3.0 <!-- v6.3.0 Change -->
+## In Development: v7.0.0 <!-- v6.3.0 Change -->
 
 ---
 
@@ -189,19 +189,46 @@ Comprehensive template infrastructure ensuring cross-LLM consistency for job his
 
 ---
 
-## v6.3.0 - Polish & Edge Cases (Future) <!-- v6.2.0 Change -->
+---
 
-**Planned Features:**
-- [ ] Summary generator edge cases
-- [ ] Enhanced error messages (E001-E008)
-- [ ] Output specification templates for resume bullets (ensure consistent output across LLMs)
-  - Exact templates for each output type
-  - Formatting rules (no emojis, bullet styles, spacing)
-  - Required vs optional sections
-  - Character limits where applicable
+## v6.3.0 - System Integrity Guardrails (COMPLETE) <!-- v6.3.0 Change -->
 
-**Removed from scope:**
-- ~~State recovery (checkpoints, undo)~~ - Not possible without environment control. File-based persistence only.
+**Branch:** `v6.3.0-adding_guardrails` | **Status:** Complete | **Date:** 2026-01-03
+
+**Implementation Overview:**
+Integrated 27 comprehensive quality guardrails across all modular components and core instruction files. This release focuses on **data integrity**, **factual accuracy**, **quantitative enforcement**, and **user experience consistency**.
+
+**Guardrail Pass Breakdown:**
+1. **Pass 1: Data Integrity** (#1-4) - Metric traceability, chronological order, summary abstraction, metric compatibility
+2. **Pass 2: Data Safety** (#5-7) - Limitation enforcement, data loss prevention, skill classification
+3. **Pass 3: Quantitative Enforcement** (#8-14) - Character limits, verb diversity, keyword density, plausibility, recency weighting, reconciliation, failure handling
+4. **Pass 4: Cross-Phase Consistency** (#15-21) - Phrase repetition, master skills quarantine, scope attribution, phase consistency, fit scores, acronym expansion, skill context
+5. **Pass 5: User Experience** (#22-27) - Symbol/em-dash validation, state persistence, alternatives diversity, confirmation tracking, output structure, input type detection
+
+**Files Modified (Total 12 components updated):**
+- [x] `PROJECT-INSTRUCTIONS.md` (v6.2.0 → v6.3.0) - Added Master Guardrail Checklist
+- [x] `quick-start-phase.md` (v6.2.0 → v6.3.0) - Added condensed Guardrail Checklist
+- [x] `core/format-rules.md` (v6.3.0) - Added #8, #14, #15, #22, #2, #12, #20
+- [x] `core/metrics-requirements.md` (v6.3.0) - Added #4, #11
+- [x] `core/verb-categories.md` (v6.3.0) - Added #9, #24
+- [x] `core/fit-thresholds.md` (v6.3.0) - Added #19
+- [x] `phases/phase-1/job-history-v2-creation.md` (v2.1.0) - Added #1, #17, #5
+- [x] `phases/phase-1/jd-parsing-17-point.md` (v2.1.0) - Added #7, #10
+- [x] `phases/phase-2/evidence-matching.md` (v1.1.0) - Added #5, #21, #24, #16, #1
+- [x] `phases/phase-3/workflow-router.md` (v1.1.0) - Added #18, #23, #25, #27
+- [x] `phases/phase-3/incremental-updates.md` (v1.1.0) - Added #6, #16, #21
+- [x] `phases/phase-4/summary-generation.md` (v1.2.0) - Added #3, #13, #26, #15
+
+**Impact:**
+- **Zero-Trust Factual Content:** Metrics and claims must be literally evidenced in job history.
+- **Structural Sanity:** Guaranteed chronological order and strict output templates.
+- **Narrative Variety:** Proactive checks for phrase repetition and verb diversity.
+- **Safety Gauges:** Honest limitations enforcement prevents overstatement and hallucination.
+- **Predictable UX:** Consistent state persistence and input type detection across all user interactions.
+
+---
+
+## v7.0.0 - Multi-Agent Architecture (In Development) <!-- v6.3.0 Change -->
 
 ---
 
