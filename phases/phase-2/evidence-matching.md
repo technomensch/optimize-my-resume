@@ -1,6 +1,6 @@
 # Evidence-Based Matching Protocol - Phase 2
 
-**Version:** 1.0
+**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #1, #5, #16, #21, #24 -->
 **Created:** 2025-12-28
 **Purpose:** Match JD requirements against job history with evidence citations and gap analysis
 
@@ -595,6 +595,114 @@ EXAMPLE OUTPUT:
     → Accenture | Senior Analyst (2019-2020)
   Gap: Led teams but not at required scale (5 vs 10+ required)
   Recommendation: Highlight team leadership experience, acknowledge smaller scale
+```
+
+---
+
+## Evidence Matching Quality Gates (Guardrails)
+
+### Guardrail #5: honest_limitations Enforcement
+
+> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md) (secondary).
+
+**Instruction Text:**
+```xml
+<honest_limitations_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    Implicitly cross-reference every claim against the "Honest Limitations" section of the Job History.
+  </instruction>
+  
+  <validation_logic>
+    FOR EACH matched skill:
+      CHECK if skill exists in <honest_limitations_summary>
+      IF found:
+        Compare claim ("I am an expert in X") vs limitation ("I only have 3 months of X")
+        IF claim > limitation:
+          FLAG as Hallucination Risk
+          FORCE status to [PARTIAL]
+          ADD Note: "Matched via [Evidence] but subject to stated limitation: [Limitation Text]"
+  </validation_logic>
+</honest_limitations_guardrail>
+```
+
+### Guardrail #21: Skill Inventory Context Verification
+
+> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md).
+
+**Instruction Text:**
+```xml
+<skill_context_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Ensure skills pulled from the master inventory are contextually appropriate for the target position.
+  </instruction>
+  
+  <validation_logic>
+    FOR EACH skill suggested from master_skills_inventory:
+      CHECK: "Does this skill meaningfully support a 'Lead', 'Collaborate', or 'Built' achievement in this specific role?"
+      IF skill is tangential (e.g., suggesting 'Photoshop' for a 'Database Admin' role just because it's in the master inventory):
+        FLAG as "Contextual Mismatch"
+        EXCLUDE from current position suggestions.
+  </validation_logic>
+</skill_context_guardrail>
+```
+
+### Guardrail #24: Alternatives Presentation Consistency
+
+> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [verb-categories.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/verb-categories.md) (secondary).
+
+**Instruction Text:**
+```xml
+<alternatives_presentation_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    When presenting alternative bullets, ensure variety and context-aware filtering.
+  </instruction>
+  
+  <sub_guardrails>
+    <guardrail id="no_repeat_category_per_position">
+      Within ONE position, alternatives must NOT repeat the same verb category if it's already used in a fixed bullet.
+    </guardrail>
+    <guardrail id="max_3_alternatives">
+      Present exactly 3 distinct alternatives per bullet replacement.
+    </guardrail>
+    <guardrail id="diversity_requirement">
+      The 3 alternatives MUST represent 3 DIFFERENT verb categories.
+    </guardrail>
+  </sub_guardrails>
+  
+  <loop_prevention>
+    IF diversity_requirement would result in 0 valid alternatives:
+      FALLBACK: Present best available alternatives and add warning: "[WARNING: Restricted by available evidence categories]"
+  </loop_prevention>
+</alternatives_presentation_guardrail>
+```
+
+### Guardrail #16: Master Skills Inventory Protection (Secondary)
+
+> **Implementation Target:** Add to [phases/phase-3/incremental-updates.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/incremental-updates.md) (primary) and [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (secondary).
+
+**Instruction Text:**
+```xml
+<inventory_protection_guardrail>
+  <instruction>
+    Never add a skill to <master_skills_inventory> unless it is explicitly supported by a <key_achievement> in the Job History.
+  </instruction>
+</inventory_protection_guardrail>
+```
+
+### Guardrail #1: Metric Isolation & Traceability (Secondary)
+
+> **Implementation Target:** Add to [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md) (primary) and [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (secondary).
+
+**Instruction Text:**
+```xml
+<metric_traceability_verification>
+  <instruction>
+    Verification step: Confirm the cited achievement source literally contains the metric being used.
+  </instruction>
+</metric_traceability_verification>
 ```
 
 ---
