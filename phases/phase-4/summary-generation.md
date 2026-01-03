@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 1.1.0 <!-- v1.1.0 Change: Added mandatory secondary grammar check warning -->
+**Version:** 1.2.0 <!-- v1.2.0 Change: Added Guardrails #3, #13, #15, #26 -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 
@@ -535,6 +535,96 @@ DURING PER-JD CUSTOMIZATION:
 "Extracting JD keywords..."
 "Optimizing keyword placement..."
 "Done. Here's your customized summary:"
+```
+
+---
+
+## Summary Generation Quality Gates (Guardrails)
+
+### Guardrail #3: Professional Summary Separation
+
+> **Implementation Target:** Add to [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md).
+
+**Instruction Text:**
+```xml
+<summary_abstraction_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Ensure the Professional Summary is a high-level abstraction and does not exactly duplicate the wording of specific resume bullets.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE finalized output:
+    1. Extract all generated summary sentences.
+    2. COMPARE each sentence against all extracted resume bullets in <positions>.
+    3. IF similarity (Levenshtein distance or semantic overlap) > 85%:
+       - REWRITE the summary sentence to be broader.
+       - Focus on the *aggregate* impact rather than the *specific* task.
+  </validation_logic>
+</summary_abstraction_guardrail>
+```
+
+### Guardrail #13: Summary-to-Bullet Metric Reconciliation
+
+> **Implementation Target:** Add to [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md).
+
+**Instruction Text:**
+```xml
+<metric_reconciliation_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    Every metric used in a Professional Summary MUST have a corresponding, supporting metric in the Job History bullets.
+  </instruction>
+  
+  <validation_logic>
+    FOR EACH metric (%, $, volume) in the summary:
+      SEARCH for that metric in the key_achievements of the Job History.
+      IF NOT found:
+        STOP generation.
+        PROMPT: "Summary mentions [Metric X], but I don't see this in your job highlights. Did you mean to add this to a specific position first?"
+  </validation_logic>
+</metric_reconciliation_guardrail>
+```
+
+### Guardrail #26: Output Order Enforcement
+
+> **Implementation Target:** Add to [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md).
+
+**Instruction Text:**
+```xml
+<output_order_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Enforce a strict section order for the final customized output.
+  </instruction>
+  
+  <required_order>
+    1. [Company] | [Job Title] (Header)
+    2. Professional Summary (Customized)
+    3. Changes Made (Summary of Optimization)
+    4. Key Achievements (Optional / if requested)
+    5. Action Verb Categories (Optional / if requested)
+    6. Secondary Grammar Check Warning (v1.1.0)
+  </required_order>
+  
+  <validation_logic>
+    IF output sequence deviates from <required_order>:
+      RE-ORDER sections before presenting to user.
+  </validation_logic>
+</output_order_guardrail>
+```
+
+### Guardrail #15: Phrase Repetition Enforcement (Secondary)
+
+> **Implementation Target:** Add to [core/format-rules.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/format-rules.md) (primary) and [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md) (secondary).
+
+**Instruction Text:**
+```xml
+<summary_phrase_repetition_check>
+  <instruction>
+    Apply Guardrail #15 logic (3+ word phrases repeated 3+ times) across both the Summary and the top 3 visible positions to ensure overall narrative variety.
+  </instruction>
+</summary_phrase_repetition_check>
 ```
 
 ---
