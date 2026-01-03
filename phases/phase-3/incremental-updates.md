@@ -1,6 +1,6 @@
 # Incremental Job History Updates Protocol - Phase 3
 
-**Version:** 1.0
+**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #6, #21a, #21b -->
 **Created:** 2025-12-28
 **Purpose:** Add, edit, or remove positions from job history without full re-analysis
 
@@ -612,6 +612,113 @@ For required fields (job_title, company, dates):
 For optional fields (achievements, education):
   → Allow user to skip
   "That's optional. Type 'skip' if you don't have this information."
+```
+
+---
+
+## Incremental Update Quality Gates (Guardrails)
+
+### Guardrail #6: Data Loss Prevention during Updates
+
+> **Implementation Target:** [incremental-updates.md](phases/phase-3/incremental-updates.md).
+
+**Instruction Text:**
+```xml
+<data_loss_prevention_guardrail> <!-- v6.3.0 Change: Restored original with additions merged -->
+  <priority>CRITICAL</priority>
+  <trigger>When executing /update-history or modifying existing positions</trigger> <!-- NEW from v6.3.0 plan -->
+  <instruction>
+    Ensure that adding or editing a position does not overwrite or delete unrelated existing data.
+  </instruction>
+  
+  <!-- NEW from v6.3.0 plan: Item Count Verification -->
+  <item_count_verification>
+    Compare the "Item Count" of the original vs. the new draft.
+    
+    Rule:
+    - New `core_responsibilities` count >= Original count (unless deletion explicitly requested).
+    - New `key_achievements` count >= Original count.
+    
+    IF New count < Original count:
+      STOP and verify: "Did you intend to remove [Missing Item]?"
+  </item_count_verification>
+  
+  <!-- ORIGINAL: Full validation with backup/restore logic -->
+  <validation_logic>
+    BEFORE saving finalized job history:
+    1. LOAD original file.
+    2. PERFORM 'Integrity Check':
+       - count_before = total_positions
+       - count_after = (total_positions + 1) [for Add] OR (total_positions) [for Edit]
+       - IF count_after is unexpected:
+         ABORT save.
+         RE-SYNC with original file and RETRY update logic.
+    3. SEARCH for "Placeholder" text or empty [brackets] in fields that were NOT part of the current update.
+       IF found:
+         BLOCK save and restore from backup.
+  </validation_logic>
+</data_loss_prevention_guardrail>
+```
+
+
+### Guardrail #16: Master Skills Inventory Protection
+
+> **Implementation Target:** [PROJECT-INSTRUCTIONS.md](PROJECT-INSTRUCTIONS.md) (primary) and [incremental-updates.md](phases/phase-3/incremental-updates.md) (secondary).
+
+**Instruction Text:**
+```xml
+<inventory_protection_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    Never add a skill to the <master_skills_inventory> unless it is explicitly and literally supported by a <key_achievement> or <core_responsibility> in the Job History.
+  </instruction>
+  
+  <validation_logic>
+    WHEN user adds/edits a skill:
+      SCAN position achievements for that skill keyword.
+      IF NOT found:
+        PROMPT: "I see you're adding [Skill], but I don't see matching achievements. Should we add an achievement that demonstrates this skill first?"
+        BLOCK addition to master inventory until evidence is provided.
+  </validation_logic>
+</inventory_protection_guardrail>
+```
+
+### Guardrail #21a: Skill Inventory Context Verification (Original) <!-- v6.3.0 Change: Restored original guardrail -->
+
+> **Implementation Target:** [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [incremental-updates.md](phases/phase-3/incremental-updates.md) (secondary).
+
+**Instruction Text:**
+```xml
+<incremental_skill_context_check>
+  <priority>HIGH</priority> <!-- v6.3.0 Change: Added priority tag -->
+  <instruction>
+    When updating a position, verify that newly added skills match the professional level and domain of that specific role.
+  </instruction>
+</incremental_skill_context_check>
+```
+
+### Guardrail #21b: Limitation-to-Bullet Cross-Check (Secondary) <!-- v6.3.0 Change: Renamed from #21 to #21b to distinguish from original -->
+
+> **Implementation Target:** [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [incremental-updates.md](phases/phase-3/incremental-updates.md) (secondary).
+
+**Instruction Text:**
+```xml
+<limitation_bullet_cross_check_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    During Phase 3 bullet generation, check honest_limitations BEFORE recommending bullets for each position.
+  </instruction>
+  
+  <validation_logic>
+    WHEN generating bullets for Position N in Phase 3:
+      1. Load position[N].honest_limitations
+      2. Extract JD requirements
+      3. FOR EACH JD requirement:
+           IF requirement mentions skill/tool in honest_limitations:
+             DO NOT generate bullet for Position N using this requirement
+             ADD to gap analysis: "Position [N] limited: [limitation text]"
+  </validation_logic>
+</limitation_bullet_cross_check_guardrail>
 ```
 
 ---

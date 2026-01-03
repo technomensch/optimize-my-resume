@@ -1,6 +1,6 @@
 # Workflow Router - Complete Entry Point System (Phase 3)
 
-**Version:** 1.0
+**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #18, #23, #25, #27 -->
 **Created:** 2025-12-29
 **Purpose:** Complete routing system that detects user intent and routes to appropriate workflow
 **Extends:** phases/phase-1/entry-router.md
@@ -453,6 +453,107 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 ### Scenario 8: No Context
 **Input:** User's first message is "hello"
 **Expected:** Detect first interaction → Show welcome message
+
+---
+
+- **Re-Comparison:** phases/phase-3/re-comparison.md
+- **JD Parsing:** phases/phase-1/jd-parsing-17-point.md
+- **Evidence Matching:** phases/phase-2/evidence-matching.md
+
+---
+
+## Workflow Routing Quality Gates (Guardrails)
+
+### Guardrail #18: Skill/Metric Conflict Resolution
+
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
+
+**Instruction Text:**
+```xml
+<conflict_resolution_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Resolve contradictions between JD requirements and Job History facts before processing.
+  </instruction>
+  
+  <validation_logic>
+    IF JD requires [Skill X] AND Job History states [Limitation/Lack of Skill X]:
+      STOP routing.
+      PROMPT user: "JD requires [Skill X], but your history notes [Limitation]. How would you like me to represent this? (e.g., mention related skill [Y], or flag as a gap?)"
+  </validation_logic>
+</conflict_resolution_guardrail>
+```
+
+### Guardrail #23: User State Persistence Consistency
+
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
+
+**Instruction Text:**
+```xml
+<state_persistence_guardrail>
+  <priority>MODERATE</priority>
+  <instruction>
+    Maintain continuity of the 'State' across different tasks.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE starting any new workflow Scenario (1-8):
+      1. LOAD latest user-state from memory/context.
+      2. VERIFY compatibility: "Does current intent [Scenario N] utilize all previously accepted changes from [Scenario M]?"
+      3. IF mismatched (e.g., user is asking to re-compare a JD that was never parsed):
+         - RESET to appropriate entry point.
+         - NOTIFY user: "I see we have [Old State], but you're asking for [New Action]. I'll reset to [New Action] to ensure consistency."
+  </validation_logic>
+</state_persistence_guardrail>
+```
+
+### Guardrail #25: Confirmation Tracking Guardrail
+
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
+
+**Instruction Text:**
+```xml
+<confirmation_tracking_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    Never proceed to "Action" steps without explicit, affirmative user confirmation.
+  </instruction>
+  
+  <validation_logic>
+    FOR EVERY Scenario 1-8:
+      MUST reach <confirmation_prompt> state.
+      IF user response is NOT clearly affirmative ("yes", "proceed", "go", "1"):
+        RE-PROMPT with clarified options.
+        DO NOT execute handler (e.g., incremental-updates.md) until confirmation is logged.
+  </validation_logic>
+</confirmation_tracking_guardrail>
+```
+
+### Guardrail #27: Output Format Consistency Scanner
+
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
+
+**Instruction Text:**
+```xml
+<output_format_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Scan final output for unexpected markdown or structure anomalies.
+  </instruction>
+  
+  <validation_logic>
+    1. CHECK that the presentation exactly matches the 'Scenario' template (e.g., Scenarios 1-8).
+    2. SCAN for:
+       - Unclosed XML tags.
+       - Missing bullet points where required.
+       - Placeholder text like "[INSERT_HERE]" that wasn't replaced.
+       - Broken file paths or URLs.
+    3. IF anomalies found:
+       - Auto-fix if trivial.
+       - REGENERATE section if structural.
+  </validation_logic>
+</output_format_guardrail>
+```
 
 ---
 

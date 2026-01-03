@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 1.1.0 <!-- v1.1.0 Change: Added mandatory secondary grammar check warning -->
+**Version:** 1.2.0 <!-- v1.2.0 Change: Added Guardrails #3, #13, #15, #26 -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 
@@ -535,6 +535,100 @@ DURING PER-JD CUSTOMIZATION:
 "Extracting JD keywords..."
 "Optimizing keyword placement..."
 "Done. Here's your customized summary:"
+```
+
+---
+
+## Summary Generation Quality Gates (Guardrails)
+
+### Guardrail #3: Professional Summary Abstraction
+
+> **Implementation Target:** [summary-generation.md](phases/phase-4/summary-generation.md).
+
+**Instruction Text:**
+```xml
+<summary_abstraction_guardrail>
+  <priority>HIGH</priority> <!-- v6.3.0 Change: Restored priority tag -->
+  <instruction>
+    The Professional Summary must function as an "Executive Synthesis," not a "Bullet Echo."
+  </instruction>
+  <constraints>
+    - <constraint id="no_mirroring">No sentence in the summary can share more than 50% of its keywords with any single bullet point in the resume.</constraint>
+    - <constraint id="synthesis_requirement">At least one sentence must synthesize metrics across multiple roles (e.g., "Led projects across [Industry A] and [Industry B], achieving [Cumulative Metric]").</constraint>
+    - <constraint id="impact_first">Start sentences with the "Outcome" (The Why) rather than the "Action" (The How) to differentiate from bullets.</constraint>
+  </constraints>
+</summary_abstraction_guardrail>
+```
+
+<!-- v6.3.0 ARCHIVED ORIGINAL (2026-01-03): The following is the original Guardrail #3 implementation 
+     that was replaced with the above simplified version. Retained for reference in case the more 
+     detailed Levenshtein/semantic overlap validation logic needs to be restored.
+     
+     REASON FOR REPLACEMENT: The new version provides additional constraints (synthesis_requirement, 
+     impact_first) that the original lacked, and uses a simpler 50% keyword threshold instead of 
+     85% semantic overlap. The new approach is more actionable but less technically precise.
+
+ORIGINAL GUARDRAIL #3:
+```xml
+<summary_abstraction_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Ensure the Professional Summary is a high-level abstraction and does not exactly duplicate the wording of specific resume bullets.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE finalized output:
+    1. Extract all generated summary sentences.
+    2. COMPARE each sentence against all extracted resume bullets in <positions>.
+    3. IF similarity (Levenshtein distance or semantic overlap) > 85%:
+       - REWRITE the summary sentence to be broader.
+       - Focus on the *aggregate* impact rather than the *specific* task.
+  </validation_logic>
+</summary_abstraction_guardrail>
+```
+-->
+
+### Guardrail #13: Summary-to-Bullets Metric Reconciliation
+
+> **Implementation Target:** [summary-generation.md](phases/phase-4/summary-generation.md).
+
+**Instruction Text:**
+```xml
+<summary_metric_reconciliation_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Every quantified claim in the Professional Summary must be traceable to at least one bullet point.
+  </instruction>
+  
+  <validation_process>
+    1. Extract all metrics from Professional Summary (e.g., "10 years", "$5M", "500K+ users")
+    2. FOR EACH metric in summary:
+         Search all bullets for supporting evidence
+         IF metric NOT found in any bullet:
+           FLAG as "Unsupported summary claim"
+           Options:
+             A) Add supporting bullet
+             B) Remove metric from summary
+             C) Verify metric exists in job history and add to bullets
+  </validation_process>
+  
+  <exception>
+    Years of experience can be calculated from position dates without explicit bullet mention
+  </exception>
+</summary_metric_reconciliation_guardrail>
+```
+
+### Guardrail #15: Phrase Repetition Enforcement (Secondary)
+
+> **Implementation Target:** [format-rules.md](core/format-rules.md) (primary) and [summary-generation.md](phases/phase-4/summary-generation.md) (secondary).
+
+**Instruction Text:**
+```xml
+<summary_phrase_repetition_check>
+  <instruction>
+    Apply Guardrail #15 logic (3+ word phrases repeated 3+ times) across both the Summary and the top 3 visible positions to ensure overall narrative variety.
+  </instruction>
+</summary_phrase_repetition_check>
 ```
 
 ---

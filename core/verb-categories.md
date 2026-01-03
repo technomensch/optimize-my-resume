@@ -1,6 +1,6 @@
 # Action Verb Categories
 
-**Version:** 5.0  
+**Version:** 6.3.0 <!-- v6.3.0 Change: Added Guardrail #9 and secondary implementation for #7, #24 -->
 **Applies to:** All Modes
 
 ---
@@ -122,6 +122,102 @@ For each bullet point in the resume:
    - Report the verb
    - State which category it belongs to
    - Provide reasoning based on context
+
+---
+
+## Skill & Verb Quality Gates (Guardrails)
+
+### Guardrail #9: Verb Diversity Per-Position Enforcement
+
+> **Implementation Target:** Add to [verb-categories.md](core/verb-categories.md) (primary) and [format-rules.md](core/format-rules.md) (secondary).
+
+**Instruction Text:**
+```xml
+<position_verb_diversity_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Within a SINGLE position, no verb category may be used more than once.
+  </instruction>
+  
+  <validation_logic>
+    FOR EACH position:
+      verb_categories_used = []
+      
+      FOR EACH bullet in position:
+        category = identify_verb_category(bullet)
+        
+        IF category IN verb_categories_used:
+          FLAG as "Duplicate category in position [N]"
+          REGENERATE bullet using different category
+        ELSE:
+          verb_categories_used.append(category)
+  </validation_logic>
+  
+  <exception>
+    If position has 5+ bullets, allow ONE category to repeat (but still prefer diversity)
+  </exception>
+</position_verb_diversity_guardrail>
+```
+
+### Guardrail #7: Skill Categorization Mutual Exclusivity (Secondary)
+
+> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+
+**Instruction Text:**
+```xml
+<skill_classification_guardrail>
+  <instruction>
+    A single skill term cannot exist in both <hard_skills_demonstrated> and <soft_skills_demonstrated> within the same position.
+  </instruction>
+  <auto_correction>
+    IF duplicates found:
+    - Technical/Tools/Hard Skills -> Keep in <hard_skills_demonstrated>, remove from Soft.
+    - Behavioral/Leadership/Interpersonal -> Keep in <soft_skills_demonstrated>, remove from Hard.
+  </auto_correction>
+</skill_classification_guardrail>
+```
+
+---
+
+## Quality Gate Iteration & Loop Prevention
+
+The following principles ensure that diversity rules do not cause infinite loops during regeneration.
+
+### Loop Prevention Principles for Alternatives (#24 Secondary)
+
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+
+```xml
+<loop_prevention_principles>
+  <principle id="soft_limits">
+    Use SOFT constraints (deprioritize) not HARD blocks for global category counts.
+    Position-level: Hard constraint (never repeat within position)
+    Global-level: Soft constraint (deprioritize, don't block entirely)
+  </principle>
+  
+  <principle id="escape_hatch">
+    If ALL categories are "unavailable", fall back to least-used category.
+    Never return "no valid alternatives" error.
+  </principle>
+  
+  <principle id="one_way_data_flow">
+    Alternatives guardrail READS verb inventory but does NOT WRITE to it.
+    Writing only occurs when user ACCEPTS a recommendation.
+  </principle>
+  
+  <principle id="no_premature_counting">
+    Do NOT count alternatives as "used" before user selection.
+    Only accepted bullets update the category inventory.
+  </principle>
+</loop_prevention_principles>
+```
+
+### Anti-Patterns to Avoid
+| Anti-Pattern | Why It Causes Loops |
+|--------------|---------------------|
+| Hard blocking categories after N uses | Could result in "no valid alternatives" error |
+| Auto-regeneration when alternatives don't meet diversity | Creates feedback loop with quality gate |
+| Counting alternatives before user accepts | Depletes inventory before selections made |
 
 ---
 

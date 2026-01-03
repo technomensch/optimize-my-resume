@@ -1,6 +1,6 @@
 # 17-Point Job Description Parsing Protocol
 
-**Version:** 2.0
+**Version:** 2.1.0 <!-- v2.1.0 Change: Added Guardrails #7, #10 -->
 **Created:** 2025-12-28
 **Purpose:** Extract structured data from job descriptions using comprehensive 17-point schema
 
@@ -718,6 +718,64 @@ Before finalizing JD parse:
 - [ ] **Remote Classification:** If work_lifestyle is "Remote", check remote_restrictions
 - [ ] **Missing Fields:** Set to null (not empty string, not "Not specified" unless noted)
 - [ ] **Metadata:** extraction_confidence, extraction_method populated
+
+- [ ] **Metadata:** extraction_confidence, extraction_method populated
+
+---
+
+## JD Parsing Quality Gates (Guardrails)
+
+### Guardrail #7: Skill Categorization Consistency
+
+> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+
+**Instruction Text:**
+```xml
+<skill_classification_guardrail>
+  <instruction>
+    A single skill term cannot exist in both <hard_skills_needed> and <soft_skills_needed> arrays within the same JD output.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE finalized output:
+    1. Scan elements in all four skill arrays (needed/wanted, hard/soft).
+    2. CHECK for duplicates across Hard/Soft boundaries.
+    3. IF found:
+       - Technical/Tools/Hard Skills -> Move to HARD_SKILLS, remove from Soft.
+       - Behavioral/Leadership/Interpersonal -> Move to SOFT_SKILLS, remove from Hard.
+  </validation_logic>
+</skill_classification_guardrail>
+```
+
+### Guardrail #10: JD Keyword Density Validation
+
+> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md).
+
+**Instruction Text:**
+```xml
+<keyword_quality_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Identify and weight keywords based on JD frequency and section emphasis.
+  </instruction>
+  
+  <validation_logic>
+    FOR EACH extracted skill:
+      calculated_importance = (total_occurrences_in_jd) * (section_multiplier)
+      
+      section_multiplier = {
+        "Job Title": 3.0,
+        "Requirements Header": 2.0,
+        "Responsibilities Bullet": 1.5,
+        "Conversational Mention": 1.0
+      }
+      
+    IF importance >= [Threshold]:
+      FLAG as "Core Keyword"
+      MUST be prioritized in <evidence-matching> and <summary-generation>.
+  </validation_logic>
+</keyword_quality_guardrail>
+```
 
 ---
 

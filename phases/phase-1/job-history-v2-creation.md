@@ -1,6 +1,6 @@
 # Job History v2.0 - Creation Protocol
 
-**Version:** 2.0
+**Version:** 2.1.0 <!-- v2.1.0 Change: Added Guardrails #1, #5, #17 -->
 **Created:** 2025-12-28
 **Purpose:** Complete job history schema with evidence-based matching support
 
@@ -601,6 +601,83 @@ Before marking job history as complete:
 - [ ] **Section 12:** Additional info complete (languages, clearances, work auth)
 - [ ] **Evidence Quality:** Each achievement has clear Context-Action-Result
 - [ ] **Classification Accuracy:** Spot-check 5 skills for correct HARD/SOFT classification
+
+- [ ] **Classification Accuracy:** Spot-check 5 skills for correct HARD/SOFT classification
+
+---
+
+## Job History Quality Gates (Guardrails)
+
+### Guardrail #1: Metric Isolation & Traceability
+
+> **Implementation Target:** Add to [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md) (primary) and [evidence-matching.md](phases/phase-2/evidence-matching.md) (secondary).
+
+**Instruction Text:**
+```xml
+<metric_isolation_guardrail>
+  <priority>CRITICAL</priority>
+  <instruction>
+    Ensure every metric ($ amounts, %, multipliers) is uniquely tied to the specific position where it was achieved.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE finalized extraction:
+    1. Scan all extracted metrics.
+    2. FOR EACH metric:
+       - Confirm literal presence in source text for THAT position.
+       - IF found in other positions, verify if it's a repeated achievement or a cross-contamination error.
+       - FLAG for re-verification if a metric appears in multiple roles with identical wording.
+  </validation_logic>
+  
+  <metric_source_formatting>
+    When listing a metric in <achievements>, include a 'Traceability Hash' in internal thinking:
+    [Metric: "34% increase"] -> [Source: "Google Lead PM Responsibilities paragraph 3"]
+  </metric_source_formatting>
+</metric_isolation_guardrail>
+```
+
+### Guardrail #17: Scope Attribution Validation
+
+> **Implementation Target:** Add to [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md).
+
+**Instruction Text:**
+```xml
+<scope_attribution_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Distinguish between team-wide achievements and individual contributions.
+  </instruction>
+  
+  <validation_logic>
+    SCAN achievements for collective pronouns ("We", "The team", "Our department").
+    IF found:
+      IDENTIFY specific user role in that achievement.
+      REWRITE to emphasize individual action: "Led team of X to..." or "Contributed [Specific Effort] to team project that achieved..."
+      
+    BLOCK: Achieving a 50% revenue increase for the entire 5,000-person company as a Junior Analyst achievement. 
+    REWRITE: "Performed critical data analysis supporting $X revenue increase initiative."
+  </validation_logic>
+</scope_attribution_guardrail>
+```
+
+### Guardrail #5: honest_limitations Enforcement (Secondary)
+
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md) (secondary).
+
+**Instruction Text:**
+```xml
+<honest_limitations_enforcement>
+  <instruction>
+    During initial extraction, if a user mentions limitations (e.g., "I did Python but only for 3 months"), these MUST be captured in an "Honest Limitations Summary" section.
+  </instruction>
+  <validation>
+    Cross-reference every hard skill claim in Section 5 against the Limitations Summary.
+    IF skill claim exceeds stated limitation:
+      FLAG as "Potential Hallucination/Overstatement"
+      REDUCE claim to match limitation.
+  </validation>
+</honest_limitations_enforcement>
+```
 
 ---
 

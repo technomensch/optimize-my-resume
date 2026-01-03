@@ -9,6 +9,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.3.0 - System Integrity Guardrails (2026-01-03) <!-- v6.3.0 Addition -->
+> **Branch:** `v6.3.0-adding_guardrails`
+
+#### Added
+- **27 Comprehensive Quality Guardrails** - Integrated across all modular components and core instruction files to ensure data integrity, factual accuracy, and user experience consistency.
+- **Pass 1: Data Integrity** (#1-4)
+  - **Metric Isolation (#1)**: Ensures metrics are uniquely tied to specific positions and traceable to their original source in the job history.
+  - **Chronological Integrity (#2)**: Mandates reverse-chronological order for all position displays and exports.
+  - **Summary Abstraction (#3)**: Prevents professional summaries from duplicating bullet wording, forcing high-level overview.
+  - **Metric Compatibility (#4)**: Heuristic validation to ensure metrics (%, $, volume) match the role's scope and seniority.
+- **Pass 2: Data Safety** (#5-7)
+  - **Honest Limitations (#5)**: Critical gate preventing claims that exceed user's stated limitations or experience caps.
+  - **Data Loss Prevention (#6)**: Integrity checks before file saves to prevent accidental overwriting of unrelated history data.
+  - **Skill Classification Mutual Exclusivity (#7)**: Logic to ensure skills don't appear in both hard and soft skills categories simultaneously.
+- **Pass 3: Quantitative Enforcement** (#8-14)
+  - **Budget Compliance Gate (#8)**: Strict enforcement of character-per-bullet (100-210) and word-per-section (350-500) limits.
+  - **Verb Diversity Per-Position (#9)**: Prevents sharing the same verb category twice within any single position's bullets.
+  - **JD Keyword Density (#10)**: Validates that keyword optimization doesn't compromise content quality or authenticity.
+  - **Plausibility Filter (#11)**: Common-sense validation logic for numeric claims (e.g., preventing >100% efficiency gains without context).
+  - **Position Recency Weighting (#12)**: Systematically prioritizes bullet count and metric density for the most recent role.
+  - **Summary-to-Bullet Metric Reconciliation (#13)**: Ensures every metric in a customized summary has a matching supporting bullet.
+  - **Quality Gate Iteration Limit (#14)**: Safeguard preventing infinite regeneration loops (capped at 3 iterations) with diagnostic fallback.
+- **Pass 4: Cross-Phase Consistency** (#15-21)
+  - **Phrase Repetition Enforcement (#15)**: Scans for 3+ word phrases appearing 3+ times across the entire resume.
+  - **Inventory Protection (#16)**: Prevents adding skills to the master inventory without literal backing from a position's achievements.
+  - **Scope Attribution Validation (#17)**: Distinguishes between "Individual Contributor" achievements and "Leading/Managing" team-wide results.
+  - **Fitz Assessment Score Consistency (#19)**: Validates that match scores (0-100) logically align with identified gaps and red flags.
+  - **Acronym Expansion (#20)**: Mandates spelling out domain-specific acronyms on first use to ensure ATS and recruiter clarity.
+  - **Skill Inventory Context (#21)**: Verifies suggested skills are contextually appropriate for the professional level of the role.
+  - **Em-Dash Validation (#22)**: Automated scanner for forbidden Unicode characters (—) often caused by word processors.
+- **Pass 5: User Experience** (#22-27)
+  - **Skill/Metric Conflict Resolution (#18)**: Resolves contradictions between JD requirements and History limitations before processing.
+  - **User State Persistence (#23)**: Ensures preferences and context (remote status, role titles) persist across different workflow steps.
+  - **Alternatives Presentation Consistency (#24)**: Guarantees exactly 3 distinct verb-category alternatives are presented during optimization.
+  - **Confirmation Tracking (#25)**: Prevents repetitive clarifying questions by logging previous user approvals within the session.
+  - **Output Order Enforcement (#26)**: Enforces a strict section sequence for final optimized outputs to ensure consistent presentation.
+  - **Output Format Consistency Scanner (#27)**: Final scan for markdown anomalies, broken links, or placeholder text before presentation.
+
+#### Changed
+- **PROJECT-INSTRUCTIONS.md** (v6.2.0 → v6.3.0) - Integrated Master Guardrail Checklist into `<quality_assurance_rules>`.
+- **quick-start-phase.md** (v6.2.0 → v6.3.0) - Added condensed 27-point Guardrail Checklist.
+- **Modular Instruction Files** - All core and phase instructions versions updated to v6.3.0 (or equivalent) with specific guardrail implementations.
+
+#### Impact
+- ✅ **Zero-Trust Content Integrity**: Eliminated hallucination risks by requiring literal evidence for every claim.
+- ✅ **Structural Consistency**: Guaranteed output formatting and section ordering across all LLM models.
+- ✅ **Safety and Authenticity**: Honest limitations and plausibility filters ensure resumes remain defensible in interviews.
+- ✅ **Improved UX**: Reduced repetitive prompts and maintained persistent user state throughout the session.
+
+---
+
 ### v6.2.0 - Job History Template System & Workflow Automation (2026-01-02) <!-- v6.2.0 Addition -->
 > **Branch:** `v6.2.0-job-history-templates`
 
