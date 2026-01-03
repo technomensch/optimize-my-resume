@@ -1,8 +1,8 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 11
+**Total Lessons:** 12
 **Categories:** 4
-**Last Updated:** 2026-01-02
+**Last Updated:** 2026-01-03
 
 ---
 
@@ -11,7 +11,7 @@
 **By Category:**
 - [Architecture](#architecture-lessons) (2)
 - [Debugging](#debugging-lessons) (1)
-- [Process](#process-lessons) (6)
+- [Process](#process-lessons) (7)
 - [Patterns](#patterns-lessons) (2)
 
 **By Tag:** See [Tag Index](#tag-index)
@@ -55,39 +55,45 @@
 
 ## Process Lessons
 
-**6 lessons** - See [process/README.md](process/README.md) for full details
+**7 lessons** - See [process/README.md](process/README.md) for full details
 
-1. **[Patch Workflow and /patch Command](process/Lessons_Learned_Patch_Workflow.md)**
+1. **[SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)**
+   - Date: 2026-01-03
+   - Tags: #process #automation #hooks #memory-system #claude-code #workflow
+   - Problem: Manual triggering overhead for memory system skills
+   - Solution: Hook-based automation at workflow boundaries (SessionStart + git commit)
+
+2. **[Patch Workflow and /patch Command](process/Lessons_Learned_Patch_Workflow.md)**
    - Date: 2025-12-11
    - Tags: #process #workflow #patch #planning
    - Problem: Jumping to implementation before analysis during patches
    - Solution: Always analyze → plan → implement, even for "simple" bug fixes
 
-2. **[Branch Prompt Workflow Pattern](process/Lessons_Learned_Branch_Prompt_Workflow.md)**
+3. **[Branch Prompt Workflow Pattern](process/Lessons_Learned_Branch_Prompt_Workflow.md)**
    - Date: 2025-12-10
    - Tags: #process #workflow #prompts #iteration #git-hygiene
    - Problem: Testing AI prompt changes without breaking stable versions
    - Solution: Use branch-specific temporary prompts, never commit them
 
-3. **[Chat History Export Workflow](process/Lessons_Learned_Chat_History_Workflow.md)**
+4. **[Chat History Export Workflow](process/Lessons_Learned_Chat_History_Workflow.md)**
    - Date: 2025-12-18
    - Tags: #process #workflow #chat-history #context-preservation #git-hygiene
    - Problem: Preserving conversation context before compaction
    - Solution: Track chat-history/ folder, ignore contents, export before compaction
 
-4. **[Plan File Locations](process/Lessons_Learned_Plan_File_Locations.md)**
+5. **[Plan File Locations](process/Lessons_Learned_Plan_File_Locations.md)**
    - Date: 2025-12-10
    - Tags: #process #planning #file-organization #version-control
    - Problem: Plans created in temporary `.claude/plans/` instead of tracked `docs/plans/`
    - Solution: Move plans from `.claude/plans/` to `docs/plans/` for version control
 
-5. **[Automated Validation for Documentation Consistency](process/Lessons_Learned_Automated_Validation.md)**
+6. **[Automated Validation for Documentation Consistency](process/Lessons_Learned_Automated_Validation.md)**
    - Date: 2025-12-10
    - Tags: #process #automation #validation #documentation #consistency
    - Problem: Documentation conflicts and version inconsistencies during rapid iteration
    - Solution: Automated validation scripts catch issues before they compound
 
-6. **[Version Consistency Across Split Changelogs](process/Lessons_Learned_Split_Changelog_Versioning.md)**
+7. **[Version Consistency Across Split Changelogs](process/Lessons_Learned_Split_Changelog_Versioning.md)**
    - Date: 2025-12-17
    - Tags: #process #versioning #changelog #consistency #automation
    - Problem: Maintaining version consistency with separate user/developer changelogs
@@ -124,11 +130,13 @@
 - [ID-Based Architecture](architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
-**#automation** (2 lessons)
+**#automation** (3 lessons)
+- [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
 - [Automated Validation](process/Lessons_Learned_Automated_Validation.md)
 - [Split Changelog Versioning](process/Lessons_Learned_Split_Changelog_Versioning.md)
 
-**#claude-code** (2 lessons)
+**#claude-code** (3 lessons)
+- [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
 - [Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)
 - [Skills Not Loading](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)
 
@@ -143,8 +151,14 @@
 - [Branch Prompt Workflow](process/Lessons_Learned_Branch_Prompt_Workflow.md)
 - [Chat History Workflow](process/Lessons_Learned_Chat_History_Workflow.md)
 
+**#hooks** (1 lesson)
+- [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
+
 **#knowledge-capture** (1 lesson)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+
+**#memory-system** (1 lesson)
+- [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
 
 **#optimization** (1 lesson)
 - [ID-Based Architecture](architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
@@ -157,7 +171,8 @@
 - [Patch Workflow](process/Lessons_Learned_Patch_Workflow.md)
 - [Plan File Locations](process/Lessons_Learned_Plan_File_Locations.md)
 
-**#process** (6 lessons)
+**#process** (7 lessons)
+- [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
 - [Patch Workflow](process/Lessons_Learned_Patch_Workflow.md)
 - [Branch Prompt Workflow](process/Lessons_Learned_Branch_Prompt_Workflow.md)
 - [Chat History Workflow](process/Lessons_Learned_Chat_History_Workflow.md)
@@ -175,7 +190,8 @@
 **#versioning** (1 lesson)
 - [Split Changelog Versioning](process/Lessons_Learned_Split_Changelog_Versioning.md)
 
-**#workflow** (5 lessons)
+**#workflow** (6 lessons)
+- [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
 - [Patch Workflow](process/Lessons_Learned_Patch_Workflow.md)
 - [Branch Prompt Workflow](process/Lessons_Learned_Branch_Prompt_Workflow.md)
 - [Chat History Workflow](process/Lessons_Learned_Chat_History_Workflow.md)
@@ -187,6 +203,7 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-03: [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md) - Hook-based automation at workflow boundaries
 - 2026-01-02: [Complete Memory System v6.3.0](patterns/Lessons_Learned_Complete_Memory_System_v6.3.0_Implementation.md) - Full three-phase implementation
 - 2026-01-02: [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md) - Four-pillar memory architecture
 - 2026-01-02: [Skills Not Loading](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md) - Startup-only loading behavior
@@ -231,27 +248,27 @@ grep -r "#architecture" docs/lessons-learned/
 ## Statistics
 
 **By Category:**
-- Process: 6 lessons (55%)
-- Architecture: 2 lessons (18%)
-- Patterns: 2 lessons (18%)
-- Debugging: 1 lesson (9%)
+- Process: 7 lessons (58%)
+- Architecture: 2 lessons (17%)
+- Patterns: 2 lessons (17%)
+- Debugging: 1 lesson (8%)
 
 **Most Common Tags:**
-1. #process (6 lessons)
-2. #workflow (5 lessons)
-3. #architecture (3 lessons)
-4. #skills, #claude-code, #automation, #git-hygiene, #documentation, #planning (2 lessons each)
+1. #process (7 lessons)
+2. #workflow (6 lessons)
+3. #architecture, #automation, #claude-code (3 lessons each)
+4. #skills, #git-hygiene, #documentation, #planning (2 lessons each)
 
 **Timeline:**
 - First lesson: 2025-12-10
-- Latest lesson: 2026-01-02
-- Total span: 23 days
-- Average: ~0.4 lessons per day
+- Latest lesson: 2026-01-03
+- Total span: 24 days
+- Average: ~0.5 lessons per day
 
 **Content:**
-- Total lessons: 11
-- Estimated total lines: ~8,500 lines
-- Average per lesson: ~770 lines
+- Total lessons: 12
+- Estimated total lines: ~9,000 lines
+- Average per lesson: ~750 lines
 
 ---
 
@@ -265,4 +282,4 @@ grep -r "#architecture" docs/lessons-learned/
 ---
 
 **Created:** 2026-01-02
-**Last Major Update:** 2026-01-02 (Phase 3: Categorization complete)
+**Last Major Update:** 2026-01-03 (Added SessionStart Automation lesson)
