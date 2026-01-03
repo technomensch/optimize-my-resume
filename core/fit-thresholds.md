@@ -1,9 +1,7 @@
 # Fit Thresholds Configuration
 
-<!-- Version: 5.1 (v6.1.9 update) -->
-<!-- Purpose: Define fit percentage thresholds for Mode 3 (JD Comparison) -->
-<!-- Last Updated: December 2025 -->
-<!-- v6.1.9 Change: Added skill-level priority weights (3:2:1 model) -->
+**Version:** 6.3.0 <!-- v6.3.0 Change: Added Guardrail #19 Fit Assessment Score Consistency -->
+**Applies to:** All Phases
 
 ---
 
@@ -111,6 +109,46 @@ Based on industry ATS scoring best practices (Rezi.ai, Jobscan, Recruiterflow):
 | **80-89%** | Ask user about gaps | Full investigation + bullets if proceed | MEDIUM-HIGH |
 | **75-79%** | Stop with brief summary | Brief exit (~150-250 words) | LOW |
 | **≤74%** | Stop with ultra-brief | Ultra-brief exit (~50-100 words) | MINIMAL |
+
+---
+
+## Fit Assessment Quality Gates (Guardrails)
+
+### Guardrail #19: Fit Assessment Score Consistency
+
+> **Implementation Target:** Add to [fit-thresholds.md](core/fit-thresholds.md).
+
+**Instruction Text:**
+```xml
+<fit_score_consistency_guardrail>
+  <priority>HIGH</priority>
+  <instruction>
+    Ensure the calculated fit percentage matches the volume and severity of identified gaps.
+  </instruction>
+  
+  <validation_logic>
+    BEFORE outputting final score, count the following:
+    - critical_gaps_count = (number of Required/Must-have skills missing)
+    - preferred_gaps_count = (number of Preferred/Nice-to-have skills missing)
+    
+    APPLY "Consistency Check":
+    IF critical_gaps_count >= 3:
+      score MUST be <= 79% (Stop Tier)
+    IF critical_gaps_count == 2:
+      score MUST be <= 85% (Good/Ask Tier)
+    IF critical_gaps_count == 0 AND preferred_gaps_count <= 2:
+      score SHOULD be >= 90% (Excellent Tier)
+      
+    IF score conflicts with gap counts:
+      RECALCULATE using Scoring Methodology weights (50/30/20) and 3:2:1 model.
+  </validation_logic>
+  
+  <output_requirement>
+    Provide a "Score Justification" block in internal thinking:
+    "Score [X]% justified by [N] critical matches vs [M] gaps."
+  </output_requirement>
+</fit_score_consistency_guardrail>
+```
 
 ---
 

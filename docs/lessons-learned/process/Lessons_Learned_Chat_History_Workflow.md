@@ -642,11 +642,11 @@ After merging v4.8.2 automated export system, a comprehensive security review id
 
 **Problem:**
 ```json
-"command": "/Users/mkaplan/Documents/GitHub/Resume_Analyzer_Optimizer/scripts/auto-export-transcript.sh"
+"command": "/Users/<username>/Documents/GitHub/Resume_Analyzer_Optimizer/scripts/auto-export-transcript.sh"
 ```
 
 **Risks:**
-- ✗ **Privacy Leak:** Exposes developer username (`mkaplan`) in repository
+- ✗ **Privacy Leak:** Exposes developer username in repository
 - ✗ **Collaboration Failure:** Won't work for other contributors
 - ✗ **Cross-Platform Issues:** Hard-coded macOS path breaks on Windows/Linux
 - ✗ **CI/CD Incompatibility:** Breaks in automated build environments
