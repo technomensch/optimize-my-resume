@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "hooks/session-start-memory.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
