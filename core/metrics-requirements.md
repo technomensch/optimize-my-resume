@@ -1,6 +1,6 @@
 # Metrics Requirements
 
-**Version:** 5.0  
+**Version:** 6.3.0 <!-- v6.3.0 Change: Added guardrails #4, #11 -->
 **Applies to:** All Modes
 
 ---
@@ -20,6 +20,39 @@
     <target>At least 4 across entire resume</target>
     <distribution>Professional Summary (1) + Position 1 (2) + Positions 2&3 (1 each minimum)</distribution>
   </requirement>
+
+  <validity_heuristic_check> <!-- v6.3.0 Change: Guardrail #4 - Rule-Metric Compatibility Heuristic -->
+    <instruction>Perform a "Common Sense Audit" on metric-role pairings.</instruction>
+    <audit_questions>
+      - "Does it make sense for a [User_Role] to be personally responsible for [Result X]?"
+      - "Is this metric too specific to a different job category (e.g., code coverage metrics in a PM role)?"
+      - "If the metric is for a government role, does it strictly adhere to the Job History limitations for that specific agency?"
+    </audit_questions>
+  </validity_heuristic_check>
+
+  <metric_plausibility_guardrail> <!-- v6.3.0 Change: Guardrail #11 - Plausibility Filter -->
+    <priority>HIGH</priority>
+    <instruction>Apply common-sense validation to numeric claims before output.</instruction>
+    <plausibility_checks>
+      <check id="percentage_range">
+        All percentages must be 0-100%
+        IF percentage > 100%: FLAG as "Implausible percentage"
+      </check>
+      <check id="time_savings">
+        Time reduction claims must show valid before/after
+        IF "reduced from X to Y" AND Y > X: FLAG as "Inverted time metric"
+      </check>
+      <check id="team_size_consistency">
+        Team size should be consistent with role level
+        IF role = "Junior" AND team_size > 10: FLAG for review
+        IF role = "Senior/Lead" AND team_size = 0: FLAG as "Missing leadership scope"
+      </check>
+      <check id="currency_format">
+        All currency values must include $ symbol and reasonable magnitude
+        IF revenue_claim > $1B for individual contributor: FLAG for review
+      </check>
+    </plausibility_checks>
+  </metric_plausibility_guardrail>
 
 </overall_metrics_requirements>
 ```
