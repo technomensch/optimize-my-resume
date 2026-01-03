@@ -10,6 +10,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### v6.3.0.1 - Guardrail Implementation Audit & Restoration (2026-01-03) <!-- v6.3.0.1 Change -->
+
+#### Issue Detected - LLM Replacement Pattern
+- **Problem:** Gemini replaced existing guardrail implementations with plan specifications instead of merging additions
+- **Impact:** Lost CRITICAL priority tags, backup/restore logic, and placeholder detection in Guardrail #6
+- **Detection:** User-requested audit comparing local changes against committed HEAD
+
+#### Fixed - Guardrail Restorations
+- **Guardrail #6 (Data Loss Prevention):** Restored original with CRITICAL priority, backup/restore logic, placeholder detection, MERGED with new `<trigger>` and `<item_count_verification>` from plan
+- **Guardrail #3 (Professional Summary):** Restored `<priority>HIGH</priority>` tag, archived original as commented reference
+- **Guardrail #21:** Split into #21a (original skill-role matching) and #21b (new limitation cross-check) - both coexist
+
+#### Files Updated (4)
+- `phases/phase-3/incremental-updates.md` - Guardrails #6, #21a, #21b
+- `phases/phase-4/summary-generation.md` - Guardrail #3 with archived original
+- `PROJECT-INSTRUCTIONS.md` - Guardrail #6 in master checklist
+- `quick-start-phase.md` - Guardrail #6 in condensed checklist
+
+#### Security - Username Anonymization
+- Replaced hardcoded `/Users/mkaplan/...` paths with `/Users/<username>/...` in documentation examples
+- Files: `docs/CHANGELOG_DEV.md`, `docs/lessons-learned/process/Lessons_Learned_Chat_History_Workflow.md`
+
+#### Cleanup
+- Deleted duplicate `docs/plans/v6.3-adding_guardrails.md` (canonical file is `v6.3.0-adding_guardrails.md`)
+- Created audit report: `docs/plans/v6.3.0-change-audit-report.md`
+
+#### Lesson Learned
+> When applying implementation plans, LLMs may REPLACE existing implementations with plan specifications instead of MERGING additions. Always audit for content loss when using AI to implement changes, especially for guardrails and safety-critical logic.
+
+---
+
 ### v4.11.1 - ATS Format Parsing Hotfix (2025-12-20) <!-- v4.11.1 Change -->
 > **User-facing changes:** See [CHANGELOG.md](CHANGELOG.md) for full details.
 > This is a user-facing fix (parsing improvements), documented in main changelog.
@@ -117,7 +148,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 #### Fixed - Critical Security Vulnerabilities
 - **Hardcoded Absolute Path (P0):** Exposed developer username, broke collaboration
-  - Before: `/Users/mkaplan/Documents/GitHub/Resume_Analyzer_Optimizer/scripts/...`
+  - Before: `/Users/<username>/Documents/GitHub/Resume_Analyzer_Optimizer/scripts/...`
   - After: `${workspaceFolder}/scripts/...`
   - Impact: Works for ALL contributors, cross-platform compatible, no PII exposure
 

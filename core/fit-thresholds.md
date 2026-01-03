@@ -116,7 +116,7 @@ Based on industry ATS scoring best practices (Rezi.ai, Jobscan, Recruiterflow):
 
 ### Guardrail #19: Fit Assessment Score Consistency
 
-> **Implementation Target:** Add to [fit-thresholds.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/fit-thresholds.md).
+> **Implementation Target:** Add to [fit-thresholds.md](core/fit-thresholds.md).
 
 **Instruction Text:**
 ```xml

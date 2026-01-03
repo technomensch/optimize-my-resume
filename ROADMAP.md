@@ -372,7 +372,7 @@ Integrated 27 comprehensive quality guardrails across all modular components and
 - [ ] Convert Phase files into independent agents with specialized identities
 - [ ] Implement Orchestrator/Manager agent logic using `workflow-router.md`
 - [ ] Standardize context hand-offs (Write/Select/Compress) between agents
-- [ ] Reference Architecture: [Lessons_learned-Context_Engineering_Template.txt](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/docs/lessons-learned/Lessons_learned-Context_Engineering_Template.txt)
+- [ ] Reference Architecture: [Lessons_learned-Context_Engineering_Template.txt](docs/lessons-learned/Lessons_learned-Context_Engineering_Template.txt)
 
 ---
 
@@ -400,4 +400,4 @@ Integrated 27 comprehensive quality guardrails across all modular components and
 
 ---
 
-**Last Updated:** 2025-12-30 (v6.1.9 - Skill priority weights & test case expansion) <!-- v6.1.9 Change -->
+**Last Updated:** 2026-01-03 (v6.3.0.1 - Guardrail audit & restoration) <!-- v6.3.0.1 Change -->

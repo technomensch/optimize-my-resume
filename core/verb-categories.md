@@ -129,7 +129,7 @@ For each bullet point in the resume:
 
 ### Guardrail #9: Verb Diversity Per-Position Enforcement
 
-> **Implementation Target:** Add to [verb-categories.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/verb-categories.md) (primary) and [format-rules.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/format-rules.md) (secondary).
+> **Implementation Target:** Add to [verb-categories.md](core/verb-categories.md) (primary) and [format-rules.md](core/format-rules.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -161,7 +161,7 @@ For each bullet point in the resume:
 
 ### Guardrail #7: Skill Categorization Mutual Exclusivity (Secondary)
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -185,7 +185,7 @@ The following principles ensure that diversity rules do not cause infinite loops
 
 ### Loop Prevention Principles for Alternatives (#24 Secondary)
 
-> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [verb-categories.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 ```xml
 <loop_prevention_principles>

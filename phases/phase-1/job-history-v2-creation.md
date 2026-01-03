@@ -610,7 +610,7 @@ Before marking job history as complete:
 
 ### Guardrail #1: Metric Isolation & Traceability
 
-> **Implementation Target:** Add to [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md) (primary) and [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md) (primary) and [evidence-matching.md](phases/phase-2/evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -638,7 +638,7 @@ Before marking job history as complete:
 
 ### Guardrail #17: Scope Attribution Validation
 
-> **Implementation Target:** Add to [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md).
+> **Implementation Target:** Add to [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md).
 
 **Instruction Text:**
 ```xml
@@ -662,7 +662,7 @@ Before marking job history as complete:
 
 ### Guardrail #5: honest_limitations Enforcement (Secondary)
 
-> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md) (secondary).
 
 **Instruction Text:**
 ```xml

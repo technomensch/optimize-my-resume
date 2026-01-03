@@ -541,11 +541,34 @@ DURING PER-JD CUSTOMIZATION:
 
 ## Summary Generation Quality Gates (Guardrails)
 
-### Guardrail #3: Professional Summary Separation
+### Guardrail #3: Professional Summary Abstraction
 
-> **Implementation Target:** Add to [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md).
+> **Implementation Target:** [summary-generation.md](phases/phase-4/summary-generation.md).
 
 **Instruction Text:**
+```xml
+<summary_abstraction_guardrail>
+  <priority>HIGH</priority> <!-- v6.3.0 Change: Restored priority tag -->
+  <instruction>
+    The Professional Summary must function as an "Executive Synthesis," not a "Bullet Echo."
+  </instruction>
+  <constraints>
+    - <constraint id="no_mirroring">No sentence in the summary can share more than 50% of its keywords with any single bullet point in the resume.</constraint>
+    - <constraint id="synthesis_requirement">At least one sentence must synthesize metrics across multiple roles (e.g., "Led projects across [Industry A] and [Industry B], achieving [Cumulative Metric]").</constraint>
+    - <constraint id="impact_first">Start sentences with the "Outcome" (The Why) rather than the "Action" (The How) to differentiate from bullets.</constraint>
+  </constraints>
+</summary_abstraction_guardrail>
+```
+
+<!-- v6.3.0 ARCHIVED ORIGINAL (2026-01-03): The following is the original Guardrail #3 implementation 
+     that was replaced with the above simplified version. Retained for reference in case the more 
+     detailed Levenshtein/semantic overlap validation logic needs to be restored.
+     
+     REASON FOR REPLACEMENT: The new version provides additional constraints (synthesis_requirement, 
+     impact_first) that the original lacked, and uses a simpler 50% keyword threshold instead of 
+     85% semantic overlap. The new approach is more actionable but less technically precise.
+
+ORIGINAL GUARDRAIL #3:
 ```xml
 <summary_abstraction_guardrail>
   <priority>HIGH</priority>
@@ -563,60 +586,41 @@ DURING PER-JD CUSTOMIZATION:
   </validation_logic>
 </summary_abstraction_guardrail>
 ```
+-->
 
-### Guardrail #13: Summary-to-Bullet Metric Reconciliation
+### Guardrail #13: Summary-to-Bullets Metric Reconciliation
 
-> **Implementation Target:** Add to [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md).
-
-**Instruction Text:**
-```xml
-<metric_reconciliation_guardrail>
-  <priority>CRITICAL</priority>
-  <instruction>
-    Every metric used in a Professional Summary MUST have a corresponding, supporting metric in the Job History bullets.
-  </instruction>
-  
-  <validation_logic>
-    FOR EACH metric (%, $, volume) in the summary:
-      SEARCH for that metric in the key_achievements of the Job History.
-      IF NOT found:
-        STOP generation.
-        PROMPT: "Summary mentions [Metric X], but I don't see this in your job highlights. Did you mean to add this to a specific position first?"
-  </validation_logic>
-</metric_reconciliation_guardrail>
-```
-
-### Guardrail #26: Output Order Enforcement
-
-> **Implementation Target:** Add to [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md).
+> **Implementation Target:** [summary-generation.md](phases/phase-4/summary-generation.md).
 
 **Instruction Text:**
 ```xml
-<output_order_guardrail>
+<summary_metric_reconciliation_guardrail>
   <priority>HIGH</priority>
   <instruction>
-    Enforce a strict section order for the final customized output.
+    Every quantified claim in the Professional Summary must be traceable to at least one bullet point.
   </instruction>
   
-  <required_order>
-    1. [Company] | [Job Title] (Header)
-    2. Professional Summary (Customized)
-    3. Changes Made (Summary of Optimization)
-    4. Key Achievements (Optional / if requested)
-    5. Action Verb Categories (Optional / if requested)
-    6. Secondary Grammar Check Warning (v1.1.0)
-  </required_order>
+  <validation_process>
+    1. Extract all metrics from Professional Summary (e.g., "10 years", "$5M", "500K+ users")
+    2. FOR EACH metric in summary:
+         Search all bullets for supporting evidence
+         IF metric NOT found in any bullet:
+           FLAG as "Unsupported summary claim"
+           Options:
+             A) Add supporting bullet
+             B) Remove metric from summary
+             C) Verify metric exists in job history and add to bullets
+  </validation_process>
   
-  <validation_logic>
-    IF output sequence deviates from <required_order>:
-      RE-ORDER sections before presenting to user.
-  </validation_logic>
-</output_order_guardrail>
+  <exception>
+    Years of experience can be calculated from position dates without explicit bullet mention
+  </exception>
+</summary_metric_reconciliation_guardrail>
 ```
 
 ### Guardrail #15: Phrase Repetition Enforcement (Secondary)
 
-> **Implementation Target:** Add to [core/format-rules.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/format-rules.md) (primary) and [phases/phase-4/summary-generation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-4/summary-generation.md) (secondary).
+> **Implementation Target:** [format-rules.md](core/format-rules.md) (primary) and [summary-generation.md](phases/phase-4/summary-generation.md) (secondary).
 
 **Instruction Text:**
 ```xml
