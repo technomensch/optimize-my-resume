@@ -1,7 +1,7 @@
 # Core Concepts
 
-**Last Updated:** 2026-01-02
-**Entries:** 8
+**Last Updated:** 2026-01-03
+**Entries:** 9
 
 ---
 
@@ -15,6 +15,7 @@
 - [Categorization](#categorization) - Knowledge organization strategy
 - [Cross-Referencing](#cross-referencing) - Bidirectional linking system
 - [Startup-Only Loading](#startup-only-loading) - Resource initialization timing
+- [Automation Strategy](#automation-strategy) - Manual triggers vs. automatic execution
 
 ---
 
@@ -296,6 +297,84 @@ Understanding temporal behavior (when things load) is as important as functional
 
 - **Lesson:** [Skills Not Loading Until Restart](../lessons-learned/debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)
 - **Related:** [Global vs. Project-Local](#global-vs-project-local)
+
+---
+
+## Workflow Concepts
+
+### Automation Strategy
+
+**Category:** Concept
+**Tags:** #automation #workflow #triggers #skills #manual-vs-automatic
+
+#### Quick Summary
+
+The memory system automates capture *execution* when skills are invoked, but requires manual *triggering*. Skills don't auto-detect when documentation is needed—users must recognize capture-worthy moments.
+
+#### Details
+
+**What's Automatic (Skills-Based):**
+
+When you invoke a skill, it automates:
+- **`/lesson-learned`:** Auto-categorizes, updates indexes, commits with standard message
+- **`/session-summary`:** Auto-detects session type, extracts key artifacts, organizes by date
+- **`/recall`:** Auto-searches across all memory systems, formats results
+
+**What's Manual (Requires User Trigger):**
+
+You must decide WHEN to invoke skills:
+- Recognizing a problem is worth documenting
+- Knowing when to create an ADR vs. lesson
+- Triggering `/session-summary` before context limits
+- Updating knowledge graph entries manually
+- Creating cross-references between documents
+
+**Current State:**
+```
+┌─────────────────┐
+│ User recognizes │ ← MANUAL DECISION
+│ capture moment  │
+└────────┬────────┘
+         │
+         ▼
+    ┌────────┐
+    │ Invoke │
+    │ skill  │ ← MANUAL TRIGGER
+    └───┬────┘
+        │
+        ▼
+┌───────────────┐
+│ Skill handles │ ← AUTOMATIC EXECUTION
+│ everything    │   (categorize, index, commit)
+└───────────────┘
+```
+
+**Why Manual Triggers:**
+
+1. **Context awareness:** Only humans know if a solution is novel or routine
+2. **Quality control:** Not every commit deserves a lesson learned
+3. **Judgment calls:** Deciding between ADR, lesson, or knowledge entry requires understanding
+4. **Cognitive load:** Auto-triggering could create documentation fatigue
+
+**Future Automation Possibilities:**
+
+*Not currently implemented, but could be added:*
+
+- **Smart triggers:** Detect patterns suggesting documentation (e.g., long debugging session, significant refactor)
+- **Context-based suggestions:** "You're at 180K tokens—run `/session-summary`?"
+- **Commit hooks:** After significant commits, suggest `/lesson-learned`
+- **Cross-reference detection:** Auto-link related ADRs/lessons based on content analysis
+- **Proactive reminders:** "No lessons captured in 2 weeks—anything worth documenting?"
+
+#### Key Insight
+
+The system is **semi-automatic**: it removes the *tedium* of documentation (formatting, indexing, committing) but preserves the *judgment* of what to document. This balance prevents both under-documentation (manual tedium) and over-documentation (noisy auto-capture).
+
+#### Cross-References
+
+- **Lesson:** [Complete Memory System](../lessons-learned/patterns/Lessons_Learned_Complete_Memory_System_v6.3.0_Implementation.md)
+- **Skills:** `/lesson-learned`, `/session-summary`, `/recall`
+- **Workflow:** [Memory System Workflow](workflows.md#memory-system-workflow)
 
 ---
 
