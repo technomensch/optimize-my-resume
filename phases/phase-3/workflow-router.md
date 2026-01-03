@@ -466,7 +466,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #18: Skill/Metric Conflict Resolution
 
-> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/workflow-router.md).
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -486,7 +486,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #23: User State Persistence Consistency
 
-> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/workflow-router.md).
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -509,7 +509,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #25: Confirmation Tracking Guardrail
 
-> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/workflow-router.md).
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -531,7 +531,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #27: Output Format Consistency Scanner
 
-> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/workflow-router.md).
+> **Implementation Target:** Add to [phases/phase-3/workflow-router.md](phases/phase-3/workflow-router.md).
 
 **Instruction Text:**
 ```xml

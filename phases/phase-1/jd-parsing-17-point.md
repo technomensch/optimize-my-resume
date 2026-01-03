@@ -727,7 +727,7 @@ Before finalizing JD parse:
 
 ### Guardrail #7: Skill Categorization Consistency
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -749,7 +749,7 @@ Before finalizing JD parse:
 
 ### Guardrail #10: JD Keyword Density Validation
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/jd-parsing-17-point.md).
+> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md).
 
 **Instruction Text:**
 ```xml

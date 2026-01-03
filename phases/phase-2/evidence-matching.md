@@ -603,7 +603,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #5: honest_limitations Enforcement
 
-> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -628,7 +628,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #21: Skill Inventory Context Verification
 
-> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md).
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md).
 
 **Instruction Text:**
 ```xml
@@ -650,7 +650,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #24: Alternatives Presentation Consistency
 
-> **Implementation Target:** Add to [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (primary) and [verb-categories.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](phases/phase-2/evidence-matching.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -681,7 +681,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #16: Master Skills Inventory Protection (Secondary)
 
-> **Implementation Target:** Add to [phases/phase-3/incremental-updates.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-3/incremental-updates.md) (primary) and [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [phases/phase-3/incremental-updates.md](phases/phase-3/incremental-updates.md) (primary) and [evidence-matching.md](phases/phase-2/evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -694,7 +694,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #1: Metric Isolation & Traceability (Secondary)
 
-> **Implementation Target:** Add to [job-history-v2-creation.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-1/job-history-v2-creation.md) (primary) and [evidence-matching.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/phases/phase-2/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [job-history-v2-creation.md](phases/phase-1/job-history-v2-creation.md) (primary) and [evidence-matching.md](phases/phase-2/evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
