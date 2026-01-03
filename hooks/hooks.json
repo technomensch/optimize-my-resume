@@ -11,6 +11,18 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "hooks/pre-write-plan-router.sh",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   }
 }
