@@ -1,8 +1,8 @@
 # Architecture Decision Records (ADRs)
 
-**Total ADRs:** 0
-**Status:** 0 Accepted, 0 Proposed
-**Last Decision:** N/A
+**Total ADRs:** 3
+**Status:** 3 Accepted, 0 Proposed
+**Last Decision:** 2026-01-02 (ADR-003)
 
 ---
 
@@ -22,7 +22,9 @@ Architecture Decision Records document significant architectural decisions made 
 
 | ID | Title | Date | Tags | Related |
 |----|-------|------|------|---------|
-| - | - | - | - | - |
+| [001](ADR-001-dual-format-documentation.md) | Dual-Format Documentation Strategy | 2026-01-02 | #documentation #format #llm-optimization | [Memory System Lesson](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md) |
+| [002](ADR-002-skills-global-only.md) | Skills Must Be Global-Only | 2026-01-02 | #architecture #skills #claude-code | [Skills Architecture](../lessons-learned/architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md) |
+| [003](ADR-003-surgical-updates-pattern.md) | Surgical Updates Pattern | 2026-01-02 | #pattern #updates #preservation | [ID-Based Architecture](../lessons-learned/architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md) |
 
 ## Proposed ADRs
 
