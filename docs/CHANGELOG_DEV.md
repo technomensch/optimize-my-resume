@@ -41,6 +41,368 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+### v6.3.0 - System Integrity Guardrails (2026-01-03) <!-- v6.3.0 Change -->
+> **Also in CHANGELOG.md:** This entry is duplicated here because the 27 comprehensive quality guardrails are **internal validation rules and process controls**, not user-facing features. Users don't interact with these guardrails directly - they're automated quality checks that enforce standards during development.
+
+#### Added - 27 Comprehensive Quality Guardrails
+**Classification:** Internal validation rules, process automation, developer tooling
+
+**Core System Guardrails:**
+- **Guardrail #1 (JD Parser Output Validation):** Ensures 17-point JD schema completeness before gap analysis
+- **Guardrail #2 (Hard vs Soft Skill Categorization):** 5-question decision tree prevents mis-categorization
+- **Guardrail #3 (Professional Summary Validation):** Character limits (300-350), tense checking, pronoun detection
+- **Guardrail #4 (Bullet Character Limits):** 100-210 character range enforcement
+- **Guardrail #5 (CAR Framework Enforcement):** Context-Action-Result validation for all bullets
+- **Guardrail #6 (Data Loss Prevention - CRITICAL):** Backup/restore, placeholder detection, item count verification
+- **Guardrail #7 (Keyword Evidence Cross-Check):** Prevents keyword stuffing without job history evidence
+- **Guardrail #8 (Metric Preservation):** Never remove quantifiable metrics during optimization
+- **Guardrail #9 (Tense Consistency):** Past-tense action verbs required for all bullets
+- **Guardrail #10 (Escape Character Detection):** Prevents `\~`, `\%`, `\+` in output
+
+**Gap Analysis Guardrails:**
+- **Guardrail #11 (Evidence Citation Format):** Standardized "Company | Job Title" citation format
+- **Guardrail #12 (Blocking Logic Sequence):** Low score → Hard skill deficit → Location gates in order
+- **Guardrail #13 (Match Score Calculation):** Documented formula with requirement-level weighting
+- **Guardrail #14 (Partial Match Definition):** Criteria for [MATCHED], [PARTIAL], [MISSING] status
+- **Guardrail #15 (Cross-Position Deduplication):** Prevents duplicate recommendations across positions
+
+**Incremental Update Guardrails:**
+- **Guardrail #16 (Position Addition Workflow):** Chronological insertion, aggregate recalculation
+- **Guardrail #17 (Position Edit Workflow):** Show current → Modify → Recalculate pipeline
+- **Guardrail #18 (Position Removal Workflow):** Confirmation → Remove → Recalculate safeguards
+- **Guardrail #19 (Aggregate Recalculation):** Years of experience, master skills inventory updates
+- **Guardrail #20 (Version Tracking):** Schema version field validation (job_history v2.0+)
+- **Guardrail #21a (Skill-Role Matching):** Technical skills matched to technical roles only
+- **Guardrail #21b (Limitation Cross-Check):** Portfolio projects counted as skills-only, not professional experience
+
+**Summary Generation Guardrails:**
+- **Guardrail #22 (Master Summary Structure):** 4-sentence format (Role/Achievements/Hard/Soft)
+- **Guardrail #23 (Per-JD Summary Customization):** Keyword replacement preserving metrics
+- **Guardrail #24 (Summary Length Limits):** 300-350 characters strict enforcement
+- **Guardrail #25 (Evidence-Based Summaries):** Only demonstrated skills from job history
+- **Guardrail #26 (Aggregation Accuracy):** Total years, companies, team sizes from metadata
+
+**Output Quality Guardrails:**
+- **Guardrail #27 (Secondary Grammar Check Warning):** Mandatory recommendation for external validation
+
+#### Impact
+- ✅ **Process Controls:** 27 automated checks prevent quality regressions
+- ✅ **Developer Safety:** Data loss prevention, backup/restore logic
+- ✅ **Consistency:** Standardized validation across all phases
+- ✅ **Documentation:** All guardrails documented in phase-specific files
+
+#### Files Updated
+- `PROJECT-INSTRUCTIONS.md` - Master guardrail checklist
+- `quick-start-phase.md` - Condensed guardrail reference
+- `phases/phase-1/jd-parsing-17-point.md` - Guardrails #1-2
+- `phases/phase-2/evidence-matching.md` - Guardrails #11-15
+- `phases/phase-3/incremental-updates.md` - Guardrails #16-21b
+- `phases/phase-4/summary-generation.md` - Guardrails #3, #22-26
+- `core/format-rules.md` - Guardrails #4-10, #27
+
+---
+
+### v6.2.0 - Job History Template System & Workflow Automation (2026-01-02) <!-- v6.2.0 Change -->
+> **Also in CHANGELOG.md:** This entry is duplicated here because the template system, validation scripts, conversion tools, and workflow skills are **developer tooling and automation infrastructure**, not user-facing features. Users benefit from these tools indirectly through improved consistency and validation.
+
+#### Added - Developer Tooling & Automation
+
+**Template System (4 files, ~1,515 lines):**
+- **`job_history_template.xml`** - v2.0 schema with 12 required sections
+  - Hard/soft skills separated into distinct arrays
+  - Education and certifications sections added
+  - Professional summary per role
+  - Tools/technologies granular listing
+  - Impact metrics categorization
+  - Schema version tracking
+- **`job_history_generation_instructions.md`** - 3,500+ word comprehensive guide
+  - CAR Framework enforcement rules
+  - Hard vs Soft skill classification decision tree
+  - Metric extraction guidelines
+  - Cross-LLM consistency standards (Claude, Gemini, ChatGPT, Copilot)
+- **`bullet_template.md`** - CAR Framework reference with examples
+  - Context-Action-Result structure
+  - Measurable impact requirements
+  - 5-category action verb system (Built/Lead/Managed/Improved/Collaborate)
+- **`TEMPLATE_USAGE.md`** - Quick start guide
+  - Template system overview
+  - Workflow integration
+  - Style & tone guidelines
+  - Common mistakes to avoid
+
+**Python Automation Tools (2 scripts, ~626 lines):**
+- **`validate_job_history.py`** (226 lines) - Schema compliance validation
+  - Header format validation (VERSION X.Y with description)
+  - Version history presence checking
+  - Required global sections verification (education, certifications, master_skills_inventory)
+  - Required position sections validation (13 sections per position)
+  - Metadata completeness checks (job_title, company, dates, duration)
+  - Professional summary length validation (minimum 2 sentences)
+  - XML tag balance verification (all tags properly opened/closed)
+- **`convert_job_history_to_md.py`** (400+ lines) - XML to Markdown conversion
+  - XML parsing with regex
+  - Emoji header generation (📋 for positions, 🎯 for achievements)
+  - Markdown table formatting for metrics
+  - Hierarchical structure creation
+  - Achievement expansion (CONTEXT/ACTION/RESULT/IMPACT)
+  - Professional summary formatting
+  - Skills list conversion
+
+**Workflow Skills (2 skills, ~697 lines):**
+- **`/md-job-history` Skill** - Convert job history to Markdown
+  - Context-aware file detection
+  - Automatic validation before conversion
+  - User-friendly error messages
+  - Integration with /update-history workflow
+- **`/update-history` Skill** - Intelligent version management
+  - Analyzes chat context to identify updates
+  - Determines version increment (MAJOR/MINOR/PATCH)
+  - Applies surgical updates (preserves existing content)
+  - Validates and converts to both formats (.txt + .md)
+  - Provides summary of changes
+
+**Dual-Format Architecture:**
+- **.txt format (XML structure)** - Source of truth for LLM consumption
+  - XML-like tag structure for semantic clarity
+  - Explicit section markers
+  - Schema validation compatible
+  - Optimized for LLM parsing
+- **.md format (Markdown)** - Presentation format for human viewing
+  - Generated automatically from .txt
+  - Emoji headers and professional formatting
+  - Markdown tables
+  - Do NOT edit directly (regenerate from .txt)
+
+#### Changed
+- **PROJECT-INSTRUCTIONS.md** - Added comprehensive `<job_history_template_system>` section (v6.1.11 → v6.2.0)
+  - 385 lines of template system documentation
+  - Dual-format architecture explanation
+  - Validation and conversion workflows
+  - Workflow skills documentation
+  - Best practices and cross-LLM consistency guarantees
+  - Integration with Phases 1, 2, and 3
+- **quick-start-phase.md** - Added condensed `<job_history_template_system>` section
+  - Quick reference for template system
+  - Critical rules and required structure
+  - Validation and conversion workflow
+  - Version management guidelines
+
+#### Impact
+- ✅ **Cross-LLM Consistency** - Claude, Gemini, ChatGPT, Copilot all generate identical structure
+- ✅ **Automated Validation** - Schema violations caught immediately
+- ✅ **Dual-Format Output** - .txt for LLMs, .md for humans
+- ✅ **Workflow Automation** - /md-job-history and /update-history skills streamline management
+- ✅ **Version Management** - Clear MAJOR/MINOR/PATCH increment rules
+- ✅ **Surgical Updates** - Preserve existing content, enhance specific sections
+- ✅ **Template System** - Prevents structural drift as LLM technology evolves
+- ✅ **Comprehensive Documentation** - 3,500+ word guide ensures consistency
+
+#### Philosophy
+- Keep .txt as source of truth, generate .md for presentations
+- Always validate before converting
+- Use surgical updates only - preserve existing content, add/enhance specific sections
+- Template system ensures consistency across all LLMs now and in the future
+
+#### Files Created (6,452 lines total)
+- Templates: 4 files (~1,515 lines)
+- Scripts: 2 files (~626 lines)
+- Skills: 2 files (~697 lines)
+- Job history: v7.0, v7.1 with .txt and .md formats (~2,714 lines)
+- Plans: Implementation plan (~900 lines)
+
+---
+
+### v6.1.9 - Skill Priority Weights & Test Case Expansion (2025-12-30) <!-- v6.1.9 Change -->
+> **Also in CHANGELOG.md:** This entry is duplicated here because the 79 test cases are **testing infrastructure and QA tooling**, not a user-facing feature. The skill priority weights ARE user-facing, but the bulk of this entry (47 new test cases) is developer-focused testing infrastructure.
+
+#### Added - Testing Infrastructure (Developer Tooling)
+
+**Expanded Test Suite - 79 Total Test Cases:**
+- **Baseline (32 test cases):** Sonnet baseline tests for Phases 2-4
+- **New (47 test cases):** Opus advanced test coverage
+
+**Test Categories Added:**
+- **INTX (8 tests):** Complex integration scenarios
+  - Contractors and freelance work handling
+  - Stale skills (5+ years old) detection
+  - Multiple roles at same company
+  - Portfolio project vs professional experience distinction
+- **INCX (10 tests):** Advanced position manipulation
+  - Batch operations (add/edit/remove multiple positions)
+  - Position merging logic
+  - Undo/redo functionality
+  - Aggregate recalculation edge cases
+- **DIFFX (7 tests):** Complex diff scenarios
+  - Batch comparison across versions
+  - Regression detection (improvements → regressions)
+  - Stale cache handling
+  - Cross-version diff accuracy
+- **SUMX (8 tests):** Advanced summary generation
+  - Executive-level summaries (C-suite, VP)
+  - Entry-level summaries (new grad, intern)
+  - Career pivot summaries (role transition)
+  - Industry-specific customization
+- **GATE (7 tests):** Blocking gate combinations
+  - Multiple gates triggering simultaneously
+  - Edge cases at threshold boundaries
+  - Override confirmation workflows
+  - Gate bypass scenarios
+- **ERR (7 tests):** Error recovery and resilience
+  - Invalid JD formats
+  - Malformed job history schemas
+  - API timeout handling
+  - Partial data recovery
+- **FIX (12 tests):** Logic corrections
+  - Corrected test definitions from original Sonnet baseline
+  - Gap-filling tests for uncovered scenarios
+  - Regression tests for known bugs
+
+#### Fixed - Test Logic Errors (Developer Corrections)
+Corrected 4 issues in original Sonnet test definitions:
+- **INC-004:** Index direction corrected from "shifted up" to "shifted DOWN"
+- **SUM-005:** Threshold corrected from 42 to 30 (actual blocking gate value)
+- **INT-007:** Added explicit weight ratio (Required = 1.5x Preferred)
+- **INT-006:** Clarified confidence boundary as ">= 0.5" (inclusive)
+
+#### Added - Skill Priority Weights (User-Facing Scoring)
+
+**3:2:1 Model (Industry-Standard ATS Methodology):**
+Based on Rezi.ai, Jobscan, and Recruiterflow best practices:
+- **Required skills**: 1.5x weight (priority 3) - "Required", "Must have", "Essential"
+- **Preferred skills**: 1.0x weight (priority 2) - "Preferred", "Nice to have", "Bonus"
+- **Optional skills**: 0.5x weight (priority 1) - Inferred from context, not emphasized
+
+**Impact on Gap Analysis:**
+- Missing a Required skill now has 1.5x the negative impact of missing a Preferred skill
+- More accurate job fit scoring reflecting recruiter evaluation patterns
+- Aligned with industry-standard ATS scoring methodologies
+
+#### Changed - System Files
+- **Scoring Formula:** `phases/phase-2/evidence-matching.md` updated with priority-weighted calculation
+- **System Instructions:** `PROJECT-INSTRUCTIONS.md` and `quick-start-phase.md` updated with skill priority weights
+- **Core Configuration:** `core/fit-thresholds.md` includes skill-level priority weights alongside category weights
+
+#### Impact
+- ✅ **Testing Infrastructure:** 79 total test cases (62% increase in coverage)
+- ✅ **Edge Case Coverage:** Complex scenarios now tested (contractors, pivots, batch ops)
+- ✅ **Quality Assurance:** Gate combinations, error recovery, regression detection
+- ✅ **Accurate Scoring:** Required skills weighted 1.5x Preferred skills
+- ✅ **No Breaking Changes:** Additive enhancement only
+
+#### Technical
+- **Test Suite Location:** `docs/testing/phases-2-4/`
+- **Test Documentation:** Each category documented with purpose and expected behavior
+- **Regression Suite:** FIX category prevents known bugs from returning
+
+---
+
+### v6.1.8 - Location Red Flag Update with State Abbreviation Expansion (2025-12-30) <!-- v6.1.8 Change -->
+> **Also in CHANGELOG.md:** This entry is duplicated here because the enhanced `location_red_flags` detection and state abbreviation mapping are **internal validation logic improvements**, not user-facing features. Users don't configure these rules - they're automated detection patterns that improve JD parsing accuracy.
+
+#### Added - Internal Validation Logic
+
+**State Abbreviation Mapping (Developer Data Structure):**
+- Complete mapping of all 50 US states + DC for automatic state code expansion
+- Auto-expands state abbreviations: "AL, AK, MT" → "Alabama (AL), Alaska (AK), Montana (MT)"
+- Applies to all location parsing: payroll restrictions, residency requirements, excluded states
+- Improves user experience by showing full state names alongside codes
+- Reduces confusion for users unfamiliar with all state abbreviations
+
+**Enhanced `location_red_flags` Detection Pattern:**
+- New pattern: "The following states are not approved for remote payroll at this time: [list]"
+- Improves blocking gate accuracy for location mismatches during Phase 1 JD parsing
+- Prevents wasted effort on applications where user's state is excluded due to payroll compliance
+- Triggers critical blocking gate when user's location matches excluded states
+
+#### Changed - Internal Parsing Logic
+
+**Enhanced `location_mismatch` Instruction:**
+- Now references `state_abbreviation_mapping` for clearer output
+- Example output: "Excluded: Alabama (AL), Alaska (AK)" instead of just "AL, AK"
+- Automatic expansion in all location-related warnings and error messages
+
+#### Impact
+- ✅ **Better Detection:** Payroll compliance restrictions caught during Phase 1 JD parsing
+- ✅ **More Accurate Blocking:** Location blocking gate warnings during Phase 2
+- ✅ **Improved UX:** No manual state code lookup needed (auto-expanded)
+- ✅ **Clearer Warnings:** More accessible location warnings for all users
+- ✅ **No Breaking Changes:** Additive enhancement only
+
+#### Technical
+- **Files Modified:** `phases/phase-1/jd-parsing-17-point.md`
+- **Detection Pattern Added:** State-specific remote payroll restriction parsing
+- **Data Structure Added:** 51-entry state abbreviation mapping (50 states + DC)
+- **Classification:** Internal validation logic, automated parsing enhancement
+
+---
+
+### v6.1.7 - Gemini Grammar Tips & Quality Assurance (2025-12-29) <!-- v6.1.7 Change -->
+> **Also in CHANGELOG.md:** This entry is duplicated here because the Quality Assurance Rules and Pre-output Quality Checklist are **internal QA processes and automation**, not user-facing features. These are automated validation systems that run behind the scenes to ensure quality.
+
+#### Added - Internal QA Rules & Automation
+
+**Quality Assurance Rules (Internal Validation):**
+- **Phrase Variation Rule:** Prevents exact repetition of metrics/achievements (max 2 occurrences)
+  - Automated scan: Detects duplicate phrases across positions
+  - Triggers: Warning if same metric appears 3+ times
+  - Developer control: Built into pre-output validation pipeline
+- **Symbol Consistency Rule:** Standardizes use of tildes (~), percentages (%), and hyphenated ranges
+  - Prohibits escaped characters: `\~`, `\%`, `\+`
+  - Automated detection: Scans output before presentation
+  - Auto-correction: Removes backslashes from escaped symbols
+- **Verb Tense Rule:** Enforces past-tense action verbs at the start of all bullets
+  - Prohibits gerunds (-ing verbs) at bullet start
+  - Automated detection: Regex pattern matching
+  - Developer control: Blocks output until corrected
+- **Keyword Diversity Rule:** Optimizes keyword distribution between professional summary and position bullets
+  - Prevents keyword duplication (summary vs bullets)
+  - Automated scan: Cross-references keywords
+  - Developer control: Suggests redistribution before output
+
+**Pre-output Quality Checklist (Automated Validation):**
+- **Escaped Characters Detection:** Scans for `\~`, `\%`, `\+` and auto-corrects
+- **Gerund Detection:** Identifies bullets starting with -ing verbs
+- **Repeated Phrase Detection:** Flags >2 exact occurrences of same phrase
+- **Keyword Duplication Checking:** Cross-checks summary vs bullets
+- **Automated Execution:** Runs automatically before all output presentation
+- **Blocking Gate:** Output held until all checks pass
+
+#### Added - Workflow Automation (Developer Experience)
+
+**Implementation Plan Auto-Naming:**
+- Plans now automatically named and saved to `/docs/plans/v[BranchName].md`
+- Eliminates manual naming step
+- Consistent naming convention across all plans
+- Developer workflow streamlined
+
+#### Changed - System Instructions
+- **PROJECT-INSTRUCTIONS.md:** Added `<quality_assurance_rules>` section
+  - Integrated QA rules into core instructions
+  - Mandatory secondary grammar check warning added
+  - Pre-output checklist documented
+- **quick-start-phase.md:** Added QA rules reference
+  - Condensed QA standards for quick lookup
+  - Cross-reference to full documentation
+- **core/format-rules.md:** Updated to v6.1.7 with technical QA standards
+  - Symbol consistency specifications
+  - Character escaping rules
+  - Tense validation patterns
+
+#### Impact
+- ✅ **Improved Quality:** Automated checks catch formatting and grammar issues
+- ✅ **Better ATS Compatibility:** Consistent symbol usage prevents parsing errors
+- ✅ **Enhanced Keyword Coverage:** Distribution optimization without redundancy
+- ✅ **Streamlined Workflow:** Auto-naming for implementation plans
+- ✅ **No Breaking Changes:** Additive enhancement only
+
+#### Technical
+- **Classification:** Internal QA automation, process controls, developer tooling
+- **Execution:** Pre-output validation pipeline (automatic)
+- **Files Modified:** 3 instruction files + 1 core config file
+- **Developer Benefit:** Reduced manual QA burden, consistent quality enforcement
+
+---
+
 ### v4.11.1 - ATS Format Parsing Hotfix (2025-12-20) <!-- v4.11.1 Change -->
 > **User-facing changes:** See [CHANGELOG.md](CHANGELOG.md) for full details.
 > This is a user-facing fix (parsing improvements), documented in main changelog.
