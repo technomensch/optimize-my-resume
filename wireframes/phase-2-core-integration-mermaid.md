@@ -1,62 +1,65 @@
-# Phase 2: Core Integration - Mermaid Workflow
+# Phase 2: Core Integration - Mermaid Flow
 
-**Version:** 1.0
-**Last Updated:** 2025-12-29
-**Related Modules:** `phases/phase-2/`
+**Version:** 1.1 <!-- v1.1 Change: Added Calibrated Scoring (Industry, Role, Context) -->
+**Last Updated:** 2026-01-05
+**Related Modules:** `phases/phase-2/`, `core/adjacent-technical.md`, `core/industry-context.md`
 
 ---
 
 ## Overview
-Phase 2 performs the semantic matching between evidence and requirements. It uses high-confidence lookup to map resume achievements to JD needs, while protecting the user via safety gates.
+Phase 2 transforms raw job history into JD-specific evidence. It acts as the "Scientific Layer" of the system, applying rigid context and industry rules to ensure the resulting match score is accurate and defensible.
 
 ## Diagram
 
 ```mermaid
-graph TD
-    InputJH[Job History] --> Match[Evidence Matcher]
-    InputJD[Parsed JD] --> Match
+flowchart TD
+    JH[(Job History v2.0)] --> Match[Evidence Matching Engine]
+    JD[(Parsed JD)] --> Match
     
-    subgraph "Matching Logic"
-    Match --> Extract[Requirement Extraction]
-    Extract --> Search[History Lookup]
-    Search --> Cite[Format Citations]
+    subgraph "Calibration Filter (v6.3.1)"
+    Match --> C1[Keyword Context Check]
+    C1 --> C2[Industry Transferability]
+    C2 --> C3[Role-Type Verification]
     end
     
-    Cite --> Score[Calculate match %]
+    C3 --> Score[Calibrated Match Score]
     
     subgraph "Blocking Gates"
-    Score --> Gate1{Score < 50%?}
-    Score --> Gate2{Missing Hard Skills?}
-    Score --> Gate3{Location Mismatch?}
+    Score --> G1{Score <= 79%?}
+    Score --> G2{Critical Role Gap?}
+    Score --> G3{Location Check}
     end
     
-    Gate1 -->|True| Warn[Warning & Confirmation]
-    Gate2 -->|True| Warn
-    Gate3 -->|True| Warn
+    G1 -->|Yes| Stop([Stop / Exit Report])
+    G1 -->|No| P3([Ready for Phase 3])
     
-    Gate1 & Gate2 & Gate3 -->|Pass/Override| Next([Proceed to Phase 3])
-    Warn -->|Reject| End([Stop/Redirect])
-    
-    style Warn fill:#f66,stroke:#333
+    style G1 fill:#ffcdd2,stroke:#b71c1c
+    style G2 fill:#ffcdd2,stroke:#b71c1c
+    style Stop fill:#ffcdd2,stroke:#b71c1c
 ```
 
 ## Key Decision Points
-- **Hard Skill Enforcement:** System prioritizes technical hard skills over soft skills for the matching logic.
-- **Location Check:** Specifically looks for "Remote" vs "On-site" contradictions.
+- **Context Filtering:** Differentiates between primary contributors and documentarians.
+- **Economic Penalties:** Applies score deductions for industry mismatches using the Transferability Matrix.
+- **Strict Stop:** Unlike earlier versions, 6.3.1 enforces a hard "Exit" if the score is ≤79% (Stop Tier).
 
 ## Inputs
-- Structured Job History v2.0
-- 17-Point Parsed JD
+- Validated Job History (XML format)
+- Target keywords with context requirements
+- Experience targets (New Grad vs Senior)
 
 ## Outputs
-- Comprehensive Gap Analysis
-- Match Score (0-100)
-- Detailed Evidence Table
+- Evidence Audit Map
+- Gap Assessment (Risk/Tweak categories)
+- Calibrated Fit Score
 
 ## Files Involved
 - `phases/phase-2/evidence-matching.md`
 - `phases/phase-2-blocking-gates.md`
+- `core/adjacent-technical.md`
+- `core/industry-context.md`
+- `core/role-type-validation.md`
 
 ## Related Phases
-- **Previous:** **Phase 1: Foundation**
-- **Next:** **Phase 3: Router & Workflows**
+- **Previous:** Phase 1: Foundation
+- **Next:** Phase 3: Router & Workflows

@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v6.3.1.2 - Wireframe Alignment & Guardrail Documentation (2026-01-05) <!-- v6.3.1.2 Addition -->
+> **Branch:** `v6.3.1-address-instruction-gaps`
+
+#### Added
+- **Rules & Guardrails Wireframes** – Created architectural diagrams (`wireframes/rules-and-guardrails-ascii.md`, `wireframes/rules-and-guardrails-mermaid.md`) to visualize the 3-layer system defense strategy.
+- **Architectural Indexing** – Created `core/README.md` to serve as a central directory for all "Rules-as-Code" modules.
+- **Verification Testing** – Created `docs/plans/testing/guardrail-verification.md` to establish test protocols for all 27+ guardrails.
+
+#### Changed
+- **Wireframe Synchronization (v1.1)** – Updated all Phase-specific and Workflow wireframes to include:
+  - **Phase 1**: Fit Assessment Gate (80% stop/proceed logic).
+  - **Phase 2**: Calibrated Scoring (Industry/Role-type penalties).
+  - **Phase 3**: Quality Formatting Guardrails (Chrono sort, phrase repetition).
+  - **Phase 4**: Production Hardening (Word budgets, symbol sanitization).
+- **Project Roadmap** – Updated `ROADMAP.md` to v6.3.1 and marked the alignment phase complete.
+
+---
+
 ## [Released]
 
 ### v6.3.0 - System Integrity Guardrails (2026-01-03) <!-- v6.3.0 Addition -->

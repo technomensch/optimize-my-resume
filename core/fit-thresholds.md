@@ -152,8 +152,86 @@ Based on industry ATS scoring best practices (Rezi.ai, Jobscan, Recruiterflow):
 
 ---
 
+## Validation Penalties (v6.3.1)
+
+The following penalties are applied to raw fit scores to account for validation rule violations:
+
+```xml
+<validation_penalties>
+  <penalty id="portfolio_inflation">
+    <trigger>Portfolio project experience counted toward role requirements</trigger>
+    <adjustment>-15 to -25 points depending on weight given</adjustment>
+    <message>"Portfolio projects provide skill evidence but don't count as 
+    professional [role type] experience."</message>
+  </penalty>
+  
+  <penalty id="adjacent_technical_misclassification">
+    <trigger>Technical-adjacent role (TW, BA, PM) counted as "adjacent technical"</trigger>
+    <adjustment>-10 to -20 points</adjustment>
+    <message>"Writing ABOUT technical systems ≠ working IN technical systems."</message>
+  </penalty>
+  
+  <penalty id="documentation_false_positive">
+    <trigger>Documentation experience matched to hands-on technical requirement</trigger>
+    <adjustment>-5 to -15 points per false match</adjustment>
+    <message>"Documentation of [technology] ≠ hands-on [technology] experience."</message>
+  </penalty>
+  
+  <penalty id="industry_mismatch">
+    <trigger>Candidate industry doesn't match JD industry</trigger>
+    <adjustment>See industry_context_validation transferability matrix</adjustment>
+    <message>"Your [industry] background has [X%] transferability to [JD industry]."</message>
+  </penalty>
+  
+  <penalty id="role_type_gap">
+    <trigger>Insufficient direct experience in target role type</trigger>
+    <adjustment>-10 to -30 points based on gap severity</adjustment>
+    <message>"Senior [role] requires ~X years. You have Y direct + Z transferable."</message>
+  </penalty>
+</validation_penalties>
+```
+
+---
+
+## Score Calculation Order (v6.3.1)
+
+Fit scores must be calculated in this specific order to ensure validation rules are properly applied:
+
+```xml
+<calculation_order>
+  <step order="1">Calculate raw score from requirements matching</step>
+  <step order="2">Apply portfolio_project_weighting rules</step>
+  <step order="3">Apply adjacent_technical_definition validation</step>
+  <step order="4">Apply keyword_context_validation (remove false positives)</step>
+  <step order="5">Apply industry_context_validation penalty</step>
+  <step order="6">Apply role_type_experience_validation penalty</step>
+  <step order="7">Final score = Raw score - All penalties</step>
+</calculation_order>
+```
+
+**Reference Files:**
+- `core/portfolio-weighting.md` - Portfolio project rules
+- `core/adjacent-technical.md` - Technical role definitions
+- `core/keyword-context.md` - Context validation rules
+- `core/industry-context.md` - Industry transferability
+- `core/role-type-validation.md` - Role-type assessment
+
+---
+
 ## Usage Notes
 
 - These thresholds are used in Mode 3 (JD Comparison) Phase 1
 - Thresholds prevent token waste on poor-fit applications
 - User cannot override stop decisions for ≤79% fits
+
+---
+
+## Version History
+
+- v6.3.1 (January 4, 2026): Added validation penalties and calculation order
+  - Added 5 validation penalty types for new v6.3.1 rules
+  - Added 7-step calculation order for proper penalty application
+  - Added references to 5 new core validation modules
+- v6.3.0 (January 3, 2026): Added Guardrail #19 - Fit Assessment Score Consistency
+- v6.1.9 (December 2025): Added Skill-Level Priority Weights (3:2:1 Model)
+- v6.0.0 (Initial): Fit threshold definitions and scoring methodology

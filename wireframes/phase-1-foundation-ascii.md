@@ -1,13 +1,13 @@
 # Phase 1: Foundation - ASCII Workflow
 
-**Version:** 1.0
-**Last Updated:** 2025-12-29
-**Related Modules:** `phases/phase-1/`
+**Version:** 1.1 <!-- v1.1 Change: Added v6.3.x Fit Gates and 17-Point Check Integration -->
+**Last Updated:** 2026-01-05
+**Related Modules:** `phases/phase-1/`, `core/fit-thresholds.md`
 
 ---
 
 ## Overview
-Phase 1 establishes the system's foundation by processing primary inputs: the user's resume (converted to Job History v2.0) and the targeted Job Description (parsed through a 17-point inspection).
+Phase 1 establishes the system's foundation by processing primary inputs: the user's resume (converted to Job History v2.0) and the targeted Job Description (parsed through a 17-point inspection). It now includes a mandatory Fit Assessment Gate to validate alignment before proceeding.
 
 ## Diagram
 
@@ -24,14 +24,12 @@ Phase 1 establishes the system's foundation by processing primary inputs: the us
     v           v
 +-------+   +-------+
 |  RES  |   |  JD   |
-|PARSER |   |PARSER |
+|PARSER |   |PARSER |---[ 17-POINT CHECK ]
 +-------+   +-------+
     |           |
-    |     +-----+-----+---------------[ 17-POINT CHECK ]
-    |     |           |
-    |     v           v
-    | [ HARD SKILLS ] [ SOFT SKILLS ]
-    | [ RESPONSIBILITIES ] [ LOGISTICS ]
+    |           v
+    |   < FIT ASSESSMENT GATE > ---[ Score <= 79% ]---> ( STOP )
+    |   ( v6.3.1 Guardrails )   ---[ Score >= 80% ]---> ( PROCEED )
     |           |
     v           v
 +-----------------------+
@@ -45,22 +43,24 @@ Phase 1 establishes the system's foundation by processing primary inputs: the us
 
 ## Key Decision Points
 - **Input Type:** Router determines if input is a Resume, a JD, or a conversational command.
-- **Parsing Depth:** JD Parser extracts 17 distinct data points to ensure high-fidelity matching.
+- **17-Point Inspection:** JD Parser extracts logistics, technical requirements, and soft skills.
+- **Fit Assessment Gate:** Engages `fit-thresholds.md` and `portfolio-weighting.md` to ensure realistic matching.
 - **Categorization:** Skills are explicitly separated into Hard and Soft categories at the foundation.
 
 ## Inputs
 - Raw Resume text (from User)
 - Raw Job Description text (from User)
-- User intent (prompts)
+- Portfolio/Project details (v6.3.1 rules)
 
 ## Outputs
-- `claude_generated_job_history_summaries_v2.txt` (Structured JSON-like history)
-- Parsed JD Context (Internal state for matching)
+- `claude_generated_job_history_summaries_v2.txt` (Structured XML-like history)
+- Preliminary Fit Assessment Report (with Gap analysis)
 
 ## Files Involved
-- `phases/phase-1/job-history-v2.md`
-- `phases/phase-1-jd-parser.md`
-- `phases/phase-1-entry-router.md`
+- `phases/phase-1/job-history-v2-creation.md`
+- `phases/phase-1/jd-parsing-17-point.md`
+- `core/fit-thresholds.md`
+- `core/portfolio-weighting.md`
 
 ## Related Phases
 - **Previous:** N/A (Entry Point)

@@ -1,48 +1,46 @@
-# Phase 3: Router & Workflows - Mermaid Workflow
+# Phase 3: Router & Workflows - Mermaid Flow
 
-**Version:** 1.0
-**Last Updated:** 2025-12-29
-**Related Modules:** `phases/phase-3/`
+**Version:** 1.1 <!-- v1.1 Change: Added Bullet Optimization & Guardrail Integration -->
+**Last Updated:** 2026-01-05
+**Related Modules:** `phases/phase-3/`, `core/format-rules.md`
 
 ---
 
 ## Overview
-Phase 3 manages the dynamic state of the consultation. It handles the "inner loop" of resume iteration—updating history, checking matches, and calculating improvements.
+Phase 3 manages state transitions and bullet refinement. It uses the Workflow Router to select the appropriate specialized logic while funneling all bullet generation through a rigorous set of v6.3.x constraints.
 
 ## Diagram
 
 ```mermaid
 graph TD
-    Input([Input]) --> Router{Workflow Router}
+    In([User Intent]) --> Router{Workflow Router}
     
-    subgraph "Scenario Switching"
-    Router -->|New Job| Incr[Incremental Update]
-    Router -->|Updated Skills| ReC[JD Re-Comparison]
-    Router -->|New JD| Fresh[Fresh Comparison]
-    Router -->|Help/Query| Help[Guidance]
+    Router -->|Incremental| Update[Incremental Update Handler]
+    Router -->|JD Re-Compare| ReMatch[Re-Comparison Engine]
+    Router -->|Optimization| Opt[Bullet Optimization]
+    
+    subgraph "Rule Enforcement (v6.3.0)"
+    Opt --> R1[G2: Chronological Sort]
+    R1 --> R2[G15: Max-2 Repetition]
+    R2 --> R3[G20: Acronym Spell-out]
     end
     
-    Incr --> Save[Save Updated History]
-    ReC --> Diff[Calculate Score Delta]
-    Fresh --> Match[Phase 2 Matcher]
+    Update --> Score[Updated History v2.x]
+    ReMatch --> Score
+    R3 --> Score
     
-    Save --> Next([Proceed to Phase 4])
-    Diff --> Next
-    Match --> Next
-    
-    style Router fill:#f96,stroke:#333
-    style Incr fill:#dfd,stroke:#333
-    style ReC fill:#ddf,stroke:#333
+    Score --> Next([Ready for Phase 4])
 ```
 
 ## Key Decision Points
-- **Incremental Logic:** When adding a job, the system recalculates aggregate metrics (total years, total companies) without manual input.
-- **Cache Management:** Re-comparison relies on cached JD metadata to avoid asking the user to re-paste the job description.
+- **Scenario Handling:** Routes complex requests (like "add a job") to dedicated sub-workflows to prevent context contamination.
+- **Reverse Chronological Enforcement:** Guardrail #2 validates that Position 1 is always the most recent before any output is generated.
+- **Anti-Repetition:** Guardrail #15 prevents "LLM Laziness" where the same impactful phrase is copied across multiple job bullets.
 
 ## Inputs
-- User data updates (new bullets/roles)
-- JD Cache (`jd_parsed/` directory)
-- Versioned match history
+- Current validated state (HasHistory, HasJD)
+- Optimization targets (Keywords)
+- Chronological data (Dates)
 
 ## Outputs
 - Delta match reports
