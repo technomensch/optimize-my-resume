@@ -1,10 +1,11 @@
-# Optimize-My-Resume System v6.3.0
+# Optimize-My-Resume System v6.4.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - QUICK START (SINGLE FILE)                     -->
 <!-- ========================================================================== -->
-<!-- Version: 6.3.0 (January 2026)                                              --> <!-- v6.3.0 Release: 27 Quality Guardrails -->
-<!-- Last Updated: January 3, 2026                                              -->
+<!-- Version: 6.4.0 (January 2026)                                              --> <!-- v6.4.0 Release: Enhanced User Entry Experience (A/B/C/D/E Menu) -->
+<!-- Previous: 6.3.0 (January 2026)                                             --> <!-- v6.3.0 Release: 27 Quality Guardrails -->
+<!-- Last Updated: January 5, 2026                                              -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
 <!-- ========================================================================== -->
@@ -1174,7 +1175,7 @@
 <!-- INITIAL GREETING (PHASE 2 & 3)                                              -->
 <!-- ========================================================================== -->
 
-<initial_user_prompt>
+<initial_user_prompt> <!-- v6.4.0 Change: Replaced single-path greeting with A/B/C/D/E entry menu -->
 
   <greeting>
 Welcome to Your Resume Optimizer
