@@ -1,4 +1,4 @@
-# Optimize My Resume v6.2 <!-- v6.2.0 Change -->
+# Optimize My Resume v6.4.0 <!-- v6.4.0 Change -->
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -421,10 +421,27 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 6.1.0 (MINOR RELEASE)
-**Released:** December 29, 2025
+**Current Version:** 6.4.0 (MINOR RELEASE) <!-- v6.4.0 Change -->
+**Released:** January 5, 2026
 
-### What's New in v6.1:
+### What's New in v6.4.0:
+- **Enhanced User Entry Experience** - New A/B/C/D/E menu system that routes you based on what you have (resume file, bullets, job description, or starting from scratch)
+- **Smarter Routing** - System now asks "what do you have?" instead of forcing everyone through bullet optimization
+- **Better First Impressions** - Clearer expectations for each entry path (analyze resume, optimize bullets, check job fit, build summary from memory, or get help)
+- **Improved User Guidance** - Each option explains exactly what will happen and what to provide
+
+### What Was New in v6.3.0:
+- **27 Quality Guardrails** - Comprehensive validation rules ensuring data integrity, safety, and consistency
+- **Data Loss Prevention** - Critical backup/restore logic for job history management
+- **Enhanced Blocking Gates** - Improved fit assessment with calibrated scoring and industry-specific penalties
+
+### What Was New in v6.2.0:
+- **Job History Template System** - Standardized XML/Markdown dual-format architecture
+- **Workflow Automation Skills** - `/update-history` and `/md-job-history` commands for version management
+- **Python Validation Tools** - Automated schema compliance checking and format conversion
+- **Cross-LLM Consistency** - Template ensures identical structure across Claude, ChatGPT, Gemini, and Copilot
+
+### What Was New in v6.1:
 - **Enhanced Documentation** - Consistent phase terminology across all docs
 - **Job Summary Usage Guide** - Clear instructions for professional summary generation
 - **Visual Wireframes** - 10 comprehensive workflow diagrams (ASCII + Mermaid)
