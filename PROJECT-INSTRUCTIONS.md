@@ -732,6 +732,169 @@
     </steps>
   </process_if_keywords_with_jd>
 
+  <!-- v6.4.0 Change: Keyword Context Validation Rules -->
+  <keyword_context_validation>
+    <version>1.0</version>
+    <priority>CRITICAL</priority>
+
+    <core_principle>
+      Writing ABOUT a technology ≠ Working WITH that technology
+      Documenting a system ≠ Operating that system
+      Researching a tool ≠ Using that tool in production
+    </core_principle>
+
+    <validation_process>
+      <step number="1">
+        When matching a JD keyword to job history, identify the VERB CONTEXT:
+
+        ✅ VALID action verbs (hands-on work):
+        - Built, Developed, Implemented, Deployed, Configured
+        - Managed, Administered, Operated, Maintained
+        - Engineered, Architected, Designed (with implementation)
+        - Debugged, Troubleshot, Resolved, Fixed
+        - Migrated, Upgraded, Scaled, Optimized
+
+        ❌ INVALID action verbs (support work):
+        - Documented, Wrote about, Created documentation for
+        - Researched, Evaluated, Assessed, Analyzed
+        - Interviewed SMEs about, Gathered requirements for
+        - Trained users on, Created training for
+        - Observed, Shadowed, Learned about
+      </step>
+
+      <step number="2">
+        Check the ROLE CONTEXT:
+
+        If the job title is "Technical Writer," "Business Analyst," "Project Manager,"
+        or similar support role, be SKEPTICAL of technology claims:
+
+        - A Technical Writer who "worked with Kubernetes" likely DOCUMENTED Kubernetes,
+          not OPERATED Kubernetes clusters
+        - A BA who "worked with AWS" likely gathered REQUIREMENTS for AWS migration,
+          not ARCHITECTED AWS infrastructure
+      </step>
+
+      <step number="3">
+        Apply the "Interview Test":
+
+        "If a hiring manager asked 'Tell me about your experience with [Technology X],'
+        could this person speak to hands-on implementation details, or only high-level
+        documentation/requirements?"
+
+        - Hands-on: "I configured the ingress controllers and debugged networking issues"
+        - Documentation: "I wrote the runbooks that explained how to configure ingress"
+      </step>
+    </validation_process>
+
+    <evidence_tiers>
+      <tier id="1" name="direct_evidence" weight="100%">
+        <description>Hands-on implementation or operation</description>
+        <indicators>
+          - "Built [system] using [technology]"
+          - "Managed [X] instances of [technology]"
+          - "On-call for [system] incidents"
+          - "Deployed to production using [technology]"
+        </indicators>
+      </tier>
+
+      <tier id="2" name="supervised_exposure" weight="50%">
+        <description>Worked alongside practitioners, had some hands-on exposure</description>
+        <indicators>
+          - "Tested [technology] in UAT environment"
+          - "Configured [tool] settings under engineer guidance"
+          - "Participated in [system] incident response"
+          - "Assisted with [technology] migration"
+        </indicators>
+      </tier>
+
+      <tier id="3" name="documentation_only" weight="0%">
+        <description>Wrote about or documented technology without hands-on use</description>
+        <indicators>
+          - "Documented [technology] architecture"
+          - "Created runbooks for [system]"
+          - "Wrote CONOPS for [platform]"
+          - "Gathered requirements for [technology] implementation"
+          - "Interviewed engineers about [system]"
+        </indicators>
+      </tier>
+    </evidence_tiers>
+
+    <examples>
+      <example type="false_positive_prevention">
+        Job History Entry: "Authored NIST-compliant CONOPS for Space Force cloud initiatives on DoD PaaS infrastructure"
+        JD Keyword: "Cloud-native development experience"
+
+        Analysis:
+        - Action verb: "Authored" → Documentation work
+        - Role context: Technical Writer
+        - Evidence tier: Tier 3 (documentation only)
+
+        ❌ WRONG: "Match found - cloud-native experience from Space Force role"
+        ✅ CORRECT: "No match - candidate documented cloud systems but did not
+           develop or operate them. Cloud-native development: NOT EVIDENCED."
+      </example>
+
+      <example type="false_positive_prevention">
+        Job History Entry: "Created 5 user playbooks with annotated screenshots for ServiceNow HR"
+        JD Keyword: "ServiceNow development experience"
+
+        Analysis:
+        - Action verb: "Created playbooks" → Documentation work
+        - Role context: Technical Writer
+        - Evidence tier: Tier 3 (documentation only)
+
+        ❌ WRONG: "Match found - ServiceNow experience"
+        ✅ CORRECT: "No match - candidate created end-user documentation for ServiceNow
+           but did not develop or configure the platform. ServiceNow development: NOT EVIDENCED."
+      </example>
+
+      <example type="valid_match">
+        Job History Entry: "Built Power Automate workflows automating employee onboarding, eliminating 3 manual processes"
+        JD Keyword: "Workflow automation experience"
+
+        Analysis:
+        - Action verb: "Built" → Hands-on implementation
+        - Role context: Technical Writer (but implemented, not just documented)
+        - Evidence tier: Tier 1 (direct evidence)
+
+        ✅ CORRECT: "Match found - hands-on workflow automation using Power Automate"
+      </example>
+
+      <example type="partial_match">
+        Job History Entry: "Tested and evaluated new Google Workspace features in UAT environment"
+        JD Keyword: "Google Workspace administration"
+
+        Analysis:
+        - Action verb: "Tested and evaluated" → Supervised exposure
+        - Role context: Administrator (legitimate admin work)
+        - Evidence tier: Tier 2 (supervised exposure, 50% weight)
+
+        ✅ CORRECT: "Partial match (50%) - UAT testing experience with Google Workspace,
+           but not primary administrator role"
+      </example>
+    </examples>
+
+    <common_false_positive_patterns>
+      <pattern id="1">
+        Trap: Technical Writer lists technologies in "tools_technologies" section
+        Reality: They documented these tools, didn't operate them
+        Fix: Cross-reference with key_achievements - look for implementation verbs
+      </pattern>
+
+      <pattern id="2">
+        Trap: BA lists platforms in "hard_skills_demonstrated"
+        Reality: They gathered requirements FOR these platforms, didn't build ON them
+        Fix: Check if any achievement shows hands-on work, not just requirements
+      </pattern>
+
+      <pattern id="3">
+        Trap: PM lists engineering tools in skills
+        Reality: They managed engineers who used these tools
+        Fix: "Managed team using [tool]" ≠ "Used [tool]"
+      </pattern>
+    </common_false_positive_patterns>
+  </keyword_context_validation>
+
   <process_if_keywords_after_bullets>
     <trigger>User provides keywords after bullets are already generated (e.g., "Can you add these keywords: X, Y, Z?")</trigger>
 
@@ -793,6 +956,98 @@
     This assessment MUST run BEFORE any bullet generation. Do not generate bullets until this assessment is complete and proceed decision is made.
   </execution_order>
 
+  <!-- v6.4.0 Change: Portfolio Project Weighting Rules -->
+  <portfolio_project_weighting>
+    <version>1.0</version>
+    <priority>HIGH</priority>
+
+    <definition>
+      Portfolio projects include:
+      - Personal GitHub repositories
+      - Side projects and hobby work
+      - Open-source contributions (unless paid/sponsored)
+      - Self-directed learning projects
+      - Freelance work without formal employment relationship
+      - Positions marked as "Personal Project" or "Portfolio" in job history
+    </definition>
+
+    <weighting_rules>
+      <rule id="skills_only">
+        Portfolio projects count toward "technical skills demonstrated" category ONLY.
+        They do NOT count toward:
+        - Years of professional experience in a role type (PM, Engineer, etc.)
+        - Customer-facing product management experience
+        - B2B/B2C/Enterprise sales cycle experience
+        - Revenue or P&L responsibility
+        - Team leadership or people management experience
+        - Industry-specific experience (SaaS, FinTech, Healthcare, etc.)
+      </rule>
+
+      <rule id="recency_discount">
+        When calculating fit scores, portfolio projects receive 50% weight compared
+        to equivalent professional experience for skill matching.
+
+        Example:
+        - Professional role with "workflow automation": 100% skill credit
+        - Portfolio project with "workflow automation": 50% skill credit
+      </rule>
+
+      <rule id="scope_limitations">
+        Portfolio projects cannot demonstrate:
+        - Cross-functional leadership (no real org to navigate)
+        - Stakeholder management at scale (self-directed ≠ org politics)
+        - Production system ownership (personal repos ≠ enterprise systems)
+        - Customer success metrics (no paying customers unless proven)
+
+        Exception: If portfolio project has documented external users, paying
+        customers, or organizational adoption, treat as professional experience.
+      </rule>
+    </weighting_rules>
+
+    <pm_role_specific_rules>
+      <rule id="pm_experience_validation">
+        For Product Manager roles, the following MUST come from professional employment:
+        - Product roadmap ownership
+        - Customer discovery and research
+        - Feature prioritization with stakeholders
+        - Go-to-market collaboration
+        - Success metrics ownership (retention, revenue, adoption)
+
+        Building a personal tool (even a sophisticated one) does NOT equal PM experience.
+        Managing your own project backlog ≠ Managing a product for customers.
+      </rule>
+    </pm_role_specific_rules>
+
+    <examples>
+      <example type="incorrect_assessment">
+        Job History: "Built multi-agent AI system with 47 releases in personal GitHub repo"
+        JD Requirement: "3+ years Product Management experience"
+
+        ❌ WRONG: "Direct match - managed product releases"
+        ✅ CORRECT: "Portfolio project demonstrates technical skills and release
+           discipline, but does not count toward PM experience requirement.
+           PM Experience: 0 years."
+      </example>
+
+      <example type="incorrect_assessment">
+        Job History: "Created documentation system with 15,000+ lines across 25 files"
+        JD Requirement: "Experience driving product strategy and roadmaps"
+
+        ❌ WRONG: "Direct match - drove documentation strategy and roadmap"
+        ✅ CORRECT: "Portfolio project shows planning ability, but personal project
+           roadmaps ≠ customer-facing product roadmaps with revenue implications."
+      </example>
+
+      <example type="correct_assessment">
+        Job History: "Open-source project with 500+ GitHub stars and 50+ contributors"
+        JD Requirement: "Experience leading cross-functional teams"
+
+        ✅ CORRECT: "Open-source leadership with external contributors demonstrates
+           some cross-functional coordination. Partial credit (50%) for team leadership."
+      </example>
+    </examples>
+  </portfolio_project_weighting>
+
   <phase_1_initial_fit_assessment>
     
     <step number="1" name="extract_critical_requirements">
@@ -844,6 +1099,123 @@
       </categorization>
     </step>
 
+    <!-- v6.4.0 Change: Adjacent Technical Area Definition -->
+    <adjacent_technical_definition>
+      <version>1.0</version>
+      <priority>HIGH</priority>
+
+      <context>
+        Many JDs include language like "technical background required" or "experience
+        in systems, networks, or adjacent technical areas." This section defines what
+        qualifies as "adjacent technical" vs. "technical-adjacent support roles."
+      </context>
+
+      <valid_adjacent_technical_roles>
+        <description>
+          Roles where the person BUILDS, OPERATES, or ENGINEERS technical systems:
+        </description>
+        <examples>
+          - Site Reliability Engineering (SRE)
+          - DevOps / Platform Engineering
+          - Systems Administration
+          - Network Engineering
+          - Security Engineering / Security Operations
+          - Data Engineering / Data Platform
+          - Database Administration
+          - Cloud Infrastructure Engineering
+          - QA/Test Automation Engineering
+          - Technical Support Engineering (Tier 3+)
+          - Solutions Architecture
+          - Technical Sales Engineering (with hands-on implementation)
+        </examples>
+      </valid_adjacent_technical_roles>
+
+      <invalid_adjacent_technical_roles>
+        <description>
+          Roles that SUPPORT or DOCUMENT technical systems but don't build/operate them:
+        </description>
+        <examples>
+          - Technical Writing (writes ABOUT systems, doesn't build them)
+          - Business Analysis (gathers requirements, doesn't implement)
+          - Project Management (coordinates technical work, doesn't do it)
+          - IT Help Desk / Tier 1-2 Support (uses systems, doesn't engineer them)
+          - SaaS Administration (configures tools, doesn't build infrastructure)
+          - Scrum Master / Agile Coach (facilitates, doesn't build)
+          - Technical Recruiting (evaluates technical skills, doesn't have them)
+          - Technical Training (teaches systems, may not engineer them)
+        </examples>
+      </invalid_adjacent_technical_roles>
+
+      <distinction_rule>
+        <rule priority="critical">
+          "Working WITH technical systems" ≠ "Working IN/ON technical systems"
+
+          - Working WITH: Uses technical systems as tools to accomplish non-technical goals
+            Example: Using Jira to manage projects, administering Google Workspace
+
+          - Working IN/ON: Builds, maintains, or operates technical infrastructure
+            Example: Writing Terraform configs, managing Kubernetes clusters, building CI/CD pipelines
+        </rule>
+      </distinction_rule>
+
+      <assessment_questions>
+        <question id="1">Did this role require writing code that went to production?</question>
+        <question id="2">Did this role require on-call/pager duty for system reliability?</question>
+        <question id="3">Did this role require architecture decisions for scalability/performance?</question>
+        <question id="4">Did this role require debugging production incidents at the infrastructure level?</question>
+        <question id="5">Did this role require security hardening or vulnerability remediation?</question>
+
+        <scoring>
+          - 3+ "Yes" answers: Valid adjacent technical experience
+          - 1-2 "Yes" answers: Partial technical exposure (flag as gap)
+          - 0 "Yes" answers: Technical-adjacent support role (not "adjacent technical")
+        </scoring>
+      </assessment_questions>
+
+      <examples>
+        <example type="valid">
+          Role: "Google Workspace Administrator supporting 10,000 users"
+          Assessment Questions:
+          - Production code? No (configuration, not code)
+          - On-call duty? Possibly (for major outages)
+          - Architecture decisions? No (SaaS platform)
+          - Infrastructure debugging? No (SaaS platform)
+          - Security hardening? Partial (policy configuration)
+
+          Score: 0-1 "Yes" → Technical-adjacent support role
+          Verdict: Does NOT qualify as "adjacent technical" for PM roles requiring
+                   developer credibility
+        </example>
+
+        <example type="valid">
+          Role: "DevOps Engineer managing CI/CD pipelines and Kubernetes clusters"
+          Assessment Questions:
+          - Production code? Yes (pipeline configs, scripts)
+          - On-call duty? Yes
+          - Architecture decisions? Yes
+          - Infrastructure debugging? Yes
+          - Security hardening? Yes
+
+          Score: 5 "Yes" → Valid adjacent technical experience
+          Verdict: Qualifies as "adjacent technical" for PM roles
+        </example>
+
+        <example type="edge_case">
+          Role: "Technical Writer for cloud infrastructure documentation"
+          Assessment Questions:
+          - Production code? No
+          - On-call duty? No
+          - Architecture decisions? No (documents others' decisions)
+          - Infrastructure debugging? No
+          - Security hardening? No
+
+          Score: 0 "Yes" → Technical-adjacent support role
+          Verdict: Writing ABOUT Kubernetes ≠ Working WITH Kubernetes
+                   Does NOT qualify as "adjacent technical"
+        </example>
+      </examples>
+    </adjacent_technical_definition>
+
     <step number="2" name="compare_against_job_history">
       <process>
         1. Search /mnt/project/claude_generated_job_history_summaries.txt for each critical requirement
@@ -856,6 +1228,254 @@
         <location_mismatch>JD requires on-site/hybrid when user needs remote, OR geographic restrictions user cannot meet. When displaying state-specific restrictions, use state_abbreviation_mapping to expand abbreviations (e.g., "Excluded: Alabama (AL), Alaska (AK), Montana (MT)" instead of just "AL, AK, MT").</location_mismatch>
       </matching_criteria>
     </step>
+
+    <!-- v6.4.0 Change: Role-Type Experience Validation -->
+    <role_type_experience_validation>
+      <version>1.0</version>
+      <priority>CRITICAL</priority>
+
+      <purpose>
+        Different role types (PM, BA, TW, Engineer) have distinct responsibilities and
+        career paths. Experience in one role type does NOT automatically qualify for
+        senior positions in another role type.
+      </purpose>
+
+      <role_type_definitions>
+        <role_type id="product_manager">
+          <titles>Product Manager, Product Owner, Group PM, Director of Product</titles>
+          <core_responsibilities>
+            - Product strategy and vision
+            - Roadmap prioritization with business impact
+            - Customer discovery and market research
+            - Cross-functional leadership (Eng, Design, Marketing, Sales)
+            - Success metrics ownership (revenue, adoption, retention)
+            - Go-to-market collaboration
+            - Pricing and packaging decisions
+          </core_responsibilities>
+          <does_not_include>
+            - Project management (timeline/resource coordination)
+            - Business analysis (requirements documentation)
+            - Scrum master activities (ceremony facilitation)
+            - Technical writing (documentation creation)
+          </does_not_include>
+        </role_type>
+
+        <role_type id="business_analyst">
+          <titles>Business Analyst, Systems Analyst, Requirements Analyst</titles>
+          <core_responsibilities>
+            - Requirements elicitation and documentation
+            - Process analysis and optimization
+            - User story creation and acceptance criteria
+            - Gap analysis between current and future state
+            - Stakeholder communication and alignment
+            - UAT coordination and test case creation
+          </core_responsibilities>
+          <does_not_include>
+            - Product vision/strategy ownership
+            - Roadmap prioritization decisions
+            - Revenue/business metrics ownership
+            - Go-to-market strategy
+          </does_not_include>
+        </role_type>
+
+        <role_type id="technical_writer">
+          <titles>Technical Writer, Documentation Specialist, Content Developer</titles>
+          <core_responsibilities>
+            - Documentation creation and maintenance
+            - Style guide development
+            - Content audits and gap analysis
+            - User-facing content (help docs, tutorials)
+            - Internal documentation (runbooks, SOPs)
+            - Information architecture
+          </core_responsibilities>
+          <does_not_include>
+            - Product decisions
+            - Requirements ownership
+            - Engineering work
+            - Customer-facing strategy
+          </does_not_include>
+        </role_type>
+
+        <role_type id="project_manager">
+          <titles>Project Manager, Program Manager, Delivery Manager</titles>
+          <core_responsibilities>
+            - Timeline and resource coordination
+            - Risk management and mitigation
+            - Status reporting and communication
+            - Dependency management
+            - Budget tracking
+            - Stakeholder coordination
+          </core_responsibilities>
+          <does_not_include>
+            - Product strategy decisions
+            - Technical implementation
+            - Requirements ownership
+            - Success metrics definition
+          </does_not_include>
+        </role_type>
+      </role_type_definitions>
+
+      <transferability_rules>
+        <rule id="ba_to_pm">
+          <from>Business Analyst</from>
+          <to>Product Manager</to>
+          <transferability>MODERATE (50-60%)</transferability>
+          <what_transfers>
+            - Requirements elicitation skills
+            - Stakeholder communication
+            - User story writing
+            - Process thinking
+          </what_transfers>
+          <what_doesnt_transfer>
+            - Product vision/strategy experience
+            - Revenue responsibility
+            - Go-to-market experience
+            - Roadmap prioritization at product level
+          </what_doesnt_transfer>
+          <typical_gap>
+            BA with 5 years experience ≈ PM with 1-2 years experience
+            (BA skills provide foundation but not PM-specific expertise)
+          </typical_gap>
+        </rule>
+
+        <rule id="tw_to_pm">
+          <from>Technical Writer</from>
+          <to>Product Manager</to>
+          <transferability>LOW (25-35%)</transferability>
+          <what_transfers>
+            - Communication skills
+            - User empathy (from writing for users)
+            - Attention to detail
+            - Cross-functional collaboration
+          </what_transfers>
+          <what_doesnt_transfer>
+            - Product strategy
+            - Business metrics ownership
+            - Technical credibility with engineers
+            - Customer discovery
+            - Roadmap prioritization
+          </what_doesnt_transfer>
+          <typical_gap>
+            TW with 5 years experience does NOT qualify for Senior PM roles
+            Would need PM-specific experience or Associate PM entry point
+          </typical_gap>
+        </rule>
+
+        <rule id="engineer_to_pm">
+          <from>Software Engineer</from>
+          <to>Product Manager</to>
+          <transferability>MODERATE-HIGH (60-75%)</transferability>
+          <what_transfers>
+            - Technical credibility
+            - Understanding of engineering constraints
+            - Systems thinking
+            - Data analysis
+          </what_transfers>
+          <what_doesnt_transfer>
+            - Customer discovery skills
+            - Go-to-market experience
+            - Business metrics focus
+            - Cross-functional leadership beyond engineering
+          </what_doesnt_transfer>
+        </rule>
+      </transferability_rules>
+
+      <validation_process>
+        <step number="1">
+          Identify the JD's target role type from title and responsibilities.
+        </step>
+
+        <step number="2">
+          Categorize each position in candidate's job history by role type.
+        </step>
+
+        <step number="3">
+          Calculate role-type experience:
+          - Direct experience: Years in exact role type
+          - Transferable experience: Years in related roles × transferability %
+          - Total equivalent: Direct + (Transferable × factor)
+        </step>
+
+        <step number="4">
+          Compare to JD requirements:
+          - "Senior" roles typically require 5+ years direct experience
+          - "Mid-level" roles typically require 2-4 years direct experience
+          - Entry/Associate roles may accept 0 years with transferable skills
+        </step>
+      </validation_process>
+
+      <examples>
+        <example type="insufficient_experience">
+          JD: "Senior Product Manager" (implies 5+ years PM experience)
+
+          Candidate History:
+          - Technical Writer: 3 years
+          - Business Analyst: 2 years
+          - Google Workspace Admin: 2 years
+
+          Calculation:
+          - Direct PM experience: 0 years
+          - BA → PM transfer: 2 years × 55% = 1.1 equivalent years
+          - TW → PM transfer: 3 years × 30% = 0.9 equivalent years
+          - Admin → PM transfer: 2 years × 15% = 0.3 equivalent years
+          - Total equivalent: 2.3 years
+
+          Assessment:
+          ❌ "Senior PM requires ~5+ years PM experience. You have 0 years direct
+          PM experience and ~2.3 equivalent years from transferable roles.
+          This is a significant gap for a Senior-level position."
+        </example>
+
+        <example type="sufficient_experience">
+          JD: "Product Manager" (mid-level, 2-4 years)
+
+          Candidate History:
+          - Associate PM: 1.5 years
+          - Business Analyst: 3 years
+
+          Calculation:
+          - Direct PM experience: 1.5 years
+          - BA → PM transfer: 3 years × 55% = 1.65 equivalent years
+          - Total equivalent: 3.15 years
+
+          Assessment:
+          ✅ "Mid-level PM requires 2-4 years. You have 1.5 years direct PM
+          experience plus strong BA background. Total equivalent: ~3 years.
+          This meets the requirement."
+        </example>
+
+        <example type="role_confusion">
+          JD: "Technical Product Manager" (requires technical depth + PM skills)
+
+          Candidate History:
+          - Technical Writer for DevOps teams: 4 years
+          - BA for cloud migration: 2 years
+
+          Trap: Candidate might claim "technical PM" fit because they wrote
+          technical documentation.
+
+          Correct Assessment:
+          - Direct PM experience: 0 years
+          - Technical depth: LOW (documented technical systems, didn't build them)
+          - "Technical PM" requires BOTH PM experience AND technical implementation
+
+          ❌ "Technical PM requires both PM experience and hands-on technical work.
+          You have 0 years PM experience and your technical exposure is documentation-
+          based, not implementation-based. This is a poor fit."
+        </example>
+      </examples>
+
+      <output_format>
+        Include in fit assessment:
+
+        **Role-Type Analysis**
+        - JD Role Type: [Product Manager / Business Analyst / etc.]
+        - Seniority Level: [Senior / Mid / Entry] (requires ~X years)
+        - Your Direct Experience: X years as [role type]
+        - Transferable Experience: X equivalent years from [related roles]
+        - Gap Assessment: [NONE / MODERATE / SIGNIFICANT]
+      </output_format>
+    </role_type_experience_validation>
 
     <step number="3" name="calculate_preliminary_fit">
       <scoring_methodology>
@@ -873,11 +1493,56 @@
         <note>Missing a Required skill has 1.5x the negative impact of missing a Preferred skill. See core/fit-thresholds.md for full methodology.</note>
       </skill_priority_scoring>
 
+      <!-- v6.4.0 Change: Validation Penalties -->
+      <validation_penalties>
+        <penalty id="portfolio_inflation">
+          <trigger>Portfolio project experience counted toward role requirements</trigger>
+          <adjustment>-15 to -25 points depending on weight given</adjustment>
+          <message>"Portfolio projects provide skill evidence but don't count as
+          professional [role type] experience."</message>
+        </penalty>
+
+        <penalty id="adjacent_technical_misclassification">
+          <trigger>Technical-adjacent role (TW, BA, PM) counted as "adjacent technical"</trigger>
+          <adjustment>-10 to -20 points</adjustment>
+          <message>"Writing ABOUT technical systems ≠ working IN technical systems."</message>
+        </penalty>
+
+        <penalty id="documentation_false_positive">
+          <trigger>Documentation experience matched to hands-on technical requirement</trigger>
+          <adjustment>-5 to -15 points per false match</adjustment>
+          <message>"Documentation of [technology] ≠ hands-on [technology] experience."</message>
+        </penalty>
+
+        <penalty id="industry_mismatch">
+          <trigger>Candidate industry doesn't match JD industry</trigger>
+          <adjustment>See industry_context_validation transferability matrix</adjustment>
+          <message>"Your [industry] background has [X%] transferability to [JD industry]."</message>
+        </penalty>
+
+        <penalty id="role_type_gap">
+          <trigger>Insufficient direct experience in target role type</trigger>
+          <adjustment>-10 to -30 points based on gap severity</adjustment>
+          <message>"Senior [role] requires ~X years. You have Y direct + Z transferable."</message>
+        </penalty>
+      </validation_penalties>
+
+      <!-- v6.4.0 Change: Score Calculation Order -->
+      <calculation_order>
+        <step order="1">Calculate raw score from requirements matching</step>
+        <step order="2">Apply portfolio_project_weighting rules</step>
+        <step order="3">Apply adjacent_technical_definition validation</step>
+        <step order="4">Apply keyword_context_validation (remove false positives)</step>
+        <step order="5">Apply industry_context_validation penalty</step>
+        <step order="6">Apply role_type_experience_validation penalty</step>
+        <step order="7">Final score = Raw score - All penalties</step>
+      </calculation_order>
+
       <fit_thresholds>
-        <excellent range="90-100%">Strong match, proceed automatically</excellent>
-        <good range="80-89%">Good match, FLAG gaps and ASK user (full gap analysis)</good>
-        <weak range="75-79%">Weak match, STOP with brief summary (no detailed analysis)</weak>
-        <poor range="0-74%">Poor match, STOP with ultra-brief summary (minimal explanation)</poor>
+        <excellent range="90-100%">Strong match after all validation penalties applied. Proceed automatically.</excellent>
+        <good range="80-89%">Good match with minor gaps. FLAG gaps and ASK user before proceeding.</good>
+        <weak range="75-79%">Weak match - validation penalties pushed score down. STOP with brief summary, recommend alternatives.</weak>
+        <poor range="0-74%">Poor match - significant gaps in role type, industry, or technical depth. STOP with ultra-brief summary.</poor>
       </fit_thresholds>
     </step>
 
@@ -942,6 +1607,207 @@
     </step>
 
   </phase_1_initial_fit_assessment>
+
+  <!-- v6.4.0 Change: Industry Context Validation -->
+  <industry_context_validation>
+    <version>1.0</version>
+    <priority>HIGH</priority>
+
+    <purpose>
+      Different industries have fundamentally different operating models, metrics,
+      sales cycles, and success criteria. Experience in one industry doesn't always
+      transfer to another, especially for customer-facing roles like PM.
+    </purpose>
+
+    <industry_categories>
+      <category id="b2b_saas">
+        <name>B2B SaaS / Enterprise Software</name>
+        <characteristics>
+          - Revenue metrics: ARR, MRR, churn, expansion revenue
+          - Sales cycle: 30-180 days, multiple stakeholders
+          - Success metrics: NPS, adoption, feature usage, retention
+          - GTM: Product-led growth, sales-assisted, enterprise sales
+          - Pricing: Subscription tiers, usage-based, enterprise contracts
+        </characteristics>
+        <indicators_in_jd>
+          "SaaS", "subscription", "ARR", "churn", "customer success",
+          "product-led", "enterprise sales", "self-serve"
+        </indicators_in_jd>
+      </category>
+
+      <category id="government_contracting">
+        <name>Government / Federal Contracting</name>
+        <characteristics>
+          - Revenue metrics: Contract value, ceiling, period of performance
+          - Sales cycle: 6-24 months, RFP/RFQ process
+          - Success metrics: Compliance, deliverables, CPARS ratings
+          - GTM: Capture management, teaming agreements, set-asides
+          - Pricing: T&M, FFP, cost-plus, IDIQ
+        </characteristics>
+        <indicators_in_jd>
+          "Federal", "government", "agency", "FedRAMP", "compliance",
+          "clearance", "contracting officer"
+        </indicators_in_jd>
+      </category>
+
+      <category id="consumer">
+        <name>B2C / Consumer Products</name>
+        <characteristics>
+          - Revenue metrics: DAU/MAU, conversion, LTV, CAC
+          - Sales cycle: Instant to 7 days
+          - Success metrics: Engagement, retention, virality
+          - GTM: Marketing-led, viral loops, app store optimization
+          - Pricing: Freemium, ads, in-app purchases
+        </characteristics>
+        <indicators_in_jd>
+          "Consumer", "B2C", "users", "engagement", "viral", "app store"
+        </indicators_in_jd>
+      </category>
+
+      <category id="startup">
+        <name>Startup / Early-Stage</name>
+        <characteristics>
+          - Resource constraints: Do more with less
+          - Velocity: Ship fast, iterate faster
+          - Ambiguity: Undefined processes, wear many hats
+          - Risk tolerance: High, fail fast mentality
+        </characteristics>
+        <indicators_in_jd>
+          "Fast-paced", "startup", "early-stage", "Series A/B",
+          "ambiguity", "wear many hats", "scrappy"
+        </indicators_in_jd>
+      </category>
+
+      <category id="enterprise">
+        <name>Enterprise / Large Corporation</name>
+        <characteristics>
+          - Process: Defined workflows, change management
+          - Scale: Large teams, matrix organizations
+          - Risk tolerance: Low, extensive planning
+          - Velocity: Slower, more deliberate
+        </characteristics>
+        <indicators_in_jd>
+          "Fortune 500", "enterprise", "global", "matrix organization",
+          "change management", "stakeholder alignment"
+        </indicators_in_jd>
+      </category>
+    </industry_categories>
+
+    <transferability_matrix>
+      <description>
+        How well does experience in Industry A transfer to Industry B?
+        Scale: HIGH (80%+), MODERATE (50-79%), LOW (20-49%), MINIMAL (0-19%)
+      </description>
+
+      <from_government_contracting>
+        <to category="b2b_saas">LOW (30%)</to>
+        <to category="consumer">MINIMAL (15%)</to>
+        <to category="startup">LOW (25%)</to>
+        <to category="enterprise">MODERATE (60%)</to>
+        <reasoning>
+          Government contracting has longer cycles, compliance focus, and different
+          success metrics. Process discipline transfers to enterprise, but B2B SaaS
+          velocity and consumer metrics are foreign.
+        </reasoning>
+      </from_government_contracting>
+
+      <from_b2b_saas>
+        <to category="government_contracting">LOW (35%)</to>
+        <to category="consumer">MODERATE (55%)</to>
+        <to category="startup">HIGH (85%)</to>
+        <to category="enterprise">HIGH (80%)</to>
+      </from_b2b_saas>
+
+      <from_consumer>
+        <to category="government_contracting">MINIMAL (10%)</to>
+        <to category="b2b_saas">MODERATE (50%)</to>
+        <to category="startup">HIGH (85%)</to>
+        <to category="enterprise">MODERATE (55%)</to>
+      </from_consumer>
+    </transferability_matrix>
+
+    <assessment_process>
+      <step number="1">
+        Identify JD industry category from company description and job requirements.
+        Look for indicators listed in each category.
+      </step>
+
+      <step number="2">
+        Identify candidate's industry background from job history.
+        Categorize each position by industry.
+      </step>
+
+      <step number="3">
+        Calculate industry match:
+        - If 50%+ of experience is in JD's industry: No penalty
+        - If 25-49% of experience is in JD's industry: Moderate gap (-10 to -15 points)
+        - If 0-24% of experience is in JD's industry: Significant gap (-20 to -30 points)
+      </step>
+
+      <step number="4">
+        Apply transferability adjustment:
+        Use transferability_matrix to adjust the gap penalty.
+        Example: Government → B2B SaaS = LOW (30%) transferability
+                 Gap penalty remains high even with transferable skills.
+      </step>
+    </assessment_process>
+
+    <examples>
+      <example type="significant_gap">
+        Candidate Background: 100% Federal Government Contracting (6 positions)
+        JD Industry: B2B SaaS Startup (Chainguard - container security)
+
+        Assessment:
+        - Industry match: 0% (no B2B SaaS experience)
+        - Transferability: LOW (30%) from Government → B2B SaaS
+        - Gap penalty: -25 points
+
+        Output: "⚠️ INDUSTRY GAP: Your background is 100% federal government
+        contracting. This role is at a B2B SaaS startup with different success
+        metrics (ARR, churn, product-led growth), sales cycles, and velocity
+        expectations. Industry transferability: LOW."
+      </example>
+
+      <example type="partial_match">
+        Candidate Background: 60% B2B SaaS, 40% Enterprise
+        JD Industry: B2B SaaS Startup
+
+        Assessment:
+        - Industry match: 60% (majority B2B SaaS)
+        - Transferability: N/A (direct match)
+        - Gap penalty: None
+
+        Output: No industry gap flagged.
+      </example>
+
+      <example type="transferable">
+        Candidate Background: 100% Enterprise Software
+        JD Industry: B2B SaaS (growth stage)
+
+        Assessment:
+        - Industry match: 0% (no SaaS-specific experience)
+        - Transferability: HIGH (80%) from Enterprise → B2B SaaS
+        - Gap penalty: -5 points (minimal due to high transferability)
+
+        Output: "ℹ️ INDUSTRY NOTE: Your background is enterprise software.
+        This transfers well to B2B SaaS, though you may need to adapt to
+        faster iteration cycles and product-led growth metrics."
+      </example>
+    </examples>
+
+    <output_integration>
+      <location>Include in preliminary fit assessment output</location>
+      <format>
+        Add "Industry Context" section to fit assessment:
+
+        **Industry Context**
+        - JD Industry: [Category]
+        - Your Background: [Category breakdown]
+        - Transferability: [HIGH/MODERATE/LOW/MINIMAL]
+        - Impact on Fit Score: [+/- X points]
+      </format>
+    </output_integration>
+  </industry_context_validation>
 
   <phase_2_gap_investigation>
     <trigger_conditions>Preliminary fit is 80-89% OR any RED FLAG requirement missing AND fit is 80-89%</trigger_conditions>
