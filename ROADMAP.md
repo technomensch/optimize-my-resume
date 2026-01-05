@@ -223,11 +223,37 @@ This release addresses instruction gaps in fit assessment (v6.3.1) and synchroni
 
 ---
 
+## v6.4.0 - Enhanced User Entry Experience (COMPLETE) <!-- v6.4.0 Change -->
+
+**Branch:** `v6.4.0-update-user-initial-prompt` | **Status:** Complete | **Date:** 2026-01-05
+
+### Overview
+Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entry menu that routes users based on what they have (resume file, bullets, JD, role from memory) rather than forcing all users through bullet optimization workflow.
+
+### Files Modified
+- [x] `PROJECT-INSTRUCTIONS.md` - Replaced `<initial_user_prompt>` section (lines 2806-2834) with multi-path entry menu
+
+### Features
+- [x] **Entry Point Menu:** A/B/C/D/E options based on user's starting point
+- [x] **Option A (Resume File):** Routes to comprehensive job summary creation
+- [x] **Option B (Resume Bullets):** Routes to targeted bullet optimization
+- [x] **Option C (Job Description):** Routes to fit analysis workflow
+- [x] **Option D (Role from Memory):** Routes to guided summary building
+- [x] **Option E (Confused/Unsure):** Provides system explanation and re-prompts
+
+### Benefits
+- Eliminates funnel problem where all users forced through bullet optimization
+- Sets clearer expectations for each entry path
+- Maintains routing to existing workflows (no structural changes)
+- Preserves honest "no fabrication" messaging
+
+---
+
 ## v7.0.0 - Multi-Agent Architecture (In Development) <!-- v6.3.0 Change -->
 
 ---
 
-## v6.4.0+ - Resume Generation (Future) <!-- v6.2.0 Change -->
+## v6.5.0+ - Resume Generation (Future) <!-- v6.2.0 Change -->
 
 **Planned Features:**
 - [ ] Generate tailored resume from job history based on JD

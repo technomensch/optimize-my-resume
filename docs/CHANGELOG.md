@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v6.4.0 - Enhanced User Entry Experience (2026-01-05) <!-- v6.4.0 Addition -->
+> **Branch:** `v6.4.0-update-user-initial-prompt`
+
+#### Changed
+- **Initial User Prompt** – Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entry menu that routes users based on what they have:
+  - **Option A (Resume File)**: Routes to comprehensive job summary creation with probing questions
+  - **Option B (Resume Bullets)**: Routes to targeted bullet optimization with metric analysis
+  - **Option C (Job Description)**: Routes to fit analysis before optimization
+  - **Option D (Role from Memory)**: Routes to guided summary building from scratch
+  - **Option E (Confused/Unsure)**: Provides system explanation and re-prompts for clarity
+
+#### Benefits
+- Eliminates funnel problem where all users were forced through bullet optimization workflow regardless of starting point
+- Sets clearer expectations for each entry path based on user's current material
+- Maintains routing to existing workflows with no structural changes to core system
+- Preserves honest "no fabrication" messaging throughout all entry points
+
+---
+
 ### v6.3.1.2 - Wireframe Alignment & Guardrail Documentation (2026-01-05) <!-- v6.3.1.2 Addition -->
 > **Branch:** `v6.3.1-address-instruction-gaps`
 
