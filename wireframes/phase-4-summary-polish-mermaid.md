@@ -1,44 +1,52 @@
-# Phase 4: Summary & Polish - Mermaid Workflow
+# Phase 4: Summary & Polish - Mermaid Flow
 
-**Version:** 1.0
-**Last Updated:** 2025-12-29
-**Related Modules:** `phases/phase-4/`
+**Version:** 1.1 <!-- v1.1 Change: Added Budget Enforcement & Quality Gates -->
+**Last Updated:** 2026-01-05
+**Related Modules:** `phases/phase-4/`, `core/format-rules.md`
 
 ---
 
 ## Overview
-Phase 4 handles the final synthesis of the candidate's professional brand. It bridges the gap between raw data and high-impact storytelling.
+Phase 4 acts as the "Assembly Line" where optimized components are combined into a final product. Every document must pass through a Quality Gate that strictly enforces the character budget (Guardrail #8) and symbol standards (Guardrail #22).
 
 ## Diagram
 
 ```mermaid
 graph TD
-    History[Job History Data] --> Engine[Summary Engine]
-    Match[JD Match Data] --> Engine
+    Data[(Matches & History)] --> Engine[Summary Synthesis]
     
-    subgraph "Synthesis Process"
-    Engine --> Metrics[Aggregate Tenure/Metrics]
-    Engine --> Keywords[Inject Target Keywords]
-    Engine --> Tone[Assertive Tone Check]
+    subgraph "Output Assembly"
+    Engine --> MS[Master Summary]
+    Engine --> PS[Per-JD Summary]
     end
     
-    Metrics --> Master[Master Summary]
-    Keywords --> PerJD[Per-JD Summary]
+    subgraph "Production Quality Gate (v6.3.0)"
+    MS & PS --> G1{Budget Check}
+    G1 -->| > 210 char| Red[Reduction Strategy]
+    G1 -->|OK| G2{Symbol Scan}
+    G2 -->|Em-Dash Found| Fix[Standardize Symbol]
+    G2 -->|OK| G3{Verb Diversity}
+    end
     
-    Master --> Output([Final Documentation])
-    PerJD --> Output
+    G3 -->|Pass| Out([Final TXT Export])
+    G3 -->|Fail| Loop{Loop Count < 3?}
+    Loop -->|Yes| Engine
+    Loop -->|No| Warn([Diagnostic Alert])
     
-    style Master fill:#dfd,stroke:#333
-    style PerJD fill:#ddf,stroke:#333
+    style G1 fill:#ffcdd2,stroke:#b71c1c
+    style G3 fill:#ffcdd2,stroke:#b71c1c
+    style Out fill:#e8f5e9,stroke:#1b5e20
 ```
 
 ## Key Decision Points
-- **Constraint Handling:** If the generated summary exceeds 350 characters, the engine intelligently truncates secondary technical skills to keep the opening sentence impactful.
-- **Metric Injection:** Specifically looks for the most "impressive" aggregate metric (e.g., "Led 15+ launches") to lead the summary.
+- **Budget Enforcement:** If the document is too long (>500 words), the system automatically prunes older roles (Rule #8).
+- **Infinite Loop Prevention:** Guardrail #14 ensures the system doesn't get stuck in a "Regeneration Loop" and alerts the user if standards can't be met.
+- **Formal Export:** The system automatically generates a `.txt` version ready for copy-pasting into ATS portals.
 
 ## Inputs
-- Aggregated career data
-- Specific job requirements
+- Career Profile
+- Gap Analysis Results
+- Word Count Limits
 
 ## Outputs
 - Reusable "Master Summary"

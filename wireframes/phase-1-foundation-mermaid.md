@@ -1,47 +1,54 @@
-# Phase 1: Foundation - Mermaid Workflow
+# Phase 1: Foundation - Mermaid Flow
 
-**Version:** 1.0
-**Last Updated:** 2025-12-29
-**Related Modules:** `phases/phase-1/`
+**Version:** 1.1 <!-- v1.1 Change: Added v6.3.x Fit Gates and 17-Point Check Integration -->
+**Last Updated:** 2026-01-05
+**Related Modules:** `phases/phase-1/`, `core/fit-thresholds.md`
 
 ---
 
 ## Overview
-Phase 1 establishes the system's foundation by processing primary inputs: the user's resume (converted to Job History v2.0) and the targeted Job Description (parsed through a 17-point inspection).
+Phase 1 focuses on high-fidelity extraction of data. By breaking down the JD into 17 points and the resume into 12 categories, the system ensures no critical requirement is missed before performing the initial Fit Assessment.
 
 ## Diagram
 
 ```mermaid
 graph TD
-    Start([User Input]) --> Router{Entry Router}
+    In([User Input]) --> Router{Entry Router}
     
-    Router -->|Resume Provided| ResP[Resume Parser]
-    Router -->|JD Provided| JDP[17-Point JD Parser]
-    Router -->|Question/CMD| Intent[Intent Detection]
+    Router -->|Resume| RP[Resume Parser]
+    Router -->|JD| JP[JD Parser]
     
-    ResP --> JHv2[Job History v2.0]
-    
-    subgraph "17-Point Analysis"
-    JDP --> Hard[Hard Skills]
-    JDP --> Soft[Soft Skills]
-    JDP --> Resp[Responsibilities]
-    JDP --> Logi[Logistics/Salary]
+    subgraph "High-Fidelity Extraction"
+    JP --> JP1[17-Point Inspection]
+    JP1 --> JP2[Logistics & Keywords]
+    RP --> RP1[Job History v2.0]
+    RP1 --> RP2[12-Category XML]
     end
     
-    JHv2 --> Next([Proceed to Phase 2])
-    Hard & Soft & Resp & Logi --> Next
+    JP2 --> FitGate{Fit Assessment Gate}
+    RP2 --> FitGate
     
-    style JHv2 fill:#f9f,stroke:#333,stroke-width:2px
-    style JDP fill:#bbf,stroke:#333,stroke-width:2px
+    subgraph "Validation Logic (v6.3.1)"
+    FitGate --> V1[Portfolio Weighting]
+    V1 --> V2[Core Fit Scoring]
+    end
+    
+    V2 -->|Score >= 80%| Out([Ready for Phase 2])
+    V2 -->|Score <= 79%| Stop([Brief Exit Report])
+    
+    style FitGate fill:#ffcdd2,stroke:#b71c1c
+    style Router fill:#e1f5fe,stroke:#01579b
 ```
 
 ## Key Decision Points
-- **Parsing Strategy:** Uses highly structured schemas for both job history and job descriptions.
-- **Skill Classification:** Initial separation of technical (hard) and behavioral (soft) assets.
+- **Entry Routing:** Directs user to the correct workflow (Analysis vs optimization).
+- **17-Point Check:** Identifies "Secret Requirements" often buried in JD text.
+- **Fit Assessment:** Stops low-probability matches early to save user time and context tokens.
 
 ## Inputs
-- Raw Resume text
-- Raw JD text
+- Career history (Resume)
+- Target role (JD)
+- Role type (PM, BA, etc.)
 
 ## Outputs
 - Structured Job History (12 categories)

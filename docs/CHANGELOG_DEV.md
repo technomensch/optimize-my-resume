@@ -8,9 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
-## [Unreleased]
+---
 
-### v6.3.0.1 - Guardrail Implementation Audit & Restoration (2026-01-03) <!-- v6.3.0.1 Change -->
+### v6.3.1.1 - Implementing Guardrail Core Modules (2026-01-04) <!-- v6.3.1.1 Change -->
 
 #### Issue Detected - LLM Replacement Pattern
 - **Problem:** Gemini replaced existing guardrail implementations with plan specifications instead of merging additions

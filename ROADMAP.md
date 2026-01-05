@@ -1,7 +1,7 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.3.0 <!-- v6.3.0 Change -->
-## In Development: v7.0.0 <!-- v6.3.0 Change -->
+## Current Version: v6.3.1 <!-- v6.3.1 Change -->
+## In Development: v7.0.0 <!-- v6.3.1 Change -->
 
 ---
 
@@ -191,40 +191,35 @@ Comprehensive template infrastructure ensuring cross-LLM consistency for job his
 
 ---
 
-## v6.3.0 - System Integrity Guardrails (COMPLETE) <!-- v6.3.0 Change -->
+## v6.3.1 - Fit Assessment Calibration & Wireframe Alignment (COMPLETE) <!-- v6.3.1 Change -->
 
-**Branch:** `v6.3.0-adding_guardrails` | **Status:** Complete | **Date:** 2026-01-03
+**Branch:** `v6.3.1-address-instruction-gaps` | **Status:** Complete | **Date:** 2026-01-05
 
-**Implementation Overview:**
-Integrated 27 comprehensive quality guardrails across all modular components and core instruction files. This release focuses on **data integrity**, **factual accuracy**, **quantitative enforcement**, and **user experience consistency**.
+### Overview
+This release addresses instruction gaps in fit assessment (v6.3.1) and synchronizes all architectural wireframes with the 27+ quality guardrails introducted in v6.3.0.
 
-**Guardrail Pass Breakdown:**
-1. **Pass 1: Data Integrity** (#1-4) - Metric traceability, chronological order, summary abstraction, metric compatibility
-2. **Pass 2: Data Safety** (#5-7) - Limitation enforcement, data loss prevention, skill classification
-3. **Pass 3: Quantitative Enforcement** (#8-14) - Character limits, verb diversity, keyword density, plausibility, recency weighting, reconciliation, failure handling
-4. **Pass 4: Cross-Phase Consistency** (#15-21) - Phrase repetition, master skills quarantine, scope attribution, phase consistency, fit scores, acronym expansion, skill context
-5. **Pass 5: User Experience** (#22-27) - Symbol/em-dash validation, state persistence, alternatives diversity, confirmation tracking, output structure, input type detection
+### Sub-Versions
+- ✅ v6.3.1.1 - Implementing Guardrail Core Modules (Portfolio, Adjacent Technical, Keyword/Industry Context, Role-Type Validation)
+- ✅ v6.3.1.2 - Wireframe Alignment & Guardrail Documentation (12 wireframes updated/created)
 
-**Files Modified (Total 12 components updated):**
-- [x] `PROJECT-INSTRUCTIONS.md` (v6.2.0 → v6.3.0) - Added Master Guardrail Checklist
-- [x] `quick-start-phase.md` (v6.2.0 → v6.3.0) - Added condensed Guardrail Checklist
-- [x] `core/format-rules.md` (v6.3.0) - Added #8, #14, #15, #22, #2, #12, #20
-- [x] `core/metrics-requirements.md` (v6.3.0) - Added #4, #11
-- [x] `core/verb-categories.md` (v6.3.0) - Added #9, #24
-- [x] `core/fit-thresholds.md` (v6.3.0) - Added #19
-- [x] `phases/phase-1/job-history-v2-creation.md` (v2.1.0) - Added #1, #17, #5
-- [x] `phases/phase-1/jd-parsing-17-point.md` (v2.1.0) - Added #7, #10
-- [x] `phases/phase-2/evidence-matching.md` (v1.1.0) - Added #5, #21, #24, #16, #1
-- [x] `phases/phase-3/workflow-router.md` (v1.1.0) - Added #18, #23, #25, #27
-- [x] `phases/phase-3/incremental-updates.md` (v1.1.0) - Added #6, #16, #21
-- [x] `phases/phase-4/summary-generation.md` (v1.2.0) - Added #3, #13, #26, #15
+### Files Created
+- [x] `core/portfolio-weighting.md` - 50% discount rule for personal projects
+- [x] `core/adjacent-technical.md` - Defining "Hands-on" vs "Support" role boundaries
+- [x] `core/keyword-context.md` - "Working WITH" vs "Writing ABOUT" validation
+- [x] `core/industry-context.md` - Transferability matrix (Gov -> SaaS penalties)
+- [x] `core/role-type-validation.md` - Preventing BA/TW experience from counting as PM tenure
+- [x] `wireframes/rules-and-guardrails-ascii.md` - New documentation wireframe
+- [x] `wireframes/rules-and-guardrails-mermaid.md` - New documentation wireframe
 
-**Impact:**
-- **Zero-Trust Factual Content:** Metrics and claims must be literally evidenced in job history.
-- **Structural Sanity:** Guaranteed chronological order and strict output templates.
-- **Narrative Variety:** Proactive checks for phrase repetition and verb diversity.
-- **Safety Gauges:** Honest limitations enforcement prevents overstatement and hallucination.
-- **Predictable UX:** Consistent state persistence and input type detection across all user interactions.
+### Files Modified
+- [x] `core/fit-thresholds.md` - Added validation penalties and 7-step calculation order
+- [x] `PROJECT-INSTRUCTIONS.md` - Integrated v6.3.1 calibration rules
+- [x] All 10 existing files in `/wireframes/` - Sync'd to v1.1 with guardrail integration
+
+### Features
+- [x] **Calibrated Fit Scoring:** Automated penalties for inflated experience or industry gaps.
+- [x] **Authenticity Filters:** Mandatory check on verb context (Built vs Documented) for technical claims.
+- [x] **Visual Architecture:** End-to-end mapping of guardrails across all 4 phases.
 
 ---
 
