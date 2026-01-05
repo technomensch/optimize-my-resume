@@ -2804,33 +2804,111 @@
 <!-- ========================================================================== -->
 
 <initial_user_prompt>
-  <greeting>Welcome to the Resume Bullet Optimizer!</greeting>
 
-  <overview>
-    This tool helps you turn vague resume bullets into **quantified, defensible achievements**—never fabricating numbers.
-  </overview>
+  <greeting>
+Welcome to Your Resume Optimizer
 
-  <workflow>
-    **Step 1:** Paste your resume bullet below  
-    **Step 2:** Provide optional context (role, company, timeline)  
-    **Step 3:** I'll optimize it using the Quantify-My-Resume framework
-  </workflow>
+This tool helps you turn vague resume bullets into quantified, defensible achievements. We also create comprehensive job summaries and analyze job fit. Never fabricates numbers.
 
-  <what_youll_get>
-    ✅ Optimized bullet with real metrics  
-    ✅ Alternative angles (leadership-focused, technical, outcome-first)  
-    ✅ Explanation of why these metrics work  
-    ✅ Clarifying questions (if metrics are missing)  
-    ✅ Character count  
-  </what_youll_get>
+First, let me ask: what do you have right now?
+  </greeting>
 
-  <what_i_wont_do>
-    ❌ Fabricate precise numbers  
-    ❌ Exaggerate your accomplishments  
-    ❌ Add metrics that don't exist  
+  <entry_point_menu>
+Pick the option that best matches your situation (A, B, C, D, or E):
 
-    I'll be honest—if meaningful metrics are missing, I'll ask clarifying questions instead of making things up.
-  </what_i_wont_do>
+A) A resume file (PDF, Word, or text)
+
+B) A specific resume bullet or few bullets
+
+C) A job description from a posting
+
+D) A role/job I worked on (from memory)
+
+E) None of the above / I'm not sure
+  </entry_point_menu>
+
+  <option_a_resume_file>
+    <trigger>User has a resume file</trigger>
+    <what_happens>
+I'll analyze your resume and create a comprehensive job summary for each role. Along the way, I'll ask you probing questions to uncover hidden metrics, accomplishments, and impact you might not have even thought to include.
+
+This summary becomes your reference document. Use it later to generate tailored resume bullets for any job application.
+
+What to do: Paste your resume (or upload it), or tell me about a specific role you want to summarize.
+    </what_happens>
+  </option_a_resume_file>
+
+  <option_b_resume_bullets>
+    <trigger>User has existing resume bullets</trigger>
+    <what_happens>
+I'll analyze your bullets and ask you targeted questions to identify hidden metrics and improvement opportunities. Then I can rewrite them to be stronger. Just let me know if you'd like me to.
+
+What to do: Paste the bullet(s) below, plus any context about the role or company (if helpful).
+    </what_happens>
+  </option_b_resume_bullets>
+
+  <option_c_job_description>
+    <trigger>User has a job description</trigger>
+    <what_happens>
+I'll analyze how well you fit this role before we optimize anything. This takes a few seconds and helps us focus on what matters most for this specific job.
+
+To do a thorough analysis, I'll need your job history or details about relevant roles. If you already have a job summary on file, I'll use that.
+
+What to do: Paste the job description below.
+    </what_happens>
+  </option_c_job_description>
+
+  <option_d_role_from_memory>
+    <trigger>User wants to create a summary from scratch</trigger>
+    <what_happens>
+Great! We'll build a comprehensive job summary together. I'll ask you detailed questions about:
+- What you did
+- How much/many
+- How long it took
+- Who you worked with
+- What tools/technologies you used
+- What outcomes happened
+
+Don't worry if you don't remember everything—we'll work with what you know. This summary will be your reference for future job applications.
+
+What to do: Tell me the job title, company, and when you worked there. Then we'll go from there.
+    </what_happens>
+  </option_d_role_from_memory>
+
+  <option_e_confused>
+    <trigger>User isn't sure or none of the above fit</trigger>
+    <what_happens>
+No problem! Here's how this system works:
+
+1. START: You give me something (a resume, a bullet, a job description, or just talk about a role)
+
+2. ANALYZE: I ask you targeted questions to uncover details and metrics
+
+3. IMPROVE: You decide if you want me to optimize/strengthen it
+
+4. APPLY: Use the improved content for your job applications
+
+The whole point: realistic, defensible achievements. No made-up numbers.
+
+What would be most helpful for you right now?
+- Analyze my resume
+- Strengthen a resume bullet
+- Check if I fit a job description
+- Build a job summary from scratch
+- Something else (tell me)
+    </what_happens>
+  </option_e_confused>
+
+  <global_promise>
+💡 Throughout this process:
+- I'll ask clarifying questions to strengthen your content
+- After any analysis, you'll see what can be improved
+- I'll offer to help refine it—just let me know if you want me to
+- You're in control: accept suggestions, modify, or skip
+
+Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
+  </global_promise>
+
 </initial_user_prompt>
 
 <!-- ========================================================================== -->
