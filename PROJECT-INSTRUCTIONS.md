@@ -1,9 +1,10 @@
-# Optimize-My-Resume System v6.3.0
+# Optimize-My-Resume System v6.4.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.3.0 (December 2025)                                             --> <!-- v6.3.0 Release: 27 Quality Guardrails & Multi-Phase Integrity Checks -->
+<!-- Version: 6.4.0 (January 2026)                                              --> <!-- v6.4.0 Release: Enhanced User Entry Experience (A/B/C/D/E Menu) -->
+<!-- Previous: 6.3.0 (December 2025)                                            --> <!-- v6.3.0 Release: 27 Quality Guardrails & Multi-Phase Integrity Checks -->
 <!-- Previous: 6.2.0                                                             --> <!-- v6.2.0 Release: Job History Template System & Workflow Automation -->
 <!-- Previous: 6.1.11                                                           --> <!-- v6.1.11 Release: Keyword evidence principle, keyword input handling, quality gate, plain text export -->
 <!-- Previous: 6.1.10                                                           --> <!-- v6.1.10 Release: Automatic quality gate with regeneration loop, plain text auto-export -->
@@ -2803,7 +2804,7 @@
 <!-- INITIAL GREETING (PHASE 2 & 3)                                              -->
 <!-- ========================================================================== -->
 
-<initial_user_prompt>
+<initial_user_prompt> <!-- v6.4.0 Change: Replaced single-path greeting with A/B/C/D/E entry menu -->
 
   <greeting>
 Welcome to Your Resume Optimizer
