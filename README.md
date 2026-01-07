@@ -1,4 +1,4 @@
-# Optimize My Resume v6.4.0 <!-- v6.4.0 Change -->
+# Optimize My Resume v6.5.0 <!-- v6.5.0 Change -->
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -421,10 +421,18 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 6.4.0 (MINOR RELEASE) <!-- v6.4.0 Change -->
-**Released:** January 5, 2026
+**Current Version:** 6.5.0 (MINOR RELEASE) <!-- v6.5.0 Change -->
+**Released:** January 7, 2026
 
-### What's New in v6.4.0:
+### What's New in v6.5.0:
+- **Analyzer Auditing:** New 3-row audit table for every bullet point (Action Verb, Metrics, Length) ensuring transparency.
+- **Hiring Manager Perspective:** A simulated "Hiring Manager" analysis that ignores your titles and infers your actual role based on impact, revealing perception gaps.
+- **Job History Auto-Generation:** Phase 1 now automatically creates your v2.0 Job History file from your resume text.
+- **Export Power:** One-click export of your Job History in XML, Markdown, and ZIP formats.
+- **Visual Intelligence:** Color-coded action verbs (by category) and clear "Has Metrics" indicators.
+- **Quality Guardrails:** New verification rules ensuring your bullets are correctly grouped and ordered.
+
+### What Was New in v6.4.0:
 - **Enhanced User Entry Experience** - New A/B/C/D/E menu system that routes you based on what you have (resume file, bullets, job description, or starting from scratch)
 - **Smarter Routing** - System now asks "what do you have?" instead of forcing everyone through bullet optimization
 - **Better First Impressions** - Clearer expectations for each entry path (analyze resume, optimize bullets, check job fit, build summary from memory, or get help)

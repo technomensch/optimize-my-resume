@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v6.5.0 - Analyzer Auditing & Hiring Manager Perspective (2026-01-07) <!-- v6.5.0 Addition -->
+> **Branch:** `v6.5.0-add-missing-analyzer-audit-elements`
+
+#### Added
+- **Hiring Manager Perspective** - New analysis section that ignores resume titles and infers roles based on actual work/impact.
+- **Per-Bullet Auditing** - Detailed 3-row audit table for every bullet (Action Verb, Metrics, Length).
+- **Job History v2.0 Auto-Generation** - Automatically extracts and formats job history during Phase 1 analysis.
+- **Export Functionality** - One-click downloads for Job History (XML, Markdown, ZIP).
+- **Visual Enhancements** - Color-coded action verbs and "Has Metrics" (✓/-) indicators.
+- **Guardrail #28** - `bullet_grouping_verification_guardrail` ensures correct chronological groupings.
+- **Metrics Principle** - New core principle targeting 70-80% quantified bullet coverage.
+
+#### Changed
+- **Phase 1 Report Structure** - Significantly expanded to include new audit sections and export tools.
+- **Plain Text Export** - Updated to preserve job title grouping and reverse-chronological order.
+
+---
+
 ### v6.4.0 - Enhanced User Entry Experience (2026-01-05) <!-- v6.4.0 Addition -->
 > **Branch:** `v6.4.0-update-user-initial-prompt`
 
