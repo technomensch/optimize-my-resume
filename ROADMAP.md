@@ -1,7 +1,22 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.5.0 <!-- v6.5.0 Change -->
+## Current Version: v6.5.1 <!-- v6.5.1 Change -->
 ## In Development: v7.0.0 <!-- v6.3.1 Change -->
+
+---
+
+## v6.5.1 - Analyzer Report Header Fixes (COMPLETE) <!-- v6.5.1 Change -->
+
+**Branch:** `v6.5.1-analyzer-report-header-fixes` | **Status:** Complete | **Date:** 2026-01-07
+
+**Implementation Approach:** Targeted fixes for known Phase 1 analysis report display issues.
+
+### Key Fixes
+- [x] **Header/Contact Validation:** New section with clear table checks (#12).
+- [x] **Job History Summary:** Synthesis logic + strict flow positioning (#6, #10).
+- [x] **Executive Summary:** Table format + bar graph enforcement (#7).
+- [x] **Audit Tables:** Markdown syntax replacement for stability (#5, #8).
+- [x] **Display Rendering:** Cleaned up verb/metric indicators (#9, #11).
 
 ---
 

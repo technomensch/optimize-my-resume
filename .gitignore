@@ -7,8 +7,12 @@ docs/prompts/legacy-prompts/
 # Chat History - Local conversation logs and job history summaries
 chat-history/
 
+# Job History Summaries - Local job history summaries
+job-history/
+
 # Keep the .gitkeep file to maintain the directory structure
 !chat-history/.gitkeep
+!job-history/.gitkeep
 
 # JD Cache (Phase 3) - Cache parsed JDs locally, don't commit
 jd_parsed/*.json
