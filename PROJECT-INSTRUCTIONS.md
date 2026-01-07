@@ -1,9 +1,9 @@
-# Optimize-My-Resume System v6.5.0
+# Optimize-My-Resume System v6.5.2
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.0 (January 2026)                                              --> <!-- v6.5.0 Release: Cumulative Update (Color Coding, Metrics, Audit, v8.0 Job History) -->
+<!-- Version: 6.5.2 (January 2026)                                              --> <!-- v6.5.2: Phase 2 Verb Standardization & Phase 1 Display Fix (Issues #10, #11) -->
 <!-- Last Updated: January 7, 2026                                              -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
@@ -74,7 +74,7 @@
     <scenario id="3" name="bullet_optimization">
       Condition: hasJobHistory = true AND user mentions ("bullet", "optimize")
       Route: Phase 2 (Bullet Optimization)
-      Action: Optimize bullets with job history context
+      Action: Optimize bullets with job history context (Apply standard categories: Built, Lead, Managed, Improved, Collaborate)
     </scenario>
 
     <scenario id="4" name="ambiguous_intent">
@@ -372,7 +372,7 @@
         /md-job-history [filename.txt]
 
         Examples:
-        /md-job-history chat-history/claude_generated_job_history_summaries_v7.txt
+        /md-job-history job-summaries/claude_generated_job_history_summaries_v7.txt
         /md-job-history  (Claude will infer or ask for filename)
       </usage>
 
@@ -397,7 +397,7 @@
         /update-history [filename.txt]
 
         Examples:
-        /update-history chat-history/claude_generated_job_history_summaries_v7.txt
+        /update-history job-summaries/claude_generated_job_history_summaries_v7.txt
         /update-history  (Claude will analyze chat context for updates)
       </usage>
 
@@ -486,8 +486,8 @@
   </cross_llm_consistency>
 
   <example_files>
-    <latest_version>chat-history/claude_generated_job_history_summaries_v7.1.txt</latest_version>
-    <markdown_version>chat-history/claude_generated_job_history_summaries_v7.1.md</markdown_version>
+    <latest_version>job-summaries/claude_generated_job_history_summaries_v7.1.txt</latest_version>
+    <markdown_version>job-summaries/claude_generated_job_history_summaries_v7.1.md</markdown_version>
 
     <reference>
       Always refer to latest version for style, tone, and structure examples
@@ -579,6 +579,7 @@
     <phase_1_analysis_report_output>
       <report_structure>
         <section id="1" name="Executive Summary">
+          <instruction>The report must start with `# 📊 Executive Summary`</instruction>
           <sub_section name="Verdict and Repairs">
             <reference>Implement per prioritized_repairs_summary_rules</reference>
             - Display "Prioritized Repairs" counts (Blocker, Risk, Tweak).
@@ -2007,13 +2008,26 @@
   </grouping_logic>
   
   <bullet_display_within_position>
-    For each bullet in the position:
-    [METRIC_INDICATOR] [COLOR_CODED_VERB] [bullet text]
-    
-    Where:
-    - METRIC_INDICATOR: ✓ (green) or - (gray) - placed at left
-    - COLOR_CODED_VERB: First word colored per bullet_color_coding_rules
-    - bullet text: remainder of the bullet
+        <instruction>
+          Display the verb category in brackets before the bullet text.
+          - Format: [Category] Verb reminder
+          - Example: [Built] Built system...
+        </instruction>
+                     
+        <format>
+          [METRIC_INDICATOR] [[Category]] [Verb] [remainder of bullet text]
+        </format>
+                     
+        <key>
+          - METRIC_INDICATOR: ✓ [Has Metrics] (if metrics present) or - [No Metrics] (if no metrics)
+          - [Category]: The action verb category in brackets (e.g., [Built], [Lead], [Managed], [Improved], [Collaborate])
+          - [Verb]: The action verb itself (Capitalized, no brackets)
+        </key>
+                     
+        <example>
+          ✓ [Has Metrics] [Built] Built a real-time analytics dashboard using React
+          - [No Metrics] [Managed] Managed daily standups for the engineering team
+        </example>
   </bullet_display_within_position>
   
   <position_summary>
@@ -2251,57 +2265,49 @@
   </auto_generation_process>
 
   <display_format_in_phase_1>
-    After hiring manager interpretation for each position:
-    
-    POSITION [N] JOB HISTORY SUMMARY
-    ═══════════════════════════════════════════════════════════════════════════
-    
-    [Job Title] at [Company] | [Date Range]
-    Inferred Title: [INFERRED_TITLE]
-    Duration: [Calculated]
-    
-    Professional Summary
-    ───────────────────────────────────────
-    [2-3 sentence synthesis]
-    
-    Core Responsibilities
-    ───────────────────────────────────────
-    • [Item 1]
-    • [Item 2]
-    • [Item 3]
-    
-    Key Achievements
-    ───────────────────────────────────────
-    ✓ [Achievement 1] - [Metric/Impact]
-    ✓ [Achievement 2] - [Metric/Impact]
-    
-    Hard Skills Demonstrated
-    ───────────────────────────────────────
-    [Skill 1], [Skill 2], [Skill 3]
-    
-    Soft Skills Demonstrated
-    ───────────────────────────────────────
-    [Skill 1], [Skill 2], [Skill 3]
-    
-    Tools & Technologies
-    ───────────────────────────────────────
-    [Tool 1], [Tool 2], [Tool 3]
-    
-    Impact Metrics
-    ───────────────────────────────────────
-    • [Metric 1]: [Value]
-    • [Metric 2]: [Value]
-    
-    Industry Domain
-    ───────────────────────────────────────
-    [Industry], [Specific Domain]
-    
-    Team Scope
-    ───────────────────────────────────────
-    Team Size: [X people]
-    Leadership Role: [Yes/No - describe]
-    
-    ═══════════════════════════════════════════════════════════════════════════
+    <priority>CRITICAL</priority>
+    <instruction>
+      When displaying summaries in the chat window, ALWAYS render them as formatted Markdown.
+      NEVER output raw XML tags (like <core_responsibilities>) in the visual report.
+    </instruction>
+    <rendering_rules>
+      <structure>
+        1. Convert <professional_summary> tag → "### 📝 Professional Summary"
+        2. Convert <core_responsibilities> tag → "### 📋 Core Responsibilities"
+        3. Convert <key_achievements> tag → "### 🏆 Key Achievements"
+        4. Convert <hard_skills_demonstrated> tag → "### 💻 Hard Skills"
+        5. Convert <soft_skills_demonstrated> tag → "### 🤝 Soft Skills"
+        6. Convert <tools_technologies> tag → "### 🛠 Tools & Technologies"
+        7. Convert <impact_metrics> tag → "### 📊 Impact Metrics"
+        8. Convert <team_scope> tag → "### 👥 Team Scope"
+      </structure>
+
+      <bullet_formatting>
+        For all bullet points within Core Responsibilities and Key Achievements:
+        MUST apply standard bullet_display_and_grouping_rules:
+        - Prefix with Metric Indicator: ✓ [Has Metrics] or - [No Metrics]
+        - Prefix with Verb Category: [Category] (e.g., [Built])
+        - Example: "✓ [Has Metrics] [Built] Architected a scalable..."
+      </bullet_formatting>
+    </rendering_rules>
+    <example_output>
+      #### 📄 Job History Summary: Position 1
+
+      **Inferred Title:** Microsoft 365 Administrator
+      **Duration:** 10 months
+
+      ### 📝 Professional Summary
+      Served as the Microsoft 365 Subject Matter Expert...
+
+      ### 📋 Core Responsibilities
+      * - [No Metrics] [Collaborate] Capture requirements from the Business Development team...
+      * - [No Metrics] [Built] Create custom SharePoint Online forms...
+
+      ### 🏆 Key Achievements
+      * ✓ [Has Metrics] [Built] Built custom SharePoint Online forms with Power Apps...
+
+      [...continue for all sections...]
+    </example_output>
   </display_format_in_phase_1>
 
   <download_export_formats>
@@ -2476,7 +2482,7 @@
         - "Redundant": If the same verb category is used in a nearby bullet.
       </column_2>
       <column_3>
-        - On "Passed": Show the verb category and the verb itself (e.g., "🔵 Built: Architected").
+        - On "Passed": Show the verb category and the verb itself (e.g., "[Built] Architected").
         - On "Weak": Explain why it's weak and suggest alternatives.
         - On "Redundant": Note the redundancy and suggest alternatives.
       </column_3>
@@ -2508,22 +2514,20 @@
     </format>
   </per_bullet_recommendations>
 
-  <example_display>
-    ✓ [Built] Created technical documentation and training materials.
-    ───────────────────────────────────────────────────────────────────────────
-    || Metrics || Failed || Lacks quantifiable impact
-    ||         ||        || Add: # of documents, team members trained, training hours...
-    ├─────────┼────────┼──────────────────────────────────────────────────────┤
-    || Action Verb || Passed || 🔵 Built: Created
-    ├─────────┼────────┼──────────────────────────────────────────────────────┤
-    || Char Count || Failed || 62/210 (38 chars below minimum)
-    ───────────────────────────────────────────────────────────────────────────
-    
-    ⚠️ RECOMMENDATIONS (2 items)
-    
-    [⚠️ RISK] Missing metrics - add quantified achievements
-    [⚠️ RISK] Bullet too short (62 chars) - expand with context/outcomes
-  </example_display>
+  <example_display>  
+        ✓ [Has Metrics] [Built] Created technical documentation and training materials.
+                     
+        | Check | Status | Analysis |
+        | :--- | :--- | :--- |             
+        | **Metrics** | ❌ **Failed** | **Lacks quantifiable impact.** <br> Add: # of documents, team members trained... |
+        | **Verb** | ✅ **Passed** | **[Built] Created** |        
+        | **Length** | ❌ **Failed** | **74/210 chars** <br> (26 chars below minimum) |   
+                     
+        > **⚠️ RECOMMENDATIONS**  
+        > * [⚠️ RISK] Missing metrics - add quantified achievements       
+        > * [⚠️ RISK] Bullet too short - expand with impact context            
+                     
+  </example_display> 
 </per_bullet_audit_rules>
 
 <!-- ========================================================================== -->
@@ -2588,29 +2592,25 @@
 </prioritized_repairs_summary_rules>
 
 <critical_formatting_rules>
-  <rule id="no_em_dashes" priority="critical">
-    NEVER use em-dashes (—) anywhere in the output. Use hyphens (-) or rephrase sentences instead.
-  </rule>
-  
-  <rule id="colored_verb_categories" priority="high">
-    Display action verb categories with their color names in parentheses:
-    - Built (Blue)
-    - Lead (Orange)
-    - Managed (Purple)
-    - Improved (Green)
-    - Collaborate (Pink)
-  </rule>
-
-  <acronym_expansion_guardrail> <!-- v6.3.0 Change: Added Guardrail #20 -->
+    <rule id="no_em_dashes" priority="critical">
+      NEVER use em-dashes (—) anywhere in the output. Use hyphens (-) or rephrase sentences instead.
+    </rule>
+                   
+    <rule id="enhanced_verb_display" priority="critical">
+      Display the action verb category in brackets BEFORE the bullet text.
+      Format: [Category] Verb reminder
+      Example: [Built] Built system...
+    </rule>
+                   
+<acronym_expansion_guardrail>
     <priority>MODERATE</priority>
-    <instruction>
-      Industry-standard acronyms (AWS, SQL, API) can be used as-is.
-      Domain-specific or ambiguous acronyms must be spelled out on first use.
-    </instruction>
-    
+      <instruction>
+        Industry-standard acronyms (AWS, SQL, API) can be used as-is.
+        Domain-specific or ambiguous acronyms must be spelled out on first use.
+      </instruction>
+                   
     <standard_acronyms_allowed>
-      AWS, SQL, API, REST, JSON, XML, HTML, CSS, CI/CD, DevOps, SaaS, PaaS,
-      ATS, KPI, ROI, SLA, ETL, GDPR, HIPAA, SOC, NIST
+        AWS, SQL, API, REST, JSON, XML, HTML, CSS, CI/CD, DevOps, SaaS, PaaS, ATS, KPI, ROI, SLA, ETL, GDPR, HIPAA, SOC, NIST
     </standard_acronyms_allowed>
     
     <expansion_required>
@@ -3595,32 +3595,92 @@
 <!-- JOB SUMMARY CREATION                                                       -->
 <!-- ========================================================================== -->
 
-<creating_job_summaries>
-  <purpose>
-    Job summaries serve as comprehensive reference documents that capture all context, deliverables, metrics, and outcomes from a specific role.
-  </purpose>
+  <job_history_summary_generation_rules id="8">
+    <priority>CRITICAL</priority>
+    <instruction>
+      Follow this strict generation and display protocol for Job History Summaries.
+    </instruction>
 
-  <summary_quality_checklist>
-    ✅ What did you do? (Deliverables)
-    ✅ How much/many? (Quantification)
-    ✅ How long? (Timelines)
-    ✅ For whom? (Users, stakeholders, team size)
-    ✅ With what? (Tools, technologies, methodologies)
-    ✅ With whom? (Collaboration patterns)
-    ✅ What happened? (Outcomes - even if uncertain)
-    ✅ What can't you claim? (Honest limitations)
-  </summary_quality_checklist>
+    <display_format_in_phase_1>
+      <priority>CRITICAL</priority>
+      <instruction>
+        When displaying summaries in the chat window, ALWAYS render them as formatted Markdown.
+        NEVER output raw XML tags (like <core_responsibilities>) in the visual report.
+      </instruction>
+      <rendering_rules>
+        <structure>
+          1. Convert <professional_summary> tag → "### 📝 Professional Summary"
+          2. Convert <core_responsibilities> tag → "### 📋 Core Responsibilities"
+          3. Convert <key_achievements> tag → "### 🏆 Key Achievements"
+          4. Convert <hard_skills_demonstrated> tag → "### 💻 Hard Skills"
+          5. Convert <soft_skills_demonstrated> tag → "### 🤝 Soft Skills"
+          6. Convert <tools_technologies> tag → "### 🛠 Tools & Technologies"
+          7. Convert <impact_metrics> tag → "### 📊 Impact Metrics"
+          8. Convert <team_scope> tag → "### 👥 Team Scope"
+        </structure>
 
-  <critical_reminders>
-    - Summaries are NOT resumes - they can be long, detailed, and conversational
-    - Include EVERYTHING remembered, even if it seems minor
-    - Mark uncertainties clearly ("approximately", "~", "I think")
-    - Document what is unknown or unmeasurable
-    - Spell out all acronyms
-    - Focus on facts over polish
-    - Prioritize completeness over brevity
-  </critical_reminders>
-</creating_job_summaries>
+        <bullet_formatting>
+          For all bullet points within Core Responsibilities and Key Achievements:
+          MUST apply standard bullet_display_and_grouping_rules:
+          - Prefix with Metric Indicator: ✓ [Has Metrics] or - [No Metrics]
+          - Prefix with Verb Category: [Category] (e.g., [Built])
+          - Example: "✓ [Has Metrics] [Built] Architected a scalable..."
+        </bullet_formatting>
+      </rendering_rules>
+      <example_output>
+        #### 📄 Job History Summary: Position 1
+
+        **Inferred Title:** Microsoft 365 Administrator
+        **Duration:** 10 months
+
+        ### 📝 Professional Summary
+        Served as the Microsoft 365 Subject Matter Expert...
+
+        ### 📋 Core Responsibilities
+        * - [No Metrics] [Collaborate] Capture requirements from the Business Development team...
+        * - [No Metrics] [Built] Create custom SharePoint Online forms...
+
+        ### 🏆 Key Achievements
+        * ✓ [Has Metrics] [Built] Built custom SharePoint Online forms with Power Apps...
+
+        [...continue for all sections...]
+      </example_output>
+    </display_format_in_phase_1>
+
+    <download_export_formats>
+      <format name="xml">
+        <file_format>XML (v2.0 Schema)</file_format>
+        <use_case>Machine processing, LLM consumption, system imports, version control</use_case>
+      </format>
+      <format name="markdown">
+        <file_format>Markdown (.md)</file_format>
+        <use_case>Reading, sharing, presentations, documentation</use_case>
+      </format>
+      <format name="zip">
+        <file_format>ZIP archive</file_format>
+        <use_case>Complete backup with both formats</use_case>
+      </format>
+    </download_export_formats>
+
+    <file_naming_convention>
+      <xml_format>claude_generated_job_history_v6.5_[YYYYMMDD].xml</xml_format>
+      <markdown_format>claude_generated_job_history_v6.5_[YYYYMMDD].md</markdown_format>
+      <zip_format>claude_generated_job_history_v6.5_[YYYYMMDD]_BOTH.zip</zip_format>
+    </file_naming_convention>
+
+    <user_guidance>
+      <during_analysis>
+        "Your job history summaries are being generated automatically as we analyze each position."
+      </during_analysis>
+      <before_download>
+        "We've compiled all positions into comprehensive job history summaries. Download in your preferred format:
+
+        📄 XML - For LLM processing, system integration, version control
+        📝 Markdown - For reading, sharing, presentations
+        📦 Both (ZIP) - Complete backup"
+      </before_download>
+    </user_guidance>
+  </job_history_summary_generation_rules>
 
 <!-- ========================================================================== -->
 <!-- INITIAL GREETING (PHASE 2 & 3)                                              -->

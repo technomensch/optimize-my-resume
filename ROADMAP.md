@@ -14,10 +14,11 @@
 ### Key Features
 - [x] **Hiring Manager Perspective:** New analysis section inferring roles from impact.
 - [x] **Per-Bullet Auditing:** 3-row audit table for every bullet.
-- [x] **Job History v2.0:** Auto-generated during analysis.
-- [x] **Export Functionality:** XML/MD/ZIP downloads.
-- [x] **Visuals:** Color-coded verbs and metrics indicators.
-- [x] **Guardrails:** New Bullet Grouping Verification (#28).
+- [x] **Refined Metric Indicators:** Explicit `✓ [Has Metrics]` and `- [No Metrics]` labels.
+- [x] **Consolidated Formatting:** Concise per-bullet audit tables with standardized length check display.
+- [x] **Enhanced Verb Display:** Corrected to show verb category in brackets (e.g., `[Built] Built system...`).
+- [x] **Acronym Guardrail:** Automated expansion rules with technical whitelist.
+- [x] **Executive Summary Fix:** Guaranteed header consistency (`# 📊 Executive Summary`).
 - [x] **Metrics Principle:** New core principle for impact quantification.
 
 ---
@@ -116,8 +117,9 @@
 **Branch:** `v6.1.0` | **Status:** Complete | **Date:** 2025-12-29
 
 ### Sub-Versions
-- ✅ v6.1.1 - Folder restructure (`/shared/` → `/phases/`)
-- ✅ v6.1.2 - Documentation updates (terminology + Job Summary guide)
+- [x] **v6.5.2**: Phase 2 Verb Standardization & Phase 1 Display Fix (Issues #10, #11)
+- [x] **v6.5.1**: Analyzer Report Bugfixes (Issues #5-9) & Metric Refinement
+- [x] **v6.5.0**: Cumulative Guardrails & Architecture Refinement
 - ✅ v6.1.3 - Wireframe creation (10 files)
 - ✅ v6.1.4 - Legacy archival
 - ✅ v6.1.5 - Test case gap-filling

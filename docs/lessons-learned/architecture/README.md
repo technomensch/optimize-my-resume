@@ -2,8 +2,9 @@
 
 Lessons learned about architectural decisions, design patterns, and structural choices.
 
-**Total Lessons:** 2
-**Last Updated:** 2026-01-02
+**Total Lessons:** 3
+**Total Lessons:** 4
+**Last Updated:** 2026-01-07
 
 ---
 
@@ -29,7 +30,8 @@ Lessons learned about architectural decisions, design patterns, and structural c
 
 **Optimization:**
 - Both lessons focus on reducing redundancy (skills loading, token usage)
-- Architecture decisions driven by constraints (Claude Code design, token limits)
+- Relative File Paths lesson shows how to standardize documentation across environments
+- Architecture decisions driven by constraints (Claude Code design, token limits, portability)
 
 ---
 
