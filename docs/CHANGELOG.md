@@ -7,27 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### v6.5.2 - Job History Summary & Display Fixes (2026-01-07)
-> **Branch:** `v6.5.2-analyzer-enhancements`
+## [6.5.1] - 2026-01-07
 
-#### Added
+### Added
+- **Metric Indicator Refinement**: Replaced simple ✓/- icons with explicit labels: `✓ [Has Metrics]` and `- [No Metrics]`.
+- **GitHub Workflow Enhancements**: Added "Close the Loop" rule to `Lessons_Learned_GitHub_Issue_Driven_Planning.md` to ensure instruction modifications are commented back to original issues.
+- **Improved Acronym Guardrails**: Added specific list of allowed standard acronyms and instructions for domain-specific expansions.
 - **Robust Job History Summary Rules**: Implemented `<job_history_summary_generation_rules id="8">` with multi-format download support (XML, MD, ZIP) and strict naming conventions.
 - **Phase 1 "Display Layer" Guardrail**: Added explicit instructions to render Job History Summaries as formatted Markdown with standardized bullet styling (`✓ [Has Metrics] [Category]`).
 
-#### Fixed
+### Fixed
+- **Audit Table Formatting**: Converted ASCII audit tables to Markdown for better readability and added line breaks in "Length" analysis.
+- **Verb Display Rule**: Corrected rule to show action verbs cleanly while preserving category tracking.
+- **Executive Summary Header**: Ensured all analyzer reports start with `# 📊 Executive Summary`.
 - **Phase 1 Job History Rendering**: Resolved bug where metric indicators and verb categories were not rendering correctly in the chat window.
 - **Phase 2 Verb Standardization**: Standardized all Phase 2 and global verb category references to use the official set: `Built, Lead, Managed, Improved, Collaborate`.
-
-### v6.5.1 - Analyzer Report Bugfixes (2026-01-07) <!-- v6.5.1 Addition -->
-> **Branch:** `v6.5.1-analyzer-report-bugfixes`
-
-#### Fixed
-- **Refined Metric Indicators (#15)**: Replaced vague `✓` and `-` icons with explicit labels `✓ [Has Metrics]` and `- [No Metrics]` for better clarity.
-- **Per-Bullet Audit Table Formatting (#8)**: Standardized to a more concise Markdown table format.
-- **Hiring Manager Perspective Emojis (#6)**: Standardized headers with specific emojis.
-- **Enhanced Verb Display Guardrail (#9)**: Corrected to display verb category in brackets (e.g., `[Built] Built system...`).
-- **Acronym Expansion Guardrail (#20 / #9)**: Added standard technical whitelist and expansion rules.
-- **Executive Summary Header Standard (#7)**: Guaranteed report starts with `# 📊 Executive Summary`.
 - **Per-Bullet Recommendations Placement (#5)**: Corrected logic for recommendation box placement.
 
 ### v6.5.1 - Analyzer Report Bugfixes (COMPLETE) <!-- v6.5.1 Change -->

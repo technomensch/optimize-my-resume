@@ -1,9 +1,9 @@
-# Quick-Start Phase Instruction Module v6.5.2
+# Quick-Start Phase Instruction Module v6.5.1
 
 <!-- ========================================================================== -->
 <!-- QUICK-START PHASE INSTRUCTION MODULE                                       -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.2 (January 2026)                                              --> <!-- v6.5.2: Phase 2 Verb Standardization & Phase 1 Display Fix (Issues #10, #11) -->
+<!-- Version: 6.5.1 (January 2026)                                              --> <!-- v6.5.1: Analyzer Report Bugfixes & Standardization (#5, #6, #7, #8, #9, #10, #11) -->
 <!-- Last Updated: January 7, 2026                                              -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
@@ -1787,9 +1787,9 @@
       </download_export_formats>
 
       <file_naming_convention>
-        <xml_format>claude_generated_job_history_v6.5_[YYYYMMDD].xml</xml_format>
-        <markdown_format>claude_generated_job_history_v6.5_[YYYYMMDD].md</markdown_format>
-        <zip_format>claude_generated_job_history_v6.5_[YYYYMMDD]_BOTH.zip</zip_format>
+        <xml_format>claude_generated_job_history_v6.5.1_[YYYYMMDD].xml</xml_format>
+        <markdown_format>claude_generated_job_history_v6.5.1_[YYYYMMDD].md</markdown_format>
+        <zip_format>claude_generated_job_history_v6.5.1_[YYYYMMDD]_BOTH.zip</zip_format>
       </file_naming_convention>
 
       <user_guidance>
