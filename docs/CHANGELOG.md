@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v6.5.2 - Job History Summary & Display Fixes (2026-01-07)
+> **Branch:** `v6.5.2-analyzer-enhancements`
+
+#### Added
+- **Robust Job History Summary Rules**: Implemented `<job_history_summary_generation_rules id="8">` with multi-format download support (XML, MD, ZIP) and strict naming conventions.
+- **Phase 1 "Display Layer" Guardrail**: Added explicit instructions to render Job History Summaries as formatted Markdown with standardized bullet styling (`✓ [Has Metrics] [Category]`).
+
+#### Fixed
+- **Phase 1 Job History Rendering**: Resolved bug where metric indicators and verb categories were not rendering correctly in the chat window.
+- **Phase 2 Verb Standardization**: Standardized all Phase 2 and global verb category references to use the official set: `Built, Lead, Managed, Improved, Collaborate`.
+
+### v6.5.1 - Analyzer Report Bugfixes (2026-01-07) <!-- v6.5.1 Addition -->
+> **Branch:** `v6.5.1-analyzer-report-bugfixes`
+
+#### Fixed
+- **Refined Metric Indicators (#15)**: Replaced vague `✓` and `-` icons with explicit labels `✓ [Has Metrics]` and `- [No Metrics]` for better clarity.
+- **Per-Bullet Audit Table Formatting (#8)**: Standardized to a more concise Markdown table format.
+- **Hiring Manager Perspective Emojis (#6)**: Standardized headers with specific emojis.
+- **Enhanced Verb Display Guardrail (#9)**: Corrected to display verb category in brackets (e.g., `[Built] Built system...`).
+- **Acronym Expansion Guardrail (#20 / #9)**: Added standard technical whitelist and expansion rules.
+- **Executive Summary Header Standard (#7)**: Guaranteed report starts with `# 📊 Executive Summary`.
+- **Per-Bullet Recommendations Placement (#5)**: Corrected logic for recommendation box placement.
+
+### v6.5.1 - Analyzer Report Bugfixes (COMPLETE) <!-- v6.5.1 Change -->
+
+**Branch:** `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-07
+
+**Implementation Approach:** Surgical bugfixes to Phase 1 output logic and formatting guardrails.
+
+### Key Features
+- [x] **Consolidated Formatting:** Concise per-bullet audit tables with standardized length check display.
+- [x] **Emoji Standardization:** Consistent emoji usage for job history summary headers.
+- [x] **Acronym Guardrail:** Automated expansion rules with a whitelist of standard technical acronyms.
+- [x] **Clean Output:** Removed bracketed verbs and color names from public-facing report.
+- [x] **Executive Summary Fix:** Guaranteed header consistency (`# 📊 Executive Summary`).
+
+---
+
 ### v6.5.0 - Analyzer Auditing & Hiring Manager Perspective (2026-01-07) <!-- v6.5.0 Addition -->
 > **Branch:** `v6.5.0-add-missing-analyzer-audit-elements`
 
@@ -280,7 +318,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 - **Automatic Quality Gate with Regeneration Loop** - Mandatory quality enforcement before output presentation
   - **Step 1**: Run `pre_output_quality_checklist` automated scans
-    - Escaped characters (\~, \%, \+) detection and correction
+    - Escaped characters (\~, %, \+) detection and correction
     - Gerund detection (bullets starting with -ing verbs)
     - Repeated phrase detection (>2 exact occurrences)
     - Keyword duplication checking (summary vs bullets)
@@ -369,7 +407,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 - **Quality Assurance Rules** - Integrated comprehensive grammar, consistency, and variation rules into core instructions
   - **Phrase Variation Rule**: Prevents exact repetition of metrics/achievements (max 2 occurrences)
-  - **Symbol Consistency Rule**: Standardizes use of tildes (~), percentages (%), and hpyhenated ranges; prohibits escaped characters (\~, \%, \+)
+  - **Symbol Consistency Rule**: Standardizes use of tildes (~), percentages (%), and hpyhenated ranges; prohibits escaped characters (\~, %, \+)
   - **Verb Tense Rule**: Enforces past-tense action verbs at the start of all bullets (prohibits gerunds)
   - **Keyword Diversity Rule**: Optimizes keyword distribution between professional summary and position bullets
   - **Pre-output Quality Checklist**: Automated scan patterns for common formatting and grammar issues
