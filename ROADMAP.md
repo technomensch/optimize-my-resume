@@ -1,7 +1,24 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.3.1 <!-- v6.3.1 Change -->
+## Current Version: v6.5.0 <!-- v6.5.0 Change -->
 ## In Development: v7.0.0 <!-- v6.3.1 Change -->
+
+---
+
+## v6.5.0 - Analyzer Auditing & Hiring Manager Perspective (COMPLETE) <!-- v6.5.0 Change -->
+
+**Branch:** `v6.5.0-add-missing-analyzer-audit-elements` | **Status:** Complete | **Date:** 2026-01-07
+
+**Implementation Approach:** Surgical update to Phase 1 output and core principles.
+
+### Key Features
+- [x] **Hiring Manager Perspective:** New analysis section inferring roles from impact.
+- [x] **Per-Bullet Auditing:** 3-row audit table for every bullet.
+- [x] **Job History v2.0:** Auto-generated during analysis.
+- [x] **Export Functionality:** XML/MD/ZIP downloads.
+- [x] **Visuals:** Color-coded verbs and metrics indicators.
+- [x] **Guardrails:** New Bullet Grouping Verification (#28).
+- [x] **Metrics Principle:** New core principle for impact quantification.
 
 ---
 

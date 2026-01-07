@@ -71,6 +71,32 @@ def extract_metadata(content):
     return md + "\n---\n\n"
 
 
+def extract_global_summary(content):
+    """Extract global professional summary."""
+    summary_match = re.search(r'<global_professional_summary>(.*?)</global_professional_summary>', content, re.DOTALL)
+    if not summary_match:
+        return ""
+    
+    md = "## ✍️ Global Professional Summary\n\n"
+    md += summary_match.group(1).strip() + "\n\n"
+    return md + "---\n\n"
+
+
+def extract_linkedin_narrative(content):
+    """Extract LinkedIn about narrative."""
+    about_match = re.search(r'<linkedin_about_narrative>(.*?)</linkedin_about_narrative>', content, re.DOTALL)
+    if not about_match:
+        # Fallback to older <about> tag if needed
+        about_match = re.search(r'<about>(.*?)</about>', content, re.DOTALL)
+        
+    if not about_match:
+        return ""
+    
+    md = "## 🔗 LinkedIn About Narrative\n\n"
+    md += about_match.group(1).strip() + "\n\n"
+    return md + "---\n\n"
+
+
 def extract_education(content):
     """Extract education section."""
     education_match = re.search(r'<education>(.*?)</education>', content, re.DOTALL)
@@ -143,8 +169,8 @@ def extract_position(position_content, position_id):
 
     md = f"## {position_emoji} Position {position_id}: {title}\n\n"
 
-    # Metadata
-    metadata_match = re.search(r'<metadata>(.*?)</metadata>', position_content, re.DOTALL)
+    # Metadata - check for <metadata> or <job_metadata>
+    metadata_match = re.search(r'<(?:job_)?metadata>(.*?)</(?:job_)?metadata>', position_content, re.DOTALL)
     if metadata_match:
         metadata = metadata_match.group(1)
 
@@ -232,6 +258,17 @@ def extract_position(position_content, position_id):
             md += f"- {bullet}\n"
         md += "\n"
 
+    # Soft Skills
+    soft_skills_match = re.search(r'<soft_skills_demonstrated>(.*?)</soft_skills_demonstrated>', position_content, re.DOTALL)
+    if soft_skills_match:
+        skills_content = soft_skills_match.group(1).strip()
+        md += "### 🤝 Soft Skills Demonstrated\n\n"
+        bullets = re.findall(r'- (.+?)(?=\n    -|\n  </soft_skills_demonstrated>|$)', skills_content, re.DOTALL)
+        for bullet in bullets:
+            bullet = bullet.strip()
+            md += f"- {bullet}\n"
+        md += "\n"
+
     # Impact Metrics
     metrics_match = re.search(r'<impact_metrics>(.*?)</impact_metrics>', position_content, re.DOTALL)
     if metrics_match:
@@ -251,6 +288,22 @@ def extract_position(position_content, position_id):
                 md += f"| {metric_name} | {metric_value} |\n"
             else:
                 md += f"| Achievement | {bullet} |\n"
+        md += "\n"
+
+    # Tools & Technologies
+    tools_match = re.search(r'<tools_technologies>(.*?)</tools_technologies>', position_content, re.DOTALL)
+    if tools_match:
+        tools_content = tools_match.group(1).strip()
+        md += "### 🛠️ Tools & Technologies\n\n"
+        bullets = re.findall(r'- (.+?)(?=\n    -|\n  </tools_technologies>|$)', tools_content, re.DOTALL)
+        if bullets:
+            for bullet in bullets:
+                md += f"- {bullet.strip()}\n"
+        else:
+            # Fallback for comma separated
+            tools = [t.strip() for t in re.split(r'[,;]\s*|\n', tools_content) if t.strip()]
+            for tool in tools:
+                md += f"- {tool}\n"
         md += "\n"
 
     md += "---\n\n"
@@ -278,8 +331,11 @@ def convert_to_markdown(txt_file_path, output_file_path=None):
     # Add version history
     md += extract_version_history(content)
 
-    # Add metadata
-    md += extract_metadata(content)
+    # Add global summary
+    md += extract_global_summary(content)
+
+    # Add LinkedIn narrative
+    md += extract_linkedin_narrative(content)
 
     # Add education
     md += extract_education(content)
@@ -287,13 +343,24 @@ def convert_to_markdown(txt_file_path, output_file_path=None):
     # Add certifications
     md += extract_certifications(content)
 
-    # Extract all positions
+    # Handle Position 0 (Special case - may not be wrapped in <position>)
+    p0_match = re.search(r'JOB POSITION 0:.*?(?=== POSITION 1|==\s*POSITION 1|<\/impact_metrics>|<\/hard_skills_demonstrated>)', content, re.DOTALL | re.IGNORECASE)
+    if p0_match:
+        p0_content = p0_match.group(0)
+        # Wrap it for extract_position if not wrapped
+        if '<position' not in p0_content:
+            p0_content = '<position id="0">' + p0_content + '</position>'
+        md += extract_position(p0_content, "0")
+
+    # Extract all other positions (including Position 0 if it WAS wrapped)
     positions = re.findall(r'<position id="(\d+)">(.*?)</position>', content, re.DOTALL)
 
     for position_id, position_content in positions:
+        if position_id == "0": continue # Already handled or will be handled below
+        
         # Find the header for this position
-        header_pattern = f'POSITION {position_id}:.*?(?=<position id="{position_id}">)'
-        header_match = re.search(header_pattern, content, re.DOTALL)
+        header_pattern = f'(?:JOB )?POSITION {position_id}:.*?(?=<position id="{position_id}">)'
+        header_match = re.search(header_pattern, content, re.DOTALL | re.IGNORECASE)
         if header_match:
             full_position = header_match.group(0) + f'<position id="{position_id}">' + position_content + '</position>'
         else:
