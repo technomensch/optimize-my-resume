@@ -1,7 +1,21 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.5.0 <!-- v6.5.0 Change -->
+## Current Version: v6.5.1 (January 2026)
 ## In Development: v7.0.0 <!-- v6.3.1 Change -->
+
+---
+
+## v6.5.1 - Analyzer Report Bugfixes & Standardization (COMPLETE)
+
+**Branch:** `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-07
+
+**Implementation Approach:** Surgical updates to standardizing Phase 2 labels and fixing Phase 1 display layer.
+
+### Key Features
+- [x] **Phase 2 Standardization**: Official categories: `Built, Lead, Managed, Improved, Collaborate`.
+- [x] **Phase 1 Display Fix**: Explicit Markdown rendering for Job History Summaries.
+- [x] **Robust Job History Rules**: Multi-format download support and strict naming conventions.
+- [x] **Acronym & Display Guardrails**: Mandatory expansion rules and clean verb formatting.
 
 ---
 

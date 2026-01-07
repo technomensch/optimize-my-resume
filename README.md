@@ -421,7 +421,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** v6.5.2 (January 2026)
+**Current Version:** v6.5.1 (January 2026)
 **Released:** January 7, 2026
 
 ### What's New in v6.5.1:
