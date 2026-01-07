@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v6.5.1 - Analyzer Report Header Fixes (2026-01-07) <!-- v6.5.1 Addition -->
+> **Branch:** `v6.5.1-analyzer-report-header-fixes`
+
+#### Fixed
+- **Analyzer Report Header Formatting** - Addressed multiple formatting issues in the Phase 1 report header:
+  - **Issue #5 & #8:** Converted remaining ASCII tables to Markdown format for better rendering.
+  - **Issue #6:** Enforced strict metadata flow to prevent job history summary batching.
+  - **Issue #7:** Standardized Executive Summary with table layout and emoji visuals.
+  - **Issue #9:** Cleaned up action verb display (removed brackets and color names).
+  - **Issue #10:** Updated job history generation to synthesize responsibilities instead of copying.
+  - **Issue #11:** Fixed display rendering for metric indicators and verb categories.
+  - **Issue #12:** Added dedicated Header/Contact Validation section with clear status checks.
+
 ### v6.5.0 - Analyzer Auditing & Hiring Manager Perspective (2026-01-07) <!-- v6.5.0 Addition -->
 > **Branch:** `v6.5.0-add-missing-analyzer-audit-elements`
 

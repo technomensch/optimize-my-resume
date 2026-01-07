@@ -407,24 +407,42 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
    - When you're tailoring for a specific industry
 
 3. **Use Phase 3 for each job application** (repeatedly)
-   - Paste the job description
-   - Check your match score
-   - Get customized bullets for that specific role
-   - Use the generated professional summary in your application
+1.  **Run Phase 1 once** (when you first set up the system)
+    - Upload your complete resume
+    - Get comprehensive feedback
+    - Let it create your job history file
+    - Fix any major issues it found
 
-4. **Re-run Phase 1 periodically** (every 3-6 months or after major career changes)
-   - Updates your job history file
-   - Catches new trends in resume best practices
-   - Refreshes your baseline analysis
+2.  **Update individual bullets with Phase 2** (as needed)
+    - When you add a new position
+    - When you want to strengthen weak bullets
+    - When you're tailoring for a specific industry
+
+3.  **Use Phase 3 for each job application** (repeatedly)
+    - Paste the job description
+    - Check your match score
+    - Get customized bullets for that specific role
+    - Use the generated professional summary in your application
+
+4.  **Re-run Phase 1 periodically** (every 3-6 months or after major career changes)
+    - Updates your job history file
+    - Catches new trends in resume best practices
+    - Refreshes your baseline analysis
 
 ---
 
 ## 📝 Version Information
 
-**Current Version:** 6.5.0 (MINOR RELEASE) <!-- v6.5.0 Change -->
+**Current Version:** 6.5.1 (PATCH RELEASE) <!-- v6.5.1 Change -->
 **Released:** January 7, 2026
 
-### What's New in v6.5.0:
+### What's New in v6.5.1:
+- **Header & Contact Validation:** dedicated section with clear table checks for contact info quality.
+- **Job History Synthesis:** Smarter role inference logic that synthesizes responsibilities instead of just copying them.
+- **Visual Stability:** Fixed display rendering for metric indicators and verb categories (no more broken brackets).
+- **Report Formatting:** Cleaned up Executive Summary and Audit Tables for reliable Markdown rendering.
+
+### What Was New in v6.5.0:
 - **Analyzer Auditing:** New 3-row audit table for every bullet point (Action Verb, Metrics, Length) ensuring transparency.
 - **Hiring Manager Perspective:** A simulated "Hiring Manager" analysis that ignores your titles and infers your actual role based on impact, revealing perception gaps.
 - **Job History Auto-Generation:** Phase 1 now automatically creates your v2.0 Job History file from your resume text.
