@@ -1,6 +1,6 @@
 # JD Re-Comparison Protocol - Phase 3
 
-**Version:** 1.0
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
 **Purpose:** Re-run JD comparison with updated job history and generate diff showing improvements
 

@@ -1,6 +1,6 @@
 # Job History v2.0 - Creation Protocol
 
-**Version:** 2.1.0 <!-- v2.1.0 Change: Added Guardrails #1, #5, #17 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
 **Purpose:** Complete job history schema with evidence-based matching support
 
@@ -563,7 +563,7 @@ When creating a job history file in Phase 1, follow this sequence:
 
 **Created:** [Date]
 **Last Updated:** [Date]
-**Version:** 2.0
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Status:** [Complete | In Progress]
 
 ---

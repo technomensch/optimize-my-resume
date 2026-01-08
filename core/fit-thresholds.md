@@ -1,6 +1,6 @@
 # Fit Thresholds Configuration
 
-**Version:** 6.3.0 <!-- v6.3.0 Change: Added Guardrail #19 Fit Assessment Score Consistency -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Applies to:** All Phases
 
 ---

@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 1.2.0 <!-- v1.2.0 Change: Added Guardrails #3, #13, #15, #26 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 

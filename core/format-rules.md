@@ -1,6 +1,6 @@
 # Format Rules Configuration
 
-**Version:** 6.3.0 <!-- v6.3.0 Change: Added guardrails #2, #8, #12, #14, #15, #20, #22 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Aligned with Analyzer Output Overhaul -->
 **Applies to:** All Phases
 
 ---

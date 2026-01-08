@@ -1,6 +1,6 @@
 # Metrics Requirements
 
-**Version:** 6.3.0 <!-- v6.3.0 Change: Added guardrails #4, #11 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Applies to:** All Modes
 
 ---

@@ -1,4 +1,4 @@
-# Resume Analyzer Wireframe v4.12 Draft
+# Resume Analyzer Wireframe v6.5.1 Draft
 
 **Purpose:** Unified GUI report integrating all analysis per-bullet with inline recommendations.
 
@@ -57,9 +57,9 @@
 ║  Your resume is ATS COMPATIBLE, but needs CONTENT improvements for impact.   ║
 ║                                                                              ║
 ║  REPAIR LEGEND:                                                              ║
-║  [⛔ BLOCKER](text-red) Dealbreakers - Auto-reject risk                      ║
-║  [⚠️ RISK](text-yellow)    Significant Impact - Lowers score                    ║
-║  [🔧 TWEAK](text-cyan)   Refinement - Professional polish                     ║
+║  [⛔ BLOCKER](text-red)   Auto-Reject Risk - Must fix immediately            ║
+║  [⚠️ RISK](text-yellow)    High Priority - Significant score impact           ║
+║  [🔧 TWEAK](text-cyan)      Refinement - Minor polish for professional edge    ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -113,12 +113,19 @@ architecture with a track record of improving system performance by 40%.
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-||[P1] Acme Technologies Inc.                                                 ||
-|| Senior Software Engineer                                                   ||
-|| San Francisco, CA                                                          ||
-|| Jan 2021 - Present (3 yrs)                                                 ||
-||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+Position 1: "For this position, I think your job title might have been [INFERRED_TITLE]"
+
+Inferred Title: Senior Software Engineer
+Company: Acme Technologies Inc.
+Dates: Jan 2021 - Present (3 yrs)
+Seniority Level: SENIOR
+
+Why I Think This Was Your Role:
+The strongest indicators of Senior Software Engineer are:
+- [P1-B1] Architecting microservices platform
+- [P1-B2] Leading engineering team
+- [Context] Strategic scope and business impact
+───────────────────────────────────────────────────────────────────────────────
 
 ═══════════════════════════════════════════════════════════════════════════════
 [P1-B1] Architected(text-blue) and deployed a microservices platform using Java,

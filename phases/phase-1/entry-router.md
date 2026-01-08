@@ -1,6 +1,6 @@
 # Entry Point Router - User Intent Detection & Phase Routing
 
-**Version:** 1.0
+**Version:** 6.5.1 <!-- v6.5.1 Change: Added Phase 1 Overhaul support (Repairs, Position Headers) -->
 **Created:** 2025-12-28
 **Purpose:** Detect user state and intent, then route to appropriate workflow with confirmation
 
@@ -635,7 +635,8 @@ After routing and confirmation, execute the appropriate phase:
 LOAD: PROJECT-INSTRUCTIONS.md → Phase 1 section
 EXECUTE: Full resume analysis workflow
   - Extract positions, achievements, skills
-  - Categorize hard/soft skills
+  - Identify blocking gates and prioritized repairs (Blockers, Risks, Tweaks)
+  - Generate hiring manager perspective with explicit position metadata
   - Generate job history v2.0
   - Generate master professional summary
   - Save to file

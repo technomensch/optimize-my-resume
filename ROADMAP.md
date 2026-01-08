@@ -5,18 +5,17 @@
 
 ---
 
-## v6.5.1 - Analyzer Report Header Fixes (COMPLETE) <!-- v6.5.1 Change -->
+## v6.5.1 - Analyzer Output Overhaul (COMPLETE) <!-- v6.5.1 Change -->
 
-**Branch:** `v6.5.1-analyzer-report-header-fixes` | **Status:** Complete | **Date:** 2026-01-07
+**Branch:** `v6.5.1` | **Status:** Complete | **Date:** 2026-01-08
 
-**Implementation Approach:** Targeted fixes for known Phase 1 analysis report display issues.
+**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic to address display instability and improve repair generation.
 
-### Key Fixes
-- [x] **Header/Contact Validation:** New section with clear table checks (#12).
-- [x] **Job History Summary:** Synthesis logic + strict flow positioning (#6, #10).
-- [x] **Executive Summary:** Table format + bar graph enforcement (#7).
-- [x] **Audit Tables:** Markdown syntax replacement for stability (#5, #8).
-- [x] **Display Rendering:** Cleaned up verb/metric indicators (#9, #11).
+### Key Features
+- [x] **Verb Distribution Flagging:** Flag categories with < 5% representation as TWEAK (#14).
+- [x] **Position Header Overhaul:** Expanded 4-field metadata format for inferred roles (#15).
+- [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array with actionable fixes (#16).
+- [x] **Resilience Improvements:** Increased token limits and enhanced JSON error handling for large resumes (#17).
 
 ---
 
@@ -453,4 +452,4 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 ---
 
-**Last Updated:** 2026-01-03 (v6.3.0.1 - Guardrail audit & restoration) <!-- v6.3.0.1 Change -->
+**Last Updated:** 2026-01-08 (v6.5.1 - Analyzer Output Overhaul) <!-- v6.5.1 Change -->

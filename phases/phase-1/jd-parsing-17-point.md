@@ -1,6 +1,6 @@
 # 17-Point Job Description Parsing Protocol
 
-**Version:** 2.1.0 <!-- v2.1.0 Change: Added Guardrails #7, #10 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
 **Purpose:** Extract structured data from job descriptions using comprehensive 17-point schema
 

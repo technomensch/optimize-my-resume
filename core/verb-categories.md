@@ -1,6 +1,6 @@
 # Action Verb Categories
 
-**Version:** 6.3.0 <!-- v6.3.0 Change: Added Guardrail #9 and secondary implementation for #7, #24 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Added 5% distribution threshold rule for category flagging -->
 **Applies to:** All Modes
 
 ---
@@ -236,6 +236,7 @@ The following principles ensure that diversity rules do not cause infinite loops
 - **Good diversity:** 4-5 categories represented, balanced distribution
 - **Needs improvement:** 1-2 categories dominate (>50%), or <3 categories total
 - **Red flag:** Only 1-2 categories represented across entire resume
+- **Flagging Rule (v6.5.1):** Any category with < 5% representation of total bullets MUST be flagged as a `TWEAK` in the repairs needed summary.
 
 ---
 

@@ -1,6 +1,6 @@
 # Evidence-Based Matching Protocol - Phase 2
 
-**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #1, #5, #16, #21, #24 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
 **Purpose:** Match JD requirements against job history with evidence citations and gap analysis
 
