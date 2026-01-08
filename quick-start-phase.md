@@ -87,6 +87,40 @@
       </report_structure>
     </phase_1_analysis_report_output>
 
+    <repairs_needed_generation_rules> <!-- v6.5.1 Change: Added explicit repairs generation rules -->
+      <priority>HIGH</priority>
+      
+      <purpose>
+        The repairsNeeded array contains specific, actionable repair suggestions identified 
+        during resume analysis. These are surfaced in the Prioritized Repairs Summary section.
+      </purpose>
+      
+      <severity_definitions>
+        <blocker>Dealbreaker issues that risk auto-rejection by ATS or hiring manager</blocker>
+        <risk>Significant issues that meaningfully lower resume score</risk>
+        <tweak>Minor refinements for professional polish</tweak>
+      </severity_definitions>
+      
+      <what_to_flag>
+        1. Missing Metrics: Bullets without quantified impact (%, $, numbers, time)
+        2. Character Count: Bullets under 100 or over 210 characters
+        3. Weak Verbs: Responsible, Helped, Worked on, Participated in
+        4. Verb Distribution: Any category < 5% of total bullets
+        5. Verb Repetition: Same category used twice in one position
+        6. No Impact: Bullets lacking clear business outcome
+      </what_to_flag>
+      
+      <array_structure>
+        {
+          "severity": "risk|tweak|blocker",
+          "position": "Position 1: Job Title",
+          "bulletNumber": 1,
+          "issue": "Clear description of what's wrong",
+          "suggestion": "Specific, actionable fix with example"
+        }
+      </array_structure>
+    </repairs_needed_generation_rules>
+
     - Generate job history following template system (see below)
   </behavior>
 </phase>
@@ -2041,6 +2075,29 @@
   <rule>Maximize diversity by selecting different categories for each bullet</rule>
   <rule>Prioritize matching the verb category to the achievement type</rule>
 </verb_diversity_rule>
+
+<verb_distribution_threshold_rule> <!-- v6.5.1 Change: Added 5% threshold for TWEAK flag -->
+  <priority>HIGH</priority>
+  <instruction>
+    Any action verb category representing less than 5% of total bullets should be flagged as a TWEAK in Prioritized Repairs Summary.
+  </instruction>
+  
+  <calculation>
+    Percentage = (bullets_in_category / total_bullets) * 100
+    IF percentage < 5% THEN flag as TWEAK
+  </calculation>
+  
+  <example>
+    Resume with 20 total bullets:
+    - Built: 8 (40%)
+    - Lead: 1 (5%) ← Borderline, flag if < 5%
+    - Managed: 6 (30%)
+    - Improved: 4 (20%)
+    - Collaborate: 1 (5%) ← Flag as TWEAK
+    
+    Suggestion: "Consider adding more 'Collaborate' verbs to balance distribution"
+  </example>
+</verb_distribution_threshold_rule>
 
 <!-- ========================================================================== -->
 <!-- METRICS REQUIREMENTS                                                       -->
