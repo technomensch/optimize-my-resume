@@ -1,6 +1,6 @@
 # Incremental Job History Updates Protocol - Phase 3
 
-**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #6, #21a, #21b -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
 **Purpose:** Add, edit, or remove positions from job history without full re-analysis
 

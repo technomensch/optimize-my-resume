@@ -587,25 +587,19 @@
           </sub_section>
         </section>
 
-        <section id="2" name="Header & Contact Validation">
-          <reference>Implement per header_contact_validation_rules</reference>
-          - Validates name, email, phone, location, and links.
-          - Displays clean table with status checks (✓/⚠️/❌).
-        </section>
-
-        <section id="3" name="Hiring Manager Perspective">
+        <section id="2" name="Hiring Manager Perspective">
           <reference>Implement per hiring_manager_perspective_rules</reference>
           - Display inferred title, confidence, and reasoning for each position.
           - Display auto-generated job history summary (v2.0) for each position (per job_history_summary_generation_rules).
           - Format: <position_structure><position id="N">...content...</position></position_structure>
         </section>
 
-        <section id="4" name="Job History Export">
+        <section id="3" name="Job History Export">
           <reference>Implement per job_history_export_functionality</reference>
           - Display download buttons for XML/Markdown/ZIP.
         </section>
 
-        <section id="5" name="Position-by-Position Bullet Review">
+        <section id="4" name="Position-by-Position Bullet Review">
           For each position (in document order):
           1. Display position header.
           2. For each bullet:
@@ -616,12 +610,12 @@
           4. Visual separator between positions.
         </section>
 
-        <section id="6" name="Prioritized Repairs Summary">
+        <section id="5" name="Prioritized Repairs Summary">
             <reference>Implement per prioritized_repairs_summary_rules</reference>
             - Display detailed list of all RISKS and TWEAKS with actionable suggestions.
         </section>
         
-        <section id="7" name="Overall Statistics">
+        <section id="6" name="Overall Statistics">
            - Display aggregated metric coverage and verb diversity stats.
         </section>
       </report_structure>
@@ -2131,7 +2125,7 @@
 
     <for_each_position>
       <position_header>
-        Position [N]: "For this position, I think your job title might have been....."
+        Position [N]: "For this position, I think your job title might have been [INFERRED_TITLE]"
         
         Inferred Title: [INFERRED_TITLE]
         Company: [COMPANY_NAME]
@@ -2195,26 +2189,7 @@
     </job_market_guidance>
   </output_structure>
 
-  <output_flow_enforcement_guardrail>
-    <priority>CRITICAL</priority>
-    <instruction>
-      The Job History Summary (Metadata Block) for Position N MUST be displayed IMMEDIATELY after the Hiring Manager Rationale for Position N.
-    </instruction>
-    
-    <forbidden_behavior>
-      - NEVER batch, group, or consolidate Job History Summaries at the end of the report.
-      - NEVER separate the summary from its corresponding position analysis.
-    </forbidden_behavior>
-    
-    <required_sequence_per_position>
-      1. Position N Header & Inferred Title
-      2. Position N Bullet Audit (Table & Recommendations)
-      3. Position N Rationale ("Why I think this was your role...")
-      4. Position N Job History Summary (The full v2.0 metadata block)
-      5. [Visual Separator]
-      6. Proceed to Position N+1...
-    </required_sequence_per_position>
-  </output_flow_enforcement_guardrail>
+
 
   <critical_behaviors>
     <behavior priority="critical">
@@ -2659,99 +2634,6 @@
         Do NOT use text color annotations like (text-cyan) (text-yellow) (text-red) (text-green) (text-blue) (text-purple) (text-pink)
       </no_ascii_art>
     </markdown_table_format>
-
-    <header_contact_validation_rules>
-      <priority>HIGH</priority>
-      <applies_to>Phase 1 Resume Analysis - Header validation section</applies_to>
-      
-      <purpose>
-        Validate resume header/contact information for ATS compatibility and completeness.
-        Display validation results in clean Markdown table format.
-      </purpose>
-
-      <validation_checks>
-        <check id="name">
-          <requirement>Full name must be present</requirement>
-          <pass_criteria>At least first and last name detected</pass_criteria>
-          <status_pass>✓ Found</status_pass>
-          <status_fail>❌ Missing or incomplete</status_fail>
-        </check>
-
-        <check id="email">
-          <requirement>Valid email format</requirement>
-          <pass_criteria>Contains @ symbol and domain with .</pass_criteria>
-          <status_pass>✓ Valid format</status_pass>
-          <status_fail>❌ Invalid format or missing</status_fail>
-          <details_pass>@ and . found</details_pass>
-        </check>
-
-        <check id="phone">
-          <requirement>Valid phone format</requirement>
-          <pass_criteria>10 digits in any format (with or without separators)</pass_criteria>
-          <status_pass>✓ Valid format</status_pass>
-          <status_fail>❌ Invalid format or missing</status_fail>
-          <details_pass>10 digits</details_pass>
-        </check>
-
-        <check id="location">
-          <requirement>City and state/country present</requirement>
-          <pass_criteria>At least city and state/country detected</pass_criteria>
-          <status_pass>✓ Found</status_pass>
-          <status_fail>❌ Missing or incomplete</status_fail>
-        </check>
-
-        <check id="linkedin">
-          <requirement>LinkedIn profile URL</requirement>
-          <pass_criteria>Valid linkedin.com URL format</pass_criteria>
-          <status_pass>✓ Valid URL</status_pass>
-          <status_fail>⚠️ Missing (recommended)</status_fail>
-          <severity_if_missing>TWEAK</severity_if_missing>
-        </check>
-
-        <check id="github">
-          <requirement>GitHub profile URL (optional for technical roles)</requirement>
-          <pass_criteria>Valid github.com URL format</pass_criteria>
-          <status_pass>✓ Found</status_pass>
-          <status_fail>⚠️ Not present (optional)</status_fail>
-          <severity_if_missing>TWEAK</severity_if_missing>
-          <recommendation>Add GitHub profile if applying for technical roles</recommendation>
-        </check>
-
-        <check id="portfolio">
-          <requirement>Portfolio/personal website URL (optional)</requirement>
-          <pass_criteria>Valid URL format distinct from LinkedIn/GitHub</pass_criteria>
-          <status_pass>✓ Found</status_pass>
-          <status_fail>⚠️ Not present (optional)</status_fail>
-          <severity_if_missing>TWEAK</severity_if_missing>
-          <recommendation>Add distinct portfolio URL if applicable</recommendation>
-        </check>
-      </validation_checks>
-
-      <markdown_output_format>
-        <header_display>
-          Display actual header information as formatted text (name in bold, contact info on separate lines)
-        </header_display>
-
-        <validation_table>
-          Three-column table: Element | Status | Details
-          - Element: Name of contact field
-          - Status: ✓ (pass) or ⚠️ (warning) or ❌ (fail)
-          - Details: Validation result message
-        </validation_table>
-
-        <recommendations_section>
-          Only display if there are recommendations
-          Format: **[SEVERITY]** [Recommendation text]
-          Severity levels: [⛔ BLOCKER] [⚠️ RISK] [🔧 TWEAK]
-        </recommendations_section>
-      </markdown_output_format>
-
-      <severity_assignment>
-        <rule priority="critical">
-          Missing name, email, phone, or location → ⛔ BLOCKER
-          These are required for ATS systems
-        </rule>
-
         <rule priority="high">
           Invalid format for email or phone → ⚠️ RISK
           May cause ATS parsing failures
@@ -2762,14 +2644,6 @@
           Recommended but not required
         </rule>
       </severity_assignment>
-
-      <integration_with_executive_summary>
-        Header validation issues should be counted in the Executive Summary repair totals:
-        - Add BLOCKER count if name/email/phone/location missing
-        - Add RISK count if email/phone format invalid
-        - Add TWEAK count for missing optional fields (LinkedIn, GitHub, Portfolio)
-      </integration_with_executive_summary>
-    </header_contact_validation_rules>
     
     <element name="Prioritized Repairs Counts">
       - A one-line summary of issue counts by severity.

@@ -1,6 +1,6 @@
 # Workflow Router - Complete Entry Point System (Phase 3)
 
-**Version:** 1.1.0 <!-- v1.1.0 Change: Added Guardrails #18, #23, #25, #27 -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-29
 **Purpose:** Complete routing system that detects user intent and routes to appropriate workflow
 **Extends:** phases/phase-1/entry-router.md
