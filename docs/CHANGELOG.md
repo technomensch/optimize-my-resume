@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-<<<<<<< HEAD
 ### v6.5.4 - Planned Improvements
 - **JSON Truncation Fix** - Full implementation of sequential position analysis for 3+ position resumes (Issue #7).
 - **Token Tracking** - Session-based token usage tracking (ENH-001).
