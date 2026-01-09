@@ -1,4 +1,4 @@
-# Optimize My Resume v6.5.1 <!-- v6.5.1 Change -->
+# Optimize My Resume v6.5.3
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -433,14 +433,20 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 6.5.1 (PATCH RELEASE) <!-- v6.5.1 Change -->
+**Current Version:** 6.5.3 (January 8, 2026)
 **Released:** January 8, 2026
+
+### What's New in v6.5.3:
+- **Per-Bullet Recommendations:** Detailed, actionable feedback displayed directly below relevant bullets.
+- **Improved ID Synchronization:** Transitioned to GitHub Issue IDs for all tracking.
 
 ### What's New in v6.5.1:
 - **Verb Distribution Flagging:** Automatically detects and flags underrepresented action verb categories (< 5%) as refinements.
-- **Position Header Overhaul:** Expanded position headers now display full 4-field metadata (Inferred Title, Company, Dates, Seniority) with hiring manager insights.
-- **Detailed Repairs Generation:** Claude now generates a comprehensive `repairsNeeded` array covering metrics gaps, character counts, and verb weaknesses.
-- **Resilience Improvements:** Enhanced JSON parsing and increased token limits for successfully analyzing complex, multi-page resumes.
+- **Position Header Overhaul:** Expanded position headers now display full 4-field metadata (Inferred Title, Company, Dates, Seniority).
+- **Refined Metric Indicators:** Replaced vague icons with explicit `✓ [Has Metrics]` and `- [No Metrics]` labels.
+- **Consolidated Audit Table:** New, more concise Markdown table for per-bullet analysis.
+- **Enhanced Verb Display:** Corrected to display the verb category in brackets before the bullet text.
+- **Acronym Expansion Guardrail:** Intelligent expansion of domain-specific acronyms with a standard whitelist.
 
 ### What Was New in v6.5.0:
 - **Analyzer Auditing:** New 3-row audit table for every bullet point (Action Verb, Metrics, Length) ensuring transparency.

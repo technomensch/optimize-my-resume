@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<<<<<<< HEAD
 ### v6.5.4 - Planned Improvements
 - **JSON Truncation Fix** - Full implementation of sequential position analysis for 3+ position resumes (Issue #7).
 - **Token Tracking** - Session-based token usage tracking (ENH-001).
@@ -41,14 +42,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Rate Limit Management** - Friendly countdown timer for API rate limit (429) errors (#5).
 - **Verb Balance Visuals** - Progress bars and status badges for action verb distribution (#4).
 
-### v6.5.1 - Analyzer Output Overhaul (2026-01-08) <!-- v6.5.1 Addition -->
-> **Branch:** `v6.5.1`
+### v6.5.1 - Analyzer Output Overhaul & Bugfixes (2026-01-08) <!-- v6.5.1 Addition -->
+> **Branch:** `v6.5.1` | `v6.5.1-analyzer-report-bugfixes`
 
 #### Added
 - **Verb Distribution Flagging** - Implemented 5% threshold detection for verb categories, flagging imbalances as TWEAK (#14).
 - **Position Header Overhaul** - Expanded position headers to show full 4-field metadata (Inferred Title, Company, Dates, Seniority) and a hiring manager insight statement (#15).
 - **Detailed Repairs Generation** - Automated detection of metrics gaps, formatting issues, and verb weaknesses, populating the `repairsNeeded` array for user feedback (#16).
 - **Resilience Improvements** - Increased API token limits and added user-friendly error handling for complex/oversized resume analysis (#17).
+- **Metric Indicator Refinement**: Replaced simple ✓/- icons with explicit labels: `✓ [Has Metrics]` and `- [No Metrics]`.
+- **Robust Job History Summary Rules**: Implemented `<job_history_summary_generation_rules id="8">` with multi-format download support (XML, MD, ZIP) and strict naming conventions.
+- **Improved Acronym Guardrails**: Added specific list of allowed standard acronyms and instructions for domain-specific expansions.
+
+#### Fixed
+- **Audit Table Formatting**: Converted ASCII audit tables to Markdown for better readability and added line breaks in "Length" analysis.
+- **Verb Display Rule**: Corrected rule to show action verbs cleanly while preserving category tracking.
+- **Executive Summary Header**: Ensured all analyzer reports start with `# 📊 Executive Summary`.
+- **Phase 1 Job History Rendering**: Resolved bug where metric indicators and verb categories were not rendering correctly in the chat window.
+- **Phase 2 Verb Standardization**: Standardized all Phase 2 and global verb category references to use the official set: `Built, Lead, Managed, Improved, Collaborate`.
 
 ### v6.5.0 - Analyzer Auditing & Hiring Manager Perspective (2026-01-07) <!-- v6.5.0 Addition -->
 > **Branch:** `v6.5.0-add-missing-analyzer-audit-elements`
@@ -323,7 +334,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 - **Automatic Quality Gate with Regeneration Loop** - Mandatory quality enforcement before output presentation
   - **Step 1**: Run `pre_output_quality_checklist` automated scans
-    - Escaped characters (\~, \%, \+) detection and correction
+    - Escaped characters (\~, %, \+) detection and correction
     - Gerund detection (bullets starting with -ing verbs)
     - Repeated phrase detection (>2 exact occurrences)
     - Keyword duplication checking (summary vs bullets)
@@ -412,7 +423,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 - **Quality Assurance Rules** - Integrated comprehensive grammar, consistency, and variation rules into core instructions
   - **Phrase Variation Rule**: Prevents exact repetition of metrics/achievements (max 2 occurrences)
-  - **Symbol Consistency Rule**: Standardizes use of tildes (~), percentages (%), and hpyhenated ranges; prohibits escaped characters (\~, \%, \+)
+  - **Symbol Consistency Rule**: Standardizes use of tildes (~), percentages (%), and hpyhenated ranges; prohibits escaped characters (\~, %, \+)
   - **Verb Tense Rule**: Enforces past-tense action verbs at the start of all bullets (prohibits gerunds)
   - **Keyword Diversity Rule**: Optimizes keyword distribution between professional summary and position bullets
   - **Pre-output Quality Checklist**: Automated scan patterns for common formatting and grammar issues
