@@ -31,9 +31,9 @@
 │   └── implementation-plan-token-tracking.md ← ENH-001 IMPLEMENTATION PLAN
 │
 ├── 📊 SESSION DOCUMENTATION
-│   ├── session-summary-2026-01-08-phase1-analyzer.md ← MAIN SESSION SUMMARY
-│   ├── session-summary-2026-01-08.md ← SECONDARY SESSION
-│   └── v6.5.3-prompt-optimization-summary.md ← V6.5.3 CHANGES
+│   ├── /docs/sessions/2026-01/2026-01-08_phase1-analyzer-main-session-summary.md ← MAIN SESSION SUMMARYd ← MAIN SESSION SUMMARY
+│   ├── /docs/sessions/2026-01/2026-01-08_v6.5.3-prompt-optimization-summary.md ← V6.5.3 CHANGES
+│   └── /docs/sessions/2026-01/2026-01-08_v6.5.3-prompt-optimization-summary.md ← SECONDARY SESSION
 │
 ├── 🧪 TESTING & DEBUGGING
 │   ├── error-handling-test-cases.md ← 23 TEST CASES
