@@ -1,10 +1,17 @@
-# Optimize-My-Resume System v6.5.3
+<<<<<<< HEAD
+# Optimize-My-Resume System v6.5.1
+=======
+# Quick-Start Phase Instruction Module v6.5.1
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 
 <!-- ========================================================================== -->
 <!-- QUICK-START PHASE INSTRUCTION MODULE                                       -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.3 (January 9, 2026)                                           --> <!-- v6.5.3 Release: Header Fixes, Validation Logic, Display Rendering Updates -->
-<!-- Last Updated: January 9, 2026                                              -->
+<<<<<<< HEAD
+<!-- Version: 6.5.1 (January 2026)                                              --> <!-- v6.5.1 Release: Header Fixes, Validation Logic, Display Rendering Updates -->
+=======
+<!-- Version: 6.5.1 (January 2026)                                              --> <!-- v6.5.1: Analyzer Report Bugfixes & Standardization (#5, #6, #7, #8, #9, #10, #11) -->
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 <!-- Last Updated: January 7, 2026                                              -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
@@ -675,21 +682,39 @@
   
   <bullet_display_within_position>
     <instruction>
-    <instruction>
-      Display each bullet cleanly.
-      - prefix with Metric Indicator: ✓ [Has Metrics] (if metrics present) or - [No Metrics] (if no metrics)
-      - prefix with Verb Category in brackets: [Category] (e.g., [Built])
+<<<<<<< HEAD
+      Display each bullet cleanly. 
+      - Do NOT put brackets [ ] around the verb.
       - Do NOT put the color name (Green) in text.
+      - Do NOT try to force font colors if the environment does not support it.
     </instruction>
 
     <format>
-      [METRIC_INDICATOR] [[Category]] [Verb] [remainder of bullet text]
+      [METRIC_INDICATOR] [Verb] [remainder of bullet text]
     </format>
 
+    <key>
+      - METRIC_INDICATOR: ✓ (if metrics present) or - (if no metrics)
+      - [Verb]: The action verb (Capitalized, no brackets)
+    </key>
+
+    <example>
+      ✓ Built a real-time analytics dashboard using React
+      - Managed daily standups for the engineering team
+=======
+      Display each bullet cleanly.
+      - prefix with Metric Indicator: ✓ [Has Metrics] (if metrics present) or - [No Metrics] (if no metrics)
+      - prefix with Verb Category in brackets: [Category] (e.g., [Built])
+    </instruction>
+                 
+    <format>
+      [METRIC_INDICATOR] [CATEGORY] [remainder of bullet text]
+    </format>
+                 
     <example>
       ✓ [Has Metrics] [Built] Built a real-time analytics dashboard using React
       - [No Metrics] [Managed] Managed daily standups for the engineering team
-    </example>
+>>>>>>> v6.5.1-analyzer-report-bugfixes
     </example>
   </bullet_display_within_position>
   
@@ -969,6 +994,7 @@
     </step>
   </auto_generation_process>
 
+<<<<<<< HEAD
   <display_format_in_phase_1>
     <priority>CRITICAL</priority>
     <instruction>
@@ -991,9 +1017,9 @@
       <bullet_formatting>
         For all bullet points within Core Responsibilities and Key Achievements:
         MUST apply standard bullet_display_and_grouping_rules:
-        - Prefix with Metric Indicator: ✓ [Has Metrics] or - [No Metrics]
+        - Prefix with Metric Indicator: ✓ or -
         - Prefix with Verb Category: [[Category]] (e.g., [[Built]])
-        - Example: "✓ [Has Metrics] [[Built]] Architected a scalable..."
+        - Example: "✓ [[Built]] Architected a scalable..."
       </bullet_formatting>
     </rendering_rules>
 
@@ -1007,15 +1033,18 @@
       Served as the Microsoft 365 Subject Matter Expert...
 
       ### 📋 Core Responsibilities
-      * - [No Metrics] [[Collaborate]] Capture requirements from the Business Development team...
-      * - [No Metrics] [[Built]] Create custom SharePoint Online forms...
+      * - [[Collaborate]] Capture requirements from the Business Development team...
+      * - [[Built]] Create custom SharePoint Online forms...
 
       ### 🏆 Key Achievements
-      * ✓ [Has Metrics] [[Built]] Built custom SharePoint Online forms with Power Apps...
+      * ✓ [[Built]] Built custom SharePoint Online forms with Power Apps...
 
       [...continue for all sections...]
     </example_output>
   </display_format_in_phase_1>
+  
+=======
+>>>>>>> v6.5.1-analyzer-report-bugfixes
   <download_export_formats>
     <format name="xml">
       <file_format>XML (v2.0 Schema)</file_format>
@@ -1233,13 +1262,28 @@
     </format>
   </per_bullet_recommendations>
 
+<<<<<<< HEAD
+  <example_display>
+    ✓ [Built] Created technical documentation and training materials.
+
+    | Check | Status | Analysis |
+    | :--- | :--- | :--- |
+    | **Metrics** | ❌ **Failed** | **Lacks quantifiable impact.** <br> Add: # of documents, team members trained... |
+    | **Verb** | ✅ **Passed** | **🔵 Built: Created** |
+    | **Length** | ❌ **Failed** | **74/210 chars** <br> (26 chars below minimum) |
+
+    > **⚠️ RECOMMENDATIONS**
+    > * [⚠️ RISK] Missing metrics - add quantified achievements
+    > * [⚠️ RISK] Bullet too short - expand with impact context
+  </example_display>
+=======
   <example_display>  
         ✓ [Has Metrics] [Built] Created technical documentation and training materials.
                      
         | Check | Status | Analysis |
         | :--- | :--- | :--- |             
         | **Metrics** | ❌ **Failed** | **Lacks quantifiable impact.** <br> Add: # of documents, team members trained... |
-        | **Verb** | ✅ **Passed** | **[Built]: Created** |        
+        | **Verb** | ✅ **Passed** | **[Built] Created** |        
         | **Length** | ❌ **Failed** | **74/210 chars** <br> (26 chars below minimum) |   
                      
         > **⚠️ RECOMMENDATIONS**  
@@ -1247,6 +1291,7 @@
         > * [⚠️ RISK] Bullet too short - expand with impact context            
                      
   </example_display> 
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 </per_bullet_audit_rules>
 
 <!-- ========================================================================== -->
