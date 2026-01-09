@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v6.5.4 - Planned Improvements
+- **JSON Truncation Fix** - Full implementation of sequential position analysis for 3+ position resumes (Issue #7).
+- **Token Tracking** - Session-based token usage tracking (ENH-001).
+
+## [Released]
+
+### v6.5.3 - Per-Bullet Repairs & Documentation Sync (2026-01-09) <!-- v6.5.3 Addition -->
+> **Branch:** `v6.5.3-analyzer-enhancements-part-2`
+
+#### Added
+- **Per-Bullet Recommendations** - UI component that displays consolidated, actionable feedback directly below the relevant bullet point.
+- **Explicit Known Issues** - Added `<known_issues>` section to `PROJECT-INSTRUCTIONS.md` covering the JSON truncation limitation.
+
+#### Changed
+- **Repairs Summary Strategy** - Moved detailed repair suggestions from the Executive Summary to the per-bullet context to reduce redundancy (Issue #6).
+- **ID Synchronization** - Updated all internal documentation tracks to use GitHub Issue IDs (e.g., Issue #1 → #13) instead of local session IDs.
+
+### v6.5.2 - Resilient Error Handling & UX (2026-01-08) <!-- v6.5.2 Addition -->
+> **Branch:** `v6.5.2-analyzer-enhancements-part-1`
+
+#### Added
+- **Model Selection UI** - Dropdown to select between Haiku, Sonnet, and Opus models with token cost estimates (#1, #2).
+- **Progressive Error Handling** - Smart recovery logic for JSON parsing errors, including debug mode (#3).
+- **Rate Limit Management** - Friendly countdown timer for API rate limit (429) errors (#5).
+- **Verb Balance Visuals** - Progress bars and status badges for action verb distribution (#4).
+
 ### v6.5.1 - Analyzer Output Overhaul (2026-01-08) <!-- v6.5.1 Addition -->
 > **Branch:** `v6.5.1`
 

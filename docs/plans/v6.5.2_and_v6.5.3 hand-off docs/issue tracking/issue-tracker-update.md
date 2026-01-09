@@ -10,8 +10,8 @@
 
 | Status | Count | Issues |
 |--------|-------|--------|
-| ✅ Resolved | 6 | #1, #2, #3, #4, #5, #6 |
-| 🔴 Active | 2 | #7 (JSON Truncation), #8 (GUI Docs) |
+| ✅ Resolved | 6 | #13, #14, #11, #12, #23, #24 |
+| 🔴 Active | 2 | #25 (JSON Truncation), #26 (GUI Docs) |
 | 📋 Enhancement | 1 | ENH-001 (Token Tracking) |
 | **Total** | **8** | |
 
@@ -19,7 +19,7 @@
 
 ## ✅ Resolved Issues
 
-### Issue #1: Model Selection Not Working
+### Issue #13: Add Model Selection (Haiku/Sonnet/Opus)
 **Status:** ✅ RESOLVED (v6.5.0)  
 **Priority:** HIGH  
 **Reported:** January 8, 2026  
@@ -39,7 +39,7 @@
 
 ---
 
-### Issue #2: No Token Usage Guidance
+### Issue #14: No Token Usage Guidance
 **Status:** ✅ RESOLVED (v6.5.0)  
 **Priority:** MEDIUM  
 **Reported:** January 8, 2026  
@@ -60,7 +60,7 @@
 
 ---
 
-### Issue #3: JSON Parse Errors - Poor Error Handling
+### Issue #11: Enhanced Error Handling & Resume Length Guidance
 **Status:** ✅ RESOLVED (v6.5.2)  
 **Priority:** HIGH  
 **Reported:** January 8, 2026  
@@ -82,7 +82,7 @@
 
 ---
 
-### Issue #4: Verb Distribution Hard to Understand
+### Issue #12: Verb Distribution Visualization
 **Status:** ✅ RESOLVED (v6.5.2)  
 **Priority:** MEDIUM  
 **Reported:** January 8, 2026  
@@ -103,7 +103,7 @@
 
 ---
 
-### Issue #5: Rate Limit Errors Not Handled
+### Issue #23: Error Handling - API Token Session Limit Errors
 **Status:** ✅ RESOLVED (v6.5.2)  
 **Priority:** HIGH  
 **Reported:** January 8, 2026  
@@ -125,7 +125,7 @@
 
 ---
 
-### Issue #6: Verbose Executive Summary
+### Issue #24: Move Repair Recommendations to Per-Bullet Context
 **Status:** ✅ RESOLVED (v6.5.3)  
 **Priority:** MEDIUM  
 **Reported:** January 8, 2026  
@@ -154,7 +154,7 @@
 
 ## 🔴 Active Issues
 
-### Issue #7: JSON Truncation with Multi-Position Resumes
+### Issue #25: JSON Response Truncation for Multi-Position Resumes
 **Status:** 🔴 ACTIVE (v6.5.3)  
 **Priority:** CRITICAL  
 **Reported:** January 8, 2026  
@@ -208,7 +208,7 @@ Has error: false
 - ✅ Single position: Works perfectly
 - ❌ Three positions: Truncation at ~17.6K chars
 
-### Issue #8: Create Project-GUI-Instructions.md
+### Issue #26: Create Project-GUI-Instructions.md
 **Status:** 🔴 ACTIVE
 **Priority:** MEDIUM
 **GitHub ID:** #26
@@ -285,8 +285,8 @@ Add token usage tracking and display to help users understand session limits
 
 ### Resolution Time
 - Average: 2-3 hours per issue
-- Fastest: Issue #1 (30 minutes)
-- Longest: Issue #6 (4 hours with testing)
+- Fastest: Issue #13 (30 minutes)
+- Longest: Issue #24 (4 hours with testing)
 
 ### By Priority
 - Critical: 1 active (#7)
@@ -304,7 +304,7 @@ Add token usage tracking and display to help users understand session limits
 ## 🚀 Roadmap
 
 ### v6.5.4 (Immediate - This Week)
-- [ ] Fix Issue #7 (JSON Truncation) - Option 1 or 2
+- [ ] Fix Issue #25 (JSON Truncation) - Option 1 or 2
 - [ ] Test with 3+ position resumes
 - [ ] Verify all features still work
 
@@ -327,7 +327,7 @@ Add token usage tracking and display to help users understand session limits
 ### v6.5.3 (January 8, 2026)
 **Changes:**
 - Prompt optimization for smaller JSON responses
-- Removed duplicate suggestions from Executive Summary (Issue #6)
+- Removed duplicate suggestions from Executive Summary (Issue #24)
 - Consolidated "Scope Analysis" terminology
 - Added explicit character limits in prompt
 
@@ -337,16 +337,16 @@ Add token usage tracking and display to help users understand session limits
 **Token Savings:** 1020-2370 chars (~5-12% reduction)
 
 **Known Issues:**
-- JSON truncation still occurs with 3+ positions (Issue #7 active)
+- JSON truncation still occurs with 3+ positions (Issue #25 active)
 
 ---
 
 ### v6.5.2 (January 8, 2026)
 **Changes:**
-- Enhanced error handling with progressive messaging (Issue #3)
+- Enhanced error handling with progressive messaging (Issue #11)
 - Added debug mode toggle
-- Verb distribution visualization (Issue #4)
-- Rate limit error handling (Issue #5)
+- Verb distribution visualization (Issue #12)
+- Rate limit error handling (Issue #23)
 - Fixed duplicate function declaration
 
 **Files Changed:**
@@ -364,8 +364,8 @@ Add token usage tracking and display to help users understand session limits
 
 ### v6.5.0 (January 8, 2026)
 **Initial Release:**
-- Model selection (Issue #1)
-- Token usage guidance (Issue #2)
+- Model selection (Issue #13)
+- Token usage guidance (Issue #14)
 - Full Phase 1 analysis features
 - Per-bullet audit tables
 - Prioritized repairs summary
@@ -394,4 +394,4 @@ Add token usage tracking and display to help users understand session limits
 ---
 
 **Last Updated:** January 8, 2026, 4:45 PM  
-**Next Review:** After Issue #7 resolution
+**Next Review:** After Issue #25 resolution

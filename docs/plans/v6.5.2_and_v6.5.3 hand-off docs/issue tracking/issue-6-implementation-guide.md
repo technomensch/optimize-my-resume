@@ -1,4 +1,4 @@
-# Issue #6 Implementation Guide
+# Issue #24 Implementation Guide
 ## Move Repair Recommendations from Executive Summary to Per-Bullet Context
 
 **Status:** Ready for Implementation  
