@@ -1,9 +1,9 @@
-# Optimize-My-Resume System v6.5.2 (GUI Instructions)
+# Optimize-My-Resume System v6.5.3 (GUI Instructions)
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.2 (January 8, 2026)                                           --> <!-- v6.5.2 Release: Artifact UI Enhancements (Models, Tokens, Error Handling) -->
+<!-- Version: 6.5.3 (January 8, 2026)                                           --> <!-- v6.5.3 Release: Per-Bullet Repairs, JSON Truncation Fix, Testing Suite -->
 <!-- Last Updated: January 8, 2026                                              -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
@@ -604,15 +604,17 @@
           1. Display position header.
           2. For each bullet:
              a. Display the bullet (with metric indicator and colored verb per v6.5.0).
-             b. **Display the new per-bullet audit table directly below it (per per_bullet_audit_rules).**
-             c. **If needed, display the per-bullet recommendations box (per per_bullet_audit_rules).**
+             b. **Display "RECOMMENDATION" box if improvements needed (single consolidated suggestion).**
+             c. **Display the new per-bullet audit table directly below it (per per_bullet_audit_rules).**
           3. Display position summary statistics.
           4. Visual separator between positions.
         </section>
 
         <section id="5" name="Prioritized Repairs Summary">
             <reference>Implement per prioritized_repairs_summary_rules</reference>
-            - Display detailed list of all RISKS and TWEAKS with actionable suggestions.
+            - Display brief list of RISKS and TWEAKS (Issue description ONLY).
+            - Do NOT display detailed suggestions here (moved to per-bullet review).
+            - Include jump links to specific positions [P1-B1].
         </section>
         
         <section id="6" name="Overall Statistics">
@@ -802,6 +804,13 @@
       <instruction>
         Implement progressive error handling for JSON parsing failures (often caused by resume length).
       </instruction>
+      <!-- Issue #7 Fix: Increased token limit for multi-position resumes -->
+      <!-- This section describes the API call parameters for the analysis -->
+      <api_call_parameters>
+        <model_selection>selectedModel</model_selection>
+        <max_tokens>8000</max_tokens>
+        <messages>[...]</messages>
+      </api_call_parameters>
       <logic>
         <attempt_1_and_2>
           <message>
