@@ -1,7 +1,34 @@
 # Optimize My Resume - Roadmap
 
-## Current Version: v6.5.1 <!-- v6.5.1 Change -->
+## Current Version: v6.5.3 <!-- v6.5.3 Change -->
 ## In Development: v7.0.0 <!-- v6.3.1 Change -->
+
+---
+
+## v6.5.3 - Per-Bullet Repairs & JSON Truncation Fix (COMPLETE) <!-- v6.5.3 Change -->
+
+**Branch:** `v6.5.3-analyzer-enhancements-part-2` | **Status:** Complete | **Date:** 2026-01-09
+
+**Implementation Approach:** Moved detailed repair suggestions to per-bullet context to reduce token usage and improve UX. Identified and documented fix for JSON truncation issue.
+
+### Key Features
+- [x] **Per-Bullet Repair UI:** Moved "Recommendation" box to appear only when needed below specific bullets (Issue #6).
+- [x] **Repairs Schema Update:** Simplified prioritized repairs summary to use brief descriptors instead of full suggestions (Issue #6).
+- [x] **JSON Truncation Strategy:** Documented Option 1 (max_tokens increase) and Option 2 (sequential analysis) for Issue #7.
+
+---
+
+## v6.5.2 - Error Handling & UX Enhancements (COMPLETE) <!-- v6.5.2 Change -->
+
+**Branch:** `v6.5.2-analyzer-enhancements-part-1` | **Status:** Complete | **Date:** 2026-01-08
+
+**Implementation Approach:** Focused on system resilience and user feedback mechanisms.
+
+### Key Features
+- [x] **Model Selection:** Added Haiku/Sonnet/Opus selection with token cost estimates (Issue #1, #2).
+- [x] **Progressive Error Handling:** Implemented cascading error recovery for JSON parsing failures (Issue #3).
+- [x] **Rate Limit Handling:** Added user-friendly countdown for API 429 errors (Issue #5).
+- [x] **Verb Distribution Visuals:** Added color-coded progress bars for verb category balance (Issue #4).
 
 ---
 
