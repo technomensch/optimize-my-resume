@@ -5,6 +5,7 @@
 
 ---
 
+<<<<<<< HEAD
 ## v6.5.3 - Per-Bullet Repairs & JSON Truncation Fix (COMPLETE) <!-- v6.5.3 Change -->
 
 **Branch:** `v6.5.3-analyzer-enhancements-part-2` | **Status:** Complete | **Date:** 2026-01-09
@@ -32,17 +33,22 @@
 
 ---
 
-## v6.5.1 - Analyzer Output Overhaul (COMPLETE) <!-- v6.5.1 Change -->
+---
 
-**Branch:** `v6.5.1` | **Status:** Complete | **Date:** 2026-01-08
+## v6.5.1 - Analyzer Output Overhaul & Bugfixes (COMPLETE) <!-- v6.5.1 Change -->
 
-**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic to address display instability and improve repair generation.
+**Branch:** `v6.5.1` | `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-08
+
+**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic combined with surgical bugfixes for display stability and standardization.
 
 ### Key Features
 - [x] **Verb Distribution Flagging:** Flag categories with < 5% representation as TWEAK (#14).
 - [x] **Position Header Overhaul:** Expanded 4-field metadata format for inferred roles (#15).
-- [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array with actionable fixes (#16).
-- [x] **Resilience Improvements:** Increased token limits and enhanced JSON error handling for large resumes (#17).
+- [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array (#16).
+- [x] **Metric Indicator Refinement**: Explicit labels: `✓ [Has Metrics]` and `- [No Metrics]`.
+- [x] **Phase 1 Display Fix**: Explicit Markdown rendering for Job History Summaries.
+- [x] **Robust Job History Rules**: Multi-format download support and strict naming conventions.
+- [x] **Acronym & Display Guardrails**: Mandatory expansion rules and clean verb formatting.
 
 ---
 
@@ -55,10 +61,11 @@
 ### Key Features
 - [x] **Hiring Manager Perspective:** New analysis section inferring roles from impact.
 - [x] **Per-Bullet Auditing:** 3-row audit table for every bullet.
-- [x] **Job History v2.0:** Auto-generated during analysis.
-- [x] **Export Functionality:** XML/MD/ZIP downloads.
-- [x] **Visuals:** Color-coded verbs and metrics indicators.
-- [x] **Guardrails:** New Bullet Grouping Verification (#28).
+- [x] **Refined Metric Indicators:** Explicit `✓ [Has Metrics]` and `- [No Metrics]` labels.
+- [x] **Consolidated Formatting:** Concise per-bullet audit tables with standardized length check display.
+- [x] **Enhanced Verb Display:** Corrected to show verb category in brackets (e.g., `[Built] Built system...`).
+- [x] **Acronym Guardrail:** Automated expansion rules with technical whitelist.
+- [x] **Executive Summary Fix:** Guaranteed header consistency (`# 📊 Executive Summary`).
 - [x] **Metrics Principle:** New core principle for impact quantification.
 
 ---
@@ -157,8 +164,9 @@
 **Branch:** `v6.1.0` | **Status:** Complete | **Date:** 2025-12-29
 
 ### Sub-Versions
-- ✅ v6.1.1 - Folder restructure (`/shared/` → `/phases/`)
-- ✅ v6.1.2 - Documentation updates (terminology + Job Summary guide)
+- [x] **v6.5.2**: Phase 2 Verb Standardization & Phase 1 Display Fix (Issues #10, #11)
+- [x] **v6.5.1**: Analyzer Report Bugfixes (Issues #5-9) & Metric Refinement
+- [x] **v6.5.0**: Cumulative Guardrails & Architecture Refinement
 - ✅ v6.1.3 - Wireframe creation (10 files)
 - ✅ v6.1.4 - Legacy archival
 - ✅ v6.1.5 - Test case gap-filling

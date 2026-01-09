@@ -1,16 +1,16 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 12
+**Total Lessons:** 14
 **Categories:** 4
-**Last Updated:** 2026-01-03
+**Last Updated:** 2026-01-07
 
 ---
 
 ## Quick Search
 
 **By Category:**
-- [Architecture](#architecture-lessons) (2)
-- [Debugging](#debugging-lessons) (1)
+- [Architecture](#architecture-lessons) (3)
+- [Debugging](#debugging-lessons) (2)
 - [Process](#process-lessons) (7)
 - [Patterns](#patterns-lessons) (2)
 
@@ -21,7 +21,7 @@
 
 ## Architecture Lessons
 
-**2 lessons** - See [architecture/README.md](architecture/README.md) for full details
+**3 lessons** - See [architecture/README.md](architecture/README.md) for full details
 
 1. **[Claude Code Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)**
    - Date: 2025-12-29
@@ -34,6 +34,11 @@
    - Tags: #architecture #optimization #token-management #ai-pipeline
    - Problem: Token bloat and display redundancy in AI pipeline
    - Solution: Universal ID-based architecture eliminates redundancy by referencing entities by ID
+3. **[Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md)**
+   - Date: 2026-01-07
+   - Tags: #architecture #documentation #best-practices #portability
+   - Problem: Machine-specific absolute paths in versioned docs
+   - Solution: Enforcement of relative paths from repository root for all documentation references
 
 **Subdirectory:** [architecture/](architecture/)
 
@@ -41,13 +46,18 @@
 
 ## Debugging Lessons
 
-**1 lesson** - See [debugging/README.md](debugging/README.md) for full details
+**3 lessons** - See [debugging/README.md](debugging/README.md) for full details
 
 1. **[Skills Not Loading Until Restart](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)**
    - Date: 2026-01-02
    - Tags: #debugging #skills #claude-code #loading-behavior #startup
    - Problem: Skills added during active session don't load
    - Solution: Claude Code loads skills at startup only - always restart after adding/modifying skills
+2. **[GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md)**
+   - Date: 2026-01-07
+   - Tags: #debugging #workflow #github-cli #automation #planning
+   - Problem: Fragmentation of requirements across multiple issues and comments
+   - Solution: Leverage `gh` CLI to Programmatically fetch bodies and comments for authoritative consolidation before implementation.
 
 **Subdirectory:** [debugging/](debugging/)
 
@@ -128,6 +138,7 @@
 **#architecture** (3 lessons)
 - [Claude Code Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)
 - [ID-Based Architecture](architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
+- [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 **#automation** (3 lessons)
@@ -145,6 +156,7 @@
 
 **#documentation** (2 lessons)
 - [Automated Validation](process/Lessons_Learned_Automated_Validation.md)
+- [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 **#git-hygiene** (2 lessons)
@@ -196,6 +208,7 @@
 - [Branch Prompt Workflow](process/Lessons_Learned_Branch_Prompt_Workflow.md)
 - [Chat History Workflow](process/Lessons_Learned_Chat_History_Workflow.md)
 - [Plan File Locations](process/Lessons_Learned_Plan_File_Locations.md)
+- [GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
@@ -203,6 +216,8 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-07: [GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md) - Programmatic requirement gathering
+- 2026-01-07: [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md) - Context-agnostic file referencing
 - 2026-01-03: [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md) - Hook-based automation at workflow boundaries
 - 2026-01-02: [Complete Memory System v6.3.0](patterns/Lessons_Learned_Complete_Memory_System_v6.3.0_Implementation.md) - Full three-phase implementation
 - 2026-01-02: [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md) - Four-pillar memory architecture
@@ -249,14 +264,14 @@ grep -r "#architecture" docs/lessons-learned/
 
 **By Category:**
 - Process: 7 lessons (58%)
-- Architecture: 2 lessons (17%)
+- Architecture: 3 lessons (23%)
 - Patterns: 2 lessons (17%)
-- Debugging: 1 lesson (8%)
+- Debugging: 2 lessons (14%)
 
 **Most Common Tags:**
 1. #process (7 lessons)
 2. #workflow (6 lessons)
-3. #architecture, #automation, #claude-code (3 lessons each)
+3. #architecture, #automation, #claude-code, #documentation (3 lessons each)
 4. #skills, #git-hygiene, #documentation, #planning (2 lessons each)
 
 **Timeline:**
@@ -282,4 +297,4 @@ grep -r "#architecture" docs/lessons-learned/
 ---
 
 **Created:** 2026-01-02
-**Last Major Update:** 2026-01-03 (Added SessionStart Automation lesson)
+**Last Major Update:** 2026-01-07 (Added Relative File Paths lesson)
