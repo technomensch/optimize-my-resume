@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Released]
 
+### v6.5.3.1 - Documentation Infrastructure Cleanup (2026-01-09)
+> **Branch:** `v6.5.3.1-doc-cleanup`
+
+#### Changed
+- **Documentation Archiving** - Moved v6.1-v6.5.1 plans and handoff documents to `docs/plans/archive/` to improve repository organization.
+- **Reference Updates** - Updated cross-references and handoff plans to use relative paths pointing to the new archive locations.
+
 ### v6.5.3 - Per-Bullet Repairs & Documentation Sync (2026-01-09) <!-- v6.5.3 Addition -->
 > **Branch:** `v6.5.3-analyzer-enhancements-part-2`
 
