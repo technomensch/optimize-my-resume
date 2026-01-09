@@ -17,8 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > **Branch:** `v6.5.3.1-doc-cleanup`
 
 #### Changed
-- **Documentation Archiving** - Moved v6.1-v6.5.1 plans and handoff documents to `docs/plans/archive/` to improve repository organization.
-- **Reference Updates** - Updated cross-references and handoff plans to use relative paths pointing to the new archive locations.
+- **Documentation Infrastructure** - Centralized all project plans and handoffs into a new [Documentation Index](docs/plans/INDEX.md).
+- **Archiving** - Moved v6.1-v6.5.1 plans and handoff documents to `docs/plans/archive/` subdirectories to improve repository hygiene.
+- **Reference Updates** - Standardized on relative paths across all active planning documents.
 
 ### v6.5.3 - Per-Bullet Repairs & Documentation Sync (2026-01-09) <!-- v6.5.3 Addition -->
 > **Branch:** `v6.5.3-analyzer-enhancements-part-2`

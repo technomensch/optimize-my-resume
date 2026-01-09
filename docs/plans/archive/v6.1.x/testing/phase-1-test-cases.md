@@ -1,0 +1,285 @@
+# v6.0.1 Deep Dive: Additional Test Cases & Edge Cases
+
+## Overview
+
+This document captures additional test cases, edge cases, and validation scenarios discovered during a deep dive review of the v6.0 implementation plan. These findings supplement the [v6.0-implementation-plan.md](v6.0-implementation-plan.md).
+
+**Branch:** v6.0.1
+**Date:** 2025-12-28
+**Source:** Industry research, ATS parser best practices, state machine design patterns
+
+---
+
+## PART 1: Additional Test Cases for JD Parser (17-Point Schema)
+
+### Test Case Group 1: Missing Fields Handling
+
+Based on [RChilli JD Parser](https://docs.rchilli.com/kc/c_RChilli_JD_parser) and [Affinda Parser](https://www.affinda.com/job-description-parser) patterns:
+
+| Test ID | Scenario | Expected Behavior |
+|---------|----------|-------------------|
+| JD-001 | JD missing salary range | Set `salaryRange: null`, continue parsing |
+| JD-002 | JD missing clearance requirements | Set `clearance: null`, don't flag as gap |
+| JD-003 | JD has responsibilities but no skills section | Extract implied skills from responsibilities |
+| JD-004 | JD uses non-standard section headers ("What You'll Do" vs "Responsibilities") | Map common variations to standard fields |
+| JD-005 | JD in bullet points only (no prose) | Parse each bullet as individual requirement |
+| JD-006 | JD with only "Requirements" section (combined hard/soft) | Use categorizer to split into skillsNeeded/softSkillsNeeded |
+| JD-007 | JD with duplicate skills across sections | Deduplicate, preserve highest priority occurrence |
+| JD-008 | JD in all caps (SENIOR BUSINESS ANALYST) | Normalize case before processing |
+
+### Test Case Group 2: Ambiguous Location Parsing
+
+| Test ID | Scenario | Expected Behavior |
+|---------|----------|-------------------|
+| LOC-001 | "Remote (US Only)" | workLifestyle: "Remote", remoteRestrictions: "US" |
+| LOC-002 | "Hybrid - 2 days in office" | workLifestyle: "Hybrid", note: "2 days in office" |
+| LOC-003 | "Remote but must be within driving distance of NYC" | workLifestyle: "Fake-Remote", flag for user review |
+| LOC-004 | "Fully remote with quarterly on-sites" | workLifestyle: "Remote", note: "Quarterly on-sites" |
+| LOC-005 | "Location: Multiple" | prompt user to clarify before proceeding |
+| LOC-006 | "San Francisco, CA (Remote eligible)" | location: "San Francisco, CA", workLifestyle: "Hybrid" |
+| LOC-007 | No location specified | Set `location: null`, warn user about missing info |
+
+### Test Case Group 3: Salary Range Parsing
+
+| Test ID | Scenario | Expected Behavior |
+|---------|----------|-------------------|
+| SAL-001 | "$90,000 - $120,000" | salaryRange: {min: 90000, max: 120000, currency: "USD", period: "annual"} |
+| SAL-002 | "$45/hour" | salaryRange: {min: 45, max: 45, currency: "USD", period: "hourly"} |
+| SAL-003 | "Competitive salary" | salaryRange: null, note: "Competitive - unspecified" |
+| SAL-004 | "$80K-$100K DOE" | salaryRange: {min: 80000, max: 100000, note: "DOE"} |
+| SAL-005 | "120-150k" (no currency symbol) | Infer USD if US location, else prompt user |
+| SAL-006 | "$100,000+ depending on experience" | salaryRange: {min: 100000, max: null, note: "DOE"} |
+
+---
+
+## PART 2: Additional Test Cases for Skills Categorizer
+
+### Test Case Group 4: Ambiguous Skills Classification
+
+Based on [Indeed's Hard vs Soft Skills Guide](https://www.indeed.com/career-advice/resumes-cover-letters/hard-skills-vs-soft-skills) and [ResumeGenius analysis](https://resumegenius.com/blog/resume-help/hard-skills-vs-soft-skills):
+
+| Test ID | Skill | Context Clue | Expected Category | Confidence |
+|---------|-------|--------------|-------------------|------------|
+| SKL-001 | "Agile" | "Agile certification required" | HARD | high |
+| SKL-002 | "Agile" | "Agile mindset preferred" | SOFT | medium |
+| SKL-003 | "Agile" | (no context) | HARD (default for methodologies) | low |
+| SKL-004 | "Communication" | "Communication protocols (REST, SOAP)" | HARD | high |
+| SKL-005 | "Communication" | "Strong communication skills" | SOFT | high |
+| SKL-006 | "Communication" | (no context) | SOFT (default) | medium |
+| SKL-007 | "Project Management" | "PMP certification required" | HARD | high |
+| SKL-008 | "Project Management" | "Proven project management abilities" | BOTH (flag) | low |
+| SKL-009 | "Customer Service" | "Customer service software experience" | HARD | high |
+| SKL-010 | "Customer Service" | "Customer service orientation" | SOFT | high |
+| SKL-011 | "Data-Driven" | "Data-driven decision making" | SOFT | medium |
+| SKL-012 | "Data Analysis" | "3+ years data analysis" | HARD | high |
+| SKL-013 | "Mediation" | (HR role) | SOFT | high |
+| SKL-014 | "Mediation" | (no context, non-HR role) | SOFT | low |
+| SKL-015 | "Creativity" | (graphic design role) | SOFT | high |
+| SKL-016 | "Creativity" | (data entry role) | SOFT | low (unusual for role) |
+
+### Test Case Group 5: Edge Cases for Skills with Multiple Meanings
+
+| Test ID | Skill Text | Possible Interpretations | Resolution Strategy |
+|---------|------------|--------------------------|---------------------|
+| SKL-017 | "Python" | Programming language | HARD (exact match database) |
+| SKL-018 | "Java" | Programming language OR coffee | HARD (assume programming in tech JDs) |
+| SKL-019 | "C" | Programming language OR grade | HARD (context: programming role) |
+| SKL-020 | "R" | Programming language OR statistical R | HARD (both are technical) |
+| SKL-021 | "Go" | Programming language OR verb | HARD (context: tech skills section) |
+| SKL-022 | "AWS" | Amazon Web Services | HARD (exact match) |
+| SKL-023 | "Azure" | Microsoft Azure | HARD (exact match) |
+| SKL-024 | "SAP" | ERP system | HARD (exact match) |
+| SKL-025 | "Excel" | Microsoft Excel OR "excel at" | HARD if capitalized, SOFT if "excel at" |
+
+---
+
+## PART 3: Additional Test Cases for Evidence Matcher
+
+### Test Case Group 6: Citation Edge Cases
+
+| Test ID | Scenario | Expected Citation Format |
+|---------|----------|--------------------------|
+| EVI-001 | Same company, multiple roles | "Company Name | Title 1 (2020-2022), Title 2 (2022-2024)" |
+| EVI-002 | Contract through staffing agency | "Client (via Staffing Agency) | Title" |
+| EVI-003 | Freelance with multiple clients | "Freelance (Multiple Clients) | Consultant" |
+| EVI-004 | Internship | "Company | Title (Intern)" |
+| EVI-005 | Part-time role | "Company | Title (PT)" |
+| EVI-006 | Overlapping positions (moonlighting) | List both with dates, flag overlap |
+| EVI-007 | Gap in employment (6+ months) | Note gap but don't penalize scoring |
+| EVI-008 | Position with no end date (current) | "Company | Title (Current)" |
+
+### Test Case Group 7: Match Confidence Edge Cases
+
+| Test ID | Scenario | Expected Match Status | Notes |
+|---------|----------|----------------------|-------|
+| EVI-009 | Exact keyword match | MATCHED (100%) | "SQL" in JD, "SQL" in history |
+| EVI-010 | Synonym match | MATCHED (90%) | "SQL Server" in JD, "MSSQL" in history |
+| EVI-011 | Partial match (subset) | PARTIAL (75%) | "Advanced SQL" in JD, "SQL" in history |
+| EVI-012 | Version mismatch | PARTIAL (80%) | "Python 3" in JD, "Python 2" in history |
+| EVI-013 | Related but different | PARTIAL (50%) | "Tableau" in JD, "Power BI" in history |
+| EVI-014 | Implied from achievement | INFERRED (60%) | "SQL" in JD, "optimized database queries" in history |
+| EVI-015 | Certification implies skill | MATCHED (95%) | "Python" in JD, "PCEP certified" in history |
+| EVI-016 | Outdated skill (5+ years ago) | PARTIAL (70%) | Weight recent experience higher |
+
+---
+
+## PART 4: Additional Test Cases for Router
+
+### Test Case Group 8: Intent Detection Edge Cases
+
+Based on [AWS Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html) error handling patterns:
+
+| Test ID | User Input | Detected Intent | Confidence | Action |
+|---------|------------|-----------------|------------|--------|
+| RTR-001 | "Here's my resume" + PDF | full_analysis | 95% | Route to Phase 1 |
+| RTR-002 | "Here's the job" + text | jd_comparison | 90% | Route to Phase 3 |
+| RTR-003 | PDF that looks like both resume AND JD | ambiguous | 50/50 | Ask user to clarify |
+| RTR-004 | Text with 3 bullet points | bullet_optimization | 85% | Route to Phase 2 |
+| RTR-005 | "Add this to my resume" + 1 paragraph | unclear | 60% | Ask: bullet opt or new position? |
+| RTR-006 | "Update my experience at Google" | incremental_update | 90% | Route to position editor |
+| RTR-007 | Empty input | error | 0% | Ask for input |
+| RTR-008 | Very long input (10+ pages) | full_analysis | 80% | Warn about length, proceed |
+| RTR-009 | Non-English text | unsupported | N/A | "Currently supports English only" |
+| RTR-010 | "Just do it" / "Skip" | bypass_confirmation | 100% | Set experienced_user flag |
+
+### Test Case Group 9: State Recovery Edge Cases
+
+Based on [workflow resumability patterns](https://aws.amazon.com/blogs/compute/resume-aws-step-functions-from-any-state/):
+
+| Test ID | Scenario | Expected Behavior |
+|---------|----------|-------------------|
+| STA-001 | User closes mid-analysis | Save checkpoint, offer to resume |
+| STA-002 | Error during JD parsing | Retry 3x, then save partial state |
+| STA-003 | User says "undo" after position add | Restore previous checkpoint |
+| STA-004 | User says "start over" | Clear v2.0 data, confirm before proceeding |
+| STA-005 | Corrupted job_history_v2.0.json | Validate on load, offer repair or reset |
+| STA-006 | Schema version mismatch | Attempt migration, or prompt user |
+| STA-007 | Partial JD cache (incomplete parse) | Re-parse or remove partial entry |
+
+---
+
+## PART 5: Additional Test Cases for Multi-Track
+
+### Test Case Group 10: Track Management Edge Cases
+
+| Test ID | Scenario | Expected Behavior |
+|---------|----------|-------------------|
+| TRK-001 | User creates track with 0 positions | Warn: "A track needs at least 1 position" |
+| TRK-002 | User assigns position to multiple tracks | Allowed (tracks share positions) |
+| TRK-003 | User deletes position that's in a track | Remove from track, warn user |
+| TRK-004 | User deletes last position in track | Delete empty track automatically |
+| TRK-005 | Track name collision ("PM" and "pm") | Normalize to lowercase, warn if collision |
+| TRK-006 | User has 5+ tracks | Paginate track selection UI |
+| TRK-007 | JD matches multiple tracks equally | Ask user to choose, don't auto-select |
+| TRK-008 | User switches track mid-comparison | Restart evidence matching with new track |
+
+---
+
+## PART 6: Additional Test Cases for Summary Generator
+
+### Test Case Group 11: Summary Edge Cases
+
+| Test ID | Scenario | Expected Behavior |
+|---------|----------|-------------------|
+| SUM-001 | Master summary exceeds 350 chars | Truncate intelligently (complete sentences) |
+| SUM-002 | No notable companies in history | Omit "company name-dropping" requirement |
+| SUM-003 | Only 1 position in history | Adjust summary to avoid "X years across Y companies" |
+| SUM-004 | All positions are contract | Note contract experience appropriately |
+| SUM-005 | Career change (unrelated positions) | Focus on transferable skills |
+| SUM-006 | Per-JD summary has no keyword overlap | Flag low keyword density, suggest alternatives |
+| SUM-007 | JD in different industry than history | Emphasize transferable skills, domain-agnostic achievements |
+| SUM-008 | Aggregate metrics conflict (overlapping dates) | Use conservative estimate, don't double-count |
+
+---
+
+## PART 7: Validation Rules (PROJECT-INSTRUCTIONS.md Integration)
+
+These validation rules should be added to PROJECT-INSTRUCTIONS.md to ensure data integrity:
+
+### Schema Validation Rules
+
+```markdown
+## v6.0 Schema Validation Rules
+
+### Job History v2.0 Validation
+1. **Required fields:** schema_version, positions (array with at least 1 entry)
+2. **Position required fields:** job_title, company, start_date
+3. **Date format:** YYYY-MM (e.g., "2021-06")
+4. **Skills arrays:** Each skill object must have `skill` field (string)
+5. **Proficiency values:** "beginner" | "intermediate" | "advanced" | "expert"
+6. **Position indices:** Must be sequential starting from 1
+
+### JD Parsed Schema Validation
+1. **Required fields:** jd_id, parsed_date, company
+2. **Skills arrays:** Cannot be empty if JD mentions any skills
+3. **Priority values:** "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
+4. **Location fallback:** If missing, prompt user before proceeding
+
+### Evidence Match Validation
+1. **Status values:** "MATCHED" | "PARTIAL" | "INFERRED" | "MISSING"
+2. **Confidence range:** 0.0 to 1.0
+3. **Citations:** Must reference valid position_index
+4. **Score calculation:** (MATCHED * 1.0 + PARTIAL * 0.5 + INFERRED * 0.3) / total_requirements
+```
+
+---
+
+## PART 8: Error Messages & Recovery
+
+### Standardized Error Messages
+
+| Error Code | Message | User Action |
+|------------|---------|-------------|
+| E001 | "Could not parse this document. Please paste the text directly." | Fallback for PDF failures |
+| E002 | "This JD seems incomplete. Missing: [fields]. Proceed anyway?" | Warn about missing JD fields |
+| E003 | "Low match score (X%). This role may not be a good fit." | Gate 2 blocking message |
+| E004 | "You're missing more required skills than you have. Address gaps first." | Gate 1 blocking message |
+| E005 | "Your job history file appears corrupted. Restore from backup?" | Schema validation failure |
+| E006 | "I couldn't determine your intent. Are you sharing a resume, JD, or bullets?" | Ambiguous input |
+| E007 | "This track has no positions. Delete it or add positions first." | Empty track warning |
+| E008 | "A skill couldn't be categorized with high confidence: [skill]. Classify as hard or soft?" | Ambiguous skill prompt |
+
+---
+
+## PART 9: Performance Benchmarks
+
+Based on [Textkernel parser documentation](https://developer.textkernel.com/Parser/master/) patterns:
+
+| Operation | Target | Threshold | Action if Exceeded |
+|-----------|--------|-----------|-------------------|
+| JD parsing (17-point) | < 2 seconds | 5 seconds | Cache result, warn user |
+| Evidence matching (10 positions) | < 5 seconds | 10 seconds | Index skills, show progress |
+| Summary generation (master) | < 3 seconds | 8 seconds | Stream output |
+| Summary generation (per-JD) | < 5 seconds | 12 seconds | Stream output |
+| Full workflow (Phase 1 → Phase 3) | < 30 seconds | 60 seconds | Show progress indicators |
+
+---
+
+## Summary
+
+### New Test Cases Added: 95+
+
+- JD Parser: 22 test cases (missing fields, location, salary)
+- Skills Categorizer: 25 test cases (ambiguous skills, multi-meaning)
+- Evidence Matcher: 16 test cases (citations, confidence)
+- Router: 17 test cases (intent, state recovery)
+- Multi-Track: 8 test cases (track management)
+- Summary Generator: 8 test cases (edge cases)
+
+### Key Findings
+
+1. **Ambiguous skills require confidence scoring** - Many skills (Agile, Communication, Project Management) have valid hard and soft interpretations depending on context
+2. **Location parsing is complex** - "Remote" has many variations (US only, fake-remote, hybrid-eligible)
+3. **State recovery is essential** - Users expect to resume after errors or interruptions
+4. **Empty/missing fields need graceful handling** - Not all JDs have all 17 points; system must degrade gracefully
+5. **Multi-track adds complexity** - Track management has edge cases around deletion, collision, and selection
+
+### Sources
+
+- [Jobscan ATS Checker](https://www.jobscan.co/)
+- [RChilli JD Parser Documentation](https://docs.rchilli.com/kc/c_RChilli_JD_parser)
+- [Affinda Job Description Parser](https://www.affinda.com/job-description-parser)
+- [Indeed Hard vs Soft Skills](https://www.indeed.com/career-advice/resumes-cover-letters/hard-skills-vs-soft-skills)
+- [ResumeGenius Skills Guide](https://resumegenius.com/blog/resume-help/hard-skills-vs-soft-skills)
+- [AWS Step Functions Error Handling](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html)
+- [Textkernel Parser Documentation](https://developer.textkernel.com/Parser/master/)
