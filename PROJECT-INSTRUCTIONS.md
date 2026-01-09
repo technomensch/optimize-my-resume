@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v6.5.1
+# Optimize-My-Resume System v6.5.3
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.1 (January 2026)                                              --> <!-- v6.5.1 Release: Header Fixes, Validation Logic, Display Rendering Updates -->
-<!-- Last Updated: January 7, 2026                                              -->
+<!-- Version: 6.5.3 (January 8, 2026)                                           --> <!-- v6.5.3 Release: Per-Bullet Repairs, JSON Truncation Fix, Testing Suite -->
+<!-- Last Updated: January 8, 2026                                              -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
@@ -622,6 +622,18 @@
     </phase_1_analysis_report_output>
 
     - Generate job history in v2.0 format (see job_history_creation below)
+    
+    <known_issues> <!-- v6.5.3 Addition: Issue #7 -->
+      <issue id="json_truncation">
+        <symptom>Analysis fails for resumes with 3+ positions (JSON syntax error).</symptom>
+        <cause>API response size limit exceeded (~18k chars).</cause>
+        <workaround>
+          1. Use Haiku model (more efficient output).
+          2. Reduce max_tokens to prevent timeout (counter-intuitive but sometimes helps) OR increase if using model with larger context window.
+          3. Analyze resumes in parts (positions 1-2, then 3-4).
+        </workaround>
+      </issue>
+    </known_issues>
   </behavior>
 
   <job_history_creation>
@@ -2448,12 +2460,13 @@
   <priority>CRITICAL</priority>
   <applies_to>Phase 1 Resume Analysis Report</applies_to>
 
-  <repairs_needed_generation_rules> <!-- v6.5.1 Change: Added explicit repairs generation rules -->
+  <repairs_needed_generation_rules> <!-- v6.5.3 Change: Removed verbose suggestions -->
     <priority>HIGH</priority>
     
     <purpose>
-      The repairsNeeded array contains specific, actionable repair suggestions identified 
-      during resume analysis. These are surfaced in the Prioritized Repairs Summary section.
+      The repairsNeeded array contains BRIEF issue descriptors identified during analysis.
+      These are surfaced in the Prioritized Repairs Summary for quick scanning.
+      Detailed repair suggestions are now located in the per-bullet recommendation field.
     </purpose>
     
     <severity_definitions>
@@ -2476,8 +2489,8 @@
         "severity": "risk|tweak|blocker",
         "position": "Position 1: Job Title",
         "bulletNumber": 1,
-        "issue": "Clear description of what's wrong",
-        "suggestion": "Specific, actionable fix with example"
+        "issue": "Brief 1-sentence description (max 50 chars)"
+        <!-- NOTE: No suggestion field here. Detailed fixes go in bullet.recommendation -->
       }
     </array_structure>
   </repairs_needed_generation_rules>
@@ -2559,6 +2572,10 @@
     <description>
       If any check fails, add a recommendation block below the table.
     </description>
+    <rule>
+      Use the `bullet.recommendation` field for the consolidated, detailed suggestion.
+      Keep it actionable and concise (max 100 chars).
+    </rule>
     <format>
       Use a blockquote (>) to distinctively set off recommendations.
       Prefix with [⚠️ RISK] or [🔧 TWEAK].

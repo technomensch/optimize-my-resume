@@ -64,15 +64,17 @@
           1. Display position header.
           2. For each bullet:
              a. Display the bullet (with metric indicator and colored verb per v6.5.0).
-             b. **Display the new per-bullet audit table directly below it (per per_bullet_audit_rules).**
-             c. **If needed, display the per-bullet recommendations box (per per_bullet_audit_rules).**
+             b. **Display "RECOMMENDATION" box if improvements needed (single consolidated suggestion).**
+             c. **Display the new per-bullet audit table directly below it (per per_bullet_audit_rules).**
           3. Display position summary statistics.
           4. Visual separator between positions.
         </section>
 
         <section id="5" name="Prioritized Repairs Summary">
             <reference>Implement per prioritized_repairs_summary_rules</reference>
-            - Display detailed list of all RISKS and TWEAKS with actionable suggestions.
+            - Display brief list of RISKS and TWEAKS (Issue description ONLY).
+            - Do NOT display detailed suggestions here (moved to per-bullet review).
+            - Include jump links to specific positions [P1-B1].
         </section>
         
         <section id="6" name="Overall Statistics">
@@ -81,12 +83,13 @@
       </report_structure>
     </phase_1_analysis_report_output>
 
-    <repairs_needed_generation_rules> <!-- v6.5.1 Change: Added explicit repairs generation rules -->
+    <repairs_needed_generation_rules> <!-- v6.5.3 Change: Removed verbose suggestions -->
       <priority>HIGH</priority>
       
       <purpose>
-        The repairsNeeded array contains specific, actionable repair suggestions identified 
-        during resume analysis. These are surfaced in the Prioritized Repairs Summary section.
+        The repairsNeeded array contains BRIEF issue descriptors identified during analysis.
+        These are surfaced in the Prioritized Repairs Summary for quick scanning.
+        Detailed repair suggestions are now located in the per-bullet recommendation field.
       </purpose>
       
       <severity_definitions>
@@ -109,8 +112,8 @@
           "severity": "risk|tweak|blocker",
           "position": "Position 1: Job Title",
           "bulletNumber": 1,
-          "issue": "Clear description of what's wrong",
-          "suggestion": "Specific, actionable fix with example"
+          "issue": "Brief 1-sentence description (max 50 chars)"
+          <!-- NOTE: No suggestion field here. Detailed fixes go in bullet.recommendation -->
         }
       </array_structure>
     </repairs_needed_generation_rules>
@@ -1272,13 +1275,12 @@
     <structure>
       - Issues will be grouped by severity ([⚠️ RISK] then [🔧 TWEAK]).
       - Each issue will reference its location (e.g., "[P1-B4]").
-      - Each issue will provide a concise description and an actionable fix suggestion.
+      - Each issue will provide a concise description ONLY.
     </structure>
     <example>
       [⚠️ RISK] - 4 issues (Significant Impact - Lowers Score)
       ───────────────────────────────────────────────────────────────────────────────
       1. [P1-B4] Missing metrics - add quantified achievements
-         → Add: "Created 25+ technical documents, reducing onboarding time by 30%"
     </example>
   </final_summary_section>
 </prioritized_repairs_summary_rules>
