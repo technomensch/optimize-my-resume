@@ -1,10 +1,19 @@
+<<<<<<< HEAD
 # Optimize-My-Resume System v6.5.3
+=======
+# Optimize-My-Resume System v6.5.1
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.3 (January 9, 2026)                                           --> <!-- v6.5.3: Per-Bullet Repairs, JSON Truncation Fix, Metric Refinement -->
-<!-- Last Updated: January 9, 2026                                              -->
+<<<<<<< HEAD
+<!-- Version: 6.5.3 (January 8, 2026)                                           --> <!-- v6.5.3 Release: Per-Bullet Repairs, JSON Truncation Fix, Testing Suite -->
+<!-- Last Updated: January 8, 2026                                              -->
+=======
+<!-- Version: 6.5.1 (January 2026)                                              --> <!-- v6.5.1: Analyzer Report Bugfixes & Standardization (#5, #6, #7, #8, #9, #10, #11) -->
+<!-- Last Updated: January 7, 2026                                              -->
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
@@ -2028,27 +2037,49 @@
   </grouping_logic>
   
   <bullet_display_within_position>
+<<<<<<< HEAD
     <instruction>
-      Display the verb category in brackets before the bullet text.
-      - Format: [Category] Verb reminder
-      - Example: [Built] Built system...
+      Display each bullet cleanly. 
+      - Do NOT put brackets [ ] around the verb.
       - Do NOT put the color name (Green) in text.
+      - Do NOT try to force font colors if the environment does not support it.
     </instruction>
 
     <format>
-      [METRIC_INDICATOR] [[Category]] [Verb] [remainder of bullet text]
+      [METRIC_INDICATOR] [Verb] [remainder of bullet text]
     </format>
 
     <key>
-      - METRIC_INDICATOR: ✓ [Has Metrics] (if metrics present) or - [No Metrics] (if no metrics)
-      - [Category]: The action verb category (e.g., [Built], [Lead], [Managed], [Improved], [Collaborate])
-      - [Verb]: The action verb itself (Capitalized, no brackets)
+      - METRIC_INDICATOR: ✓ (if metrics present) or - (if no metrics)
+      - [Verb]: The action verb (Capitalized, no brackets)
     </key>
 
     <example>
-      ✓ [Has Metrics] [Built] Built a real-time analytics dashboard using React
-      - [No Metrics] [Managed] Managed daily standups for the engineering team
+      ✓ Built a real-time analytics dashboard using React
+      - Managed daily standups for the engineering team
     </example>
+=======
+        <instruction>
+          Display the verb category in brackets before the bullet text.
+          - Format: [Category] Verb reminder
+          - Example: [Built] Built system...
+        </instruction>
+                     
+        <format>
+          [METRIC_INDICATOR] [[Category]] [Verb] [remainder of bullet text]
+        </format>
+                     
+        <key>
+          - METRIC_INDICATOR: ✓ [Has Metrics] (if metrics present) or - [No Metrics] (if no metrics)
+          - [Category]: The action verb category in brackets (e.g., [Built], [Lead], [Managed], [Improved], [Collaborate])
+          - [Verb]: The action verb itself (Capitalized, no brackets)
+        </key>
+                     
+        <example>
+          ✓ [Has Metrics] [Built] Built a real-time analytics dashboard using React
+          - [No Metrics] [Managed] Managed daily standups for the engineering team
+        </example>
+>>>>>>> v6.5.1-analyzer-report-bugfixes
   </bullet_display_within_position>
   
   <position_summary>
@@ -2587,6 +2618,7 @@
     </row>
     
     <row id="2" name="Action Verb">
+<<<<<<< HEAD
       <check>Verb</check>
       <logic>
         - ✅ Passed: Strong verb found.
@@ -2594,9 +2626,22 @@
         - ⚠️ Redundant: Verb category repeated.
       </logic>
       <output>
-        - On Passed: Show category + verb (e.g., "[Built]: Architected").
+        - On Passed: Show category + verb (e.g., "🔵 Built: Architected").
         - On Weak/Redundant: Suggest stronger alternatives <br> (e.g., "Try: Engineered or Developed").
       </output>
+=======
+      <column_1>Action Verb</column_1>
+      <column_2>
+        - "Passed": If verb is strong and not redundant.
+        - "Weak": If verb is passive (e.g., "Worked on").
+        - "Redundant": If the same verb category is used in a nearby bullet.
+      </column_2>
+      <column_3>
+        - On "Passed": Show the verb category and the verb itself (e.g., "[Built] Architected").
+        - On "Weak": Explain why it's weak and suggest alternatives.
+        - On "Redundant": Note the redundancy and suggest alternatives.
+      </column_3>
+>>>>>>> v6.5.1-analyzer-report-bugfixes
     </row>
     
     <row id="3" name="Char Count">

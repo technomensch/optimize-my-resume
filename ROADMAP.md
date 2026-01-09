@@ -1,6 +1,10 @@
 # Optimize My Resume - Roadmap
 
+<<<<<<< HEAD
 ## Current Version: v6.5.3 <!-- v6.5.3 Change -->
+=======
+## Current Version: v6.5.1 (January 2026)
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 ## In Development: v7.0.0 <!-- v6.3.1 Change -->
 
 ---
@@ -33,22 +37,30 @@
 
 ---
 
----
+## v6.5.1 - Analyzer Output Overhaul (COMPLETE) <!-- v6.5.1 Change -->
 
-## v6.5.1 - Analyzer Output Overhaul & Bugfixes (COMPLETE) <!-- v6.5.1 Change -->
+**Branch:** `v6.5.1` | **Status:** Complete | **Date:** 2026-01-08
 
-**Branch:** `v6.5.1` | `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-08
-
-**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic combined with surgical bugfixes for display stability and standardization.
+**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic to address display instability and improve repair generation.
 
 ### Key Features
 - [x] **Verb Distribution Flagging:** Flag categories with < 5% representation as TWEAK (#14).
 - [x] **Position Header Overhaul:** Expanded 4-field metadata format for inferred roles (#15).
-- [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array (#16).
-- [x] **Metric Indicator Refinement**: Explicit labels: `✓ [Has Metrics]` and `- [No Metrics]`.
+- [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array with actionable fixes (#16).
+- [x] **Resilience Improvements:** Increased token limits and enhanced JSON error handling for large resumes (#17).
+=======
+## v6.5.1 - Analyzer Report Bugfixes & Standardization (COMPLETE)
+
+**Branch:** `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-07
+
+**Implementation Approach:** Surgical updates to standardizing Phase 2 labels and fixing Phase 1 display layer.
+
+### Key Features
+- [x] **Phase 2 Standardization**: Official categories: `Built, Lead, Managed, Improved, Collaborate`.
 - [x] **Phase 1 Display Fix**: Explicit Markdown rendering for Job History Summaries.
 - [x] **Robust Job History Rules**: Multi-format download support and strict naming conventions.
 - [x] **Acronym & Display Guardrails**: Mandatory expansion rules and clean verb formatting.
+>>>>>>> v6.5.1-analyzer-report-bugfixes
 
 ---
 
