@@ -11,7 +11,7 @@
 | Status | Count | Issues |
 |--------|-------|--------|
 | ✅ Resolved | 6 | #1, #2, #3, #4, #5, #6 |
-| 🔴 Active | 1 | #7 (JSON Truncation) |
+| 🔴 Active | 2 | #7 (JSON Truncation), #8 (GUI Docs) |
 | 📋 Enhancement | 1 | ENH-001 (Token Tracking) |
 | **Total** | **8** | |
 
@@ -207,6 +207,13 @@ Has error: false
 **Testing:**
 - ✅ Single position: Works perfectly
 - ❌ Three positions: Truncation at ~17.6K chars
+
+### Issue #8: Create Project-GUI-Instructions.md
+**Status:** 🔴 ACTIVE
+**Priority:** MEDIUM
+**GitHub ID:** #26
+**Description:** Separating GUI/Artifact instructions from main `PROJECT-INSTRUCTIONS.md` to improve maintainability and separation of concerns.
+**Files:** `Project-GUI-Instructions.md`
 
 ---
 
