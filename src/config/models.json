@@ -1,0 +1,53 @@
+{
+  "ollama": [
+    {
+      "id": "llama3.1:8b",
+      "name": "🦙 Llama 3.1",
+      "desc": "Recommended - Great balance of speed and quality",
+      "recommended": true
+    },
+    {
+      "id": "mistral",
+      "name": "⚡ Mistral",
+      "desc": "Fast - Quick analysis for shorter resumes"
+    },
+    {
+      "id": "gemma2:9b",
+      "name": "📊 Gemma 2",
+      "desc": "Analytical - Detailed technical analysis"
+    },
+    {
+      "id": "qwen2.5:7b",
+      "name": "✨ Qwen 2.5",
+      "desc": "Creative - Best for bullet rewrites"
+    },
+    {
+      "id": "phi3",
+      "name": "🎯 Phi-3",
+      "desc": "Precise - Accurate technical details"
+    }
+  ],
+  "claude": [
+    {
+      "id": "claude-haiku-4-20250514",
+      "name": "⚡ Haiku",
+      "desc": "Fast, fewest tokens (short resumes)",
+      "tier": "free",
+      "tokenUsage": "low"
+    },
+    {
+      "id": "claude-sonnet-4-20250514",
+      "name": "🎯 Sonnet",
+      "desc": "Balanced, moderate tokens (recommended)",
+      "tier": "free",
+      "tokenUsage": "moderate"
+    },
+    {
+      "id": "claude-opus-4-20250514",
+      "name": "⭐ Opus",
+      "desc": "Most capable, most tokens (complex resumes, Pro only)",
+      "tier": "pro",
+      "tokenUsage": "high"
+    }
+  ]
+}
