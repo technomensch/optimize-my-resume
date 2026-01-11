@@ -277,21 +277,23 @@ Build output goes to `dist/` folder.
 optimize-my-resume/
 ├── src/
 │   ├── components/
-│   │   └── ResumeAnalyzer.jsx      # Main UI component
+│   │   └── ResumeAnalyzer-local.jsx      # Main UI component (Ollama)
 │   ├── services/
-│   │   └── ollamaService.js        # Ollama API client
+│   │   └── ollamaService.js              # Ollama API client
 │   ├── config/
-│   │   └── models.json             # Model configuration
-│   ├── App.jsx                     # App shell
-│   ├── main.jsx                    # React entry point
-│   └── index.css                   # Tailwind imports
-├── public/                         # Static assets
-├── index.html                      # HTML template
-├── vite.config.js                  # Vite configuration
-├── tailwind.config.js              # Tailwind configuration
-├── package.json                    # Dependencies & scripts
-└── README-LOCAL-DEV.md             # This file
+│   │   └── models.json                   # Model configuration
+│   ├── App.jsx                           # App shell
+│   ├── main.jsx                          # React entry point
+│   └── index.css                         # Tailwind CSS (v4 syntax)
+├── public/                               # Static assets
+├── index.html                            # HTML template
+├── vite.config.js                        # Vite configuration
+├── postcss.config.js                     # PostCSS config (Tailwind v4)
+├── package.json                          # Dependencies & scripts
+└── README-LOCAL-DEV.md                   # This file
 ```
+
+> **Note**: Tailwind v4 uses CSS-based configuration (no `tailwind.config.js` needed). See README-LOCAL-DEV.md for details.
 
 ## Next Steps
 

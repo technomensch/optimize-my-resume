@@ -18,7 +18,7 @@
 - [x] **React + Vite Application** - Modern frontend with fast dev server (HMR) and production build <!-- v7.0.0 Addition -->
 - [x] **Ollama Service Integration** - Service layer for local LLM integration (`src/services/ollamaService.js`) <!-- v7.0.0 Addition -->
 - [x] **Configuration-Driven Models** - Easy model management via JSON (`src/config/models.json`) <!-- v7.0.0 Addition -->
-- [x] **ResumeAnalyzer Component** - Full-featured analyzer adapted from Phase1ResumeAnalyzer.jsx <!-- v7.0.0 Addition -->
+- [x] **ResumeAnalyzer Component** - Full-featured analyzer adapted from Phase1ResumeAnalyzer.jsx (renamed to ResumeAnalyzer-local.jsx in v7.0.1) <!-- v7.0.0 Addition -->
 - [x] **5 Pre-Configured Models** - Llama 3.1, Mistral, Gemma 2, Qwen 2.5, Phi-3 <!-- v7.0.0 Addition -->
 - [x] **Automated Setup Script** - quick-start.sh with prerequisite checking and guided setup <!-- v7.0.0 Addition -->
 - [x] **Comprehensive Documentation** - 6 guides (9,000+ lines): GET-STARTED, README-LOCAL-DEV, SETUP-GUIDE, MODEL-CONFIGURATION-GUIDE, SETUP-SUMMARY, STATUS <!-- v7.0.0 Addition -->

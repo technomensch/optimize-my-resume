@@ -1,11 +1,35 @@
 # Local Development Environment - Ollama Integration
 
-This branch (`7.0.0-create-local-dev-test-environment`) contains the local development setup for Optimize My Resume using Ollama AI models.
+This document describes the local development setup for Optimize My Resume using Ollama AI models.
+
+> **Latest Version**: v7.0.1
+> **Branch**: `main` (merged from v7.0.1-analyzer-gui-fixes)
+> **Last Updated**: January 2026
 
 ## Overview
 
 - **Production**: Uses Claude API (artifact in Claude.ai) - requires tokens, cloud-based
 - **Local Dev**: Uses Ollama (this setup) - free, unlimited, runs on your machine
+
+## Recent Updates (v7.0.1)
+
+The v7.0.1 release includes important fixes and improvements:
+
+### Tailwind CSS v4 Migration
+- **What Changed**: Migrated from Tailwind v3 to v4 syntax
+- **Impact**: Removed `tailwind.config.js`, updated `src/index.css` to use `@import "tailwindcss"`
+- **Why It Matters**: v4 uses CSS-based configuration instead of JS config files
+- **More Info**: [Tailwind v4 Styling Fix Lessons Learned](docs/lessons-learned/debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+
+### Ollama Model Tag Matching
+- **What Changed**: Added tag normalization to handle `:latest` suffix behavior
+- **Impact**: Models now correctly appear in dropdown even when config uses short names (e.g., `"mistral"` matches API's `"mistral:latest"`)
+- **Why It Matters**: Prevents "install model" prompts for already-installed models
+- **More Info**: [Ollama Model Tag Matching Lessons Learned](docs/lessons-learned/debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md)
+
+### Component Rename
+- **What Changed**: `ResumeAnalyzer.jsx` → `ResumeAnalyzer-local.jsx`
+- **Why**: Distinguishes local Ollama implementation from production Claude artifact version
 
 ## Prerequisites
 
@@ -19,11 +43,13 @@ This branch (`7.0.0-create-local-dev-test-environment`) contains the local devel
    ollama pull llama3.1:8b
 
    # Optional - other models
-   ollama pull mistral
+   ollama pull mistral      # Note: Ollama stores as mistral:latest
    ollama pull gemma2:9b
    ollama pull qwen2.5:7b
-   ollama pull phi3
+   ollama pull phi3         # Note: Ollama stores as phi3:latest
    ```
+
+> **Note on Model Tags**: When you pull a model without specifying a tag (e.g., `ollama pull mistral`), Ollama automatically appends `:latest`. The app handles this automatically - you don't need to worry about tag matching. See [Ollama Tag Matching Guide](docs/lessons-learned/debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md) for details.
 
 ## Quick Start
 
@@ -51,21 +77,34 @@ The app will open at [http://localhost:3000](http://localhost:3000)
 optimize-my-resume/
 ├── src/
 │   ├── components/
-│   │   └── ResumeAnalyzer.jsx       # Main UI component (Ollama version)
+│   │   └── ResumeAnalyzer-local.jsx  # Main UI component (Ollama version)
 │   ├── services/
-│   │   └── ollamaService.js         # Ollama API integration
+│   │   └── ollamaService.js          # Ollama API integration
 │   ├── config/
-│   │   └── models.json              # ⭐ Model configuration (EDIT THIS!)
-│   ├── App.jsx                      # App shell with Ollama status
-│   ├── main.jsx                     # React entry point
-│   └── index.css                    # Tailwind CSS
-├── docs/plans/hand-offs/v6.5.4-hand_off/completed artifacts/
-│   └── Phase1ResumeAnalyzer.jsx     # Original Claude version (for reference)
-├── index.html                       # HTML entry point
-├── vite.config.js                   # Vite configuration
-├── tailwind.config.js               # Tailwind configuration
-└── package.json                     # Dependencies and scripts
+│   │   └── models.json               # ⭐ Model configuration (EDIT THIS!)
+│   ├── App.jsx                       # App shell with Ollama status
+│   ├── main.jsx                      # React entry point
+│   └── index.css                     # Tailwind CSS (v4 syntax)
+├── docs/
+│   ├── plans/
+│   │   └── v7.0.1-analyzer-gui-fixes.md
+│   └── lessons-learned/
+│       └── debugging/
+│           ├── Lessons_Learned_Tailwind_v4_Styling_Fix.md
+│           └── Lessons_Learned_Ollama_Model_Tag_Matching.md
+├── index.html                        # HTML entry point
+├── vite.config.js                    # Vite configuration
+├── postcss.config.js                 # PostCSS configuration (Tailwind v4)
+└── package.json                      # Dependencies and scripts
 ```
+
+**Key Configuration Files:**
+- **`src/index.css`**: Uses Tailwind v4 `@import "tailwindcss"` syntax (not `@tailwind` directives)
+- **`postcss.config.js`**: PostCSS configuration with `@tailwindcss/postcss` plugin
+- **`src/config/models.json`**: Model definitions for dropdown
+- **No `tailwind.config.js`**: Tailwind v4 uses CSS-based configuration
+
+> **Important**: If you're upgrading from v7.0.0 or migrating from Tailwind v3, see the [Tailwind v4 Migration Guide](docs/lessons-learned/debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md).
 
 ## Customizing Models
 
@@ -96,6 +135,11 @@ Open `src/config/models.json` and modify the `ollama` array:
 1. Install it: `ollama pull model-name`
 2. Add to `models.json`
 3. Restart dev server
+
+**Model Name Matching:**
+- You can use short names (`"mistral"`) or tagged names (`"mistral:latest"`)
+- The app automatically handles tag normalization
+- If a model shows "click to install" but it's already installed, see [Troubleshooting](#model-not-appearing-in-dropdown)
 
 **To change order:**
 - Just reorder the array in `models.json`
@@ -194,27 +238,82 @@ lsof -ti:3000 | xargs kill -9
 | **qwen2.5:7b** | ⭐⭐⭐ | ⭐⭐⭐⭐ | 8GB | Creative bullet rewrites |
 | **phi3** | ⭐⭐⭐⭐ | ⭐⭐⭐ | 4GB | Low RAM systems |
 
+### Model Not Appearing in Dropdown
+
+**Symptom:** Model installed (shows in `ollama list`) but doesn't appear in UI dropdown
+
+**Cause:** Tag mismatch between config and API response
+
+**Solution:**
+1. Check installed models: `ollama list`
+   - Example output: `mistral:latest`
+2. Check your `src/config/models.json`:
+   - If it says `"id": "mistral"`, this should work automatically
+   - If it says `"id": "mistral:7b"` but Ollama has `mistral:latest`, they won't match
+3. Update config to match: Use the exact tag from `ollama list` OR use the short name (without tag)
+
+**Best Practice:** Use short names in config (`"mistral"`, `"phi3"`) and let Ollama add the tag
+
+**More Info:** [Ollama Model Tag Matching Lessons Learned](docs/lessons-learned/debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md)
+
+### Tailwind Styles Not Rendering
+
+**Symptom:** White background, no styling, broken UI
+
+**Cause:** Tailwind v4 requires different CSS syntax than v3
+
+**Solution:**
+1. Check `src/index.css` - should use:
+   ```css
+   @import "tailwindcss";
+
+   @layer base {
+     /* your styles */
+   }
+   ```
+
+   NOT:
+   ```css
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   ```
+
+2. Verify `postcss.config.js` includes `@tailwindcss/postcss` plugin
+
+3. Ensure `tailwind.config.js` is deleted (conflicts with v4)
+
+4. Hard refresh browser (Cmd+Shift+R / Ctrl+Shift+R)
+
+5. Restart dev server: `npm run dev`
+
+**More Info:** [Tailwind v4 Styling Fix Lessons Learned](docs/lessons-learned/debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+
 ## Development vs Production
 
-### Local Dev (This Branch)
+### Local Dev (This Setup)
 - Uses Ollama models
 - Free and unlimited
 - Runs on your machine
 - Best for development and testing
+- Component: `src/components/ResumeAnalyzer-local.jsx`
 
 ### Production (Claude Artifact)
 - Uses Claude API (Haiku/Sonnet/Opus)
 - Cloud-based
 - Token limits apply
 - Best for end users
+- Component: Archive reference versions in `docs/plans/`
 
 ### Switching Between Environments
 
 **To test Claude integration locally:**
-1. Checkout main branch
-2. Copy `docs/plans/.../Phase1ResumeAnalyzer.jsx` to `src/components/`
+1. Checkout a feature branch
+2. Create separate component for Claude integration
 3. Create `.env` with Claude API key
 4. Modify to use Claude API instead of Ollama
+
+> **Note**: The local and production versions use different components to avoid conflicts. `ResumeAnalyzer-local.jsx` is specifically for Ollama integration.
 
 ## Scripts
 
@@ -233,9 +332,11 @@ npm run preview
 
 ### Ollama API (http://localhost:11434)
 
-- `GET /api/tags` - List installed models
+- `GET /api/tags` - List installed models (returns full tags like `mistral:latest`)
 - `POST /api/generate` - Generate completion
 - `POST /api/chat` - Chat completion
+
+> **Note**: The `/api/tags` endpoint returns model names with tags (e.g., `mistral:latest`), while you typically pull models with short names (`mistral`). The app normalizes these automatically.
 
 ## Next Steps
 
@@ -249,24 +350,75 @@ Future enhancements for this local dev environment:
 4. **Resume History** - Save and compare analyses
 5. **Export Options** - PDF, DOCX, JSON formats
 
+## Known Issues & Solutions
+
+This section documents known issues and their solutions. For detailed implementation guides, see the [Lessons Learned documentation](docs/lessons-learned/README.md).
+
+### Tailwind v4 Migration Issues
+- **Issue**: Styles not rendering after upgrade to Tailwind v4
+- **Root Cause**: v3 `@tailwind` directives incompatible with v4
+- **Solution**: See [Tailwind v4 Styling Fix Guide](docs/lessons-learned/debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+- **Status**: ✅ Resolved in v7.0.1
+
+### Ollama Model Tag Matching
+- **Issue**: Installed models showing as "not available" in UI
+- **Root Cause**: Config uses short names, API returns tagged names
+- **Solution**: See [Ollama Tag Matching Guide](docs/lessons-learned/debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md)
+- **Status**: ✅ Resolved in v7.0.1
+
+### Browser Caching After Build Changes
+- **Issue**: CSS changes not appearing after Tailwind v4 migration
+- **Root Cause**: Browser caching PostCSS output
+- **Solution**: Hard refresh (Cmd+Shift+R on Mac, Ctrl+Shift+R on Windows/Linux) + restart dev server
+- **Prevention**: Always hard refresh after changing build configuration
+- **Status**: ⚠️ Known behavior (browser caching)
+
+### Model Auto-Selection Not Working
+- **Issue**: Recommended model not auto-selecting on first load
+- **Root Cause**: Tag mismatch between config and API response
+- **Solution**: Already handled by tag normalization in v7.0.1
+- **Status**: ✅ Resolved in v7.0.1
+
 ### Contributing
 
 To add features to this local dev environment:
 
-1. Create feature branch from `7.0.0-create-local-dev-test-environment`
+1. Create feature branch from `main`
 2. Make changes
 3. Test with multiple Ollama models
-4. Submit PR
+4. Ensure Tailwind v4 compatibility
+5. Submit PR
+
+**Before submitting:**
+- Test with hard browser refresh (Cmd+Shift+R)
+- Verify dev server restart works
+- Test with at least 2 different Ollama models
+- Check that tag matching works (test with both short and tagged model names)
 
 ## License
 
 Same as main project.
 
-## Support
+## Support & Documentation
 
+### Issue Reporting
 - **Ollama Issues**: https://github.com/ollama/ollama/issues
 - **Project Issues**: https://github.com/technomensch/optimize-my-resume/issues
 
+### Documentation
+- **This Guide**: README-LOCAL-DEV.md (local development)
+- **Setup Guide**: SETUP-GUIDE.md (installation)
+- **Lessons Learned**: docs/lessons-learned/README.md
+- **Implementation Plans**: docs/plans/v7.0.1-analyzer-gui-fixes.md
+
+### Recent Updates
+- **v7.0.1** (Jan 2026): Tailwind v4 migration, Ollama tag matching fixes
+- **v7.0.0** (Jan 2026): Initial local development environment
+
 ---
 
-**Note**: This is the local development version. For the production Claude-based artifact, see the main README and `docs/plans/hand-offs/v6.5.4-hand_off/`.
+**Current Version**: v7.0.1
+**Last Updated**: January 2026
+**Maintained By**: Project contributors
+
+**Note**: This is the local development version. For the production Claude-based artifact, see the main README and `docs/plans/` directory.

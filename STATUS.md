@@ -16,7 +16,7 @@
 ### Application Code
 - [x] Main entry point (src/main.jsx)
 - [x] App shell with Ollama status (src/App.jsx)
-- [x] ResumeAnalyzer component (src/components/ResumeAnalyzer.jsx)
+- [x] ResumeAnalyzer component (src/components/ResumeAnalyzer-local.jsx)
 - [x] Ollama service layer (src/services/ollamaService.js)
 - [x] Model configuration file (src/config/models.json)
 - [x] Tailwind CSS setup (src/index.css)
@@ -24,7 +24,7 @@
 
 ### Configuration
 - [x] Vite configuration (vite.config.js)
-- [x] Tailwind configuration (tailwind.config.js)
+- [x] Tailwind CSS setup (src/index.css, postcss.config.js) - Tailwind v4
 - [x] PostCSS configuration (postcss.config.js)
 - [x] Package.json scripts (dev, build, preview)
 
