@@ -180,11 +180,11 @@ See [SETUP-GUIDE.md](SETUP-GUIDE.md) for more troubleshooting.
 optimize-my-resume/
 ├── src/
 │   ├── components/
-│   │   └── ResumeAnalyzer.jsx      # Main UI
+│   │   └── ResumeAnalyzer-local.jsx      # Main UI (Ollama)
 │   ├── services/
-│   │   └── ollamaService.js        # Ollama API
+│   │   └── ollamaService.js              # Ollama API
 │   ├── config/
-│   │   └── models.json             # ⭐ Edit this!
+│   │   └── models.json                   # ⭐ Edit this!
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -198,7 +198,7 @@ optimize-my-resume/
 ├── quick-start.sh                   # Auto setup
 ├── package.json
 ├── vite.config.js
-└── tailwind.config.js
+└── postcss.config.js                # PostCSS (Tailwind v4)
 ```
 
 ## Development Workflow
