@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle, FileText, Download, ChevronDown, ChevronUp, Loader, Info, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { AlertCircle, CheckCircle, FileText, Download, ChevronDown, ChevronUp, Loader, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
 import OllamaService from '../services/ollamaService';
 import modelsConfig from '../config/models.json';
 
@@ -32,9 +32,16 @@ export default function ResumeAnalyzer() {
       setOllamaStatus('connected');
 
       // Auto-select recommended model if available
+      // Handle :latest tag matching
       const recommended = modelsConfig.ollama.find(m => m.recommended);
-      if (recommended && models.some(m => m.name === recommended.id)) {
-        setSelectedModel(recommended.id);
+      if (recommended) {
+        const isAvailable = models.some(m =>
+          m.name === recommended.id ||
+          (m.name === `${recommended.id}:latest` && !recommended.id.includes(':'))
+        );
+        if (isAvailable) {
+          setSelectedModel(recommended.id);
+        }
       }
     } else {
       setOllamaStatus('disconnected');
@@ -331,49 +338,67 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
   };
 
   // Filter models to only show ones that are actually installed
-  const displayModels = models.filter(model =>
-    availableModels.length === 0 || availableModels.includes(model.id)
-  );
+  // Handle Ollama's :latest tag - treat "model" and "model:latest" as the same
+  const displayModels = models.filter(model => {
+    if (availableModels.length === 0) return true;
+
+    // Check exact match first
+    if (availableModels.includes(model.id)) return true;
+
+    // If model.id doesn't have a tag, check if model:latest exists
+    if (!model.id.includes(':')) {
+      return availableModels.includes(`${model.id}:latest`);
+    }
+
+    return false;
+  });
 
   return (
-    <div className="min-h-screen bg-gray-950">
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* Compact Ollama Status */}
-        <div className={`flex items-center justify-between px-4 py-2 mb-6 rounded-lg ${
-          ollamaStatus === 'connected'
-            ? 'bg-green-900/20 border border-green-800/50'
-            : ollamaStatus === 'disconnected'
-            ? 'bg-red-900/20 border border-red-800/50'
-            : 'bg-blue-900/20 border border-blue-800/50'
-        }`}>
-          <div className="flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        {/* Session Warning Banner - adapted for Ollama */}
+        <div className="bg-amber-900/40 border border-amber-700 rounded-lg p-4 mb-8">
+          <p className="text-amber-100">
+            💾 <span className="font-semibold">Remember:</span> This tool only exists in your current Claude session. Your resume data is not saved anywhere. Download or save anything you want to keep before you close this chat!
+          </p>
+        </div>
+
+        {/* Ollama Status Display - matching Token Usage style from original */}
+        <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 mb-8">
+          <div className={`flex items-center justify-between ${
+            ollamaStatus === 'connected'
+              ? 'text-green-400'
+              : ollamaStatus === 'disconnected'
+              ? 'text-red-400'
+              : 'text-blue-400'
+          }`}>
             <div className="flex items-center gap-3">
               {ollamaStatus === 'connected' && (
                 <>
-                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  <CheckCircle className="w-5 h-5" />
                   <div>
-                    <p className="text-green-100 font-semibold">Local Ollama Connected</p>
-                    <p className="text-green-200 text-sm">
+                    <div className="text-white font-medium mb-1">Local Development Mode - Ollama</div>
+                    <div className="text-slate-400 text-sm">
                       {availableModels.length} model{availableModels.length !== 1 ? 's' : ''} available • Unlimited usage
-                    </p>
+                    </div>
                   </div>
                 </>
               )}
               {ollamaStatus === 'disconnected' && (
                 <>
-                  <AlertCircle className="w-5 h-5 text-red-400" />
+                  <AlertCircle className="w-5 h-5" />
                   <div>
-                    <p className="text-red-100 font-semibold">Ollama Not Running</p>
-                    <p className="text-red-200 text-sm">
+                    <div className="text-white font-medium mb-1">Ollama Not Running</div>
+                    <div className="text-slate-400 text-sm">
                       Start Ollama with: <code className="bg-slate-900/50 px-2 py-1 rounded">ollama serve</code>
-                    </p>
+                    </div>
                   </div>
                 </>
               )}
               {ollamaStatus === 'checking' && (
                 <>
-                  <Loader className="w-5 h-5 text-blue-400 animate-spin" />
-                  <p className="text-blue-100">Checking Ollama status...</p>
+                  <Loader className="w-5 h-5 animate-spin" />
+                  <div className="text-white font-medium">Checking Ollama status...</div>
                 </>
               )}
             </div>
@@ -387,39 +412,39 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
           </div>
         </div>
 
-        <div className="mb-10">
-          <h1 className="text-3xl font-bold text-white mb-2">Phase 1: Resume Analyzer</h1>
-          <p className="text-gray-400">Transform your resume into a comprehensive job history database</p>
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-white mb-2">Phase 1: Resume Analyzer</h1>
+          <p className="text-slate-300 text-lg">Transform your resume into a comprehensive job history database</p>
         </div>
 
         {!analyzed && (
-          <div className="bg-gray-900 rounded-xl border border-gray-800 p-8 mb-8 shadow-xl">
-            <h2 className="text-xl font-semibold text-white mb-6">Upload or Paste Your Resume</h2>
+          <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
+            <h2 className="text-2xl font-semibold text-white mb-6">Upload or Paste Your Resume</h2>
 
             <div className="mb-6">
-              <label className="flex items-center justify-center w-full px-6 py-8 bg-gray-850 border border-gray-700 rounded-lg cursor-pointer hover:bg-gray-800 hover:border-blue-500/50 transition-all">
+              <label className="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed border-slate-600 rounded-lg cursor-pointer hover:border-blue-500 transition">
                 <div className="flex flex-col items-center">
-                  <FileText className="w-10 h-10 text-gray-500 mb-3" />
-                  <span className="text-gray-300 font-medium">Click to upload</span>
-                  <span className="text-gray-500 text-sm mt-1">TXT file</span>
+                  <FileText className="w-8 h-8 text-slate-400 mb-2" />
+                  <span className="text-slate-300">Click to upload</span>
+                  <span className="text-slate-500 text-sm">TXT file</span>
                 </div>
                 <input type="file" className="hidden" onChange={handleFileUpload} accept=".txt,.text" />
               </label>
             </div>
 
             <div className="flex items-center mb-6">
-              <div className="flex-1 border-t border-gray-700"></div>
-              <span className="px-4 text-gray-500">or</span>
-              <div className="flex-1 border-t border-gray-700"></div>
+              <div className="flex-1 border-t border-slate-600"></div>
+              <span className="px-4 text-slate-400">or</span>
+              <div className="flex-1 border-t border-slate-600"></div>
             </div>
 
             <div className="mb-6">
-              <label className="block text-gray-300 font-medium mb-2">Paste Your Resume</label>
+              <label className="block text-white font-medium mb-2">Paste Your Resume</label>
               <textarea
                 value={resumeText}
                 onChange={(e) => setResumeText(e.target.value)}
                 placeholder="Paste your complete resume here..."
-                className="w-full h-56 px-4 py-3 bg-gray-850 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition-colors"
+                className="w-full h-48 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
               />
             </div>
 
@@ -443,7 +468,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                   setError('');
                 }}
                 disabled={ollamaStatus !== 'connected'}
-                className="w-full px-4 py-3 bg-gray-850 border border-gray-700 rounded-lg text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
               >
                 <option value="">Choose a model...</option>
                 {displayModels.map(model => (
@@ -460,18 +485,18 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
 
               {availableModels.length > 0 && displayModels.length < models.length && (
                 <details className="mt-3">
-                  <summary className="cursor-pointer p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-sm text-gray-400 hover:bg-gray-800 transition-colors">
+                  <summary className="cursor-pointer p-3 bg-slate-700/50 border border-slate-600 rounded-lg text-sm text-slate-400 hover:bg-slate-700 transition">
                     <span className="font-medium">ℹ️ {models.length - displayModels.length} additional model{models.length - displayModels.length !== 1 ? 's' : ''} available (click to install)</span>
                   </summary>
-                  <div className="mt-2 p-3 bg-gray-800/50 border border-gray-700 rounded-lg text-sm">
-                    <p className="text-gray-300 text-xs mb-2">
+                  <div className="mt-2 p-3 bg-slate-700/50 border border-slate-600 rounded-lg text-sm">
+                    <p className="text-slate-300 text-xs mb-2">
                       Install these models to expand your options:
                     </p>
                     <div className="space-y-1">
                       {models
                         .filter(m => !availableModels.includes(m.id))
                         .map(m => (
-                          <code key={m.id} className="block bg-gray-900/50 px-2 py-1 rounded text-blue-400 text-xs">
+                          <code key={m.id} className="block bg-slate-900/50 px-2 py-1 rounded text-blue-400 text-xs">
                             ollama pull {m.id}
                           </code>
                         ))
@@ -536,9 +561,9 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               disabled={loading || !selectedModel || ollamaStatus !== 'connected'}
               className={`w-full ${
                 !selectedModel || ollamaStatus !== 'connected'
-                  ? 'bg-gray-700 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20'
-              } disabled:bg-gray-700 text-white font-semibold py-4 rounded-lg transition-all flex items-center justify-center gap-2`}
+                  ? 'bg-slate-600 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              } disabled:bg-slate-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2`}
               title={
                 !selectedModel
                   ? 'Please select a model first'
@@ -551,13 +576,9 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               {loading ? 'Analyzing Resume...' : 'Analyze Resume'}
             </button>
 
-            {(!selectedModel || ollamaStatus !== 'connected') && (
-              <p className="text-gray-400 text-sm mt-3 text-center flex items-center justify-center gap-2">
-                ⚠️ {
-                  ollamaStatus !== 'connected'
-                    ? 'Start Ollama first'
-                    : 'Select a model above to enable analysis'
-                }
+            {!selectedModel && (
+              <p className="text-slate-400 text-sm mt-2 text-center">
+                ⚠️ Select a model above to enable analysis
               </p>
             )}
           </div>
@@ -639,8 +660,404 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               </div>
             </div>
 
-            {/* Note: Full position-by-position analysis would go here - using same structure as original */}
-            {/* For brevity, showing key parts */}
+            {/* Section 3: Overall Statistics */}
+            <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
+              <h2 className="text-2xl font-semibold text-white mb-6">Overall Statistics</h2>
+
+              <div className="grid grid-cols-2 gap-6 mb-8">
+                <div className="bg-slate-700 rounded-lg p-6">
+                  <h3 className="text-white font-semibold mb-3">Metrics Coverage</h3>
+                  <div className="text-4xl font-bold text-blue-400 mb-2">{metricsPercentage}%</div>
+                  <p className="text-slate-400 text-sm">{analysis.bulletsWithMetrics} of {analysis.totalBullets} bullets</p>
+                  <div className="mt-4 text-sm text-slate-300">
+                    Target: 70-80% of bullets should contain metrics
+                  </div>
+                </div>
+
+                <div className="bg-slate-700 rounded-lg p-6">
+                  <h3 className="text-white font-semibold mb-3">Resume Length</h3>
+                  <div className="text-4xl font-bold text-blue-400 mb-2">{analysis.totalWordCount}</div>
+                  <p className="text-slate-400 text-sm">words across all bullets</p>
+                  <div className="mt-4 text-sm text-slate-300">
+                    Target: 350-500 words for work experience
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-white font-semibold mb-4">Action Verb Distribution</h3>
+                <div className="space-y-3">
+                  {Object.entries(analysis.verbDistribution).map(([category, count]) => {
+                    const percentage = getVerbPercentage(count);
+                    const balanceStatus = getBalanceStatus(percentage);
+                    const IconComponent = balanceStatus.icon === 'CheckCircle' ? CheckCircle
+                                        : balanceStatus.icon === 'AlertTriangle' ? AlertTriangle
+                                        : XCircle;
+
+                    return (
+                      <div key={category} className={`p-3 rounded-lg border ${balanceStatus.bgColor} ${balanceStatus.borderColor}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <IconComponent className={`w-4 h-4 ${balanceStatus.color}`} />
+                            <span className="font-medium text-white">{category}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded ${balanceStatus.bgColor} ${balanceStatus.color} border ${balanceStatus.borderColor}`}>
+                              {balanceStatus.message}
+                            </span>
+                          </div>
+                          <span className="text-slate-300 text-sm">
+                            {count} bullet{count !== 1 ? 's' : ''}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1 bg-slate-700 rounded-full h-2">
+                            <div
+                              className={`h-full rounded-full ${getCategoryColor(category)}`}
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                          <span className={`text-sm font-medium ${balanceStatus.color}`}>
+                            {percentage}%
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-4 p-3 bg-slate-700/50 rounded-lg">
+                  <p className="text-slate-300 text-sm font-medium mb-2">Balance Guide:</p>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-3 h-3 text-green-400" />
+                      <span className="text-slate-400">13-27%: Well balanced</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="w-3 h-3 text-yellow-400" />
+                      <span className="text-slate-400">&lt;13%: Under-represented</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="w-3 h-3 text-red-400" />
+                      <span className="text-slate-400">&gt;27%: Over-represented</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <XCircle className="w-3 h-3 text-red-400" />
+                      <span className="text-slate-400">&lt;5%: Critical gap</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 4: Prioritized Repairs Summary */}
+            {analysis.repairsNeeded && analysis.repairsNeeded.length > 0 && (
+              <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
+                <h2 className="text-2xl font-semibold text-white mb-6">Prioritized Repairs Summary</h2>
+
+                {(() => {
+                  const grouped = groupRepairsBySeverity();
+
+                  return (
+                    <div className="space-y-6">
+                      {grouped.blocker.length > 0 && (
+                        <div>
+                          <h3 className="text-red-400 font-semibold mb-4">⛔ BLOCKERS - {grouped.blocker.length} issues (Critical - Risks Auto-Rejection)</h3>
+                          <div className="space-y-4">
+                            {grouped.blocker.map((repair, idx) => (
+                              <div key={idx} className="bg-red-900/20 border border-red-700 rounded-lg p-4">
+                                <div className="flex items-start gap-3">
+                                  <div className="text-red-400 font-bold">{idx + 1}.</div>
+                                  <div className="flex-1">
+                                    <p className="text-red-300 font-medium">
+                                      [{repair.position} - Bullet {repair.bulletNumber}] {repair.issue}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {grouped.risk.length > 0 && (
+                        <div>
+                          <h3 className="text-orange-400 font-semibold mb-4">⚠️ RISKS - {grouped.risk.length} issues (Significant Impact - Lowers Score)</h3>
+                          <div className="space-y-4">
+                            {grouped.risk.map((repair, idx) => (
+                              <div key={idx} className="bg-orange-900/20 border border-orange-700 rounded-lg p-4">
+                                <div className="flex items-start gap-3">
+                                  <div className="text-orange-400 font-bold">{idx + 1}.</div>
+                                  <div className="flex-1">
+                                    <p className="text-orange-300 font-medium">
+                                      [{repair.position} - Bullet {repair.bulletNumber}] {repair.issue}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {grouped.tweak.length > 0 && (
+                        <div>
+                          <h3 className="text-blue-400 font-semibold mb-4">🔧 TWEAKS - {grouped.tweak.length} issues (Minor Polish)</h3>
+                          <div className="space-y-4">
+                            {grouped.tweak.map((repair, idx) => (
+                              <div key={idx} className="bg-blue-900/20 border border-blue-700 rounded-lg p-4">
+                                <div className="flex items-start gap-3">
+                                  <div className="text-blue-400 font-bold">{idx + 1}.</div>
+                                  <div className="flex-1">
+                                    <p className="text-blue-300 font-medium">
+                                      [{repair.position} - Bullet {repair.bulletNumber}] {repair.issue}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
+            {/* Section 5: Position-by-Position Analysis */}
+            <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-semibold text-white">Position-by-Position Analysis</h2>
+                <div className="flex gap-2">
+                  <button
+                    onClick={expandAll}
+                    className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm transition"
+                  >
+                    Expand All
+                  </button>
+                  <button
+                    onClick={collapseAll}
+                    className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm transition"
+                  >
+                    Collapse All
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                {analysis.positions.map((position) => {
+                  const isExpanded = expandedPositions.has(position.id);
+
+                  return (
+                    <div key={position.id} className="border border-slate-600 rounded-lg overflow-hidden">
+                      <button
+                        onClick={() => togglePosition(position.id)}
+                        className="w-full bg-slate-700 hover:bg-slate-600 p-6 text-left transition"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="text-lg font-semibold text-white mb-2">
+                              Position {position.id}: "For this position, I think your job title might have been {position.inferredTitle}"
+                            </h3>
+                            <div className="text-sm text-slate-300 space-y-1">
+                              <p><span className="font-semibold">Inferred Title:</span> {position.inferredTitle}</p>
+                              <p><span className="font-semibold">Company:</span> {position.company}</p>
+                              <p><span className="font-semibold">Dates:</span> {position.dates}</p>
+                              <p><span className="font-semibold">Seniority Level:</span> {position.seniority}</p>
+                            </div>
+                          </div>
+                          {isExpanded ? (
+                            <ChevronUp className="w-5 h-5 text-slate-400 flex-shrink-0 ml-4" />
+                          ) : (
+                            <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0 ml-4" />
+                          )}
+                        </div>
+                      </button>
+
+                      {isExpanded && (
+                        <div className="p-6 bg-slate-800 border-t border-slate-600">
+                          {/* Reasoning */}
+                          <div className="mb-6">
+                            <h4 className="text-white font-semibold mb-2">Why I Think This Was Your Role:</h4>
+                            <p className="text-slate-300">{position.reasoning || position.whyThisRole}</p>
+                          </div>
+
+                          {/* Skills Demonstrated */}
+                          <div className="mb-6 grid grid-cols-2 gap-6">
+                            <div>
+                              <h4 className="text-white font-semibold mb-2">Hard Skills:</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {position.skillsHard.map((skill, idx) => (
+                                  <span key={idx} className="px-3 py-1 bg-blue-900/30 border border-blue-700 rounded-full text-blue-300 text-sm">
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-white font-semibold mb-2">Soft Skills:</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {position.skillsSoft.map((skill, idx) => (
+                                  <span key={idx} className="px-3 py-1 bg-purple-900/30 border border-purple-700 rounded-full text-purple-300 text-sm">
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Bullets */}
+                          <div className="mb-4">
+                            <h4 className="text-white font-semibold mb-3">Resume Bullets:</h4>
+                            <div className="space-y-4">
+                              {position.bullets.map((bullet, idx) => (
+                                <div key={idx} className="bg-slate-700 rounded-lg p-4">
+                                  <div className="flex items-start gap-3 mb-3">
+                                    <span className={bullet.hasMetrics ? 'text-green-400' : 'text-slate-500'}>
+                                      {bullet.hasMetrics ? '✓' : '-'}
+                                    </span>
+                                    <p className="flex-1 text-slate-200">{bullet.text}</p>
+                                  </div>
+
+                                  {/* Per-Bullet Audit Table */}
+                                  <div className="mt-3 border-t border-slate-600 pt-3">
+                                    <table className="w-full text-sm">
+                                      <thead>
+                                        <tr className="text-left text-slate-400">
+                                          <th className="pb-2">Check</th>
+                                          <th className="pb-2">Status</th>
+                                          <th className="pb-2">Analysis</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody className="text-slate-300">
+                                        <tr>
+                                          <td className="py-2 font-medium">Metrics</td>
+                                          <td className="py-2">
+                                            {bullet.hasMetrics ? (
+                                              <span className="text-green-400">✅ Passed</span>
+                                            ) : (
+                                              <span className="text-red-400">❌ Failed</span>
+                                            )}
+                                          </td>
+                                          <td className="py-2">
+                                            {bullet.hasMetrics ? (
+                                              <span>Found: {bullet.metrics.join(', ')}</span>
+                                            ) : (
+                                              <span>Lacks quantifiable impact.<br />Add: # of users, efficiency %, time saved...</span>
+                                            )}
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td className="py-2 font-medium">Verb</td>
+                                          <td className="py-2">
+                                            <span className="text-green-400">✅ Passed</span>
+                                          </td>
+                                          <td className="py-2">
+                                            <span className={`px-2 py-1 rounded text-xs ${getCategoryBadgeColor(bullet.category)}`}>
+                                              {bullet.category}: {bullet.verb}
+                                            </span>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td className="py-2 font-medium">Length</td>
+                                          <td className="py-2">
+                                            {bullet.charCount >= 100 && bullet.charCount <= 210 ? (
+                                              <span className="text-green-400">✅ Passed</span>
+                                            ) : (
+                                              <span className="text-red-400">❌ Failed</span>
+                                            )}
+                                          </td>
+                                          <td className="py-2">
+                                            {bullet.charCount}/210 chars
+                                            {bullet.charCount < 100 && <span><br />({100 - bullet.charCount} chars below minimum)</span>}
+                                            {bullet.charCount > 210 && <span><br />({bullet.charCount - 210} chars over maximum)</span>}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+                                  {/* Per-Bullet Recommendations */}
+                                  {(bullet.recommendation || (bullet.issues && bullet.issues.length > 0)) && (
+                                    <div className="mt-3 bg-yellow-900/20 border border-yellow-700 rounded p-3">
+                                      <p className="text-yellow-300 font-semibold text-sm mb-2">⚠️ RECOMMENDATION</p>
+                                      {bullet.recommendation ? (
+                                        <p className="text-slate-300 text-sm">{bullet.recommendation}</p>
+                                      ) : (
+                                        <ul className="text-slate-300 text-sm space-y-1">
+                                          {bullet.issues.map((issue, issueIdx) => (
+                                            <li key={issueIdx}>• {issue}</li>
+                                          ))}
+                                        </ul>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Position Summary Stats */}
+                          <div className="bg-slate-700 rounded-lg p-4">
+                            <h4 className="text-white font-semibold mb-2">Position Summary:</h4>
+                            <div className="text-sm text-slate-300 space-y-1">
+                              <p>Total bullets: {position.bullets.length} | With metrics: {position.bullets.filter(b => b.hasMetrics).length} ({Math.round((position.bullets.filter(b => b.hasMetrics).length / position.bullets.length) * 100)}%)</p>
+                              {position.confidence && <p>Confidence: {position.confidence}</p>}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Section 6: Job History Export */}
+            <div className="bg-slate-800 rounded-lg border border-slate-700 p-8">
+              <h2 className="text-2xl font-semibold text-white mb-6">Download Your Job History</h2>
+
+              <p className="text-slate-300 mb-6">
+                Export your comprehensive job history in your preferred format:
+              </p>
+
+              <div className="grid grid-cols-3 gap-4">
+                <button
+                  onClick={() => downloadJobHistory('xml')}
+                  className="flex flex-col items-center gap-3 p-6 bg-slate-700 hover:bg-slate-600 rounded-lg transition border-2 border-transparent hover:border-blue-500"
+                >
+                  <Download className="w-8 h-8 text-blue-400" />
+                  <div className="text-center">
+                    <div className="text-white font-semibold">XML Format</div>
+                    <div className="text-slate-400 text-sm">For LLM processing</div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => downloadJobHistory('md')}
+                  className="flex flex-col items-center gap-3 p-6 bg-slate-700 hover:bg-slate-600 rounded-lg transition border-2 border-transparent hover:border-blue-500"
+                >
+                  <Download className="w-8 h-8 text-blue-400" />
+                  <div className="text-center">
+                    <div className="text-white font-semibold">Markdown</div>
+                    <div className="text-slate-400 text-sm">For reading/sharing</div>
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => {
+                    downloadJobHistory('xml');
+                    setTimeout(() => downloadJobHistory('md'), 500);
+                  }}
+                  className="flex flex-col items-center gap-3 p-6 bg-slate-700 hover:bg-slate-600 rounded-lg transition border-2 border-transparent hover:border-blue-500"
+                >
+                  <Download className="w-8 h-8 text-blue-400" />
+                  <div className="text-center">
+                    <div className="text-white font-semibold">Both (ZIP)</div>
+                    <div className="text-slate-400 text-sm">Complete backup</div>
+                  </div>
+                </button>
+              </div>
+            </div>
 
             {/* Reset Button */}
             <div className="mt-8 text-center">
