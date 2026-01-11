@@ -1,8 +1,8 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 14
+**Total Lessons:** 15
 **Categories:** 4
-**Last Updated:** 2026-01-07
+**Last Updated:** 2026-01-10
 
 ---
 
@@ -10,7 +10,7 @@
 
 **By Category:**
 - [Architecture](#architecture-lessons) (3)
-- [Debugging](#debugging-lessons) (2)
+- [Debugging](#debugging-lessons) (3)
 - [Process](#process-lessons) (7)
 - [Patterns](#patterns-lessons) (2)
 
@@ -48,12 +48,17 @@
 
 **3 lessons** - See [debugging/README.md](debugging/README.md) for full details
 
-1. **[Skills Not Loading Until Restart](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)**
+1. **[Tailwind v4 Styling Not Rendering](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)**
+   - Date: 2026-01-10
+   - Tags: #debugging #tailwind #vite #styling #configuration #css
+   - Problem: White background and broken styling due to Tailwind v3/v4 syntax mismatch
+   - Solution: Use `@import "tailwindcss"` syntax for v4, remove hardcoded backgrounds, restart dev server
+2. **[Skills Not Loading Until Restart](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)**
    - Date: 2026-01-02
    - Tags: #debugging #skills #claude-code #loading-behavior #startup
    - Problem: Skills added during active session don't load
    - Solution: Claude Code loads skills at startup only - always restart after adding/modifying skills
-2. **[GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md)**
+3. **[GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md)**
    - Date: 2026-01-07
    - Tags: #debugging #workflow #github-cli #automation #planning
    - Problem: Fragmentation of requirements across multiple issues and comments
@@ -151,8 +156,16 @@
 - [Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)
 - [Skills Not Loading](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)
 
-**#debugging** (1 lesson)
+**#configuration** (1 lesson)
+- [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+
+**#css** (1 lesson)
+- [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+
+**#debugging** (3 lessons)
+- [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
 - [Skills Not Loading](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)
+- [GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md)
 
 **#documentation** (2 lessons)
 - [Automated Validation](process/Lessons_Learned_Automated_Validation.md)
@@ -196,11 +209,20 @@
 - [Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)
 - [Skills Not Loading](debugging/Lessons_Learned_Skills_Not_Loading_Until_Restart.md)
 
+**#styling** (1 lesson)
+- [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+
+**#tailwind** (1 lesson)
+- [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
+
 **#version-control** (1 lesson)
 - [Plan File Locations](process/Lessons_Learned_Plan_File_Locations.md)
 
 **#versioning** (1 lesson)
 - [Split Changelog Versioning](process/Lessons_Learned_Split_Changelog_Versioning.md)
+
+**#vite** (1 lesson)
+- [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md)
 
 **#workflow** (6 lessons)
 - [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
@@ -216,6 +238,7 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-10: [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md) - Tailwind v4 syntax migration and styling restoration
 - 2026-01-07: [GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md) - Programmatic requirement gathering
 - 2026-01-07: [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md) - Context-agnostic file referencing
 - 2026-01-03: [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md) - Hook-based automation at workflow boundaries
@@ -263,10 +286,10 @@ grep -r "#architecture" docs/lessons-learned/
 ## Statistics
 
 **By Category:**
-- Process: 7 lessons (58%)
-- Architecture: 3 lessons (23%)
-- Patterns: 2 lessons (17%)
-- Debugging: 2 lessons (14%)
+- Process: 7 lessons (47%)
+- Architecture: 3 lessons (20%)
+- Debugging: 3 lessons (20%)
+- Patterns: 2 lessons (13%)
 
 **Most Common Tags:**
 1. #process (7 lessons)
@@ -276,13 +299,13 @@ grep -r "#architecture" docs/lessons-learned/
 
 **Timeline:**
 - First lesson: 2025-12-10
-- Latest lesson: 2026-01-03
-- Total span: 24 days
+- Latest lesson: 2026-01-10
+- Total span: 31 days
 - Average: ~0.5 lessons per day
 
 **Content:**
-- Total lessons: 12
-- Estimated total lines: ~9,000 lines
+- Total lessons: 15
+- Estimated total lines: ~11,500 lines
 - Average per lesson: ~750 lines
 
 ---
@@ -297,4 +320,4 @@ grep -r "#architecture" docs/lessons-learned/
 ---
 
 **Created:** 2026-01-02
-**Last Major Update:** 2026-01-07 (Added Relative File Paths lesson)
+**Last Major Update:** 2026-01-10 (Added Tailwind v4 Styling Fix lesson)
