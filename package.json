@@ -1,0 +1,40 @@
+{
+  "name": "optimize-my-resume",
+  "version": "1.0.0",
+  "description": "**An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/technomensch/optimize-my-resume.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/technomensch/optimize-my-resume/issues"
+  },
+  "homepage": "https://github.com/technomensch/optimize-my-resume#readme",
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "vite": "^7.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
+  }
+}

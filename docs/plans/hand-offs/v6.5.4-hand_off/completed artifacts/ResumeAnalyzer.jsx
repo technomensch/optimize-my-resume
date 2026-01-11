@@ -143,7 +143,7 @@ export default function Phase1ResumeAnalyzer() {
         },
         body: JSON.stringify({
           model: selectedModel,
-          max_tokens: 5000,
+          max_tokens: 8000,  // v6.5.4 FIX: Increased from 5000 to prevent JSON truncation
           messages: [
             {
               role: 'user',
@@ -256,20 +256,18 @@ Identify these repair types:
         setError(
           `🚦 **Rate Limit Reached**\n\n` +
           `You've used your token allocation for this 5-hour window. This limit is shared across ALL Claude features (chat, artifacts, analysis).\n\n` +
-          `**What happened?**\n` +
+          `**Token Limits by Plan:**\n` +
           `• Free tier: 500,000 tokens per 5-hour window\n` +
-          `• This includes all conversations, artifacts, and analyses\n` +
-          `• Phase 1 analysis uses ~3K-8K tokens depending on model and resume length\n\n` +
+          `• Pro tier: 2,500,000 tokens per 5-hour window (5x more)\n\n` +
           `**When will it reset?**\n` +
           `• Your limit resets in **${timeMessage}**\n` +
           `• Reset time: **${resetTimeFormatted}**\n\n` +
           `**What you can do:**\n\n` +
           `1️⃣ **Wait for reset** - Your tokens will automatically refresh at reset time\n\n` +
-          `2️⃣ **Upgrade to Pro** - Get 5x more tokens (2.5M per 5 hours) plus priority access\n\n` +
+          `2️⃣ **Upgrade to Pro** - Get 5x more tokens plus Opus model access\n\n` +
           `3️⃣ **Use tokens strategically:**\n` +
           `   • Haiku uses fewer tokens than Sonnet/Opus\n` +
-          `   • Consider shorter resumes or analyzing in parts\n` +
-          `   • Minimize other Claude usage until reset\n\n` +
+          `   • Consider shorter resumes or analyzing in parts\n\n` +
           `**Pro Tip:** Check your token usage in claude.ai settings to track consumption across all features.`
         );
         setLoading(false);
@@ -509,6 +507,32 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
           </p>
         </div>
 
+        {/* Token Usage Display - v6.5.4 Added both Free/Pro tiers */}
+        <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 mb-8">
+          <div className="flex items-center gap-2 text-white font-medium mb-2">
+            <BarChart3 className="w-5 h-5 text-blue-400" />
+            Token Usage
+          </div>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-slate-300">Estimated Available:</span>
+            <span className="text-green-400 font-semibold text-lg">~500,000 tokens</span>
+          </div>
+          <div className="grid grid-cols-2 gap-4 text-sm mb-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+              <span className="text-slate-400">Free: 500K / 5-hour window</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+              <span className="text-slate-400">Pro: 2.5M / 5-hour window</span>
+            </div>
+          </div>
+          <p className="text-slate-500 text-xs flex items-center gap-1">
+            <Info className="w-3 h-3" />
+            Token balance is approximate. Actual usage tracked by Claude across all features.
+          </p>
+        </div>
+
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-white mb-2">Phase 1: Resume Analyzer</h1>
           <p className="text-slate-300 text-lg">Transform your resume into a comprehensive job history database</p>
@@ -598,10 +622,18 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                     </div>
                   </div>
                   <div className="mt-3 pt-3 border-t border-blue-700">
-                    <p className="text-slate-400 text-xs">
-                      💾 <strong>Free tier:</strong> 500K tokens/day shared across all Claude features
-                    </p>
-                    <p className="text-slate-400 text-xs mt-1">
+                    <p className="text-slate-300 text-xs font-medium mb-2">Token Limits:</p>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+                        <span className="text-slate-400">Free: 500K / 5-hour window</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                        <span className="text-slate-400">Pro: 2.5M / 5-hour window</span>
+                      </div>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-2">
                       💡 <strong>Multi-phase tip:</strong> Using Phase 2/3 later? Start with Haiku or Sonnet to conserve tokens.
                     </p>
                   </div>
@@ -1027,12 +1059,10 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                             <div className="space-y-4">
                               {position.bullets.map((bullet, idx) => (
                                 <div key={idx} className="bg-slate-700 rounded-lg p-4">
+                                  {/* v6.5.4 Issue #28 Fix: Removed duplicate verb badge - verb shown in audit table only */}
                                   <div className="flex items-start gap-3 mb-3">
                                     <span className={bullet.hasMetrics ? 'text-green-400' : 'text-slate-500'}>
                                       {bullet.hasMetrics ? '✓' : '-'}
-                                    </span>
-                                    <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryBadgeColor(bullet.category)}`}>
-                                      {bullet.category}
                                     </span>
                                     <p className="flex-1 text-slate-200">{bullet.text}</p>
                                   </div>
