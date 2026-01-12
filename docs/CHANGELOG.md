@@ -10,7 +10,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
-## [Unreleased]
+### v8.2.0 - Job Fit Assessment Module (Issue #29)
+- **Shadow Modularization** - Extracted Job Fit Assessment logic to [job-fit-assessment.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/optimization-tools/job-fit-analyzer/job-fit-assessment.md).
+- **Token Optimization** - Replaced ~1,000 lines of redundant logic in `Project-GUI-Instructions.md` with an active `<modular_reference>`.
+- **Gold Master Protection** - Implemented "Silent Sync" HTML comments in `PROJECT-INSTRUCTIONS.md`.
 
 ### v7.1.1 - Metric Preservation & Technical Exception (Issue #34)
 - **Metric Preservation Guardrail** - Enforces "Data Integrity Audit" to prevent loss of numeric metrics during rewriting.
