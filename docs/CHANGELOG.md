@@ -8,7 +8,7 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
 ## [Unreleased]
 
@@ -211,7 +211,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Added
 - **Hiring Manager Perspective** - New analysis section that ignores resume titles and infers roles based on actual work/impact.
 - **Per-Bullet Auditing** - Detailed 3-row audit table for every bullet (Action Verb, Metrics, Length).
-- **Job History v2.0 Auto-Generation** - Automatically extracts and formats job history during Phase 1 analysis.
+- **Job History Creation Auto-Generation** - Automatically extracts and formats job history during Phase 1 analysis.
 - **Export Functionality** - One-click downloads for Job History (XML, Markdown, ZIP).
 - **Visual Enhancements** - Color-coded action verbs and "Has Metrics" (✓/-) indicators.
 - **Guardrail #28** - `bullet_grouping_verification_guardrail` ensures correct chronological groupings.
@@ -621,7 +621,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Use cases (cover letters, LinkedIn, email applications)
   - ATS keyword optimization tip
 - **Comprehensive Wireframes** - 10 visual workflow guides (5 ASCII + 5 Mermaid)
-  - Phase 1: Foundation (job history v2.0, JD parser, entry router)
+  - Phase 1: Foundation (job history creation, JD parser, entry router)
   - Phase 2: Core Integration (evidence matching, blocking gates)
   - Phase 3: Router & Workflows (8-scenario routing, incremental updates)
   - Phase 4: Summary & Polish (professional summary generation)
@@ -665,26 +665,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This major release transforms the system from a simple 3-mode analyzer into a complete, intelligent resume management platform with smart routing, incremental updates, and change tracking.
 
 **Breaking Changes:**
-- **Job History Schema v2.0:** New 12-section schema (up from 8 sections in v1.0)
+- **Job History Schema job history creation:** New 12-section schema (up from 8 sections in v1.0)
   - Hard/soft skills separated into distinct arrays
   - Education and certifications added
   - Professional summary per role
   - Tools/technologies granular listing
   - v1.0 files preserved for reference (`claude_generated_job_history_summaries.txt`)
-  - v2.0 files created automatically (`claude_generated_job_history_summaries_v2.txt`)
-  - Mode 2 backward compatible (works with both v1.0 and v2.0)
+  - job history creation files created automatically (`claude_generated_job_history_summaries_v2.txt`)
+  - Mode 2 backward compatible (works with both v1.0 and job history creation)
 
 ---
 
 #### Phase 1 (v6.0.1) - Foundation
 
 **Added:**
-- **Job History Schema v2.0** (`optimization-tools/resume-analyzer/job-history-v2-creation.md`)
+- **Job History Schema job history creation** (`optimization-tools/resume-analyzer/job-history-creation.md`)
   - 12 sections: metadata, professional_summary, core_responsibilities, key_achievements, hard_skills_demonstrated, soft_skills_demonstrated, education, certifications, tools_technologies, impact_metrics, industry_domain, team_scope
   - Structured format for evidence-based matching
   - Version tracking (schema_version field)
 
-- **17-Point JD Parser** (`optimization-tools/resume-analyzer/jd-parsing-17-point.md`)
+- **Standard JD Parser** (`optimization-tools/resume-analyzer/jd-parsing.md`)
   - Complete extraction schema: company, job_title, location, work_lifestyle, remote_restrictions, employee_type, travel_required, clearance, salary_range, required_experience, required_education, job_responsibilities
   - **Hard vs Soft Skill Classification:** Decision tree logic for accurate categorization
   - Skills separated: skills_needed/wanted (HARD), soft_skills_needed/wanted (SOFT)
@@ -726,27 +726,27 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 
 **Changed:**
 - **Mode 1 (Full Analysis):**
-  - Generates job history v2.0 with all 12 sections
+  - Generates job history creation with all 12 sections
   - Hard/soft skill categorization using classification rules
   - Professional summary per role (master summary)
   - Next steps guidance after completion
 
 - **Mode 3 (JD Comparison):**
-  - Uses 17-point JD parser (all fields extracted)
+  - Uses JD parsing protocol (all fields extracted)
   - Evidence matcher with citations for every requirement
   - Color-coded output ([MATCHED]/[PARTIAL]/[MISSING])
   - 3 blocking gates with override option
   - Per-JD summary placeholder (full implementation in v6.0.4)
 
 - **Mode 2 (Bullet Optimization):**
-  - **Backward compatible:** Checks v2.0 first, falls back to v1.0
+  - **Backward compatible:** Checks job history creation first, falls back to v1.0
   - Upgrade recommendation for v1.0 users
   - Keyword insertion logic (hard vs soft skills)
 
 **Impact:**
 - ✅ Users see exactly where they match/don't match (with proof)
 - ✅ Blocking gates save time on poor-fit applications
-- ✅ Mode 2 works for all users (v1.0 and v2.0)
+- ✅ Mode 2 works for all users (v1.0 and job history creation)
 
 ---
 
@@ -769,7 +769,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
   - **User confirmation:** Always confirms before executing mode
 
 - **Incremental Updates** (`optimization-tools/job-fit-analyzer/incremental-updates.md`)
-  - **Add position:** Collect v2.0 fields → Insert chronologically → Recalculate aggregates
+  - **Add position:** Collect job history creation fields → Insert chronologically → Recalculate aggregates
   - **Edit position:** Select → Show current values → Update → Recalculate
   - **Remove position:** Select → Confirm → Remove → Recalculate
   - **Automatic recalculation:** Years of experience, skills aggregation
@@ -810,7 +810,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
     - Sentence 3: Hard Skills (2-3 technical skills)
     - Sentence 4: Soft Skills (1-2 interpersonal skills)
     - Aggregates career data (total years, companies, team sizes)
-    - Stored in job history v2.0 (master_summary field)
+    - Stored in job history creation (master_summary field)
   - **Per-JD summary (Mode 3):** Customized, ephemeral (not stored)
     - Replaces generic hard skills with JD-specific keywords
     - Maintains metrics and achievements from master
@@ -826,7 +826,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Total Changes
 
 **Files Created:** 9 files (5,595 lines)
-- Phase 1: 3 files (job-history-v2-creation.md, jd-parsing-17-point.md, entry-router.md)
+- Phase 1: 3 files (job-history-creation.md, jd-parsing.md, entry-router.md)
 - Phase 2: 1 file (evidence-matching.md)
 - Phase 3: 3 files (workflow-router.md, incremental-updates.md, re-comparison.md)
 - Phase 4: 1 file (summary-generation.md)
@@ -850,12 +850,12 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Migration Guide (v5.1 → v6.0)
 
 **For Existing Users:**
-1. **Job History:** v1.0 files preserved, v2.0 created automatically on next Mode 1 run
-2. **Mode 2:** Backward compatible - works with v1.0, recommends upgrade to v2.0
+1. **Job History:** v1.0 files preserved, job history creation created automatically on next Mode 1 run
+2. **Mode 2:** Backward compatible - works with v1.0, recommends upgrade to job history creation
 3. **No data loss:** All existing files remain intact
 
 **Recommended Actions:**
-1. Run Mode 1 to generate v2.0 job history (if you have new positions)
+1. Run Mode 1 to generate job history creation job history (if you have new positions)
 2. Try incremental updates ("add position", "edit position")
 3. Re-run previous JD comparisons to see diff output
 
@@ -1581,7 +1581,7 @@ v4.4.0-v4.4.3 primarily consisted of README documentation updates and minor prom
 #### Preserved
 - All v3.x features intact:
   - Multi-provider support (Gemini/Claude) with runtime selection
-  - 17-point detailed JD analysis
+  - parsing detailed JD analysis
   - Evidence-based gap analysis with explicit citation
   - Hard/Soft skill grouping with Need/Want separation
   - Blocking logic (hard skill deficit, low score threshold <30)
@@ -1598,7 +1598,7 @@ This release series (v3.0-v3.17) evolved the command-line interface with multi-p
 
 #### Key Features Added
 - **Multi-Provider Support** - Runtime selection between Gemini and Claude APIs
-- **17-Point JD Analysis** (v3.7) - Skills/Qualifications/Certifications with Need/Want breakdown
+- **Standard JD Analysis** (v3.7) - Skills/Qualifications/Certifications with Need/Want breakdown
 - **Hard vs. Soft Skills Distinction** (v3.7) - Proper categorization for accurate matching
 - **Evidence-Based Gap Analysis** (v3.4-v3.9) - Explicit citation of resume evidence for each requirement
 - **Blocking Logic** (v3.8, v3.10)
@@ -1619,7 +1619,7 @@ This release series (v3.0-v3.17) evolved the command-line interface with multi-p
 - **v3.0** - Resume Analysis Agent framework, category tagging
 - **v3.1-v3.3** - Content preservation and metric philosophy
 - **v3.4-v3.5** - Evidence-based gap analysis
-- **v3.7** - 17-point JD analysis schema
+- **v3.7** - parsing JD analysis schema
 - **v3.8-v3.9** - Output presentation rules and blocking thresholds
 - **v3.10** - Hard skill deficit blocking
 - **v3.17** - CORS handling for browser compatibility
@@ -1631,7 +1631,7 @@ This release series (v3.0-v3.17) evolved the command-line interface with multi-p
 - Token tracking across phases
 - Phase gates to prevent token waste
 
-#### v2.0
+#### job history creation
 ##### Added
 - Quality scoring system (0-100)
 - Metric applicability checks

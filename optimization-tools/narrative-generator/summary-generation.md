@@ -10,7 +10,7 @@
 
 This protocol generates two types of professional summaries:
 
-1. **Master Summary** - Comprehensive, stored in job history v2.0
+1. **Master Summary** - Comprehensive, stored in job history creation
    - Created during Phase 1 (job history creation)
    - Aggregates entire career
    - Used as baseline for customization
@@ -32,7 +32,7 @@ This protocol generates two types of professional summaries:
 
 ### Trigger
 
-After Phase 1 extracts all positions, before saving job history v2.0:
+After Phase 1 extracts all positions, before saving job history creation:
 
 ```
 Position extraction complete → Aggregate career data → Generate master summary → Save to job history
@@ -197,7 +197,7 @@ Staff Software Engineer with 10 years at Google, Amazon, and Microsoft building 
 
 ### Storage
 
-Save to job history v2.0:
+Save to job history creation:
 
 ```
 job_history_v2.0 = {
@@ -450,7 +450,7 @@ Do NOT use this summary for other applications - use your master summary or gene
 
 ### Case 1: Missing Master Summary
 
-**Problem:** Job history v2.0 exists but master_summary field is empty
+**Problem:** job history creation exists but master_summary field is empty
 
 **Solution:**
 ```
@@ -728,8 +728,8 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 
 ## Related Protocols
 
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-v2-creation.md`
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
 - **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md`
 - **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/workflow-router.md`
 

@@ -448,9 +448,9 @@ A hidden tracker file maintains export history:
 
 ---
 
-## Evolution to Automated Export System (v2.0) <!-- v2.0 Change -->
+## Evolution to Automated Export System (job history creation) <!-- job history creation Change -->
 
-### From Manual to Automated: The Architecture Shift <!-- v2.0 Change -->
+### From Manual to Automated: The Architecture Shift <!-- job history creation Change -->
 
 **The Problem with Manual Workflow (v1.1):**
 - Users had to remember to run `/chat-history` before leaving
@@ -460,7 +460,7 @@ A hidden tracker file maintains export history:
 
 **User Feedback:** *"I didn't want a manual workflow. I created this slash command so it would be automated"*
 
-**The Discovery: PreCompact Hooks** <!-- v2.0 Change -->
+**The Discovery: PreCompact Hooks** <!-- job history creation Change -->
 
 Claude Code supports **event-driven hooks** that execute automatically before context compaction:
 - **Hook Type:** PreCompact
@@ -470,7 +470,7 @@ Claude Code supports **event-driven hooks** that execute automatically before co
 
 **Key Insight:** Slash commands are just prompt templates (can't access transcripts), but PreCompact hooks receive the transcript file path directly.
 
-### Implementation: Automated Export System <!-- v2.0 Change -->
+### Implementation: Automated Export System <!-- job history creation Change -->
 
 **Architecture:**
 ```
@@ -490,7 +490,7 @@ auto-export-transcript.sh
 Dual-Format Export Created Automatically
 ```
 
-**Files Created:** <!-- v2.0 Change -->
+**Files Created:** <!-- job history creation Change -->
 
 1. **`.claude/settings.json`** - PreCompact hook configuration
    ```json
@@ -527,7 +527,7 @@ Dual-Format Export Created Automatically
    - Formats with visual boundaries
    - Creates human-readable conversation script
 
-### Dual-Format Export Strategy <!-- v2.0 Change -->
+### Dual-Format Export Strategy <!-- job history creation Change -->
 
 **Why Two Formats?**
 
@@ -550,7 +550,7 @@ chat-history/
 └── 2025_12_17-11_28_04-chat_history.txt    (readable)
 ```
 
-### The Converter Bug Fix Journey <!-- v2.0 Change -->
+### The Converter Bug Fix Journey <!-- job history creation Change -->
 
 **v1.0 Bug: Empty Output (595 Bytes)**
 
@@ -583,7 +583,7 @@ Changes:
 
 **Lesson:** Don't assume data formats - inspect actual data first!
 
-### Benefits of Automated System <!-- v2.0 Change -->
+### Benefits of Automated System <!-- job history creation Change -->
 
 **Reliability:**
 - ✅ Zero user intervention required
@@ -603,7 +603,7 @@ Changes:
 - ✅ Easy to review past conversations
 - ✅ Readable format for reference
 
-### Testing and Verification <!-- v2.0 Change -->
+### Testing and Verification <!-- job history creation Change -->
 
 **Manual Simulation (Pre-Testing):**
 ```bash
@@ -976,7 +976,7 @@ git status
 **What we built (Evolution):**
 - v1.0: Chat history folder with "tracked structure, ignored contents" pattern
 - v1.1: Manual export workflow with tracking system
-- v2.0: Fully automated PreCompact hook system with dual-format exports
+- job history creation: Fully automated PreCompact hook system with dual-format exports
 - v2.1: Security hardening with input validation and workspace variables <!-- v2.1 Change -->
 
 **Why it matters:** Preserves valuable conversation context (including thinking blocks) automatically without user intervention or repository pollution, **while maintaining security and privacy**.
@@ -1005,15 +1005,15 @@ git status
 **Changelog:** <!-- v2.1 Change -->
 - v1.0 (2025-12-12): Initial release - folder structure, gitignore pattern
 - v1.1 (2025-12-12): Added manual export workflow, tracking system, incremental exports
-- v2.0 (2025-12-17): Automated PreCompact hook system, dual-format exports, converter bug fix
+- job history creation (2025-12-17): Automated PreCompact hook system, dual-format exports, converter bug fix
 - v2.1 (2025-12-17): Security hotfix - workspace variables, input validation, local settings pattern <!-- v2.1 Change -->
 
 **Related Docs:**
 - `.gitignore` (root)
-- `.claude/settings.json` - PreCompact hook configuration <!-- v2.0 Change -->
-- `scripts/auto-export-transcript.sh` - Automated export script <!-- v2.0 Change -->
-- `scripts/convert-jsonl-to-conversation.sh` - JSONL to TXT converter v1.1 <!-- v2.0 Change -->
-- `docs/plans/v4.8.2_chat_history_automation_plan.md` - Implementation plan <!-- v2.0 Change -->
+- `.claude/settings.json` - PreCompact hook configuration <!-- job history creation Change -->
+- `scripts/auto-export-transcript.sh` - Automated export script <!-- job history creation Change -->
+- `scripts/convert-jsonl-to-conversation.sh` - JSONL to TXT converter v1.1 <!-- job history creation Change -->
+- `docs/plans/v4.8.2_chat_history_automation_plan.md` - Implementation plan <!-- job history creation Change -->
 - `.claude/commands/chat-history.md` - Manual export slash command (superseded) <!-- v1.1 Change -->
 - `.claude/commands/lesson-learned.md` - Lessons learned command (updated with update mode) <!-- v1.1 Change -->
 - `chat-history/.chat-history-tracker.template.json` - Tracker schema <!-- v1.1 Change -->
@@ -1024,5 +1024,5 @@ git status
 - Git hygiene for large, frequently-changing files
 - Manual export capability before leaving sessions <!-- v1.1 Change -->
 - Duplicate archiving during auto-compaction <!-- v1.1 Change -->
-- Forgotten manual exports (automated via hooks) <!-- v2.0 Change -->
-- Thinking blocks not preserved in readable format <!-- v2.0 Change -->
+- Forgotten manual exports (automated via hooks) <!-- job history creation Change -->
+- Thinking blocks not preserved in readable format <!-- job history creation Change -->

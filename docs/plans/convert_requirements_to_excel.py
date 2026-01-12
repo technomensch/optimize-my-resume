@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Convert requirements.md (v2.0 - natural language) to Excel spreadsheet.
+Convert requirements.md (job history creation - natural language) to Excel spreadsheet.
 """
 
 import re

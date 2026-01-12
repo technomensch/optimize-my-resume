@@ -9,13 +9,13 @@ Consult these files for every request. **DO NOT rely on internal memory if these
 | User Intent / Stage | Primary Reference File |
 | :--- | :--- |
 | **Intent Detection / Routing** | `optimization-tools/resume-analyzer/entry-router.md`, `optimization-tools/job-fit-analyzer/workflow-router.md` |
-| **Resume Analysis (Phase 1)** | `optimization-tools/resume-analyzer/job-history-v2-creation.md` |
+| **Resume Analysis (Phase 1)** | `optimization-tools/resume-analyzer/job-history-creation.md` |
 | **Bullet Optimization (Phase 2)** | `templates/LLM_GENERATION_INSTRUCTIONS.md` |
-| **JD Parsing (Phase 3 Prep)** | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` |
+| **JD Parsing (Phase 3 Prep)** | `optimization-tools/resume-analyzer/jd-parsing.md` |
 | **Gap Analysis & Matching (Phase 3)** | `optimization-tools/bullet-optimizer/evidence-matching.md` |
 | **Updating Job History** | `optimization-tools/job-fit-analyzer/incremental-updates.md`, `optimization-tools/job-fit-analyzer/re-comparison.md` |
 | **Summary Generation (Phase 4)** | `optimization-tools/narrative-generator/summary-generation.md` |
-| **Data Structure (v2.0)** | `templates/job_history_template.xml` |
+| **Data Structure (job history creation)** | `templates/job_history_template.xml` |
 
 ## 3. Core Principles
 - **Evidence-Based:** Every claim must be backed by "Job History". No evidence = [MISSING].
@@ -25,9 +25,9 @@ Consult these files for every request. **DO NOT rely on internal memory if these
 
 ## 4. Phase Execution Logic
 - **Phase Detection:** Check if `job_history.txt` exists. If yes, check for JD. Route automatically per `entry-router.md`.
-- **Phase 1 (Analysis):** Create v2.0 Job History. Separate Hard Skills (Technical) from Soft Skills (Behavioral).
+- **Phase 1 (Analysis):** Create job history creation Job History. Separate Hard Skills (Technical) from Soft Skills (Behavioral).
 - **Phase 2 (Optimization):** Follow the "Parse & Diagnose" loop in `LLM_GENERATION_INSTRUCTIONS.md`.
-- **Phase 3 (JD Comparison):** 17-point JD extraction. Output [MATCHED] (w/ citation), [PARTIAL] (gap noted), [MISSING] (recommendation).
+- **Phase 3 (JD Comparison):** parsing JD extraction. Output [MATCHED] (w/ citation), [PARTIAL] (gap noted), [MISSING] (recommendation).
 - **Phase 4 (Summary):** Master Summary (career-wide) vs Per-JD Summary (keyword-optimized).
 
 ## 5. Critical Formatting & Grammar Rules
