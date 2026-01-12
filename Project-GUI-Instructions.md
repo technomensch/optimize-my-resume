@@ -8,6 +8,15 @@
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
+<system_maintenance_rule>
+  NOTE: This is an OPTIMIZED modular entry point. 
+  Core logic lives in external modules and PROJECT-INSTRUCTIONS.md (Gold Master).
+  1. DO NOT update logic here directly if it exists in a referenced module or the Gold Master.
+  2. The purpose of this file is token efficiency; use PROJECT-INSTRUCTIONS.md for the complete baseline logic.
+</system_maintenance_rule>
+
+<!-- ========================================================================== -->
+
 <!-- ========================================================================== -->
 <!-- V6.0 FOUNDATION MODULES (IN DEVELOPMENT)                                   -->
 <!-- ========================================================================== -->

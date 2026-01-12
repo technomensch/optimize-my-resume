@@ -8,6 +8,16 @@
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
+<system_maintenance_rule>
+  CRITICAL: This is the "Gold Master" logic baseline. 
+  When updating logic, check for <modular_reference> tags within the file. 
+  1. If a reference exists, apply the update to the external module file FIRST.
+  2. Sync this file's text to match the module exactly to maintain the immutable baseline.
+  3. Ensure Project-GUI-Instructions.md reflects these changes (usually automatic via reference).
+</system_maintenance_rule>
+
+<!-- ========================================================================== -->
+
 <!-- ========================================================================== -->
 <!-- V6.0 FOUNDATION MODULES (IN DEVELOPMENT)                                   -->
 <!-- ========================================================================== -->
