@@ -1,4 +1,4 @@
-# Optimize My Resume v6.5.3
+# Optimize My Resume v7.1.1
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -433,8 +433,12 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 6.5.3 (January 8, 2026)
-**Released:** January 8, 2026
+**Current Version:** 7.1.1 (January 12, 2026) <!-- v7.1.1 issue #34 -->
+**Released:** January 12, 2026
+
+### What's New in v7.1.1:
+- **Metric Preservation Guardrail** - New CRITICAL guardrail ensuring hard metrics are preserved during re-writes. (Issue #34)
+- **Technical Role Exception** - Refined industry gap penalty logic for technical roles. (Issue #34)
 
 ### What's New in v6.5.3:
 - **Per-Bullet Recommendations:** Detailed, actionable feedback displayed directly below relevant bullets.

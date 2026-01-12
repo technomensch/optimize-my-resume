@@ -1,6 +1,6 @@
 # Fit Thresholds Configuration
 
-**Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
+**Version:** 7.1.1 <!-- v7.1.1 Change: Metric Preservation & Technical Exception Patch -->
 **Applies to:** All Phases
 
 ---
@@ -155,11 +155,14 @@ Based on industry ATS scoring best practices (Rezi.ai, Jobscan, Recruiterflow):
   <implication>Reduce role_type_gap penalty by 5-10 points for high-impact deliverables.</implication>
 </deliverables_over_titles_rule>
 
-<!-- part of v7.1 issue #33 -->
-<technical_skills_transferability_exception>
-  <statement>Technical foundations transfer across industries.</statement>
-  <implication>Reduce industry_mismatch penalty by 10-15 points for technical foundation roles.</implication>
-</technical_skills_transferability_exception>
+<!-- part of v7.1.1 issue #34 -->
+<technical_role_exception>
+  <logic>
+    Code is code. Tools are tools.
+    IF the role is heavily technical (Technical Writer, Developer, DevOps) AND the toolset matches (e.g., Git, Azure, Jira),
+    THEN reduce Industry Gap Penalty by 75%.
+  </logic>
+</technical_role_exception>
 
 ---
 
