@@ -39,19 +39,19 @@ This document links the natural-language requirements in `requirements.md` to th
 | 1.1.3.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | `Project-GUI-Instructions.md` | TXT direct processing |
 | 1.1.4.0 | ❌ | - | - | RTF support not yet implemented |
 | 1.1.5.0 | ❌ | - | - | MD support not yet implemented |
-| 1.1.6.0 | ✅ | `phases/phase-1/entry-router.md` | `Project-GUI-Instructions.md` | Paste text input |
-| 1.1.7.0 | ✅ | `phases/phase-1/entry-router.md` | `phases/phase-3/workflow-router.md` | Content type detection |
+| 1.1.6.0 | ✅ | `optimization-tools/resume-analyzer/entry-router.md` | `Project-GUI-Instructions.md` | Paste text input |
+| 1.1.7.0 | ✅ | `optimization-tools/resume-analyzer/entry-router.md` | `optimization-tools/job-fit-analyzer/workflow-router.md` | Content type detection |
 
 ### Feature 1.2.0.0: Resume Parsing
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 1.2.1.0 | ✅ | `phases/phase-1/job-history-v2-creation.md` | `templates/job_history_template.xml` | Job title extraction |
-| 1.2.2.0 | ✅ | `phases/phase-1/job-history-v2-creation.md` | `templates/job_history_template.xml` | Company name extraction |
-| 1.2.3.0 | ✅ | `phases/phase-1/job-history-v2-creation.md` | `templates/job_history_template.xml` | Date extraction |
-| 1.2.4.0 | ✅ | `phases/phase-1/job-history-v2-creation.md` | `templates/job_history_template.xml` | Bullet extraction |
-| 1.2.5.0 | ✅ | `phases/phase-1/job-history-v2-creation.md` | - | Remote/hybrid/on-site detection |
-| 1.2.6.0 | ✅ | `phases/phase-1/jd-parsing-17-point.md` | `core/skill-classification.md` | Skill extraction and classification |
+| 1.2.1.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Job title extraction |
+| 1.2.2.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Company name extraction |
+| 1.2.3.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Date extraction |
+| 1.2.4.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Bullet extraction |
+| 1.2.5.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Remote/hybrid/on-site detection |
+| 1.2.6.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | `core/skill-classification.md` | Skill extraction and classification |
 
 ### Feature 1.3.0.0: Resume Quality Scoring
 
@@ -100,8 +100,8 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 1.8.1.0 | ✅ | `phases/phase-1/job-history-v2-creation.md` | `templates/job_history_template.xml` | v2.0 schema, 12 sections |
-| 1.8.2.0 | ✅ | `phases/phase-4/summary-generation.md` | - | Master summary generation |
+| 1.8.1.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | v2.0 schema, 12 sections |
+| 1.8.2.0 | ✅ | `optimization-tools/narrative-generator/summary-generation.md` | - | Master summary generation |
 | 1.8.3.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | - | `<job_history_export_functionality>` section |
 | 1.8.4.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | - | XML and Markdown export options |
 
@@ -113,17 +113,17 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 2.1.1.0 | ✅ | `phases/phase-3/workflow-router.md` | - | JD paste input |
-| 2.1.2.0 | ✅ | `phases/phase-3/workflow-router.md` | - | JD validation heuristics |
+| 2.1.1.0 | ✅ | `optimization-tools/job-fit-analyzer/workflow-router.md` | - | JD paste input |
+| 2.1.2.0 | ✅ | `optimization-tools/job-fit-analyzer/workflow-router.md` | - | JD validation heuristics |
 
 ### Feature 2.2.0.0: Job Description Analysis
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 2.2.1.0 | ✅ | `phases/phase-1/jd-parsing-17-point.md` | - | Required skills extraction |
-| 2.2.2.0 | ✅ | `phases/phase-1/jd-parsing-17-point.md` | - | Preferred skills extraction |
-| 2.2.3.0 | ✅ | `phases/phase-1/jd-parsing-17-point.md` | - | Experience requirements |
-| 2.2.4.0 | ✅ | `phases/phase-1/jd-parsing-17-point.md` | - | Education requirements |
+| 2.2.1.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Required skills extraction |
+| 2.2.2.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Preferred skills extraction |
+| 2.2.3.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Experience requirements |
+| 2.2.4.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Education requirements |
 | 2.2.5.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | - | Location requirements, state abbreviation expansion |
 
 ### Feature 2.3.0.0: Fit Score Calculation
@@ -138,9 +138,9 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 2.4.1.0 | ✅ | `phases/phase-2/evidence-matching.md` | - | Matched requirements display |
-| 2.4.2.0 | ✅ | `phases/phase-2/evidence-matching.md` | - | Partial match display |
-| 2.4.3.0 | ✅ | `phases/phase-2/evidence-matching.md` | - | Missing requirements display |
+| 2.4.1.0 | ✅ | `optimization-tools/bullet-optimizer/evidence-matching.md` | - | Matched requirements display |
+| 2.4.2.0 | ✅ | `optimization-tools/bullet-optimizer/evidence-matching.md` | - | Partial match display |
+| 2.4.3.0 | ✅ | `optimization-tools/bullet-optimizer/evidence-matching.md` | - | Missing requirements display |
 
 ### Feature 2.5.0.0: Blocking Conditions
 
@@ -165,8 +165,8 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 3.2.1.0 | ✅ | `phases/phase-4/summary-generation.md` | - | Master summary |
-| 3.2.2.0 | ✅ | `phases/phase-4/summary-generation.md` | - | Per-JD summary |
+| 3.2.1.0 | ✅ | `optimization-tools/narrative-generator/summary-generation.md` | - | Master summary |
+| 3.2.2.0 | ✅ | `optimization-tools/narrative-generator/summary-generation.md` | - | Per-JD summary |
 
 ### Feature 3.3.0.0: Quality Validation
 
@@ -190,25 +190,25 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 4.1.1.0 | 🔄 | `phases/phase-1/job-history-v2-creation.md` | - | Team size questions |
-| 4.1.2.0 | 🔄 | `phases/phase-1/job-history-v2-creation.md` | - | Budget questions |
-| 4.1.3.0 | 🔄 | `phases/phase-1/job-history-v2-creation.md` | - | Impact metrics questions |
-| 4.1.4.0 | 🔄 | `phases/phase-1/job-history-v2-creation.md` | - | Challenge questions |
+| 4.1.1.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Team size questions |
+| 4.1.2.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Budget questions |
+| 4.1.3.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Impact metrics questions |
+| 4.1.4.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Challenge questions |
 
 ### Feature 4.2.0.0: Job History Enrichment
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 4.2.1.0 | ✅ | `phases/phase-3/incremental-updates.md` | - | Add discovered information |
-| 4.2.2.0 | ✅ | `phases/phase-3/incremental-updates.md` | - | Version increment logic |
+| 4.2.1.0 | ✅ | `optimization-tools/job-fit-analyzer/incremental-updates.md` | - | Add discovered information |
+| 4.2.2.0 | ✅ | `optimization-tools/job-fit-analyzer/incremental-updates.md` | - | Version increment logic |
 
 ### Feature 4.3.0.0: Incremental Updates
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 4.3.1.0 | ✅ | `phases/phase-3/incremental-updates.md` | - | Add position workflow |
-| 4.3.2.0 | ✅ | `phases/phase-3/incremental-updates.md` | - | Edit position workflow |
-| 4.3.3.0 | ✅ | `phases/phase-3/incremental-updates.md` | - | Remove position workflow |
+| 4.3.1.0 | ✅ | `optimization-tools/job-fit-analyzer/incremental-updates.md` | - | Add position workflow |
+| 4.3.2.0 | ✅ | `optimization-tools/job-fit-analyzer/incremental-updates.md` | - | Edit position workflow |
+| 4.3.3.0 | ✅ | `optimization-tools/job-fit-analyzer/incremental-updates.md` | - | Remove position workflow |
 
 ---
 
@@ -376,14 +376,14 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | File | Description | Requirements Covered |
 |------|-------------|---------------------|
-| `phases/phase-1/entry-router.md` | Input routing logic | 1.1.6.0, 1.1.7.0 |
-| `phases/phase-1/jd-parsing-17-point.md` | JD parsing rules | 2.2.x |
-| `phases/phase-1/job-history-v2-creation.md` | Job history schema | 1.2.x, 1.8.x, 4.x |
-| `phases/phase-2/evidence-matching.md` | Requirement matching | 2.4.x |
-| `phases/phase-3/workflow-router.md` | Workflow routing | 2.1.x |
-| `phases/phase-3/incremental-updates.md` | Position updates | 4.2.x, 4.3.x |
-| `phases/phase-3/re-comparison.md` | Re-comparison logic | - |
-| `phases/phase-4/summary-generation.md` | Summary generation | 1.8.2.0, 3.2.x |
+| `optimization-tools/resume-analyzer/entry-router.md` | Input routing logic | 1.1.6.0, 1.1.7.0 |
+| `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | JD parsing rules | 2.2.x |
+| `optimization-tools/resume-analyzer/job-history-v2-creation.md` | Job history schema | 1.2.x, 1.8.x, 4.x |
+| `optimization-tools/bullet-optimizer/evidence-matching.md` | Requirement matching | 2.4.x |
+| `optimization-tools/job-fit-analyzer/workflow-router.md` | Workflow routing | 2.1.x |
+| `optimization-tools/job-fit-analyzer/incremental-updates.md` | Position updates | 4.2.x, 4.3.x |
+| `optimization-tools/job-fit-analyzer/re-comparison.md` | Re-comparison logic | - |
+| `optimization-tools/narrative-generator/summary-generation.md` | Summary generation | 1.8.2.0, 3.2.x |
 
 ### Core Rule Modules
 

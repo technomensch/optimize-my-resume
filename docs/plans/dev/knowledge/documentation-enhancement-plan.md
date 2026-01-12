@@ -22,7 +22,7 @@ Instead of one large v6.1.0 commit, we'll use semantic sub-versioning:
 
 | Sub-Version | Focus | Files Modified | Plan Document |
 |-------------|-------|----------------|---------------|
-| **v6.1.1** | Folder restructure (`/shared/` → `/phases/`) | 5 files | `v6.1.1-folder-restructure.md` |
+| **v6.1.1** | Folder restructure (`/shared/` → `/optimization-tools/`) | 5 files | `v6.1.1-folder-restructure.md` |
 | **v6.1.2** | Documentation updates (README, CHANGELOG, ROADMAP) | 4 files | `v6.1.2-documentation-updates.md` |
 | **v6.1.3** | Wireframe creation (10 new files) | 10 files | `v6.1.3-wireframes.md` |
 | **v6.1.4** | Legacy archival (obsolete files cleanup) | ~12 files | `v6.1.4-legacy-archival.md` |
@@ -40,10 +40,10 @@ Each sub-version gets:
 
 ### v6.1.1 - Folder Restructure
 
-**Goal:** Rename `/shared/` → `/phases/` for clearer architecture naming
+**Goal:** Rename `/shared/` → `/optimization-tools/` for clearer architecture naming
 
 **Changes:**
-1. Rename directory: `mv shared/ phases/`
+1. Rename directory: `mv shared/ optimization-tools/`
 2. Update references in:
    - `PROJECT-INSTRUCTIONS.md` (~15 occurrences)
    - `README.md` (file structure tree)
@@ -52,7 +52,7 @@ Each sub-version gets:
    - `quick-start-mode.md` (if any references)
 
 **Success Criteria:**
-- [ ] All `shared/phase-X/` references changed to `phases/phase-X/`
+- [ ] All `shared/phase-X/` references changed to `optimization-tools/phase-X/`
 - [ ] No broken file paths
 - [ ] Search returns 0 results for `shared/phase-` (excluding docs/legacy)
 
@@ -107,7 +107,7 @@ Add new tip section after Line 271:
   - **Enhanced Documentation** - Consistent phase terminology across all docs
   - **Job Summary Usage Guide** - Clear instructions for professional summary generation
   - **Visual Wireframes** - 10 comprehensive workflow diagrams (ASCII + Mermaid)
-  - **Improved File Structure** - `/phases/` folder for clearer organization
+  - **Improved File Structure** - `/optimization-tools/` folder for clearer organization
   - **Expanded Test Coverage** - 30+ new test cases for Phases 2-4
   ```
 
@@ -140,8 +140,8 @@ Add v6.1.0 entry:
 - **Terminology Consistency** - "Mode 1/2/3" → "Phase 1/2/3" across all user-facing documentation
   - README.md: 28 occurrences updated
   - quick-start-mode.md: Updated to use phase terminology
-  - Consistent with internal architecture (`/phases/` folder structure)
-- **Folder Structure** - Renamed `/shared/` → `/phases/` for clearer naming
+  - Consistent with internal architecture (`/optimization-tools/` folder structure)
+- **Folder Structure** - Renamed `/shared/` → `/optimization-tools/` for clearer naming
   - Updated all references in PROJECT-INSTRUCTIONS.md, README.md, CHANGELOG.md, ROADMAP.md
 - **Version Numbering** - Updated README from v6.0.0 → v6.1.0
 
@@ -149,7 +149,7 @@ Add v6.1.0 entry:
 - **Obsolete v5.0 Files** - Archived to `/docs/legacy/`
   - `/modes/` directory → `/docs/legacy/modes-v5/`
   - `/wireframes/` (v5.0) → `/docs/legacy/wireframes-v5/`
-  - `/phases/v5-legacy/` → `/docs/legacy/shared-v5/`
+  - `/optimization-tools/v5-legacy/` → `/docs/legacy/shared-v5/`
   - Root `CHANGELOG.md` (duplicate) → `/docs/legacy/CHANGELOG-v5.md`
   - `ADD_REMOTE_WORK_LOGIC.md` → `/docs/legacy/implementation-prompts/`
 
@@ -169,7 +169,7 @@ Add v6.1.0 entry:
 **Branch:** `v6.1.0` | **Status:** Complete | **Date:** 2025-12-29
 
 **Sub-Versions:**
-- [x] v6.1.1 - Folder restructure (`/shared/` → `/phases/`)
+- [x] v6.1.1 - Folder restructure (`/shared/` → `/optimization-tools/`)
 - [x] v6.1.2 - Documentation updates (terminology + Job Summary guide)
 - [x] v6.1.3 - Wireframe creation (10 files)
 - [x] v6.1.4 - Legacy archival
@@ -242,7 +242,7 @@ Each file follows this structure:
 
 **Version:** 1.0
 **Last Updated:** 2025-12-29
-**Related Modules:** `phases/phase-X/`
+**Related Modules:** `optimization-tools/phase-X/`
 
 ---
 
@@ -264,7 +264,7 @@ Each file follows this structure:
 - [What gets generated/modified]
 
 ## Files Involved
-- `phases/phase-X/[module].md`
+- `optimization-tools/phase-X/[module].md`
 
 ## Related Phases
 - **Previous:** [Link to previous phase]
@@ -325,16 +325,16 @@ mv wireframes/mode-3-workflow.md docs/legacy/wireframes-v5/
 rmdir wireframes/  # Will be recreated with v6.1 wireframes
 
 # Move shared v5-legacy
-mv phases/v5-legacy/initial-greeting.md docs/legacy/shared-v5/
-mv phases/v5-legacy/job-summary-creation.md docs/legacy/shared-v5/
-rmdir phases/v5-legacy/
+mv optimization-tools/v5-legacy/initial-greeting.md docs/legacy/shared-v5/
+mv optimization-tools/v5-legacy/job-summary-creation.md docs/legacy/shared-v5/
+rmdir optimization-tools/v5-legacy/
 
 # Move root obsolete files
 mv CHANGELOG.md docs/legacy/CHANGELOG-v5.md
 mv ADD_REMOTE_WORK_LOGIC.md docs/legacy/implementation-prompts/
 
 # Move Opus handoff (temporary artifact)
-mv phases/opus-handoff.md docs/plans/archive/opus-handoff.md
+mv optimization-tools/opus-handoff.md docs/plans/archive/opus-handoff.md
 ```
 
 **Create Legacy README:**
@@ -353,7 +353,7 @@ This directory contains v5.0 files that have been superseded by v6.0+ architectu
 ## What's Here
 
 ### `/modes-v5/` - v5.0 Mode Definitions
-Original mode files from v5.0 release. Superseded by `/phases/` modular architecture in v6.0.
+Original mode files from v5.0 release. Superseded by `/optimization-tools/` modular architecture in v6.0.
 
 **Files:**
 - `mode-1-full-analysis.md` - Full resume analysis (v5.0)
@@ -361,10 +361,10 @@ Original mode files from v5.0 release. Superseded by `/phases/` modular architec
 - `mode-3-jd-comparison.md` - JD comparison (v5.0)
 
 **Replaced by:**
-- `/phases/phase-1/` - Job history v2.0, JD parser, entry router (v6.0.1)
-- `/phases/phase-2/` - Evidence matching, blocking gates (v6.0.2)
-- `/phases/phase-3/` - Workflow router, incremental updates (v6.0.3)
-- `/phases/phase-4/` - Summary generation (v6.0.4)
+- `/optimization-tools/resume-analyzer/` - Job history v2.0, JD parser, entry router (v6.0.1)
+- `/optimization-tools/bullet-optimizer/` - Evidence matching, blocking gates (v6.0.2)
+- `/optimization-tools/job-fit-analyzer/` - Workflow router, incremental updates (v6.0.3)
+- `/optimization-tools/narrative-generator/` - Summary generation (v6.0.4)
 
 ---
 
@@ -389,8 +389,8 @@ Legacy shared components from v5.0, pre-modular architecture.
 - `job-summary-creation.md` - Job summary generator (v5.0)
 
 **Replaced by:**
-- `/phases/phase-1/entry-router.md` - Handles greetings via routing (v6.0.1)
-- `/phases/phase-4/summary-generation.md` - Professional summary (v6.0.4)
+- `/optimization-tools/resume-analyzer/entry-router.md` - Handles greetings via routing (v6.0.1)
+- `/optimization-tools/narrative-generator/summary-generation.md` - Professional summary (v6.0.4)
 
 ---
 
@@ -699,10 +699,10 @@ For each test case, provide:
 - **Phase 4 (v6.0.4):** Professional summary (master + per-JD)
 
 **Files to Reference:**
-- `phases/phase-2/evidence-matching.md` - Evidence matching logic
-- `phases/phase-3/incremental-updates.md` - Add/edit/remove operations
-- `phases/phase-3/re-comparison.md` - Diff calculation logic
-- `phases/phase-4/summary-generation.md` - Summary templates
+- `optimization-tools/bullet-optimizer/evidence-matching.md` - Evidence matching logic
+- `optimization-tools/job-fit-analyzer/incremental-updates.md` - Add/edit/remove operations
+- `optimization-tools/job-fit-analyzer/re-comparison.md` - Diff calculation logic
+- `optimization-tools/narrative-generator/summary-generation.md` - Summary templates
 
 ---
 
@@ -714,10 +714,10 @@ For each test case, provide:
 ## 🔄 Execution Sequence
 
 ### Step 1: v6.1.1 - Folder Restructure (30 min)
-1. Rename `shared/` → `phases/`
+1. Rename `shared/` → `optimization-tools/`
 2. Update references in 5 files
 3. Search for remaining `shared/` references
-4. Commit: `refactor(v6.1.1): rename /shared/ to /phases/ for clarity`
+4. Commit: `refactor(v6.1.1): rename /shared/ to /optimization-tools/ for clarity`
 
 ### Step 2: v6.1.2 - Documentation Updates (45 min)
 1. Update README.md (28 Mode→Phase changes + Job Summary tip)
@@ -750,7 +750,7 @@ For each test case, provide:
 ## ✅ Success Criteria
 
 ### Functional
-- [ ] All `/shared/` references updated to `/phases/`
+- [ ] All `/shared/` references updated to `/optimization-tools/`
 - [ ] README has Job Summary usage guide
 - [ ] 28 Mode→Phase terminology updates complete
 - [ ] 10 wireframe files created and rendering correctly
@@ -779,7 +779,7 @@ For each test case, provide:
 
 ## 📊 Impact Summary
 
-**Files to rename:** 1 directory (`shared/` → `phases/`)
+**Files to rename:** 1 directory (`shared/` → `optimization-tools/`)
 **Files to create:** 17 files (10 wireframes + 5 plans + 1 legacy README + 1 test doc)
 **Files to modify:** 5 files (README, CHANGELOG, ROADMAP, PROJECT-INSTRUCTIONS, quick-start-mode)
 **Files to move:** ~12 files (to `/docs/legacy/`)

@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added Budget Enforcement & Quality Gates -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-4/`, `core/format-rules.md`
+**Related Modules:** `optimization-tools/narrative-generator/`, `core/format-rules.md`
 
 ---
 
@@ -62,7 +62,7 @@ Phase 4 creates high-impact professional summaries and enforces final document s
 - Secondary Grammar Check Warning
 
 ## Files Involved
-- `phases/phase-4/summary-generation.md`
+- `optimization-tools/narrative-generator/summary-generation.md`
 - `core/format-rules.md` (Guardrails #8, #12, #14, #22)
 
 ## Related Phases

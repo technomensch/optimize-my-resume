@@ -474,7 +474,7 @@ A: Run the same assessment through 2-3 different LLMs. If scores vary by more th
 
 **Related Docs:**
 - `fit-assessment-calibration-plan.md` (implementation plan)
-- `phases/phase-3/workflow-router.md` (Phase 3 routing logic)
+- `optimization-tools/job-fit-analyzer/workflow-router.md` (Phase 3 routing logic)
 - `core/fit-thresholds.md` (fit scoring methodology)
 
 **Related Issues Solved:**

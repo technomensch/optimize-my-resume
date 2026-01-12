@@ -218,7 +218,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 │   ├── phase-1-foundation-ascii.md
 │   └── [Other ASCII/Mermaid files]
 │
-├── /phases/                           ← Core logic modules
+├── /optimization-tools/                           ← Core logic modules
 │   ├── /phase-1/                      ← Foundation: Job History v2.0 & JD Parser
 │   ├── /phase-2/                      ← Core: Evidence Matching & Blocking Gates
 │   ├── /phase-3/                      ← Router: Scenario Routing & Incremental Updates
@@ -307,7 +307,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 **Solution:**
 - If using ChatGPT/Gemini/Copilot and the quick-start file is too long:
   - Use Claude instead (it has a larger context window)
-  - Or use the expert modules from the `/phases/` folder (advanced)
+  - Or use the expert modules from the `/optimization-tools/` folder (advanced)
 
 ### Problem: "I keep getting generic advice, not specific to my resume"
 **Solution:**
@@ -481,7 +481,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 - **Enhanced Documentation** - Consistent phase terminology across all docs
 - **Job Summary Usage Guide** - Clear instructions for professional summary generation
 - **Visual Wireframes** - 10 comprehensive workflow diagrams (ASCII + Mermaid)
-- **Improved File Structure** - `/phases/` folder for clearer organization
+- **Improved File Structure** - `/optimization-tools/` folder for clearer organization
 - **Expanded Test Coverage** - 30+ new test cases for Phases 2-4
 
 ### What Was New in v6.0:
@@ -504,13 +504,13 @@ See `docs/CHANGELOG.md` for complete version history.
 ### Custom Configuration
 If you want to change how the system works:
 - Edit files in `/core/` folder to adjust thresholds and rules
-- Edit files in `/phases/` folder to change schemas and workflows
+- Edit files in `/optimization-tools/` folder to change schemas and workflows
 - Edit files in `/docs/legacy/modes-v5/` folder to reference legacy v5.0 logic
 
 ### Modular Loading
 If you have context window limitations:
 - Load individual mode files from `/docs/legacy/modes-v5/` instead of quick-start
-- Combine only the modules you need from `/phases/`
+- Combine only the modules you need from `/optimization-tools/`
 - Reference specific components as needed
 
 ### Job History Management

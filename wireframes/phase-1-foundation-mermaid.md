@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added v6.3.x Fit Gates and 17-Point Check Integration -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-1/`, `core/fit-thresholds.md`
+**Related Modules:** `optimization-tools/resume-analyzer/`, `core/fit-thresholds.md`
 
 ---
 
@@ -55,9 +55,9 @@ graph TD
 - Multi-dimensional JD profile
 
 ## Files Involved
-- `phases/phase-1/job-history-v2.md`
-- `phases/phase-1-jd-parser.md`
-- `phases/phase-1-entry-router.md`
+- `optimization-tools/resume-analyzer/job-history-v2.md`
+- `optimization-tools/resume-analyzer-jd-parser.md`
+- `optimization-tools/resume-analyzer-entry-router.md`
 
 ## Related Phases
 - **Previous:** N/A (Entry Point)

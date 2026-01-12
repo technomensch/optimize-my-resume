@@ -6,7 +6,7 @@
 **Created:** 2026-01-11  
 **Last Updated:** 2026-01-11  
 **Affected Files:** 
-- /phases/ directory (entire directory)
+- /optimization-tools/ directory (entire directory)
 - References in PROJECT-INSTRUCTIONS.md
 
 **Labels:** `architecture` `refactor` `high-priority`
@@ -15,12 +15,12 @@
 
 ## Problem Description
 
-The current `/phases/` directory name creates a naming collision with the new modular architecture. The modularization plan includes creating files named:
+The current `/optimization-tools/` directory name creates a naming collision with the new modular architecture. The modularization plan includes creating files named:
 - `phase1-display-rules.md`
 - `phase3-fit-assessment.md`
 
 This creates confusion between:
-- `/phases/` (existing workflow directory)
+- `/optimization-tools/` (existing workflow directory)
 - `phase1-*.md`, `phase3-*.md` (new module files)
 
 **Symptoms:**
@@ -34,7 +34,7 @@ This creates confusion between:
 
 **Current directory structure:**
 ```
-/phases/
+/optimization-tools/
 ├── phase-1/
 │   ├── job-history-v2-creation.md
 │   ├── jd-parsing-17-point.md
@@ -49,7 +49,7 @@ This creates confusion between:
     └── summary-generation.md
 ```
 
-**Problem:** New files like `phase1-display-rules.md` would exist alongside `/phases/phase-1/`, causing confusion.
+**Problem:** New files like `phase1-display-rules.md` would exist alongside `/optimization-tools/resume-analyzer/`, causing confusion.
 
 ---
 
@@ -57,7 +57,7 @@ This creates confusion between:
 
 **Desired directory structure:**
 ```
-/workflow-phases/
+/workflow-optimization-tools/
 ├── phase-1/
 │   ├── job-history-v2-creation.md
 │   ├── jd-parsing-17-point.md
@@ -104,10 +104,10 @@ This creates confusion between:
 ## Root Cause Analysis
 
 **Initial Hypothesis:**
-The `/phases/` directory was created before the modularization plan. The name made sense then (it contains phase-by-phase workflow documentation), but now creates collision with new "phaseN-*.md" module naming convention.
+The `/optimization-tools/` directory was created before the modularization plan. The name made sense then (it contains phase-by-phase workflow documentation), but now creates collision with new "phaseN-*.md" module naming convention.
 
 **Investigation Steps:**
-1. Check all references to `/phases/` in PROJECT-INSTRUCTIONS.md
+1. Check all references to `/optimization-tools/` in PROJECT-INSTRUCTIONS.md
 2. Verify no other code/scripts reference this directory
 3. Confirm rename won't break existing functionality
 
@@ -118,8 +118,8 @@ Directory named before modular architecture was planned. Simple naming collision
 
 ## Proposed Solutions
 
-### Option 1: Rename to `/workflow-phases/`
-**Description:** Rename `/phases/` → `/workflow-phases/`
+### Option 1: Rename to `/workflow-optimization-tools/`
+**Description:** Rename `/optimization-tools/` → `/workflow-optimization-tools/`
 
 **Time Estimate:** 30 minutes
 
@@ -139,14 +139,14 @@ Directory named before modular architecture was planned. Simple naming collision
 mv /phases /workflow-phases
 
 # Update references in PROJECT-INSTRUCTIONS.md
-sed -i 's|/phases/|/workflow-phases/|g' PROJECT-INSTRUCTIONS.md
-sed -i 's|phases/|workflow-phases/|g' PROJECT-INSTRUCTIONS.md
+sed -i 's|/optimization-tools/|/workflow-optimization-tools/|g' PROJECT-INSTRUCTIONS.md
+sed -i 's|optimization-tools/|workflow-optimization-tools/|g' PROJECT-INSTRUCTIONS.md
 ```
 
 ---
 
 ### Option 2: Rename to `/phase-workflows/`
-**Description:** Rename `/phases/` → `/phase-workflows/`
+**Description:** Rename `/optimization-tools/` → `/phase-workflows/`
 
 **Time Estimate:** 30 minutes
 
@@ -166,8 +166,8 @@ sed -i 's|phases/|workflow-phases/|g' PROJECT-INSTRUCTIONS.md
 mv /phases /phase-workflows
 
 # Update references
-sed -i 's|/phases/|/phase-workflows/|g' PROJECT-INSTRUCTIONS.md
-sed -i 's|phases/|phase-workflows/|g' PROJECT-INSTRUCTIONS.md
+sed -i 's|/optimization-tools/|/phase-workflows/|g' PROJECT-INSTRUCTIONS.md
+sed -i 's|optimization-tools/|phase-workflows/|g' PROJECT-INSTRUCTIONS.md
 ```
 
 ---
@@ -190,14 +190,14 @@ sed -i 's|phases/|phase-workflows/|g' PROJECT-INSTRUCTIONS.md
 
 **Implementation:**
 ```
-/phases/ (unchanged)
+/optimization-tools/ (unchanged)
 /display-rules-phase1.md (new)
 /fit-assessment-phase3.md (new)
 ```
 
 ---
 
-**Recommended:** Option 1 (`/workflow-phases/`)
+**Recommended:** Option 1 (`/workflow-optimization-tools/`)
 
 **Reasoning:**
 1. Most descriptive name that clarifies purpose
@@ -248,7 +248,7 @@ sed -i 's|phases/|phase-workflows/|g' PROJECT-INSTRUCTIONS.md
 - Identified naming collision during modularization planning
 - Created Issue #27
 - Proposed 3 solutions
-- Recommended: Option 1 (/workflow-phases/)
+- Recommended: Option 1 (/workflow-optimization-tools/)
 
 ---
 

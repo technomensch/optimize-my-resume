@@ -72,7 +72,7 @@ The "Complete Workflow" represents the end-to-end user journey from initial setu
 - Plain text export (Auto-generated)
 
 ## Files Involved
-- All files in `phases/` directory
+- All files in `optimization-tools/` directory
 - All files in `core/` directory (Guardrails & Rules)
 
 ## Related Phases
