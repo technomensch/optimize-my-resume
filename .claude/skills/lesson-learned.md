@@ -1,35 +1,222 @@
+# Document Lessons Learned
+
+**Purpose:** Create a comprehensive Lessons Learned document after solving a problem or implementing a new pattern.
+
+**Version:** 1.2 (Updated: 2026-01-02) <!-- v1.2 Change: Added category auto-detection and master index updates -->
+
 ---
-description: create a lessons learned document
+
+## Syntax Detection <!-- v1.1 Change -->
+
+**Create New Document:**
+- `/lessons-learned` → Create new document (Steps 1-5 below)
+- `/lessons-learned <topic>` → Create new document with topic
+
+**Update Existing Document:**
+- `/lessons-learned update <filename>` → Update existing document (Step 0 below)
+- Example: `/lessons-learned update Lessons_Learned_Chat_History_Workflow.md`
+
 ---
 
-# /lessons-learned
+## Step 0: Update Existing Document (v1.1 Feature) <!-- v1.1 Change -->
 
-You are the Lessons Learned Architect. Your purpose is to capture architectural, technical, and process-related insights into a structured, searchable, and highly actionable documentation system.
+**When user types:** `/lessons-learned update <filename>`
 
-## Version
-1.2 - Added automatic category index and tag generation integration
+### Step 0.1: Read Existing Document
 
-## Protocol
+1. **Locate file:**
+   - Path: `docs/lessons-learned/<filename>`
+   - If not found, ask user for correct path
 
-### Step 1: Pre-Creation Analysis
+2. **Extract metadata:**
+   - Current version (from **Version:** field)
+   - Creation date (from **Created:** field)
+   - Last update date (from **Version:** field if present)
 
-**Categorization check:**
-- Analyze the topic and current project structure
-- Determine which category the lesson belongs to:
-  1. Architecture (system design, foundation)
-  2. Implementation (coding patterns, language-specific)
-  3. Process (workflow, git, testing)
-  4. DevOps (deployment, CI/CD, environments)
-  5. Uncategorized (general insights)
+3. **Determine next version:**
+   - Minor increment: v1.0 → v1.1 → v1.2
+   - Format: `**Version:** 1.X (Updated: YYYY-MM-DD) <!-- v1.X Change -->`
 
-**Target path determination:**
-1. Architecture - move to architecture/
-2. Implementation - move to implementation/
-3. Process - move to process/
+### Step 0.2: Ask What to Update
+
+Present options to user:
+
+```markdown
+I'll help you update **<filename>**
+
+**Current Version:** v1.X
+**Last Updated:** YYYY-MM-DD
+
+**What would you like to update?**
+
+1. [ ] Add new section (will be inserted before Conclusion)
+2. [ ] Update existing section (specify which section)
+3. [ ] Add to version history only
+4. [ ] Other (describe)
+
+Please select an option and provide details.
+```
+
+### Step 0.3: Gather Update Content
+
+Based on user selection:
+
+**For "Add new section":**
+- Ask for section title
+- Ask for section content (or user will provide)
+- Ask where to insert (default: before Conclusion)
+
+**For "Update existing section":**
+- Ask which section to update
+- Ask what to add/change
+- Preserve existing content, append new content
+
+**For "Add to version history only":**
+- Ask for changelog entry
+
+### Step 0.4: Apply Updates
+
+**Update version history:**
+```markdown
+**Version:** 1.X (Updated: 2025-12-12) <!-- v1.X Change -->
+
+**Changelog:** <!-- v1.X Change -->
+- v1.0 (YYYY-MM-DD): Initial release
+- v1.X (2025-12-12): [Brief description of changes] <!-- v1.X Change -->
+```
+
+**Add dated section header** (if adding new section):
+```markdown
+## [Section Name] (Updated: 2025-12-12) <!-- v1.X Change -->
+
+[Content]
+```
+
+**Update existing section** (if modifying):
+```markdown
+## [Existing Section]
+
+[Original content]
+
+### [Sub-section] (Updated: 2025-12-12) <!-- v1.X Change -->
+
+[New content added here]
+```
+
+**Add inline comments** at all change locations:
+```markdown
+<!-- v1.X Change -->
+```
+
+### Step 0.5: Confirm with User
+
+Show user the changes that will be made:
+
+```markdown
+**Proposed Updates to <filename>:**
+
+**Version:** v1.X → v1.Y
+
+**Changes:**
+1. [Change 1 description]
+2. [Change 2 description]
+
+**Sections Modified:**
+- [Section name] (line XX)
+- [Section name] (line YY)
+
+**Proceed with these updates?** (yes/no)
+```
+
+### Step 0.6: Write Updated Document
+
+- Preserve ALL existing content
+- Add new sections/content as specified
+- Update version metadata
+- Add all inline comments
+- Save file
+
+### Step 0.7: Commit (if user approves)
+
+```bash
+git add docs/lessons-learned/<filename>
+git commit -m "docs(lessons): update <topic> v1.X
+
+[Description of changes]
+
+v1.X Change
+
+🤖 Generated with Claude Code
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+```
+
+---
+
+## Instructions (Create New Document)
+
+When the user invokes this command without "update", follow this structured process:
+
+### Step 1: Verification (INTERACTIVE)
+
+**Ask the user these questions:**
+
+1. **What problem did you solve or pattern did you implement?**
+   - Briefly describe in 1-2 sentences
+
+2. **What should this lessons learned document cover?**
+   - The problem encountered
+   - Root cause analysis
+   - Solution implemented
+   - Prevention systems
+   - Replication guidance
+   - Other (specify)
+
+3. **What is the primary audience?**
+   - Future developers on this project
+   - External developers wanting to replicate the pattern
+   - General software engineering best practices
+   - AI-assisted development workflows
+   - Other (specify)
+
+4. **Suggested filename:**
+   - Format: `Lessons_Learned_[Topic].md`
+   - Example: `Lessons_Learned_Automated_Validation.md`
+   - Confirm or suggest alternative
+
+**WAIT FOR USER CONFIRMATION** before proceeding to Step 1.5.
+
+### Step 1.5: Auto-Detect Lesson Category (v1.2 Feature) <!-- v1.2 Change -->
+
+**After gathering lesson topic, determine category:**
+
+**Category detection logic:**
+
+| Keywords in Topic/Description | Category |
+|-------------------------------|----------|
+| "architecture", "design decision", "pattern", "structure", "architectural" | `architecture/` |
+| "bug", "debug", "error", "fix", "troubleshoot", "debugging" | `debugging/` |
+| "workflow", "process", "SOP", "procedure", "ceremony", "practice" | `process/` |
+| "reusable", "pattern", "template", "boilerplate", "framework" | `patterns/` |
+| No clear match | `[uncategorized]` (root directory) |
+
+**Ask user to confirm:**
+
+```markdown
+Based on your topic, I recommend:
+
+**Category:** architecture
+
+This lesson will be saved to: docs/lessons-learned/architecture/
+
+**Is this correct?**
+1. ✅ Yes - use architecture/
+2. Process - move to process/
+3. Debugging - move to debugging/
 4. Patterns - move to patterns/
 5. Uncategorized - keep at root level
 
 [User selects option]
+```
 
 **Category override:**
 - User can always override auto-detection
@@ -353,7 +540,7 @@ git commit -m "docs(lessons): create [topic] lessons learned
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Co-Authored-By: Claude Sonnet 4.5 <noreply@anthreply.com>
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
 "
 ```
 
