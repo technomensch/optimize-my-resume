@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added Calibrated Scoring (Industry, Role, Context) -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-2/`, `core/adjacent-technical.md`, `core/industry-context.md`
+**Related Modules:** `optimization-tools/bullet-optimizer/`, `core/adjacent-technical.md`, `core/industry-context.md`
 
 ---
 
@@ -62,7 +62,7 @@ Phase 2 performs the heavy lifting of matching the user's evidence against the J
 - "The Why" assessment (Educational score breakdown)
 
 ## Files Involved
-- `phases/phase-2/evidence-matching.md`
+- `optimization-tools/bullet-optimizer/evidence-matching.md`
 - `core/adjacent-technical.md`
 - `core/industry-context.md`
 - `core/role-type-validation.md`

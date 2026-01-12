@@ -8,13 +8,13 @@ Consult these files for every request. **DO NOT rely on internal memory if these
 
 | User Intent / Stage | Primary Reference File |
 | :--- | :--- |
-| **Intent Detection / Routing** | `phases/phase-1/entry-router.md`, `phases/phase-3/workflow-router.md` |
-| **Resume Analysis (Phase 1)** | `phases/phase-1/job-history-v2-creation.md` |
+| **Intent Detection / Routing** | `optimization-tools/resume-analyzer/entry-router.md`, `optimization-tools/job-fit-analyzer/workflow-router.md` |
+| **Resume Analysis (Phase 1)** | `optimization-tools/resume-analyzer/job-history-v2-creation.md` |
 | **Bullet Optimization (Phase 2)** | `templates/LLM_GENERATION_INSTRUCTIONS.md` |
-| **JD Parsing (Phase 3 Prep)** | `phases/phase-1/jd-parsing-17-point.md` |
-| **Gap Analysis & Matching (Phase 3)** | `phases/phase-2/evidence-matching.md` |
-| **Updating Job History** | `phases/phase-3/incremental-updates.md`, `phases/phase-3/re-comparison.md` |
-| **Summary Generation (Phase 4)** | `phases/phase-4/summary-generation.md` |
+| **JD Parsing (Phase 3 Prep)** | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` |
+| **Gap Analysis & Matching (Phase 3)** | `optimization-tools/bullet-optimizer/evidence-matching.md` |
+| **Updating Job History** | `optimization-tools/job-fit-analyzer/incremental-updates.md`, `optimization-tools/job-fit-analyzer/re-comparison.md` |
+| **Summary Generation (Phase 4)** | `optimization-tools/narrative-generator/summary-generation.md` |
 | **Data Structure (v2.0)** | `templates/job_history_template.xml` |
 
 ## 3. Core Principles

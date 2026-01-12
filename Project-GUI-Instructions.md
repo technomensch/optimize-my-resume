@@ -20,20 +20,20 @@
 
   <available_modules>
     <!-- Phase 1: Foundation -->
-    - phases/phase-1/job-history-v2-creation.md (12-section schema)
-    - phases/phase-1/jd-parsing-17-point.md (17-point JD parser)
-    - phases/phase-1/entry-router.md (5-scenario routing logic)
+    - optimization-tools/resume-analyzer/job-history-v2-creation.md (12-section schema)
+    - optimization-tools/resume-analyzer/jd-parsing-17-point.md (17-point JD parser)
+    - optimization-tools/resume-analyzer/entry-router.md (5-scenario routing logic)
 
     <!-- Phase 2: Core Integration -->
-    - phases/phase-2/evidence-matching.md (requirement-by-requirement gap analysis)
+    - optimization-tools/bullet-optimizer/evidence-matching.md (requirement-by-requirement gap analysis)
 
     <!-- Phase 3: Router & Workflows -->
-    - phases/phase-3/workflow-router.md (complete 8-scenario routing system)
-    - phases/phase-3/incremental-updates.md (add/edit/remove positions)
-    - phases/phase-3/re-comparison.md (JD re-comparison with diff output)
+    - optimization-tools/job-fit-analyzer/workflow-router.md (complete 8-scenario routing system)
+    - optimization-tools/job-fit-analyzer/incremental-updates.md (add/edit/remove positions)
+    - optimization-tools/job-fit-analyzer/re-comparison.md (JD re-comparison with diff output)
 
     <!-- Phase 4: Summary & Polish -->
-    - phases/phase-4/summary-generation.md (master + per-JD summary customization)
+    - optimization-tools/narrative-generator/summary-generation.md (master + per-JD summary customization)
   </available_modules>
 
   <v6_0_0_release_notes>
@@ -50,7 +50,7 @@
   <priority>CRITICAL - Execute BEFORE phase detection</priority>
 
   <purpose>
-    Before executing any phase, consult phases/phase-3/workflow-router.md to:
+    Before executing any phase, consult optimization-tools/job-fit-analyzer/workflow-router.md to:
     1. Detect user state (hasJobHistory, hasJD, hasResume)
     2. Identify user intent (which workflow to execute)
     3. Confirm with user before proceeding
@@ -94,14 +94,14 @@
       Condition: User says "add position", "edit position", "remove position"
       Route: Incremental Update Handler
       Action: Add/edit/remove positions in job history v2.0
-      Handler: phases/phase-3/incremental-updates.md
+      Handler: optimization-tools/job-fit-analyzer/incremental-updates.md
     </scenario>
 
     <scenario id="7" name="re_comparison">
       Condition: User says "compare again", "re-run", "updated history"
       Route: Re-Comparison Handler
       Action: Re-run JD analysis with updated job history + diff output
-      Handler: phases/phase-3/re-comparison.md
+      Handler: optimization-tools/job-fit-analyzer/re-comparison.md
     </scenario>
 
     <scenario id="8" name="ambiguous_input">
@@ -119,7 +119,7 @@
   </override_commands>
 
   <execution_rule>
-    ALWAYS route through phases/phase-3/workflow-router.md FIRST before executing any phase.
+    ALWAYS route through optimization-tools/job-fit-analyzer/workflow-router.md FIRST before executing any phase.
 
     The router:
     - Detects user state and intent
@@ -149,7 +149,7 @@
   <current_version>2.0</current_version>
 
   <schema_location>
-    Job History Schema v2.0 is defined in: phases/phase-1/job-history-v2-creation.md
+    Job History Schema v2.0 is defined in: optimization-tools/resume-analyzer/job-history-v2-creation.md
   </schema_location>
 
   <key_changes_from_v1_0>
@@ -627,7 +627,7 @@
   </behavior>
 
   <job_history_creation>
-    After extracting resume data, generate job history in v2.0 format per phases/phase-1/job-history-v2-creation.md:
+    After extracting resume data, generate job history in v2.0 format per optimization-tools/resume-analyzer/job-history-v2-creation.md:
 
     FOR EACH position in resume:
       1. Extract metadata (job_title, company, dates)
@@ -643,7 +643,7 @@
          - If a resume bullet is just a duty (e.g., "Wrote reports"), put it in Responsibilities, NOT Achievements.
          - If a bullet has a result (e.g., "Reduced time by 50%"), put it here.
       
-      4. Categorize skills using phases/phase-1/jd-parsing-17-point.md classification rules:
+      4. Categorize skills using optimization-tools/resume-analyzer/jd-parsing-17-point.md classification rules:
          - Run each skill through hard vs soft categorization logic
          - Separate into hard_skills_demonstrated and soft_skills_demonstrated arrays
       5. Extract education (if mentioned in context of this role)

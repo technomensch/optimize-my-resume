@@ -145,7 +145,7 @@ Gemini's 92% over-credited portfolio work and found "transferable" matches that 
 
 | Resource | Relationship |
 |----------|--------------|
-| `phases/phase-3/workflow-router.md` | Phase 3 routing logic (where fit assessment occurs) |
+| `optimization-tools/job-fit-analyzer/workflow-router.md` | Phase 3 routing logic (where fit assessment occurs) |
 | `core/fit-thresholds.md` | Existing fit scoring methodology |
 | Project instructions (main prompt) | Where new modules will be inserted |
 | v6.3.0 guardrails | 27 existing guardrails to integrate with |

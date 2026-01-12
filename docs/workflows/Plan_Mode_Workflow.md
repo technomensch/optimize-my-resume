@@ -207,7 +207,7 @@ How things work now, what exists, what doesn't
 High-level approach to implementation
 
 ## Implementation Approach
-Detailed phases/steps with code examples
+Detailed optimization-tools/steps with code examples
 
 ## Technical Considerations
 Important decisions, trade-offs, options
