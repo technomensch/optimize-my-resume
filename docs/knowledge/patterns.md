@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
 **Last Updated:** 2026-01-02
-**Entries:** 6
+**Entries:** 11
 
 ---
 
@@ -13,6 +13,9 @@
 - [Template-Driven Docs](#template-driven-docs) - Standardized document creation
 - [Four-Pillar Memory](#four-pillar-memory) - Multi-system knowledge capture
 - [Category Auto-Detection](#category-auto-detection) - Keyword-based organization
+- [Silent Sync](#silent-sync) - Preserving gold master integrity
+- [Metric Preservation Guardrail](#metric-preservation-guardrail) - Data integrity audit
+- [Value-Driven User Stories](#value-driven-user-stories) - Benefit-focused requirements
 
 ---
 
@@ -80,6 +83,22 @@
 
 ---
 
+### Silent Sync
+
+**Problem:** Modularizing core instructions risks breaking the "Gold Master" source of truth
+**Solution:** Keep core logic in Gold Master but wrap in comments; references mirror this structure
+**When to use:** Optimizing entry points (GUI) without fragmenting the core system (System Prompt)
+
+**Quick Reference:**
+- `PROJECT-INSTRUCTIONS.md`: Wrap logic in `<!-- SILENT SYNC: [Name] -->`
+- `Project-GUI-Instructions.md`: Replace logic with `<modular_reference>`
+- Explicitly link them in documentation
+- Preserves integrity while saving tokens for users
+
+**See:** [ADR-004](../decisions/ADR-004-shadow-modularization.md)
+
+---
+
 ## Workflow Patterns
 
 ### Four-Pillar Memory
@@ -117,6 +136,21 @@ Keywords → Category:
 
 ---
 
+### Multi-Model Testing Strategy
+
+**Problem:** Single models have blind spots in self-correction.
+**Solution:** Use one model (Sonnet) to generate test cases and another (Opus) to expand/execute instructions.
+**When to use:** Complex testing scenarios requiring diverse perspectives, or when a model is stuck in a loop.
+
+**Quick Reference:**
+- **Analyst Model (Sonnet):** Generates broad, creative test cases and edge cases.
+- **Executor Model (Opus):** Expands cases into detailed steps and executes them.
+- **Benefit:** Reduces "lazy" testing where the model validates its own bias.
+
+**See:** [Refining Test Case Strategy Session](../sessions/2025-12/2025-12-29_refining-test-case-strategy.md)
+
+---
+
 ## Code Patterns
 
 ### ID-Based Architecture
@@ -132,6 +166,54 @@ Keywords → Category:
 - Maintains relational integrity
 
 **See:** [ID-Based Architecture Lesson](../lessons-learned/architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
+
+---
+
+### Metric Preservation Guardrail
+
+**Problem:** AI optimization often accidentally removes specific numbers/metrics
+**Solution:** Mandatory "Data Integrity Audit" before finalizing any edit
+**When to use:** Rewriting bullets, summarizing text, any optimization task
+
+**Quick Reference:**
+1. Extract all numbers from original text
+2. Extract all numbers from new draft
+3. If any missing → STOP and restore
+4. Zero tolerance for data loss
+
+**See:** `metric_preservation_guardrail` in [PROJECT-INSTRUCTIONS.md](../../PROJECT-INSTRUCTIONS.md)
+
+---
+
+### Value-Driven User Stories
+
+**Problem:** Task-oriented stories ("System parses PDF") fail to capture *why* feature matters
+**Solution:** Rename stories to emphasize the value proposition
+**When to use:** Requirements documentation, product planning
+
+**Quick Reference:**
+- **Bad:** "PDF Parsing" (Technical task)
+- **Good:** "PDF Document Ingestion" (Capability)
+- **Bad:** "Check Requirements" (Action)
+- **Good:** "Qualification Gap Analysis" (Value to user)
+- **Pattern:** [Noun] [Capability/Outcome] rather than [Verb] [Object]
+
+**See:** [Requirements Document](../../docs/requirements/requirements.md)
+
+---
+
+### Functional Directory Structure
+
+**Problem:** Generic named directories (e.g., "shared") obscure intent and lead to dumping ground behavior.
+**Solution:** Name directories by their functional phase or role in the pipeline (e.g., "phases").
+**When to use:** Refactoring project structure for clarity.
+
+**Quick Reference:**
+- **Bad:** `/shared/` (ambiguous, mixed concerns)
+- **Good:** `/phases/` (explicit functional role)
+- **Rule:** If you have to ask "what goes here?", the name is wrong.
+
+**See:** [Restructuring Project Directories Session](../sessions/2025-12/2025-12-29_restructuring-project-directories.md)
 
 ---
 

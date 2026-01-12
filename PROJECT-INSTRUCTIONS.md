@@ -2905,6 +2905,7 @@
 <!-- QUALITY ASSURANCE RULES - GRAMMAR, CONSISTENCY, VARIATION                 -->
 <!-- ========================================================================== -->
 
+<!-- SILENT SYNC: Quality Gates & Guardrails -->
 <quality_assurance_rules>
   <phrase_variation_rule>
     <priority>high</priority>
@@ -3676,6 +3677,7 @@
     </metric_preservation_guardrail>
   </system_guardrails>
 </quality_assurance_rules>
+<!-- END SILENT SYNC: Quality Gates & Guardrails -->
 
 <!-- ========================================================================== -->
 <!-- CHARACTER AND WORD LIMITS                                                  -->

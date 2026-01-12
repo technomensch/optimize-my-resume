@@ -137,8 +137,8 @@ Every core file now includes a `<system_maintenance_rule>` block in the first 50
 **Created:** 2026-01-12
 **Version:** 1.0
 **Related Docs:**
-- [v8.0-going-modular-implementation-plan.md](../../plans/v8.0-going-modular/v8.0-going-modular-implementation-plan.md)
-- [PROJECT-INSTRUCTIONS-modularization-analysis.md](../../plans/v8.0-going-modular/PROJECT-INSTRUCTIONS-modularization-analysis.md)
+- [v8.0-going-modular-implementation-plan.md](../../plans/v8.x/v8.0-going-modular-implementation-plan.md)
+- [PROJECT-INSTRUCTIONS-modularization-analysis.md](../../plans/v8.x/no_longer_relevant_did_not_implement/PROJECT-INSTRUCTIONS-modularization-analysis.md)
 
 **Related Issues Solved:**
 - #28 (Shadow extraction pattern established)

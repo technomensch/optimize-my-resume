@@ -1,7 +1,7 @@
 # Common Gotchas & Solutions
 
 **Last Updated:** 2026-01-02
-**Entries:** 6
+**Entries:** 7
 
 ---
 
@@ -13,6 +13,7 @@
 - [Project vs. Global Confusion](#project-vs-global-confusion) - Scoping misunderstanding
 - [Chat History Bloat](#chat-history-bloat) - Gitignore pattern needed
 - [Plan File Location](#plan-file-location) - Temporary vs. permanent
+- [Deleting Feature Branches](#deleting-feature-branches) - Loss of audit trail
 
 ---
 
@@ -125,6 +126,22 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 **Why:** `.claude/plans/` is temporary (Claude Code internal), `docs/plans/` is permanent (git tracked)
 
 **See:** [Lesson: Plan File Locations](../lessons-learned/process/Lessons_Learned_Plan_File_Locations.md)
+
+---
+
+### Deleting Feature Branches
+
+**Symptom:** Lost the "thought process" and reasoning behind a merged feature
+**Gotcha:** Standard git cleanup (deleting branches) destroys the granular commit history
+**Fix:**
+- **NEVER** delete feature branches after merging
+- Keep them on origin as historical archives
+- Use `v8.x-` naming to organize them
+- If deleted, check `git reflog` immediately to restore
+
+**Why:** The *history of decisions* is as valuable as the code. Squashed merges in main hide the intermediate steps.
+
+**See:** [ADR-006: Strict Branch Preservation](../decisions/ADR-006-strict-branch-preservation.md)
 
 ---
 

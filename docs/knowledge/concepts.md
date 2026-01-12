@@ -1,7 +1,7 @@
 # Core Concepts
 
 **Last Updated:** 2026-01-03
-**Entries:** 9
+**Entries:** 11
 
 ---
 
@@ -16,6 +16,8 @@
 - [Cross-Referencing](#cross-referencing) - Bidirectional linking system
 - [Startup-Only Loading](#startup-only-loading) - Resource initialization timing
 - [Automation Strategy](#automation-strategy) - Manual triggers vs. automatic execution
+- [Shadow Modularization](#shadow-modularization) - Integrity vs. optimization balance
+- [Action Verb Categories](#action-verb-categories) - 5-part classification framework
 
 ---
 
@@ -158,6 +160,72 @@ LLMs default to full rewrites. Explicit constraints enforce surgical behavior an
 - **ADR:** [ADR-003: Surgical Updates Pattern](../decisions/ADR-003-surgical-updates-pattern.md)
 - **Lesson:** [ID-Based Architecture](../lessons-learned/architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
 - **Skill:** `/update-history`
+
+---
+
+### Shadow Modularization
+
+**Category:** Concept
+**Tags:** #architecture #optimization #system-design
+
+#### Quick Summary
+
+A strategy where the core "Gold Master" file remains monolithic to preserve context integrity, while user-facing entry points are modularized to save tokens.
+
+#### Details
+
+**The Conflict:**
+- **Monolith:** High integrity, high token cost.
+- **Micro-modules:** Low token cost, high fragmentation risk.
+
+**The Solution:**
+- Keep `PROJECT-INSTRUCTIONS.md` (System) monolithic.
+- Use `<!-- SILENT SYNC -->` markers to define logical boundaries within it.
+- Modularize `Project-GUI-Instructions.md` (User) by extracting those same sections to referenced files.
+- Result: System sees the whole truth; User pays for only what they need.
+
+#### Key Insight
+
+Optimization should not come at the cost of system coherence. "Shadow" the modules within the master rather than replacing them.
+
+#### Cross-References
+
+- **ADR:** [ADR-004: Shadow Modularization](../decisions/ADR-004-shadow-modularization.md)
+- **Pattern:** [[patterns.md#silent-sync]]
+
+---
+
+### Action Verb Categories
+
+**Category:** Concept
+**Tags:** #resume-writing #nlp #classification #standardization
+
+#### Quick Summary
+
+A strict 5-category framework for classifying resume action verbs to ensure diversity and impact.
+
+#### Details
+
+**The 5 Categories:**
+1.  **Built (Blue) 🔵**: Creation, construction, establishing new systems.
+2.  **Lead (Yellow) 🟡**: Driving initiatives, guiding teams, championing efforts.
+3.  **Managed (Purple) 🟣**: Oversight, resource coordination, operations.
+4.  **Improved (Green) 🟢**: Optimization, enhancement, measured gain.
+5.  **Collaborate (Pink) 🩷**: Partnership, cross-functional work.
+
+**Rules:**
+- **Distribution:** Target 20% per category (13-27% acceptable).
+- **Flagging:** Any category < 5% is a defect.
+- **Diversity:** No category may repeat within a single position (unless >5 bullets).
+
+#### Key Insight
+
+Forcing verb diversity avoids "one-note" resumes (e.g., only "Managed" or only "Built") and demonstrates a complete leadership profile.
+
+#### Cross-References
+
+- **Implementation:** [core/verb-categories.md](../../core/verb-categories.md)
+- **Pattern:** [[patterns.md#metric-preservation-guardrail]] (often paired)
 
 ---
 
