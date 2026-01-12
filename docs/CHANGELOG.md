@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### v7.1.0 - Strategic Assessment Methodology (v7.1-prompt-alignment-update)
+- **Strategic Rare Skill Override** - Introduced CRITICAL override for rare required skills (<20% prevalence).
+- **Deliverables Over Titles Rule** - Prioritizes impact and deliverables over job titles.
+- **Technical Transferability Exception** - Reduced industry mismatch penalties for technical roles.
+- **Updated Fit Thresholds** - Calibrated ranges to 85/75/65/55 to account for JD inflation.
+- **Real-World Hiring Context** - Integrated hiring manager calibration principles.
+
 ### v6.5.4 - Planned Improvements
 - **JSON Truncation Fix** - Full implementation of sequential position analysis for 3+ position resumes (Issue #7).
 - **Token Tracking** - Session-based token usage tracking (ENH-001).

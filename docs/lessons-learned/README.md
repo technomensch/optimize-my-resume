@@ -1,15 +1,15 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 16
+**Total Lessons:** 17
 **Categories:** 4
-**Last Updated:** 2026-01-10
+**Last Updated:** 2026-01-12
 
 ---
 
 ## Quick Search
 
 **By Category:**
-- [Architecture](#architecture-lessons) (3)
+- [Architecture](#architecture-lessons) (4)
 - [Debugging](#debugging-lessons) (3)
 - [Process](#process-lessons) (7)
 - [Patterns](#patterns-lessons) (2)
@@ -21,7 +21,7 @@
 
 ## Architecture Lessons
 
-**3 lessons** - See [architecture/README.md](architecture/README.md) for full details
+**4 lessons** - See [architecture/README.md](architecture/README.md) for full details
 
 1. **[Claude Code Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)**
    - Date: 2025-12-29
@@ -39,6 +39,11 @@
    - Tags: #architecture #documentation #best-practices #portability
    - Problem: Machine-specific absolute paths in versioned docs
    - Solution: Enforcement of relative paths from repository root for all documentation references
+4. **[Strategic vs Strict JD Assessment Methodology](architecture/Lessons_Learned_Strategic_Assessment_Methodology.md)**
+   - Date: 2026-01-12
+   - Tags: #architecture #logic #strategic-assessment #issue-33
+   - Problem: Rigid checkbox matching causing false negatives
+   - Solution: 85/75/65/55 thresholds + rare skill overrides + inflation calibration
 
 **Subdirectory:** [architecture/](architecture/)
 
@@ -145,7 +150,7 @@
 
 ## Tag Index
 
-**#architecture** (3 lessons)
+**#architecture** (4 lessons)
 - [Claude Code Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)
 - [ID-Based Architecture](architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
 - [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md)
@@ -256,6 +261,7 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-12: [Strategic JD Assessment](architecture/Lessons_Learned_Strategic_Assessment_Methodology.md) - Methodology shift to address false negatives
 - 2026-01-10: [Ollama Model Tag Matching](debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md) - Tag normalization for Ollama API integration
 - 2026-01-10: [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md) - Tailwind v4 syntax migration and styling restoration
 - 2026-01-07: [GitHub Issue-Driven Planning](debugging/Lessons_Learned_GitHub_Issue_Driven_Planning.md) - Programmatic requirement gathering
@@ -307,14 +313,14 @@ grep -r "#architecture" docs/lessons-learned/
 **By Category:**
 - Process: 7 lessons (44%)
 - Debugging: 4 lessons (25%)
-- Architecture: 3 lessons (19%)
+- Architecture: 4 lessons (24%)
 - Patterns: 2 lessons (12%)
 
 **Most Common Tags:**
 1. #process (7 lessons)
 2. #workflow (6 lessons)
-3. #debugging (4 lessons)
-4. #architecture, #automation, #claude-code, #documentation (3 lessons each)
+3. #debugging, #architecture (4 lessons each)
+4. #automation, #claude-code, #documentation (3 lessons each)
 5. #skills, #git-hygiene, #planning (2 lessons each)
 
 **Timeline:**
@@ -324,7 +330,7 @@ grep -r "#architecture" docs/lessons-learned/
 - Average: ~0.52 lessons per day
 
 **Content:**
-- Total lessons: 16
+- Total lessons: 17
 - Estimated total lines: ~12,300 lines
 - Average per lesson: ~770 lines
 
@@ -340,4 +346,4 @@ grep -r "#architecture" docs/lessons-learned/
 ---
 
 **Created:** 2026-01-02
-**Last Major Update:** 2026-01-10 (Added Tailwind v4 Styling Fix lesson)
+**Last Major Update:** 2026-01-12 (Added Strategic vs Strict JD Assessment lesson)

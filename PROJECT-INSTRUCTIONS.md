@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v6.5.3
+# Optimize-My-Resume System v7.1.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.3 (January 9, 2026)                                           --> <!-- v6.5.3: Per-Bullet Repairs, JSON Truncation Fix, Metric Refinement -->
-<!-- Last Updated: January 9, 2026                                              -->
+<!-- Version: 7.1.0 (January 12, 2026)                                          --> <!-- v7.1.0: Strategic Assessment Methodology (Issue #33) -->
+<!-- Last Updated: January 12, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
@@ -993,6 +993,74 @@
 <!-- ========================================================================== -->
 
 <phase_3_pre_generation_assessment>
+  <!-- part of v7.1 issue #33 -->
+  <real_world_hiring_context>
+    <priority>MODERATE</priority>
+    <purpose>
+      Calibrate assessment logic to match real hiring dynamics, not rigid 
+      checkbox matching.
+    </purpose>
+    
+    <principles>
+      <principle id="jd_inflation">
+        <statement>
+          Job descriptions are typically 30% inflated. They represent the 
+          "unicorn candidate" wishlist, not the actual hire bar.
+        </statement>
+        <implication>
+          Candidate meeting 70% of requirements is genuinely competitive, 
+          not underqualified.
+        </implication>
+      </principle>
+      
+      <principle id="rare_over_common">
+        <statement>
+          Rare skills create disproportionate advantage. A candidate with 
+          ONE rare skill hiring managers struggle to find will advance 
+          further than a candidate with MORE years but COMMON skills.
+        </statement>
+        <implication>
+          Portfolio project demonstrating rare skill > 2 years professional 
+          experience with common skills.
+        </implication>
+      </principle>
+      
+      <principle id="transferable_foundations">
+        <statement>
+          Technical foundations (tools, workflows, methodologies) transfer 
+          near-perfectly. Domain knowledge (industry, regulations) is 
+          trained on the job.
+        </statement>
+        <implication>
+          Strong technical foundation + wrong industry > Weak technical 
+          foundation + right industry.
+        </implication>
+      </principle>
+      
+      <principle id="growth_potential">
+        <statement>
+          Hiring managers hire for POTENTIAL, not just CURRENT STATE. 
+          Evidence of rapid learning (portfolio projects, self-teaching, 
+          certifications) signals coachability.
+        </statement>
+        <implication>
+          Portfolio project showing self-teaching adds strategic value 
+          beyond just skill demonstration.
+        </implication>
+      </principle>
+    </principles>
+    
+    <assessment_mindset_shift>
+      <from>
+        "Do I meet every requirement on paper?"
+        (Deficit-focused, risk-averse)
+      </from>
+      <to>
+        "What's my competitive position vs other candidates?"
+        (Strength-focused, opportunity-seeking)
+      </to>
+    </assessment_mindset_shift>
+  </real_world_hiring_context>
   
   <purpose>
     Evaluate job description fit against user's experience BEFORE generating bullets. Stop early if critical domain/technology gaps exist to avoid wasting tokens on positions the user shouldn't apply for.
@@ -1521,7 +1589,41 @@
         - Transferable Experience: X equivalent years from [related roles]
         - Gap Assessment: [NONE / MODERATE / SIGNIFICANT]
       </output_format>
+      <!-- part of v7.1 issue #33 -->
+      <deliverables_over_titles_rule>
+        <statement>
+          Focus on deliverables and impact, not just job titles. A "Technical Writer"
+          who built an internal tool is more valuable than a "Software Engineer"
+          who only maintained legacy code.
+        </statement>
+        <implication>
+          If candidate demonstrates high-impact deliverables relevant to the JD,
+          reduce role_type_gap penalty by 5-10 points.
+        </implication>
+      </deliverables_over_titles_rule>
     </role_type_experience_validation>
+
+    <!-- part of v7.1 issue #33 -->
+    <strategic_rare_skill_override>
+      <priority>CRITICAL</priority>
+      <instruction>
+        If a candidate possesses a rare skill (e.g., Git-based workflow for a non-dev role)
+        that is explicitly mentioned as a "Required" skill in the JD and has <20% prevalence
+        in the candidate pool, apply a strategic override to the fit score.
+      </instruction>
+      <conditions>
+        <condition id="rare_skill_identified">
+          - Skill is "Required" in JD
+          - Skill has <20% prevalence (based on internal data)
+          - Candidate explicitly demonstrates skill (e.g., portfolio project)
+        </condition>
+      </conditions>
+      <override_logic>
+        - Portfolio weight for this skill: 50% → 100%
+        - Industry penalty: -25 points → -5 points (if applicable)
+        - Competitive bonus: +15 points
+      </override_logic>
+    </strategic_rare_skill_override>
 
     <step number="3" name="calculate_preliminary_fit">
       <scoring_methodology>
@@ -1584,12 +1686,49 @@
         <step order="7">Final score = Raw score - All penalties</step>
       </calculation_order>
 
-      <fit_thresholds>
-        <excellent range="90-100%">Strong match after all validation penalties applied. Proceed automatically.</excellent>
-        <good range="80-89%">Good match with minor gaps. FLAG gaps and ASK user before proceeding.</good>
-        <weak range="75-79%">Weak match - validation penalties pushed score down. STOP with brief summary, recommend alternatives.</weak>
-        <poor range="0-74%">Poor match - significant gaps in role type, industry, or technical depth. STOP with ultra-brief summary.</poor>
-      </fit_thresholds>
+      <!-- part of v7.1 issue #33 -->
+      <fit_thresholds_updated>
+        <thresholds>
+          <excellent range="85-100%">
+            <action>Proceed automatically to bullet generation</action>
+            <messaging>Excellent match - proceed with confidence</messaging>
+          </excellent>
+          
+          <good range="75-84%">
+            <action>Flag minor gaps, ask user for strategic differentiators</action>
+            <messaging>Good match - competitive if you highlight differentiators</messaging>
+            <clarification>
+              Present gap summary and ask:\n        "What makes you a unique fit for this role despite these minor gaps?"
+            </clarification>
+          </good>
+          
+          <moderate range="65-74%">
+            <action>Ask user if they have differentiator skill or strategic advantage</action>
+            <messaging>Moderate match - competitive IF you have unfair advantage</messaging>
+            <clarification>
+              Present gap summary and ask:\n        "Do you have expertise in [RARE SKILL X] or [CRITICAL REQUIREMENT Y] \n        that would make you stand out despite these gaps?"
+            </clarification>
+          </moderate>
+          
+          <weak range="55-64%">
+            <action>Brief exit summary (150-250 words)</action>
+            <messaging>Weak match - only apply if perfect culture fit or internal referral</messaging>
+          </weak>
+          
+          <poor range="0-54%">
+            <action>Ultra-brief exit summary (50-100 words)</action>
+            <messaging>Poor match - focus efforts elsewhere</messaging>
+          </poor>
+        </thresholds>
+        
+        <threshold_rationale>
+          Changed from 90/80/75/74 to 85/75/65/55 because:
+          - Acknowledges JDs are inflated (~30% above actual requirements)
+          - Reduces false negatives (skipping good opportunities)
+          - Better aligns with real-world hiring manager expectations
+          - Accounts for strategic positioning value
+        </threshold_rationale>
+      </fit_thresholds_updated>
     </step>
 
     <step number="4" name="decision_point">
@@ -1853,6 +1992,18 @@
         - Impact on Fit Score: [+/- X points]
       </format>
     </output_integration>
+    <!-- part of v7.1 issue #33 -->
+    <technical_skills_transferability_exception>
+      <statement>
+        Technical foundations (e.g., cloud platforms, programming languages, data science)
+        transfer near-perfectly across industries. Industry-specific domain knowledge
+        is typically learned on the job.
+      </statement>
+      <implication>
+        If industry mismatch is due to technical role in different industry,
+        reduce industry_mismatch penalty by 10-15 points.
+      </implication>
+    </technical_skills_transferability_exception>
   </industry_context_validation>
 
   <phase_2_gap_investigation>

@@ -1,9 +1,10 @@
 # Workflow Router - Complete Entry Point System (Phase 3)
 
-**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
+**Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
 **Created:** 2025-12-29
 **Purpose:** Complete routing system that detects user intent and routes to appropriate workflow
 **Extends:** phases/phase-1/entry-router.md
+**Note:** v7.1.0 introduces strategic assessment methodology with 85/75/65/55 fit thresholds and rare skill overrides.
 
 ---
 

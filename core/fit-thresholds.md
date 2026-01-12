@@ -1,37 +1,55 @@
 # Fit Thresholds Configuration
 
-**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
+**Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
 **Applies to:** All Phases
 
 ---
 
 ## Fit Threshold Definitions
 
-```xml
-<fit_thresholds>
-  <tier name="excellent" range="90-100%">
-    <action>Proceed to bullet generation automatically</action>
-    <rationale>Strong match, user should apply</rationale>
-  </tier>
+<!-- part of v7.1 issue #33 -->
+<fit_thresholds_updated>
+  <thresholds>
+    <excellent range="85-100%">
+      <action>Proceed automatically to bullet generation</action>
+      <messaging>Excellent match - proceed with confidence</messaging>
+    </excellent>
+    
+    <good range="75-84%">
+      <action>Flag minor gaps, ask user for strategic differentiators</action>
+      <messaging>Good match - competitive if you highlight differentiators</messaging>
+      <clarification>
+        Present gap summary and ask:\n        "What makes you a unique fit for this role despite these minor gaps?"
+      </clarification>
+    </good>
+    
+    <moderate range="65-74%">
+      <action>Ask user if they have differentiator skill or strategic advantage</action>
+      <messaging>Moderate match - competitive IF you have unfair advantage</messaging>
+      <clarification>
+        Present gap summary and ask:\n        "Do you have expertise in [RARE SKILL X] or [CRITICAL REQUIREMENT Y] \n        that would make you stand out despite these gaps?"
+      </clarification>
+    </moderate>
+    
+    <weak range="55-64%">
+      <action>Brief exit summary (150-250 words)</action>
+      <messaging>Weak match - only apply if perfect culture fit or internal referral</messaging>
+    </weak>
+    
+    <poor range="0-54%">
+      <action>Ultra-brief exit summary (50-100 words)</action>
+      <messaging>Poor match - focus efforts elsewhere</messaging>
+    </poor>
+  </thresholds>
   
-  <tier name="good" range="80-89%">
-    <action>FLAG gaps and ASK user (proceed to Phase 2 - Full Gap Investigation)</action>
-    <rationale>Moderate fit with addressable gaps</rationale>
-  </tier>
-  
-  <tier name="weak" range="75-79%">
-    <action>STOP with BRIEF SUMMARY (skip to Phase 3A - Brief Exit Output)</action>
-    <rationale>Weak match, not worth detailed investigation</rationale>
-    <no_user_override>Do not offer to generate bullets anyway</no_user_override>
-  </tier>
-  
-  <tier name="poor" range="0-74%">
-    <action>STOP with ULTRA-BRIEF SUMMARY (skip to Phase 3B - Ultra-Brief Exit Output)</action>
-    <rationale>Poor match, fundamental mismatch</rationale>
-    <no_user_override>Do not offer to generate bullets anyway</no_user_override>
-  </tier>
-</fit_thresholds>
-```
+  <threshold_rationale>
+    Changed from 90/80/75/74 to 85/75/65/55 because:
+    - Acknowledges JDs are inflated (~30% above actual requirements)
+    - Reduces false negatives (skipping good opportunities)
+    - Better aligns with real-world hiring manager expectations
+    - Accounts for strategic positioning value
+  </threshold_rationale>
+</fit_thresholds_updated>
 
 ---
 
@@ -103,12 +121,45 @@ Based on industry ATS scoring best practices (Rezi.ai, Jobscan, Recruiterflow):
 
 ## Decision Tree Summary
 
-| Fit % | Action | Output Type | Token Usage |
-|-------|--------|-------------|-------------|
-| **90-100%** | Proceed immediately | Full bullet generation | HIGH |
-| **80-89%** | Ask user about gaps | Full investigation + bullets if proceed | MEDIUM-HIGH |
-| **75-79%** | Stop with brief summary | Brief exit (~150-250 words) | LOW |
-| **≤74%** | Stop with ultra-brief | Ultra-brief exit (~50-100 words) | MINIMAL |
+| Fit % | Action | Messaging | Token Usage |
+|-------|--------|-----------|-------------|
+| **85-100%** | Proceed immediately | Excellent match - proceed with confidence | HIGH |
+| **75-84%** | Ask user about gaps | Good match - competitive with differentiators | MEDIUM-HIGH |
+| **65-74%** | Ask about unfair advantage | Moderate match - competitive with advantage | MEDIUM |
+| **55-64%** | Stop with brief summary | Weak match - apply only if culture/referral | LOW |
+| **0-54%** | Stop with ultra-brief | Poor match - focus efforts elsewhere | MINIMAL |
+
+---
+
+## Strategic Assessment Rules (v7.1.0)
+
+<!-- part of v7.1 issue #33 -->
+<real_world_hiring_context>
+  <priority>MODERATE</priority>
+  <principles>
+    <principle id="jd_inflation">JDs are ~30% inflated. 70% match is competitive.</principle>
+    <principle id="rare_over_common">Rare skills > Years of common experience.</principle>
+    <principle id="transferable_foundations">Technical foundations (tools, workflows) transfer near-perfectly.</principle>
+  </principles>
+</real_world_hiring_context>
+
+<!-- part of v7.1 issue #33 -->
+<strategic_rare_skill_override>
+  <instruction>Apply override for rare required skills (<20% prevalence).</instruction>
+  <logic>Portfolio weight 50%→100%; reduced industry penalty; +15 competitive bonus.</logic>
+</strategic_rare_skill_override>
+
+<!-- part of v7.1 issue #33 -->
+<deliverables_over_titles_rule>
+  <statement>Prioritize impact/deliverables over job titles.</statement>
+  <implication>Reduce role_type_gap penalty by 5-10 points for high-impact deliverables.</implication>
+</deliverables_over_titles_rule>
+
+<!-- part of v7.1 issue #33 -->
+<technical_skills_transferability_exception>
+  <statement>Technical foundations transfer across industries.</statement>
+  <implication>Reduce industry_mismatch penalty by 10-15 points for technical foundation roles.</implication>
+</technical_skills_transferability_exception>
 
 ---
 
@@ -228,6 +279,12 @@ Fit scores must be calculated in this specific order to ensure validation rules 
 
 ## Version History
 
+- v7.1.0 (January 12, 2026): Strategic Assessment Methodology (Issue #33)
+  - Updated fit thresholds (85/75/65/55) to account for JD inflation
+  - Added Strategic Rare Skill Override logic
+  - Added Deliverables Over Titles Rule
+  - Added Technical Skills Transferability Exception
+  - Integrated Real-World Hiring Context principles
 - v6.3.1 (January 4, 2026): Added validation penalties and calculation order
   - Added 5 validation penalty types for new v6.3.1 rules
   - Added 7-step calculation order for proper penalty application
