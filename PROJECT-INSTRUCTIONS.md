@@ -8,6 +8,16 @@
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
+<system_maintenance_rule>
+  CRITICAL: This is the "Gold Master" logic baseline. 
+  When updating logic, check for <modular_reference> tags within the file. 
+  1. If a reference exists, apply the update to the external module file FIRST.
+  2. Sync this file's text to match the module exactly to maintain the immutable baseline.
+  3. Ensure Project-GUI-Instructions.md reflects these changes (usually automatic via reference).
+</system_maintenance_rule>
+
+<!-- ========================================================================== -->
+
 <!-- ========================================================================== -->
 <!-- V6.0 FOUNDATION MODULES (IN DEVELOPMENT)                                   -->
 <!-- ========================================================================== -->
@@ -2041,6 +2051,7 @@
 <!-- BULLET COLOR-CODING SYSTEM (v6.5.0)                                        -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#bullet_color_coding_rules -->
 <bullet_color_coding_rules>
   <priority>HIGH</priority>
   <applies_to>Phase 1, Phase 2, Phase 3 - All bullet displays</applies_to>
@@ -2112,6 +2123,7 @@
 <!-- BULLET METRICS DETECTION (v6.5.0)                                          -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#bullet_metrics_detection_rules -->
 <bullet_metrics_detection_rules>
   <priority>HIGH</priority>
   <applies_to>Phase 1, Phase 2, Phase 3 - All bullet displays</applies_to>
@@ -2157,6 +2169,7 @@
 <!-- BULLET DISPLAY AND GROUPING (v6.5.0)                                       -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#bullet_display_and_grouping_rules -->
 <bullet_display_and_grouping_rules>
   <priority>CRITICAL</priority>
   <applies_to>Phase 1, Phase 2, Phase 3 - All bullet displays</applies_to>
@@ -2215,6 +2228,7 @@
 <!-- HIRING MANAGER PERSPECTIVE ANALYSIS (v6.5.0)                               -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#hiring_manager_perspective_rules -->
 <hiring_manager_perspective_rules>
   <priority>HIGH</priority>
   <applies_to>Phase 1 Resume Analysis only</applies_to>
@@ -2382,6 +2396,7 @@
 <!-- JOB HISTORY SUMMARY GENERATION (v6.5.0)                                    -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#job_history_summary_generation_rules -->
 <job_history_summary_generation_rules>
   <priority>HIGH</priority>
   <applies_to>Phase 1 Resume Analysis - Hiring Manager Perspective section</applies_to>
@@ -2528,6 +2543,7 @@
 <!-- JOB HISTORY EXPORT FUNCTIONALITY (v6.5.0)                                  -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#job_history_export_functionality -->
 <job_history_export_functionality>
   <priority>CRITICAL</priority>
   <applies_to>Phase 1 Resume Analysis - After hiring manager perspective section</applies_to>
@@ -2606,6 +2622,7 @@
 <!-- PER-BULLET AUDIT DISPLAY (v6.5.0)                                          -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#per_bullet_audit_rules -->
 <per_bullet_audit_rules>
   <priority>CRITICAL</priority>
   <applies_to>Phase 1 Resume Analysis Report</applies_to>
@@ -2753,6 +2770,7 @@
 <!-- PRIORITIZED REPAIRS SUMMARY (v6.5.0)                                       -->
 <!-- ========================================================================== -->
 
+<!-- MODULAR_SYNC: optimization-tools/resume-analyzer/resume-analyzer-display.md#prioritized_repairs_summary_rules -->
 <prioritized_repairs_summary_rules>
   <priority>CRITICAL</priority>
   <applies_to>Phase 1 Resume Analysis Report</applies_to>
@@ -3891,96 +3909,9 @@
   </step>
 </core_process>
 
-<!-- ========================================================================== -->
-<!-- JOB SUMMARY CREATION                                                       -->
-<!-- ========================================================================== -->
 
-  <job_history_summary_generation_rules id="8">
-    <priority>CRITICAL</priority>
-    <instruction>
-      Follow this strict generation and display protocol for Job History Summaries.
-    </instruction>
 
-    <display_format_in_phase_1>
-      <priority>CRITICAL</priority>
-      <instruction>
-        When displaying summaries in the chat window, ALWAYS render them as formatted Markdown.
-        NEVER output raw XML tags (like <core_responsibilities>) in the visual report.
-      </instruction>
-      <rendering_rules>
-        <structure>
-          1. Convert <professional_summary> tag → "### 📝 Professional Summary"
-          2. Convert <core_responsibilities> tag → "### 📋 Core Responsibilities"
-          3. Convert <key_achievements> tag → "### 🏆 Key Achievements"
-          4. Convert <hard_skills_demonstrated> tag → "### 💻 Hard Skills"
-          5. Convert <soft_skills_demonstrated> tag → "### 🤝 Soft Skills"
-          6. Convert <tools_technologies> tag → "### 🛠 Tools & Technologies"
-          7. Convert <impact_metrics> tag → "### 📊 Impact Metrics"
-          8. Convert <team_scope> tag → "### 👥 Team Scope"
-        </structure>
 
-        <bullet_formatting>
-          For all bullet points within Core Responsibilities and Key Achievements:
-          MUST apply standard bullet_display_and_grouping_rules:
-          - Prefix with Metric Indicator: ✓ [Has Metrics] or - [No Metrics]
-          - Prefix with Verb Category: [Category] (e.g., [Built])
-          - Example: "✓ [Has Metrics] [Built] Architected a scalable..."
-        </bullet_formatting>
-      </rendering_rules>
-      <example_output>
-        #### 📄 Job History Summary: Position 1
-
-        **Inferred Title:** Microsoft 365 Administrator
-        **Duration:** 10 months
-
-        ### 📝 Professional Summary
-        Served as the Microsoft 365 Subject Matter Expert...
-
-        ### 📋 Core Responsibilities
-        * - [No Metrics] [Collaborate] Capture requirements from the Business Development team...
-        * - [No Metrics] [Built] Create custom SharePoint Online forms...
-
-        ### 🏆 Key Achievements
-        * ✓ [Has Metrics] [Built] Built custom SharePoint Online forms with Power Apps...
-
-        [...continue for all sections...]
-      </example_output>
-    </display_format_in_phase_1>
-
-    <download_export_formats>
-      <format name="xml">
-        <file_format>XML (v2.0 Schema)</file_format>
-        <use_case>Machine processing, LLM consumption, system imports, version control</use_case>
-      </format>
-      <format name="markdown">
-        <file_format>Markdown (.md)</file_format>
-        <use_case>Reading, sharing, presentations, documentation</use_case>
-      </format>
-      <format name="zip">
-        <file_format>ZIP archive</file_format>
-        <use_case>Complete backup with both formats</use_case>
-      </format>
-    </download_export_formats>
-
-    <file_naming_convention>
-      <xml_format>claude_generated_job_history_v6.5.1_[YYYYMMDD].xml</xml_format>
-      <markdown_format>claude_generated_job_history_v6.5.1_[YYYYMMDD].md</markdown_format>
-      <zip_format>claude_generated_job_history_v6.5.1_[YYYYMMDD]_BOTH.zip</zip_format>
-    </file_naming_convention>
-
-    <user_guidance>
-      <during_analysis>
-        "Your job history summaries are being generated automatically as we analyze each position."
-      </during_analysis>
-      <before_download>
-        "We've compiled all positions into comprehensive job history summaries. Download in your preferred format:
-
-        📄 XML - For LLM processing, system integration, version control
-        📝 Markdown - For reading, sharing, presentations
-        📦 Both (ZIP) - Complete backup"
-      </before_download>
-    </user_guidance>
-  </job_history_summary_generation_rules>
 
 <!-- ========================================================================== -->
 <!-- INITIAL GREETING (PHASE 2 & 3)                                              -->
