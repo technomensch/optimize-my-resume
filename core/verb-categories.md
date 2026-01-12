@@ -161,7 +161,7 @@ For each bullet point in the resume:
 
 ### Guardrail #7: Skill Categorization Mutual Exclusivity (Secondary)
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](optimization-tools/resume-analyzer/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/jd-parsing.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml

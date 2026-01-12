@@ -17,7 +17,7 @@
 | **System Behavior & Product Info** | ~3,000 | 4% | ❌ Keep inline (core) |
 | **Entry Point Routing (Phase 3)** | ~2,500 | 3% | ✅ Could extract |
 | **Phase Detection & Routing** | ~1,500 | 2% | ❌ Keep inline (critical) |
-| **Job History Schema v2.0** | ~2,000 | 2% | ✅ Already referenced |
+| **Job History Schema job history creation** | ~2,000 | 2% | ✅ Already referenced |
 | **Job History Template System** | ~8,000 | 9% | ✅ **HIGH PRIORITY** |
 | **Phase 1: Full Resume Analysis** | ~5,000 | 6% | ❌ Keep inline (core) |
 | **Phase 1: Artifact Config & UI Rules** | ~6,000 | 7% | ✅ **ALREADY IN artifact-creation-instructions.md** |

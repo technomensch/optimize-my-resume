@@ -36,8 +36,8 @@ This creates confusion between:
 ```
 /optimization-tools/
 ├── phase-1/
-│   ├── job-history-v2-creation.md
-│   ├── jd-parsing-17-point.md
+│   ├── job-history-creation.md
+│   ├── jd-parsing.md
 │   └── entry-router.md
 ├── phase-2/
 │   └── evidence-matching.md
@@ -59,8 +59,8 @@ This creates confusion between:
 ```
 /workflow-optimization-tools/
 ├── phase-1/
-│   ├── job-history-v2-creation.md
-│   ├── jd-parsing-17-point.md
+│   ├── job-history-creation.md
+│   ├── jd-parsing.md
 │   └── entry-router.md
 ├── phase-2/
 │   └── evidence-matching.md

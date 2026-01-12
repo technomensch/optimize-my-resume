@@ -125,7 +125,7 @@ Add v6.1.0 entry:
   - Use cases (cover letters, LinkedIn, email applications)
   - ATS keyword optimization tip
 - **Comprehensive Wireframes** - 10 visual workflow guides (5 ASCII + 5 Mermaid)
-  - Phase 1: Foundation (job history v2.0, JD parser, entry router)
+  - Phase 1: Foundation (job history creation, JD parser, entry router)
   - Phase 2: Core Integration (evidence matching, blocking gates)
   - Phase 3: Router & Workflows (8-scenario routing, incremental updates)
   - Phase 4: Summary & Polish (professional summary generation)
@@ -211,7 +211,7 @@ Each phase gets **2 files**:
 1. **Phase 1 - Foundation**
    - `wireframes/phase-1-foundation-ascii.md`
    - `wireframes/phase-1-foundation-mermaid.md`
-   - Content: Job history v2.0 creation, 17-point JD parsing, entry router
+   - Content: job history creation creation, JD parsing, entry router
 
 2. **Phase 2 - Core Integration**
    - `wireframes/phase-2-core-integration-ascii.md`
@@ -361,7 +361,7 @@ Original mode files from v5.0 release. Superseded by `/optimization-tools/` modu
 - `mode-3-jd-comparison.md` - JD comparison (v5.0)
 
 **Replaced by:**
-- `/optimization-tools/resume-analyzer/` - Job history v2.0, JD parser, entry router (v6.0.1)
+- `/optimization-tools/resume-analyzer/` - job history creation, JD parser, entry router (v6.0.1)
 - `/optimization-tools/bullet-optimizer/` - Evidence matching, blocking gates (v6.0.2)
 - `/optimization-tools/job-fit-analyzer/` - Workflow router, incremental updates (v6.0.3)
 - `/optimization-tools/narrative-generator/` - Summary generation (v6.0.4)
@@ -477,8 +477,8 @@ These files provide historical context for:
 
 **Required Test Cases (~8 tests):**
 
-1. **INT-001:** User runs Phase 1 (creates job history v2.0) → immediately runs Phase 3 (JD comparison)
-   - **Validate:** v2.0 job history loads correctly, hard/soft skills separated, evidence citations use proper format
+1. **INT-001:** User runs Phase 1 (creates job history creation) → immediately runs Phase 3 (JD comparison)
+   - **Validate:** job history creation job history loads correctly, hard/soft skills separated, evidence citations use proper format
    - **Expected:** All 12 job history sections accessible, no null reference errors
 
 2. **INT-002:** User has v1.0 job history → runs Phase 3 (backward compatibility)
@@ -583,9 +583,9 @@ These files provide historical context for:
    - **Validate:** System detects version mismatch, re-parses JD
    - **Expected:** Warning: "Cached JD uses outdated schema. Re-parsing..."
 
-6. **DIFF-006:** User runs re-comparison with different job history version (v1.0 → v2.0 upgrade)
+6. **DIFF-006:** User runs re-comparison with different job history version (v1.0 → job history creation upgrade)
    - **Validate:** Diff handles schema change gracefully
-   - **Expected:** Note: "Job history upgraded from v1.0 to v2.0. Hard/soft skills now separated."
+   - **Expected:** Note: "Job history upgraded from v1.0 to job history creation. Hard/soft skills now separated."
 
 7. **DIFF-007:** User deletes cached JD → tries to re-compare
    - **Validate:** System detects missing cache, prompts for JD re-upload
@@ -669,7 +669,7 @@ For each test case, provide:
 
 | Test ID | Scenario | Input | Expected Output | Validation Rule |
 |---------|----------|-------|-----------------|-----------------|
-| INT-001 | Phase 1 → Phase 3 integration | Job history v2.0 + JD | Evidence citations with proper format | Check: "Company \| Job Title" format, no "Resume -" prefix |
+| INT-001 | Phase 1 → Phase 3 integration | job history creation + JD | Evidence citations with proper format | Check: "Company \| Job Title" format, no "Resume -" prefix |
 
 ---
 
@@ -693,7 +693,7 @@ For each test case, provide:
 - Summary Generator: 8 tests (edge cases) - PARTIAL, needs quality validation
 
 **Phase Implementation Details:**
-- **Phase 1 (v6.0.1):** Job history v2.0, 17-point JD parser, entry router
+- **Phase 1 (v6.0.1):** job history creation, JD parsing protocol, entry router
 - **Phase 2 (v6.0.2):** Evidence matching with citations, blocking gates
 - **Phase 3 (v6.0.3):** Workflow router, incremental updates, re-comparison
 - **Phase 4 (v6.0.4):** Professional summary (master + per-JD)

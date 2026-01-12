@@ -17,7 +17,7 @@ Original mode files from v5.0 release. Superseded by `/optimization-tools/` modu
 - `mode-3-jd-comparison.md` - JD comparison (v5.0)
 
 **Replaced by:**
-- `/optimization-tools/resume-analyzer/` - Job history v2.0, JD parser, entry router (v6.0.1)
+- `/optimization-tools/resume-analyzer/` - job history creation, JD parser, entry router (v6.0.1)
 - `/optimization-tools/bullet-optimizer/` - Evidence matching, blocking gates (v6.0.2)
 - `/optimization-tools/job-fit-analyzer/` - Workflow router, incremental updates (v6.0.3)
 - `/optimization-tools/narrative-generator/` - Summary generation (v6.0.4)

@@ -1,4 +1,4 @@
-# Job History v2.0 - Creation Protocol
+# Job History Creation - Creation Protocol
 
 **Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
@@ -610,7 +610,7 @@ Before marking job history as complete:
 
 ### Guardrail #1: Metric Isolation & Traceability
 
-> **Implementation Target:** Add to [job-history-v2-creation.md](optimization-tools/resume-analyzer/job-history-v2-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -638,7 +638,7 @@ Before marking job history as complete:
 
 ### Guardrail #17: Scope Attribution Validation
 
-> **Implementation Target:** Add to [job-history-v2-creation.md](optimization-tools/resume-analyzer/job-history-v2-creation.md).
+> **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md).
 
 **Instruction Text:**
 ```xml
@@ -662,7 +662,7 @@ Before marking job history as complete:
 
 ### Guardrail #5: honest_limitations Enforcement (Secondary)
 
-> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [job-history-v2-creation.md](optimization-tools/resume-analyzer/job-history-v2-creation.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -907,7 +907,7 @@ Evidence: "Developed ETL pipelines for 3 enterprise clients"
 
 ## Related Protocols
 
-- **JD Parsing (17-point):** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
+- **JD Parsing (parsing):** `optimization-tools/resume-analyzer/jd-parsing.md`
 - **Entry Router (5-scenario):** `optimization-tools/resume-analyzer/entry-router.md`
 - **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md`
 - **Summary Generation:** `optimization-tools/narrative-generator/summary-generation.md`
@@ -915,9 +915,9 @@ Evidence: "Developed ETL pipelines for 3 enterprise clients"
 ---
 
 **Version History:**
-- v2.0 (2025-12-28): Complete rewrite with 12-section schema, hard/soft separation, evidence-based matching
+- job history creation (2025-12-28): Complete rewrite with 12-section schema, hard/soft separation, evidence-based matching
 - v1.0 (2025-12-15): Initial 8-section schema
 
 ---
 
-**End of Job History v2.0 Creation Protocol**
+**End of Job History Creation Creation Protocol**

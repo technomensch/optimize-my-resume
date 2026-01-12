@@ -8,7 +8,7 @@
 
 ## Overview
 
-This protocol implements requirement-by-requirement matching between parsed job descriptions and job history v2.0. It provides evidence-based gap analysis with citations, enabling users to see exactly where their experience matches (or doesn't match) JD requirements.
+This protocol implements requirement-by-requirement matching between parsed job descriptions and job history creation. It provides evidence-based gap analysis with citations, enabling users to see exactly where their experience matches (or doesn't match) JD requirements.
 
 **Key Features:**
 - Two-part check: evidence match + keyword check (Decision 3)
@@ -24,7 +24,7 @@ This protocol implements requirement-by-requirement matching between parsed job 
 
 ### Step 1: Requirement Extraction
 
-Extract ALL requirements from the parsed JD (17-point format):
+Extract ALL requirements from the parsed JD (parsing format):
 
 ```javascript
 requirements = []
@@ -603,7 +603,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #5: honest_limitations Enforcement
 
-> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [job-history-v2-creation.md](optimization-tools/resume-analyzer/job-history-v2-creation.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -694,7 +694,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #1: Metric Isolation & Traceability (Secondary)
 
-> **Implementation Target:** Add to [job-history-v2-creation.md](optimization-tools/resume-analyzer/job-history-v2-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -820,8 +820,8 @@ IF quality < 0.5:
 
 ## Related Protocols
 
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-v2-creation.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
 - **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/workflow-router.md`
 - **Blocking Gates:** Defined in Phase 3 (workflow-router.md)
 

@@ -1,4 +1,4 @@
-This surgical update plan provides the final XML blocks and implementation steps to rebrand your profile as a Senior Technical Business Analyst / Product Owner. It follows the v2.0 Schema (12-section structure), renumbers positions for the Foxhole Technology split, and cleanses the content of all source markers.
+This surgical update plan provides the final XML blocks and implementation steps to rebrand your profile as a Senior Technical Business Analyst / Product Owner. It follows the job history creation Schema (12-section structure), renumbers positions for the Foxhole Technology split, and cleanses the content of all source markers.
 
 ### II. Global Profile Update (Section I)
 
@@ -214,7 +214,7 @@ Action: Update role adaptation and formatting rules.
 Ensure Antigravity verifies the following after implementation:
 
 [ ] All 12 schema sections are present for Positions 1–8.
-[ ] Every `<!-- v2.0 Schema -->` (or similar) marker has been surgically removed.
+[ ] Every `<!-- job history creation Schema -->` (or similar) marker has been surgically removed.
 [ ] Positions are sequentially numbered 1 through 8.
 [ ] The Global Professional Summary is present and leads with the "Product Owner" narrative.
 [ ] The Admin role adaptation guidance has been removed.

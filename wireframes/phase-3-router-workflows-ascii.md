@@ -50,7 +50,7 @@ Phase 3 contains the "brains" of the system's runtime. The Workflow Router handl
 
 ## Inputs
 - Cached JD / New JD
-- Current Job History (v2.0)
+- Current Job History (job history creation)
 - User's specific update requests
 
 ## Outputs

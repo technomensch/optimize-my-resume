@@ -52,7 +52,7 @@
         <section id="2" name="Hiring Manager Perspective">
           <reference>Implement per hiring_manager_perspective_rules</reference>
           - Display inferred title, confidence, and reasoning for each position.
-          - Display auto-generated job history summary (v2.0) for each position (per job_history_summary_generation_rules).
+          - Display auto-generated job history summary (job history creation) for each position (per job_history_summary_generation_rules).
           - Format: <position_structure><position id="N">...content...</position></position_structure>
         </section>
 
@@ -921,7 +921,7 @@
   <applies_to>Phase 1 Resume Analysis - Hiring Manager Perspective section</applies_to>
   
   <purpose>
-    Generate comprehensive job history v2.0 schema summaries for each position.
+    Generate comprehensive job history job history creation schema summaries for each position.
     CRITICAL: Summaries must be SYNTHESIZED from the raw resume data, not copied.
     We are creating the "Ideal Version" of this role, identifying what the user 
     *actually* did versus what the resume *says* they did.
@@ -956,7 +956,7 @@
     </step>
 
     <step number="4" name="structure_data">
-      Organize extracted data into v2.0 schema:
+      Organize extracted data into job history creation schema:
       - professional_summary (synthesized)
       - core_responsibilities (synthesized/functional)
       - key_achievements (filtered wins)
@@ -1018,7 +1018,7 @@
   </display_format_in_phase_1>
   <download_export_formats>
     <format name="xml">
-      <file_format>XML (v2.0 Schema)</file_format>
+      <file_format>XML (job history creation Schema)</file_format>
       <use_case>Machine processing, LLM consumption, system imports, version control</use_case>
     </format>
 
@@ -1075,7 +1075,7 @@
   <download_options>
     <option id="1" format="xml">
       <label>📥 Download as XML (.xml)</label>
-      <description>Job History v2.0 XML Schema - Perfect for LLM processing</description>
+      <description>Job History Creation XML Schema - Perfect for LLM processing</description>
       <use_cases>
         - Import into LLM systems
         - Version control and tracking
@@ -1896,7 +1896,7 @@
 
       <download_export_formats>
         <format name="xml">
-          <file_format>XML (v2.0 Schema)</file_format>
+          <file_format>XML (job history creation Schema)</file_format>
           <use_case>Machine processing, LLM consumption, system imports, version control</use_case>
         </format>
         <format name="markdown">
