@@ -1,6 +1,6 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 17
+**Total Lessons:** 18
 **Categories:** 4
 **Last Updated:** 2026-01-12
 
@@ -9,7 +9,7 @@
 ## Quick Search
 
 **By Category:**
-- [Architecture](#architecture-lessons) (4)
+- [Architecture](#architecture-lessons) (5)
 - [Debugging](#debugging-lessons) (3)
 - [Process](#process-lessons) (7)
 - [Patterns](#patterns-lessons) (2)
@@ -44,6 +44,11 @@
    - Tags: #architecture #logic #strategic-assessment #issue-33
    - Problem: Rigid checkbox matching causing false negatives
    - Solution: 85/75/65/55 thresholds + rare skill overrides + inflation calibration
+5. **[Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md)**
+   - Date: 2026-01-12
+   - Tags: #architecture #modularization #shadow-modularization #token-optimization
+   - Problem: 85k token redundancy and maintenance drift between manual duplicate instruction files.
+   - Solution: Pivot to 'Identify and Copy' for Gold Master and 'Extract and Remove' for Optimized Entrypoint.
 
 **Subdirectory:** [architecture/](architecture/)
 
@@ -150,11 +155,12 @@
 
 ## Tag Index
 
-**#architecture** (4 lessons)
+**#architecture** (5 lessons)
 - [Claude Code Skills Architecture](architecture/Lessons_Learned_Claude_Code_Skills_Architecture.md)
 - [ID-Based Architecture](architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
 - [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- [Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md)
 
 **#automation** (3 lessons)
 - [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
@@ -208,8 +214,9 @@
 **#memory-system** (1 lesson)
 - [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
 
-**#optimization** (1 lesson)
+**#optimization** (2 lessons)
 - [ID-Based Architecture](architecture/Lessons_Learned_ID_Based_Architecture_Token_Optimization.md)
+- [Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md)
 
 **#patterns** (2 lessons)
 - [Complete Memory System v6.3.0](patterns/Lessons_Learned_Complete_Memory_System_v6.3.0_Implementation.md)
@@ -261,6 +268,7 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-12: [Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md) - Pivot to Gold Master/Optimized Entrypoint pattern
 - 2026-01-12: [Strategic JD Assessment](architecture/Lessons_Learned_Strategic_Assessment_Methodology.md) - Methodology shift to address false negatives
 - 2026-01-10: [Ollama Model Tag Matching](debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md) - Tag normalization for Ollama API integration
 - 2026-01-10: [Tailwind v4 Styling Fix](debugging/Lessons_Learned_Tailwind_v4_Styling_Fix.md) - Tailwind v4 syntax migration and styling restoration
@@ -313,24 +321,25 @@ grep -r "#architecture" docs/lessons-learned/
 **By Category:**
 - Process: 7 lessons (44%)
 - Debugging: 4 lessons (25%)
-- Architecture: 4 lessons (24%)
+- Architecture: 5 lessons (28%)
 - Patterns: 2 lessons (12%)
 
 **Most Common Tags:**
 1. #process (7 lessons)
 2. #workflow (6 lessons)
-3. #debugging, #architecture (4 lessons each)
+3. #architecture (5 lessons)
+4. #debugging (4 lessons)
 4. #automation, #claude-code, #documentation (3 lessons each)
 5. #skills, #git-hygiene, #planning (2 lessons each)
 
 **Timeline:**
 - First lesson: 2025-12-10
-- Latest lesson: 2026-01-10
+- Latest lesson: 2026-01-12
 - Total span: 31 days
 - Average: ~0.52 lessons per day
 
 **Content:**
-- Total lessons: 17
+- Total lessons: 18
 - Estimated total lines: ~12,300 lines
 - Average per lesson: ~770 lines
 
