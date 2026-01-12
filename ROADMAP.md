@@ -3,8 +3,25 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v7.0.0 <!-- v7.0.0 Change: Updated from v6.5.3 -->
+## Current Version: v7.1.0 <!-- v7.1.0 Change: Updated from v7.0.0 -->
 ## In Development: v6.5.4, v8.0.0 <!-- v7.0.0 Change: Updated from v7.0.0 -->
+
+---
+
+## v7.1.0 - Strategic Assessment Methodology (COMPLETE) <!-- v7.1.0 Addition -->
+
+**Branch:** `v7.1-prompt-alignment-update` | **Status:** Complete | **Date:** 2026-01-12 <!-- v7.1.0 Addition -->
+
+**Implementation Approach:** Transition from strict checkbox matching to a strategic assessment methodology reflecting real-world hiring dynamics and JD inflation. <!-- v7.1.0 Addition -->
+
+### Key Features <!-- v7.1.0 Addition -->
+- [x] **Strategic Rare Skill Override** - Logic for identifies and weights rare skills. <!-- v7.1.0 Addition -->
+- [x] **Deliverables-over-Titles Rule** - Prioritizes impact over job titles. <!-- v7.1.0 Addition -->
+- [x] **Technical Transferability Exception** - Acknowledges technical skill foundations across industries. <!-- v7.1.0 Addition -->
+- [x] **Calibrated Fit Thresholds** - Updated ranges (85/75/65/55) to reduce false negatives. <!-- v7.1.0 Addition -->
+- [x] **Real-World Hiring Context** - Integrated principles for JD inflation and candidate potential. <!-- v7.1.0 Addition -->
+
+**Documentation:** See `docs/plans/v7.1-prompt-alignment-update.md` for complete implementation plan <!-- v7.1.0 Addition -->
 
 ---
 

@@ -1,6 +1,6 @@
 # Evidence-Based Matching Protocol - Phase 2
 
-**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
+**Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
 **Created:** 2025-12-28
 **Purpose:** Match JD requirements against job history with evidence citations and gap analysis
 
@@ -401,14 +401,14 @@ Example Calculation:
 
 Formula: (Sum of Weighted Points) / (Max Possible Weighted Points) × 100
 
-See `core/fit-thresholds.md` for complete scoring methodology.
+See `PROJECT-INSTRUCTIONS.md` (or `core/fit-thresholds.md`) for complete methodology.
 
 ========================================
 BLOCKING GATES CHECK
 ========================================
 
 ✓ Hard Skill Deficit: PASS (matched 5 of 8 required hard skills = 63%)
-✓ Match Score: PASS (72% >= 50% threshold)
+✓ Match Score: PASS (72% >= 65% Moderate Match threshold)
 ✓ Location: PASS (no mismatch detected)
 
 All gates passed. You may proceed with application.
