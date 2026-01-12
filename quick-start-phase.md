@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v6.5.3
+# Optimize-My-Resume System v7.1.1
 
 <!-- ========================================================================== -->
 <!-- QUICK-START PHASE INSTRUCTION MODULE                                       -->
 <!-- ========================================================================== -->
-<!-- Version: 6.5.3 (January 9, 2026)                                           --> <!-- v6.5.3 Release: Header Fixes, Validation Logic, Display Rendering Updates -->
-<!-- Last Updated: January 9, 2026                                              -->
+<!-- Version: 7.1.1 (January 12, 2026)                                          --> <!-- v7.1.1 Release: Metric Preservation & Technical Exception Patch -->
+<!-- Last Updated: January 12, 2026                                             -->
 <!-- Last Updated: January 7, 2026                                              -->
 <!-- Purpose: Use as system prompt for any LLM (Claude, GPT-4, Gemini, etc.)   -->
 <!-- Note: This is the combined single-file version of all modular components  -->
@@ -2002,6 +2002,34 @@
         Before processing user input, classify input type with confidence score.
       </instruction>
     </input_type_detection_guardrail>
+
+    <metric_preservation_guardrail id="29">
+      <priority>CRITICAL</priority>
+      <trigger>When rewriting, optimizing, or editing existing bullets (especially for keyword inclusion)</trigger>
+      
+      <instruction>
+        You must perform a "Data Integrity Audit" before finalizing any edited bullet.
+      </instruction>
+      
+      <audit_logic>
+        1. Extract all numeric values (integers, percentages, currency) from the ORIGINAL bullet.
+        2. Extract all numeric values from the NEW bullet.
+        3. IF a specific number from Original is missing in New:
+           STOP and Verify: "Did I intend to remove this metric?"
+           IF NO (accidental loss during rewriting): RESTORE the metric immediately.
+           IF YES (replaced by better metric): Proceed.
+      </audit_logic>
+      
+      <example>
+        Original: "Managed 20 API calls across 6 systems."
+        Draft: "Managed API calls to ensure team alignment."
+        Audit: 
+          - Original has {20, 6}
+          - Draft has {}
+          - ERROR: Data Loss Detected.
+        Correction: "Managed 20 API calls across 6 systems to ensure team alignment."
+      </example>
+    </metric_preservation_guardrail>
   </system_guardrails>
 </quality_assurance_rules>
 

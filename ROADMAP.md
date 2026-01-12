@@ -3,12 +3,24 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v7.1.0 <!-- v7.1.0 Change: Updated from v7.0.0 -->
-## In Development: v6.5.4, v8.0.0 <!-- v7.0.0 Change: Updated from v7.0.0 -->
+## Current Version: v7.1.1 <!-- v7.1.1 issue #34 -->
+## In Development: v6.5.4, v8.0.0
 
 ---
 
-## v7.1.0 - Strategic Assessment Methodology (COMPLETE) <!-- v7.1.0 Addition -->
+## v7.1.1 - Metric Preservation & Technical Exception (COMPLETE) <!-- v7.1.1 issue #34 -->
+
+**Branch:** `v7.1.1-enforce-metrics-patch` | **Status:** Complete | **Date:** 2026-01-12
+
+**Implementation Approach:** Patch for v7.1.0 to prevent data loss during keyword optimization and refine technical role transferability logic. (Issue #34)
+
+### Key Features
+- [x] **Metric Preservation Guardrail** - Prevents loss of numeric data during semantic rewrites.
+- [x] **Technical Role Exception** - Reduces industry gap penalty by 75% for technical workflow matches.
+
+---
+
+## v7.1.0 - Strategic Assessment Methodology (COMPLETE)
 
 **Branch:** `v7.1-prompt-alignment-update` | **Status:** Complete | **Date:** 2026-01-12 <!-- v7.1.0 Addition -->
 
