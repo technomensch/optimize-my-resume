@@ -23,8 +23,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Guardrail #21:** Split into #21a (original skill-role matching) and #21b (new limitation cross-check) - both coexist
 
 #### Files Updated (4)
-- `phases/phase-3/incremental-updates.md` - Guardrails #6, #21a, #21b
-- `phases/phase-4/summary-generation.md` - Guardrail #3 with archived original
+- `optimization-tools/job-fit-analyzer/incremental-updates.md` - Guardrails #6, #21a, #21b
+- `optimization-tools/narrative-generator/summary-generation.md` - Guardrail #3 with archived original
 - `PROJECT-INSTRUCTIONS.md` - Guardrail #6 in master checklist
 - `quick-start-phase.md` - Guardrail #6 in condensed checklist
 
@@ -94,10 +94,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 #### Files Updated
 - `PROJECT-INSTRUCTIONS.md` - Master guardrail checklist
 - `quick-start-phase.md` - Condensed guardrail reference
-- `phases/phase-1/jd-parsing-17-point.md` - Guardrails #1-2
-- `phases/phase-2/evidence-matching.md` - Guardrails #11-15
-- `phases/phase-3/incremental-updates.md` - Guardrails #16-21b
-- `phases/phase-4/summary-generation.md` - Guardrails #3, #22-26
+- `optimization-tools/resume-analyzer/jd-parsing-17-point.md` - Guardrails #1-2
+- `optimization-tools/bullet-optimizer/evidence-matching.md` - Guardrails #11-15
+- `optimization-tools/job-fit-analyzer/incremental-updates.md` - Guardrails #16-21b
+- `optimization-tools/narrative-generator/summary-generation.md` - Guardrails #3, #22-26
 - `core/format-rules.md` - Guardrails #4-10, #27
 
 ---
@@ -278,7 +278,7 @@ Based on Rezi.ai, Jobscan, and Recruiterflow best practices:
 - Aligned with industry-standard ATS scoring methodologies
 
 #### Changed - System Files
-- **Scoring Formula:** `phases/phase-2/evidence-matching.md` updated with priority-weighted calculation
+- **Scoring Formula:** `optimization-tools/bullet-optimizer/evidence-matching.md` updated with priority-weighted calculation
 - **System Instructions:** `PROJECT-INSTRUCTIONS.md` and `quick-start-phase.md` updated with skill priority weights
 - **Core Configuration:** `core/fit-thresholds.md` includes skill-level priority weights alongside category weights
 
@@ -329,7 +329,7 @@ Based on Rezi.ai, Jobscan, and Recruiterflow best practices:
 - ✅ **No Breaking Changes:** Additive enhancement only
 
 #### Technical
-- **Files Modified:** `phases/phase-1/jd-parsing-17-point.md`
+- **Files Modified:** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
 - **Detection Pattern Added:** State-specific remote payroll restriction parsing
 - **Data Structure Added:** 51-entry state abbreviation mapping (50 states + DC)
 - **Classification:** Internal validation logic, automated parsing enhancement

@@ -9,7 +9,7 @@ This directory contains v5.0 files that have been superseded by v6.0+ architectu
 ## What's Here
 
 ### `/modes-v5/` - v5.0 Mode Definitions
-Original mode files from v5.0 release. Superseded by `/phases/` modular architecture in v6.0.
+Original mode files from v5.0 release. Superseded by `/optimization-tools/` modular architecture in v6.0.
 
 **Files:**
 - `mode-1-full-analysis.md` - Full resume analysis (v5.0)
@@ -17,10 +17,10 @@ Original mode files from v5.0 release. Superseded by `/phases/` modular architec
 - `mode-3-jd-comparison.md` - JD comparison (v5.0)
 
 **Replaced by:**
-- `/phases/phase-1/` - Job history v2.0, JD parser, entry router (v6.0.1)
-- `/phases/phase-2/` - Evidence matching, blocking gates (v6.0.2)
-- `/phases/phase-3/` - Workflow router, incremental updates (v6.0.3)
-- `/phases/phase-4/` - Summary generation (v6.0.4)
+- `/optimization-tools/resume-analyzer/` - Job history v2.0, JD parser, entry router (v6.0.1)
+- `/optimization-tools/bullet-optimizer/` - Evidence matching, blocking gates (v6.0.2)
+- `/optimization-tools/job-fit-analyzer/` - Workflow router, incremental updates (v6.0.3)
+- `/optimization-tools/narrative-generator/` - Summary generation (v6.0.4)
 
 ---
 
@@ -45,8 +45,8 @@ Legacy shared components from v5.0, pre-modular architecture.
 - `job-summary-creation.md` - Job summary generator (v5.0)
 
 **Replaced by:**
-- `/phases/phase-1/entry-router.md` - Handles greetings via routing (v6.0.1)
-- `/phases/phase-4/summary-generation.md` - Professional summary (v6.0.4)
+- `/optimization-tools/resume-analyzer/entry-router.md` - Handles greetings via routing (v6.0.1)
+- `/optimization-tools/narrative-generator/summary-generation.md` - Professional summary (v6.0.4)
 
 ---
 

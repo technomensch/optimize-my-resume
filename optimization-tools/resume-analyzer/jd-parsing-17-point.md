@@ -727,7 +727,7 @@ Before finalizing JD parse:
 
 ### Guardrail #7: Skill Categorization Consistency
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [jd-parsing-17-point.md](optimization-tools/resume-analyzer/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -749,7 +749,7 @@ Before finalizing JD parse:
 
 ### Guardrail #10: JD Keyword Density Validation
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](phases/phase-1/jd-parsing-17-point.md).
+> **Implementation Target:** Add to [jd-parsing-17-point.md](optimization-tools/resume-analyzer/jd-parsing-17-point.md).
 
 **Instruction Text:**
 ```xml
@@ -879,10 +879,10 @@ After parsing JD, the 17-point output feeds into evidence matching:
 
 ## Related Protocols
 
-- **Job History Creation:** `phases/phase-1/job-history-v2-creation.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-v2-creation.md`
 - **Skills Categorization:** Use classification rules from this document
-- **Evidence Matching:** `phases/phase-2/evidence-matching.md` (v6.0.2)
-- **Entry Router:** `phases/phase-1/entry-router.md`
+- **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md` (v6.0.2)
+- **Entry Router:** `optimization-tools/resume-analyzer/entry-router.md`
 
 ---
 
