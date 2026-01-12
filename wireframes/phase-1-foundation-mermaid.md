@@ -1,13 +1,13 @@
 # Phase 1: Foundation - Mermaid Flow
 
-**Version:** 1.1 <!-- v1.1 Change: Added v6.3.x Fit Gates and 17-Point Check Integration -->
+**Version:** 1.1 <!-- v1.1 Change: Added v6.3.x Fit Gates and Standard Check Integration -->
 **Last Updated:** 2026-01-05
 **Related Modules:** `optimization-tools/resume-analyzer/`, `core/fit-thresholds.md`
 
 ---
 
 ## Overview
-Phase 1 focuses on high-fidelity extraction of data. By breaking down the JD into 17 points and the resume into 12 categories, the system ensures no critical requirement is missed before performing the initial Fit Assessment.
+Phase 1 focuses on high-fidelity extraction of data. By breaking down the JD into analysis and the resume into 12 categories, the system ensures no critical requirement is missed before performing the initial Fit Assessment.
 
 ## Diagram
 
@@ -19,9 +19,9 @@ graph TD
     Router -->|JD| JP[JD Parser]
     
     subgraph "High-Fidelity Extraction"
-    JP --> JP1[17-Point Inspection]
+    JP --> JP1[Standard Inspection]
     JP1 --> JP2[Logistics & Keywords]
-    RP --> RP1[Job History v2.0]
+    RP --> RP1[Job History Creation]
     RP1 --> RP2[12-Category XML]
     end
     
@@ -42,7 +42,7 @@ graph TD
 
 ## Key Decision Points
 - **Entry Routing:** Directs user to the correct workflow (Analysis vs optimization).
-- **17-Point Check:** Identifies "Secret Requirements" often buried in JD text.
+- **Standard Check:** Identifies "Secret Requirements" often buried in JD text.
 - **Fit Assessment:** Stops low-probability matches early to save user time and context tokens.
 
 ## Inputs

@@ -8,10 +8,10 @@
 
 ## Overview
 
-This protocol enables users to incrementally update their job history v2.0 without re-running the full Phase 1 analysis. Users can add new positions, edit existing positions, or remove outdated positions while maintaining data integrity.
+This protocol enables users to incrementally update their job history creation without re-running the full Phase 1 analysis. Users can add new positions, edit existing positions, or remove outdated positions while maintaining data integrity.
 
 **Key Features:**
-- Add single position with full v2.0 schema
+- Add single position with full job history creation schema
 - Edit specific fields of existing position
 - Remove position with confirmation
 - Automatic recalculation of aggregates (years of experience, skills)
@@ -793,7 +793,7 @@ Flow:
 
 ## Related Protocols
 
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-v2-creation.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
 - **Skills Categorization:** Use classification rules from phase-1 docs
 - **Re-Comparison:** `optimization-tools/job-fit-analyzer/re-comparison.md`
 - **Summary Generation:** `optimization-tools/narrative-generator/summary-generation.md` (future)

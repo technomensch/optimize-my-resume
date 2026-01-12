@@ -1,14 +1,14 @@
-# 17-Point Job Description Parsing Protocol
+# Job Description Parsing Protocol
 
 **Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
-**Purpose:** Extract structured data from job descriptions using comprehensive 17-point schema
+**Purpose:** Extract structured data from job descriptions using comprehensive parsing schema
 
 ---
 
 ## Overview
 
-This protocol defines the complete extraction schema for job descriptions (JDs). It handles both structured JDs (with clear sections) and conversational JDs (narrative format), extracting all relevant information into a standardized 17-point format.
+This protocol defines the complete extraction schema for job descriptions (JDs). It handles both structured JDs (with clear sections) and conversational JDs (narrative format), extracting all relevant information into a standardized parsing format.
 
 **Key Features:**
 - Dual extraction strategy (structured vs conversational)
@@ -19,7 +19,7 @@ This protocol defines the complete extraction schema for job descriptions (JDs).
 
 ---
 
-## 17-Point Schema
+## Standard Schema
 
 ### Category 1: Company & Role Information (4 fields)
 
@@ -300,7 +300,7 @@ This protocol defines the complete extraction schema for job descriptions (JDs).
 
 ### Category 6: Qualifications & Certifications (2 fields - omitted per final plan adjustment)
 
-**Note:** The original 17-point schema included:
+**Note:** The original parsing schema included:
 - qualifications_needed
 - qualifications_wanted
 - certifications_needed
@@ -727,7 +727,7 @@ Before finalizing JD parse:
 
 ### Guardrail #7: Skill Categorization Consistency
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](optimization-tools/resume-analyzer/jd-parsing-17-point.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/jd-parsing.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -749,7 +749,7 @@ Before finalizing JD parse:
 
 ### Guardrail #10: JD Keyword Density Validation
 
-> **Implementation Target:** Add to [jd-parsing-17-point.md](optimization-tools/resume-analyzer/jd-parsing-17-point.md).
+> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/jd-parsing.md).
 
 **Instruction Text:**
 ```xml
@@ -859,7 +859,7 @@ Before finalizing JD parse:
 
 ## Usage in Gap Analysis (Phase 3)
 
-After parsing JD, the 17-point output feeds into evidence matching:
+After parsing JD, the parsing output feeds into evidence matching:
 
 ```
 1. Load job_history_v2.0
@@ -879,7 +879,7 @@ After parsing JD, the 17-point output feeds into evidence matching:
 
 ## Related Protocols
 
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-v2-creation.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
 - **Skills Categorization:** Use classification rules from this document
 - **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md` (v6.0.2)
 - **Entry Router:** `optimization-tools/resume-analyzer/entry-router.md`
@@ -887,9 +887,9 @@ After parsing JD, the 17-point output feeds into evidence matching:
 ---
 
 **Version History:**
-- v2.0 (2025-12-28): Comprehensive 17-point schema with hard/soft separation, remote work classification
-- v1.0 (2025-12-15): Legacy 17-point schema (archived)
+- job history creation (2025-12-28): Comprehensive parsing schema with hard/soft separation, remote work classification
+- v1.0 (2025-12-15): Legacy parsing schema (archived)
 
 ---
 
-**End of 17-Point Job Description Parsing Protocol**
+**End of Job Description Parsing Protocol**

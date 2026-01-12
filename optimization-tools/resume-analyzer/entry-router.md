@@ -147,7 +147,7 @@ state.hasResume = true AND state.hasJobHistory = false
 **Confirmation Message:**
 ```
 I detected a new resume upload. I'll perform a comprehensive resume analysis
-and create your job history profile in v2.0 format.
+and create your job history profile in job history creation format.
 
 This analysis will:
 - Extract all your work history with evidence-based achievements
@@ -180,7 +180,7 @@ state.hasJobHistory = true AND state.hasJD = true
 **Confirmation Message:**
 ```
 I detected your job history and a job description. I'll analyze your fit
-for this role using the 17-point gap analysis system.
+for this role using the parsing gap analysis system.
 
 This comparison will:
 - Parse the JD for required/preferred skills (hard & soft)
@@ -440,7 +440,7 @@ Requirements:
 **Context Detection:**
 ```
 hasResume = false
-hasJobHistory = true (v2.0 file exists)
+hasJobHistory = true (job history creation file exists)
 hasJD = true (JD indicators + validation pass)
 jdConfidence = "high"
 ```
@@ -637,7 +637,7 @@ EXECUTE: Full resume analysis workflow
   - Extract positions, achievements, skills
   - Identify blocking gates and prioritized repairs (Blockers, Risks, Tweaks)
   - Generate hiring manager perspective with explicit position metadata
-  - Generate job history v2.0
+  - Generate job history creation
   - Generate master professional summary
   - Save to file
 OUTPUT: Completion message + next steps
@@ -650,7 +650,7 @@ OUTPUT: Completion message + next steps
 
 ```
 LOAD: PROJECT-INSTRUCTIONS.md → Phase 2 section
-LOAD: Job history v2.0 (for context)
+LOAD: job history creation (for context)
 EXECUTE: Bullet optimization workflow
   - Strengthen verbs
   - Add metrics
@@ -663,10 +663,10 @@ OUTPUT: Optimized bullets
 
 ```
 LOAD: PROJECT-INSTRUCTIONS.md → Phase 3 section
-LOAD: Job history v2.0
-LOAD: JD parsing protocol (17-point)
+LOAD: job history creation
+LOAD: JD parsing protocol (parsing)
 EXECUTE: JD comparison workflow
-  - Parse JD (17-point schema)
+  - Parse JD (parsing schema)
   - Match requirements against job history
   - Generate gap analysis with evidence citations
   - Check blocking gates
@@ -737,8 +737,8 @@ OUTPUT: Gap analysis + recommendations
 - **Phase 1:** `PROJECT-INSTRUCTIONS.md` → Phase 1 section
 - **Phase 2:** See `PROJECT-INSTRUCTIONS.md` → Core Process (Phase 2)
 - **Phase 3:** `optimization-tools/job-fit-analyzer/workflow-router.md`
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-v2-creation.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
 
 ---
 

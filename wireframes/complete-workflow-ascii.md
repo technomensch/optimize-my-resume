@@ -15,7 +15,7 @@ The "Complete Workflow" represents the end-to-end user journey from initial setu
               |
               v
 +-----------------------------+
-|    PHASE 1: FOUNDATION      |--> [ Job History v2.0 ]
+|    PHASE 1: FOUNDATION      |--> [ Job History Creation ]
 | (Analyze Resume & Parse JD) |--> [ JD Profile ]
 +-----------------------------+
               |

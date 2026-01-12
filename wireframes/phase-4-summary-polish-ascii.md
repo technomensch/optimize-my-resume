@@ -51,7 +51,7 @@ Phase 4 creates high-impact professional summaries and enforces final document s
 - **Symbol Sanitization:** Guardrail #22 automatically strips em-dashes (—) that break some ATS parsers.
 
 ## Inputs
-- Full Job History v2.0
+- Full Job History Creation
 - Phase 2 Match Analysis
 - Character/Word Budget Rules (`format-rules.md`)
 

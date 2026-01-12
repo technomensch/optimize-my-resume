@@ -48,7 +48,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 **Classification:** Internal validation rules, process automation, developer tooling
 
 **Core System Guardrails:**
-- **Guardrail #1 (JD Parser Output Validation):** Ensures 17-point JD schema completeness before gap analysis
+- **Guardrail #1 (JD Parser Output Validation):** Ensures parsing JD schema completeness before gap analysis
 - **Guardrail #2 (Hard vs Soft Skill Categorization):** 5-question decision tree prevents mis-categorization
 - **Guardrail #3 (Professional Summary Validation):** Character limits (300-350), tense checking, pronoun detection
 - **Guardrail #4 (Bullet Character Limits):** 100-210 character range enforcement
@@ -71,7 +71,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Guardrail #17 (Position Edit Workflow):** Show current → Modify → Recalculate pipeline
 - **Guardrail #18 (Position Removal Workflow):** Confirmation → Remove → Recalculate safeguards
 - **Guardrail #19 (Aggregate Recalculation):** Years of experience, master skills inventory updates
-- **Guardrail #20 (Version Tracking):** Schema version field validation (job_history v2.0+)
+- **Guardrail #20 (Version Tracking):** Schema version field validation (job_history job history creation+)
 - **Guardrail #21a (Skill-Role Matching):** Technical skills matched to technical roles only
 - **Guardrail #21b (Limitation Cross-Check):** Portfolio projects counted as skills-only, not professional experience
 
@@ -94,7 +94,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 #### Files Updated
 - `PROJECT-INSTRUCTIONS.md` - Master guardrail checklist
 - `quick-start-phase.md` - Condensed guardrail reference
-- `optimization-tools/resume-analyzer/jd-parsing-17-point.md` - Guardrails #1-2
+- `optimization-tools/resume-analyzer/jd-parsing.md` - Guardrails #1-2
 - `optimization-tools/bullet-optimizer/evidence-matching.md` - Guardrails #11-15
 - `optimization-tools/job-fit-analyzer/incremental-updates.md` - Guardrails #16-21b
 - `optimization-tools/narrative-generator/summary-generation.md` - Guardrails #3, #22-26
@@ -108,7 +108,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 #### Added - Developer Tooling & Automation
 
 **Template System (4 files, ~1,515 lines):**
-- **`job_history_template.xml`** - v2.0 schema with 12 required sections
+- **`job_history_template.xml`** - job history creation schema with 12 required sections
   - Hard/soft skills separated into distinct arrays
   - Education and certifications sections added
   - Professional summary per role
@@ -329,7 +329,7 @@ Based on Rezi.ai, Jobscan, and Recruiterflow best practices:
 - ✅ **No Breaking Changes:** Additive enhancement only
 
 #### Technical
-- **Files Modified:** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
+- **Files Modified:** `optimization-tools/resume-analyzer/jd-parsing.md`
 - **Detection Pattern Added:** State-specific remote payroll restriction parsing
 - **Data Structure Added:** 51-entry state abbreviation mapping (50 states + DC)
 - **Classification:** Internal validation logic, automated parsing enhancement
@@ -542,7 +542,7 @@ Based on Rezi.ai, Jobscan, and Recruiterflow best practices:
   - Prevents accidental commit of environment-specific settings
 
 #### Updated - Documentation
-- **Lessons Learned v2.0 → v2.1:** Added comprehensive security hardening section
+- **Lessons Learned job history creation → v2.1:** Added comprehensive security hardening section
   - Documented 5 critical security issues discovered
   - Explained 4 hotfix solutions with code examples
   - Added 5 security review lessons learned

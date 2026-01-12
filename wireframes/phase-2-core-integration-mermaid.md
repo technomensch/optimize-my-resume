@@ -13,7 +13,7 @@ Phase 2 transforms raw job history into JD-specific evidence. It acts as the "Sc
 
 ```mermaid
 flowchart TD
-    JH[(Job History v2.0)] --> Match[Evidence Matching Engine]
+    JH[(Job History Creation)] --> Match[Evidence Matching Engine]
     JD[(Parsed JD)] --> Match
     
     subgraph "Calibration Filter (v6.3.1)"

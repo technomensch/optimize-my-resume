@@ -21,7 +21,7 @@
 
 ## 📋 Document Information
 
-**Format:** v2.0 Schema (12-section structure per role)
+**Format:** job history creation Schema (12-section structure per role)
 **Last Updated:** [Month Year]
 **Total Positions:** [Number] ([breakdown])
 

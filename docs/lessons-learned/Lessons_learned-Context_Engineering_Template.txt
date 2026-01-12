@@ -150,7 +150,7 @@ Use a handler to **Select Context** based on the current trigger.
 *   **Benefit**: Keeps the prompt "dense" and relevant to the immediate task.
 
 ### E. Phase Files as Agents (Architecture Recommendation)
-The files in the `/phases` directory (e.g., `jd-parsing-17-point.md`, `evidence-matching.md`) should be treated as **proto-agents**. To fully transform them into independent agents:
+The files in the `/phases` directory (e.g., `jd-parsing.md`, `evidence-matching.md`) should be treated as **proto-agents**. To fully transform them into independent agents:
 1.  **Assign Identity**: Give each phase its own `<agent_identity>` and specific `<role>`.
 2.  **Define Hand-offs**: Use `<write_context>` to standardize the output summary of one phase as the `<provided_data>` input for the next.
 3.  **Orchestration**: Utilize `workflow-router.md` as the **Orchestrator/Manager Agent** that delegates work, handles `<error_handling_and_recovery>`, and manages the global state.
