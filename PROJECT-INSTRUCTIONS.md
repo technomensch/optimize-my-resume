@@ -1002,6 +1002,9 @@
 <!-- PHASE 3: PRE-GENERATION FIT ASSESSMENT                                      -->
 <!-- ========================================================================== -->
 
+<!-- SILENT SYNC: Job Fit Assessment -->
+<!-- DO NOT DELETE OR MOVE THIS BLOCK. It is synchronized with optimization-tools/job-fit-analyzer/job-fit-assessment.md. -->
+<!-- Update logic in the module first, then copy here. -->
 <phase_3_pre_generation_assessment>
   <!-- part of v7.1 issue #33 -->
   <real_world_hiring_context>
@@ -2042,6 +2045,7 @@
   </phase_3b_ultra_brief_exit_output>
 
 </phase_3_pre_generation_assessment>
+<!-- END SILENT SYNC: Job Fit Assessment -->
 
 <!-- ========================================================================== -->
 <!-- CRITICAL FORMATTING RULES                                                  -->
