@@ -1,9 +1,9 @@
-# Optimize-My-Resume System v7.1.0
+# Optimize-My-Resume System v7.1.1
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 7.1.0 (January 12, 2026)                                          --> <!-- v7.1.0: Strategic Assessment Methodology (Issue #33) -->
+<!-- Version: 7.1.1 (January 12, 2026)                                          --> <!-- v7.1.1: Metric Preservation & Technical Exception Patch -->
 <!-- Last Updated: January 12, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
@@ -1993,17 +1993,15 @@
       </format>
     </output_integration>
     <!-- part of v7.1 issue #33 -->
-    <technical_skills_transferability_exception>
-      <statement>
-        Technical foundations (e.g., cloud platforms, programming languages, data science)
-        transfer near-perfectly across industries. Industry-specific domain knowledge
-        is typically learned on the job.
-      </statement>
-      <implication>
-        If industry mismatch is due to technical role in different industry,
-        reduce industry_mismatch penalty by 10-15 points.
-      </implication>
-    </technical_skills_transferability_exception>
+    <technical_role_exception>
+      <logic>
+        Code is code. Tools are tools.
+        IF the role is heavily technical (Technical Writer, Developer, DevOps) AND the toolset matches (e.g., Git, Azure, Jira),
+        THEN reduce Industry Gap Penalty by 75%.
+        
+        Reasoning: A Technical Writer using "Docs-as-Code" in Government is using the exact same workflow as a SaaS writer. The domain matters less than the workflow proficiency.
+      </logic>
+    </technical_role_exception>
   </industry_context_validation>
 
   <phase_2_gap_investigation>
@@ -3626,6 +3624,34 @@
         Before processing user input, classify input type with confidence score.
       </instruction>
     </input_type_detection_guardrail>
+
+    <metric_preservation_guardrail id="29">
+      <priority>CRITICAL</priority>
+      <trigger>When rewriting, optimizing, or editing existing bullets (especially for keyword inclusion)</trigger>
+      
+      <instruction>
+        You must perform a "Data Integrity Audit" before finalizing any edited bullet.
+      </instruction>
+      
+      <audit_logic>
+        1. Extract all numeric values (integers, percentages, currency) from the ORIGINAL bullet.
+        2. Extract all numeric values from the NEW bullet.
+        3. IF a specific number from Original is missing in New:
+           STOP and Verify: "Did I intend to remove this metric?"
+           IF NO (accidental loss during rewriting): RESTORE the metric immediately.
+           IF YES (replaced by better metric): Proceed.
+      </audit_logic>
+      
+      <example>
+        Original: "Managed 20 API calls across 6 systems."
+        Draft: "Managed API calls to ensure team alignment."
+        Audit: 
+          - Original has {20, 6}
+          - Draft has {}
+          - ERROR: Data Loss Detected.
+        Correction: "Managed 20 API calls across 6 systems to ensure team alignment."
+      </example>
+    </metric_preservation_guardrail>
   </system_guardrails>
 </quality_assurance_rules>
 

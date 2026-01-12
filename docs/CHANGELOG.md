@@ -1,5 +1,7 @@
 # Changelog
 
+## Current Version: v7.1.1 <!-- v7.1.1 issue #34 -->
+
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
 
@@ -9,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### v7.1.1 - Metric Preservation & Technical Exception (Issue #34)
+- **Metric Preservation Guardrail** - Enforces "Data Integrity Audit" to prevent loss of numeric metrics during rewriting.
+- **Technical Role Exception** - Refined Industry Gap logic to reduce penalties by 75% for technical workflow matches.
+- **Version Bump** - Synchronized v7.1.1 across all instruction modules and core files.
 
 ### v7.1.0 - Strategic Assessment Methodology (v7.1-prompt-alignment-update)
 - **Strategic Rare Skill Override** - Introduced CRITICAL override for rare required skills (<20% prevalence).
