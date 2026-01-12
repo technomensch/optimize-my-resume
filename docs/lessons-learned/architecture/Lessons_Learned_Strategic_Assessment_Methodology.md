@@ -139,8 +139,8 @@ Create a logic branch that searches for "Rare Foundations" (e.g., specific metho
 **Created:** 2026-01-12
 **Version:** 1.0
 **Related Docs:**
-- [PROJECT-INSTRUCTIONS.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/PROJECT-INSTRUCTIONS.md)
-- [core/fit-thresholds.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/core/fit-thresholds.md)
+- [PROJECT-INSTRUCTIONS.md](../../../PROJECT-INSTRUCTIONS.md)
+- [core/fit-thresholds.md](../../../core/fit-thresholds.md)
 
 **Related Issues Solved:**
 - Issue #33: JD Comparison Scoring - Strict vs Strategic Assessment Methodology

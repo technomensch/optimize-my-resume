@@ -248,8 +248,8 @@ def create_excel(rows, output_path):
     print(f"Total rows: {row_num - 1} (including header)")
 
 if __name__ == '__main__':
-    input_file = '/Users/mkaplan/Documents/GitHub/optimize-my-resume/docs/plans/requirements.md'
-    output_file = '/Users/mkaplan/Documents/GitHub/optimize-my-resume/docs/plans/requirements.xlsx'
+    input_file = 'requirements.md'
+    output_file = 'requirements.xlsx'
     
     print(f"Parsing: {input_file}")
     rows = parse_requirements_md(input_file)
