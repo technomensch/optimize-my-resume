@@ -152,8 +152,8 @@
 **Branch:** `v6.0.1-foundation` | **Status:** Complete | **Date:** 2025-12-28
 
 **Files Created:**
-- [x] `optimization-tools/resume-analyzer/job-history-v2-creation.md` - 12-section schema
-- [x] `optimization-tools/resume-analyzer/jd-parsing-17-point.md` - 17-point JD parser with hard/soft skill classification
+- [x] `optimization-tools/resume-analyzer/job-history-creation.md` - 12-section schema
+- [x] `optimization-tools/resume-analyzer/jd-parsing.md` - JD parsing protocol with hard/soft skill classification
 - [x] `optimization-tools/resume-analyzer/entry-router.md` - 5-scenario routing logic
 
 **Notes:** Foundation modules created but not yet integrated into modes.
@@ -167,11 +167,11 @@
 - [x] `optimization-tools/bullet-optimizer/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
-- [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (v2.0 schema generation, next steps guidance)
-- [x] `optimization-tools/bullet-optimizer/` - 17-point parser integration, evidence matching, blocking gates
-- [x] `optimization-tools/job-fit-analyzer/` - v2.0 backward compatibility with upgrade recommendations
+- [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (job history creation schema generation, next steps guidance)
+- [x] `optimization-tools/bullet-optimizer/` - parsing parser integration, evidence matching, blocking gates
+- [x] `optimization-tools/job-fit-analyzer/` - job history creation backward compatibility with upgrade recommendations
 
-**Notes:** Core integration complete. Phases 1 and 3 now use v2.0 schema. Phase 2 supports both v1.0 and v2.0 formats.
+**Notes:** Core integration complete. Phases 1 and 3 now use job history creation schema. Phase 2 supports both v1.0 and job history creation formats.
 
 ---
 

@@ -12,7 +12,7 @@ Phase 2 performs the heavy lifting of matching the user's evidence against the J
 ## Diagram
 
 ```text
-  [ Job History v2.0 ]      [ Parsed JD ]
+  [ Job History Creation ]      [ Parsed JD ]
            |                      |
            +----------+-----------+
                       |
@@ -52,8 +52,8 @@ Phase 2 performs the heavy lifting of matching the user's evidence against the J
 - **Blocking Criteria:** Stopping point for scores ≤79% is strictly enforced; users cannot override ultra-poor fits.
 
 ## Inputs
-- Structured Job History (v2.0)
-- Parsed Job Description (17-point)
+- Structured Job History (job history creation)
+- Parsed Job Description (parsing)
 - Transferability Matrix (`industry-context.md`)
 
 ## Outputs

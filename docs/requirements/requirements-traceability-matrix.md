@@ -46,12 +46,12 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 1.2.1.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Job title extraction |
-| 1.2.2.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Company name extraction |
-| 1.2.3.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Date extraction |
-| 1.2.4.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | Bullet extraction |
-| 1.2.5.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Remote/hybrid/on-site detection |
-| 1.2.6.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | `core/skill-classification.md` | Skill extraction and classification |
+| 1.2.1.0 | ✅ | `optimization-tools/resume-analyzer/job-history-creation.md` | `templates/job_history_template.xml` | Job title extraction |
+| 1.2.2.0 | ✅ | `optimization-tools/resume-analyzer/job-history-creation.md` | `templates/job_history_template.xml` | Company name extraction |
+| 1.2.3.0 | ✅ | `optimization-tools/resume-analyzer/job-history-creation.md` | `templates/job_history_template.xml` | Date extraction |
+| 1.2.4.0 | ✅ | `optimization-tools/resume-analyzer/job-history-creation.md` | `templates/job_history_template.xml` | Bullet extraction |
+| 1.2.5.0 | ✅ | `optimization-tools/resume-analyzer/job-history-creation.md` | - | Remote/hybrid/on-site detection |
+| 1.2.6.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing.md` | `core/skill-classification.md` | Skill extraction and classification |
 
 ### Feature 1.3.0.0: Resume Quality Scoring
 
@@ -100,7 +100,7 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 1.8.1.0 | ✅ | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | `templates/job_history_template.xml` | v2.0 schema, 12 sections |
+| 1.8.1.0 | ✅ | `optimization-tools/resume-analyzer/job-history-creation.md` | `templates/job_history_template.xml` | job history creation schema, 12 sections |
 | 1.8.2.0 | ✅ | `optimization-tools/narrative-generator/summary-generation.md` | - | Master summary generation |
 | 1.8.3.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | - | `<job_history_export_functionality>` section |
 | 1.8.4.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | - | XML and Markdown export options |
@@ -120,10 +120,10 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 2.2.1.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Required skills extraction |
-| 2.2.2.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Preferred skills extraction |
-| 2.2.3.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Experience requirements |
-| 2.2.4.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | - | Education requirements |
+| 2.2.1.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing.md` | - | Required skills extraction |
+| 2.2.2.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing.md` | - | Preferred skills extraction |
+| 2.2.3.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing.md` | - | Experience requirements |
+| 2.2.4.0 | ✅ | `optimization-tools/resume-analyzer/jd-parsing.md` | - | Education requirements |
 | 2.2.5.0 | ✅ | `PROJECT-INSTRUCTIONS.md` | - | Location requirements, state abbreviation expansion |
 
 ### Feature 2.3.0.0: Fit Score Calculation
@@ -190,10 +190,10 @@ This document links the natural-language requirements in `requirements.md` to th
 
 | Req ID | Status | Primary File(s) | Secondary Files | Notes |
 |--------|--------|-----------------|-----------------|-------|
-| 4.1.1.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Team size questions |
-| 4.1.2.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Budget questions |
-| 4.1.3.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Impact metrics questions |
-| 4.1.4.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-v2-creation.md` | - | Challenge questions |
+| 4.1.1.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-creation.md` | - | Team size questions |
+| 4.1.2.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-creation.md` | - | Budget questions |
+| 4.1.3.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-creation.md` | - | Impact metrics questions |
+| 4.1.4.0 | 🔄 | `optimization-tools/resume-analyzer/job-history-creation.md` | - | Challenge questions |
 
 ### Feature 4.2.0.0: Job History Enrichment
 
@@ -377,8 +377,8 @@ This document links the natural-language requirements in `requirements.md` to th
 | File | Description | Requirements Covered |
 |------|-------------|---------------------|
 | `optimization-tools/resume-analyzer/entry-router.md` | Input routing logic | 1.1.6.0, 1.1.7.0 |
-| `optimization-tools/resume-analyzer/jd-parsing-17-point.md` | JD parsing rules | 2.2.x |
-| `optimization-tools/resume-analyzer/job-history-v2-creation.md` | Job history schema | 1.2.x, 1.8.x, 4.x |
+| `optimization-tools/resume-analyzer/jd-parsing.md` | JD parsing rules | 2.2.x |
+| `optimization-tools/resume-analyzer/job-history-creation.md` | Job history schema | 1.2.x, 1.8.x, 4.x |
 | `optimization-tools/bullet-optimizer/evidence-matching.md` | Requirement matching | 2.4.x |
 | `optimization-tools/job-fit-analyzer/workflow-router.md` | Workflow routing | 2.1.x |
 | `optimization-tools/job-fit-analyzer/incremental-updates.md` | Position updates | 4.2.x, 4.3.x |

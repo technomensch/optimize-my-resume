@@ -106,7 +106,7 @@ Example:
     "soft_skills_needed": ["Leadership", "Communication"],
     "soft_skills_wanted": ["Stakeholder management"],
     ...
-    [full 17-point JD parsing output]
+    [full JD parsing output]
   },
   "comparison_history": [
     {
@@ -188,7 +188,7 @@ LOAD: /mnt/project/jd_parsed/[selected_file].json
 cached_jd = JSON.parse(file_contents)
 
 EXTRACT:
-  - jd_parsed (full 17-point schema)
+  - jd_parsed (full parsing schema)
   - cache_metadata (for display)
   - comparison_history (for diff generation)
 
@@ -628,7 +628,7 @@ System:
 
 ## Related Protocols
 
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
 - **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md`
 - **Incremental Updates:** `optimization-tools/job-fit-analyzer/incremental-updates.md`
 - **Summary Generation:** `optimization-tools/narrative-generator/summary-generation.md` (future)

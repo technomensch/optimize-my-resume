@@ -240,7 +240,7 @@ Assistant: "Committing with tested and validated note..."
 ```
 
 **Example commit messages:**
-- "feat(prompts): add multi-language support v2.0 - tested on 5 languages"
+- "feat(prompts): add multi-language support job history creation - tested on 5 languages"
 - "feat(prompts): implement sentiment scoring v1.5 - 95% accuracy validated"
 - "feat(prompts): restructure output format v3.0 - backward compatible"
 

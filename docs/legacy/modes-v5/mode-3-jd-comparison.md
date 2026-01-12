@@ -1,6 +1,6 @@
 # Mode 3: JD Comparison
 
-<!-- Version: 6.0.2 --> <!-- v6.0.2 Change: Added 17-point JD parser, evidence matching, blocking gates -->
+<!-- Version: 6.0.2 --> <!-- v6.0.2 Change: Added JD parsing protocol, evidence matching, blocking gates -->
 <!-- Previous: 5.1.0 --> <!-- v5.1.0 Change: Added remote work classification logic -->
 <!-- Purpose: Compare job description to user's experience and generate tailored bullets -->
 <!-- Last Updated: December 2024 -->
@@ -55,10 +55,10 @@
 <phase_1_initial_fit_assessment>
   
   <step number="1" name="extract_critical_requirements">
-    <!-- v6.0.2 Change: Use 17-point JD parser for complete extraction -->
+    <!-- v6.0.2 Change: Use JD parsing protocol for complete extraction -->
 
     <jd_parsing>
-      Use the 17-point parsing schema from optimization-tools/resume-analyzer/jd-parsing-17-point.md
+      Use the JD parsing schema from optimization-tools/resume-analyzer/jd-parsing.md
 
       Extract all 17 fields:
       - company, job_title, location, work_lifestyle
@@ -69,7 +69,7 @@
       - qualifications_needed, qualifications_wanted
       - certifications_needed, certifications_wanted
 
-      IMPORTANT: Use the hard vs soft skill classification rules from jd-parsing-17-point.md
+      IMPORTANT: Use the hard vs soft skill classification rules from jd-parsing.md
     </jd_parsing>
 
     <purpose>Identify non-negotiable or heavily emphasized requirements from JD</purpose>
@@ -134,9 +134,9 @@
     <!-- v6.0.2 Change: Use evidence-based matching with requirement-by-requirement analysis -->
 
     <job_history_loading>
-      <!-- Check for v2.0 first, fallback to v1.0 -->
+      <!-- Check for job history creation first, fallback to v1.0 -->
       IF file exists: claude_generated_job_history_summaries_v2.txt:
-        LOAD v2.0 format
+        LOAD job history creation format
       ELSE IF file exists: claude_generated_job_history_summaries.txt:
         LOAD v1.0 format
       ELSE:
@@ -147,7 +147,7 @@
       Use optimization-tools/bullet-optimizer/evidence-matching.md to analyze EVERY requirement from the parsed JD.
 
       For EACH requirement:
-      1. Search job history v2.0 for evidence (exact or semantic match)
+      1. Search job history creation for evidence (exact or semantic match)
       2. Determine status (Matched/Partial/Missing)
       3. Collect evidence citations with sources ("Company | Job Title")
       4. Check keyword presence (ATS optimization)
@@ -562,7 +562,7 @@ See `/core/format-rules.md` for detailed formatting requirements including:
 
   <current_status>
     Per-JD summary generation will be implemented in v6.0.4.
-    For now, users should use their master summary from job history v2.0.
+    For now, users should use their master summary from job history creation.
   </current_status>
 
   <future_implementation>

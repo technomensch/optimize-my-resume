@@ -30,8 +30,8 @@
 
   <available_modules>
     <!-- Phase 1: Foundation -->
-    - optimization-tools/resume-analyzer/job-history-v2-creation.md (12-section schema)
-    - optimization-tools/resume-analyzer/jd-parsing-17-point.md (17-point JD parser)
+    - optimization-tools/resume-analyzer/job-history-creation.md (12-section schema)
+    - optimization-tools/resume-analyzer/jd-parsing.md (JD parsing protocol)
     - optimization-tools/resume-analyzer/entry-router.md (5-scenario routing logic)
 
     <!-- Phase 2: Core Integration -->
@@ -72,13 +72,13 @@
     <scenario id="1" name="new_user">
       Condition: hasResume = true AND hasJobHistory = false
       Route: Phase 1 (Full Analysis)
-      Action: Generate job history v2.0
+      Action: Generate job history creation
     </scenario>
 
     <scenario id="2" name="jd_comparison">
       Condition: hasJobHistory = true AND hasJD = true
       Route: Phase 3 (JD Comparison)
-      Action: 17-point parsing + evidence matching
+      Action: JD parsing + evidence matching
     </scenario>
 
     <scenario id="3" name="bullet_optimization">
@@ -103,7 +103,7 @@
     <scenario id="6" name="incremental_update">
       Condition: User says "add position", "edit position", "remove position"
       Route: Incremental Update Handler
-      Action: Add/edit/remove positions in job history v2.0
+      Action: Add/edit/remove positions in job history creation
       Handler: optimization-tools/job-fit-analyzer/incremental-updates.md
     </scenario>
 
@@ -123,8 +123,8 @@
 
   <override_commands>
     <command keyword="re-analyze">Force Phase 1 (append to existing history)</command>
-    <command keyword="start fresh">Delete v2.0 file + Force Phase 1</command>
-    <command keyword="start over">Delete v2.0 file + Force Phase 1</command>
+    <command keyword="start fresh">Delete job history creation file + Force Phase 1</command>
+    <command keyword="start over">Delete job history creation file + Force Phase 1</command>
     <command keyword="update job history">Route to Scenario 6</command>
   </override_commands>
 
@@ -159,7 +159,7 @@
   <current_version>2.0</current_version>
 
   <schema_location>
-    Job History Schema v2.0 is defined in: optimization-tools/resume-analyzer/job-history-v2-creation.md
+    Job History Schema job history creation is defined in: optimization-tools/resume-analyzer/job-history-creation.md
   </schema_location>
 
   <key_changes_from_v1_0>
@@ -172,13 +172,13 @@
   </key_changes_from_v1_0>
 
   <output_file>
-    v2.0 job histories are saved to: claude_generated_job_history_summaries_v2.txt
+    job history creation job histories are saved to: claude_generated_job_history_summaries_v2.txt
     v1.0 job histories remain in: claude_generated_job_history_summaries.txt (preserved for reference)
   </output_file>
 
   <usage>
-    When generating job history (Phase 1), use the v2.0 schema format.
-    When reading job history (Phase 2, Phase 3), check for v2.0 first, fallback to v1.0 if not found.
+    When generating job history (Phase 1), use the job history creation schema format.
+    When reading job history (Phase 2, Phase 3), check for job history creation first, fallback to v1.0 if not found.
   </usage>
 </job_history_schema_version>
 
@@ -601,7 +601,7 @@
         <section id="2" name="Hiring Manager Perspective">
           <reference>Implement per hiring_manager_perspective_rules</reference>
           - Display inferred title, confidence, and reasoning for each position.
-          - Display auto-generated job history summary (v2.0) for each position (per job_history_summary_generation_rules).
+          - Display auto-generated job history summary (job history creation) for each position (per job_history_summary_generation_rules).
           - Format: <position_structure><position id="N">...content...</position></position_structure>
         </section>
 
@@ -632,7 +632,7 @@
       </report_structure>
     </phase_1_analysis_report_output>
 
-    - Generate job history in v2.0 format (see job_history_creation below)
+    - Generate job history in job history creation format (see job_history_creation below)
     
     <known_issues> <!-- v6.5.3 Addition: Issue #7 -->
       <issue id="json_truncation">
@@ -648,7 +648,7 @@
   </behavior>
 
   <job_history_creation>
-    After extracting resume data, generate job history in v2.0 format per optimization-tools/resume-analyzer/job-history-v2-creation.md:
+    After extracting resume data, generate job history in job history creation format per optimization-tools/resume-analyzer/job-history-creation.md:
 
     FOR EACH position in resume:
       1. Extract metadata (job_title, company, dates)
@@ -664,7 +664,7 @@
          - If a resume bullet is just a duty (e.g., "Wrote reports"), put it in Responsibilities, NOT Achievements.
          - If a bullet has a result (e.g., "Reduced time by 50%"), put it here.
       
-      4. Categorize skills using optimization-tools/resume-analyzer/jd-parsing-17-point.md classification rules:
+      4. Categorize skills using optimization-tools/resume-analyzer/jd-parsing.md classification rules:
          - Run each skill through hard vs soft categorization logic
          - Separate into hard_skills_demonstrated and soft_skills_demonstrated arrays
       5. Extract education (if mentioned in context of this role)
@@ -691,7 +691,7 @@
 
 <phase_1_completion_next_steps>
   <purpose>
-    After job history v2.0 is generated and saved, guide the user to next steps.
+    After job history creation is generated and saved, guide the user to next steps.
   </purpose>
 
   <output_message>
@@ -2346,7 +2346,7 @@
 
       <job_history_summary_section>
         <heading>Your Job History Summary for This Position</heading>
-        [Display auto-generated job history v2.0 summary]
+        [Display auto-generated job history creation summary]
       </job_history_summary_section>
     </for_each_position>
 
@@ -2402,7 +2402,7 @@
   <applies_to>Phase 1 Resume Analysis - Hiring Manager Perspective section</applies_to>
   
   <purpose>
-    Generate comprehensive job history v2.0 schema summaries for each position.
+    Generate comprehensive job history job history creation schema summaries for each position.
     CRITICAL: Summaries must be SYNTHESIZED from the raw resume data, not copied.
     We are creating the "Ideal Version" of this role, identifying what the user 
     *actually* did versus what the resume *says* they did.
@@ -2431,7 +2431,7 @@
     </step>
 
     <step number="4" name="structure_data">
-      Organize extracted data into v2.0 schema:
+      Organize extracted data into job history creation schema:
       - professional_summary (synthesized)
       - core_responsibilities (synthesized/functional)
       - key_achievements (filtered wins)
@@ -2493,7 +2493,7 @@
   
   <download_export_formats>
     <format name="xml">
-      <file_format>XML (v2.0 Schema)</file_format>
+      <file_format>XML (job history creation Schema)</file_format>
       <use_case>Machine processing, LLM consumption, system imports, version control</use_case>
     </format>
 
@@ -2551,7 +2551,7 @@
   <download_options>
     <option id="1" format="xml">
       <label>📥 Download as XML (.xml)</label>
-      <description>Job History v2.0 XML Schema - Perfect for LLM processing</description>
+      <description>Job History Creation XML Schema - Perfect for LLM processing</description>
       <use_cases>
         - Import into LLM systems
         - Version control and tracking
@@ -3908,10 +3908,9 @@
     <proxy>Label all estimates: "~", "approx.", or ranges</proxy>
   </step>
 </core_process>
-
-
-
-
+<!-- ========================================================================== -->
+<!-- INITIAL GREETING (PHASE 2 & 3)                                              -->
+<!-- ========================================================================== -->
 
 <!-- ========================================================================== -->
 <!-- INITIAL GREETING (PHASE 2 & 3)                                              -->

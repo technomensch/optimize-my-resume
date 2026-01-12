@@ -219,7 +219,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 │   └── [Other ASCII/Mermaid files]
 │
 ├── /optimization-tools/                           ← Core logic modules
-│   ├── /phase-1/                      ← Foundation: Job History v2.0 & JD Parser
+│   ├── /phase-1/                      ← Foundation: Job History Creation & JD Parser
 │   ├── /phase-2/                      ← Core: Evidence Matching & Blocking Gates
 │   ├── /phase-3/                      ← Router: Scenario Routing & Incremental Updates
 │   └── /phase-4/                      ← Polish: Professional Summary Generation
@@ -365,7 +365,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 **What happens:**
 1. You paste the full job description
-2. The AI analyzes it using a 17-point system:
+2. The AI analyzes it using a parsing system:
    - Company name, job title, location
    - Remote/hybrid/on-site requirements
    - Required vs. preferred skills
@@ -455,7 +455,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 ### What Was New in v6.5.0:
 - **Analyzer Auditing:** New 3-row audit table for every bullet point (Action Verb, Metrics, Length) ensuring transparency.
 - **Hiring Manager Perspective:** A simulated "Hiring Manager" analysis that ignores your titles and infers your actual role based on impact, revealing perception gaps.
-- **Job History Auto-Generation:** Phase 1 now automatically creates your v2.0 Job History file from your resume text.
+- **Job History Auto-Generation:** Phase 1 now automatically creates your job history creation Job History file from your resume text.
 - **Export Power:** One-click export of your Job History in XML, Markdown, and ZIP formats.
 - **Visual Intelligence:** Color-coded action verbs (by category) and clear "Has Metrics" indicators.
 - **Quality Guardrails:** New verification rules ensuring your bullets are correctly grouped and ordered.
@@ -486,9 +486,9 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ### What Was New in v6.0:
 - **Smart Routing System** - Automatically detects what you need and confirms before proceeding (8 different scenarios)
-- **Job History v2.0** - Expanded from 8 to 12 categories for better analysis
+- **Job History Creation** - Expanded from 8 to 12 categories for better analysis
 - **Hard vs. Soft Skills Separation** - Better matching for technical vs. interpersonal skills
-- **17-Point Job Description Parser** - More thorough analysis of job postings
+- **Job Description Parser** - More thorough analysis of job postings
 - **Evidence-Based Matching** - Shows exact resume quotes that match job requirements
 - **Blocking Gates** - Warns you before applying for jobs that are poor fits
 - **Incremental Updates** - Add, edit, or remove positions without re-analyzing everything

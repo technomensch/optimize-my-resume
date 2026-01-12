@@ -27,12 +27,12 @@ This protocol extends the Phase 1 entry router with additional routing scenarios
 ### Scenario 1: New User (Phase 1)
 - **Condition:** hasResume = true AND hasJobHistory = false
 - **Route:** Phase 1 (Full Analysis)
-- **Action:** Generate job history v2.0
+- **Action:** Generate job history creation
 
 ### Scenario 2: JD Comparison (Phase 3)
 - **Condition:** hasJobHistory = true AND hasJD = true
 - **Route:** Phase 3 (JD Comparison)
-- **Action:** 17-point parsing + evidence matching
+- **Action:** JD parsing + evidence matching
 
 ### Scenario 3: Bullet Optimization (Phase 2)
 - **Condition:** hasJobHistory = true AND user mentions ("bullet", "optimize", "improve wording")
@@ -93,7 +93,7 @@ Please select 1-3 or describe the change."
 **Handler:** See optimization-tools/job-fit-analyzer/incremental-updates.md for complete workflow
 
 **Workflow Summary:**
-- **Add:** Collect all v2.0 fields → Insert chronologically → Recalculate aggregates → Save
+- **Add:** Collect all job history creation fields → Insert chronologically → Recalculate aggregates → Save
 - **Edit:** Select position → Show current values → Update fields → Recalculate → Save
 - **Remove:** Select position → Confirm deletion → Remove → Recalculate → Save
 
@@ -204,7 +204,7 @@ These commands bypass normal routing logic and force a specific phase:
 **Keywords:** "start fresh", "start over", "reset"
 **Action:**
 1. Confirm: "This will delete your existing job history. Are you sure?"
-2. If yes: Delete v2.0 file → Force Phase 1
+2. If yes: Delete job history creation file → Force Phase 1
 **Use Case:** User wants to completely re-do their job history
 
 ### Update Job History
@@ -256,7 +256,7 @@ USER INPUT
     |   └─> "add/edit/remove position" → Scenario 6
     |
     ├─> Detect Context
-    |   ├─> hasJobHistory? (check v2.0, then v1.0)
+    |   ├─> hasJobHistory? (check job history creation, then v1.0)
     |   ├─> hasJD? (JD validation heuristics)
     |   └─> hasResume? (file upload or long text)
     |
@@ -330,7 +330,7 @@ Proceed? (yes/no)"
 ```
 "I detected your job history and a job description.
 
-I'll analyze your fit for this role using the 17-point gap analysis system.
+I'll analyze your fit for this role using the parsing gap analysis system.
 
 This will compare your profile against:
 - Required/preferred hard skills
@@ -428,7 +428,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 **Expected:** Detect hasResume=true, hasJobHistory=false → Route to Phase 1 with confirmation
 
 ### Scenario 2: JD Comparison
-**Input:** User pastes job description, has v2.0 job history
+**Input:** User pastes job description, has job history creation job history
 **Expected:** Validate JD → Detect hasJD=true, hasJobHistory=true → Route to Phase 3
 
 ### Scenario 3: False Positive (LinkedIn Post)
@@ -448,7 +448,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 **Expected:** Attempt classification → Low confidence → Two-step clarification
 
 ### Scenario 7: Override Command
-**Input:** User says "start fresh" with existing v2.0 file
+**Input:** User says "start fresh" with existing job history creation file
 **Expected:** Confirm deletion → Delete file → Force Phase 1
 
 ### Scenario 8: No Context
@@ -458,7 +458,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 ---
 
 - **Re-Comparison:** optimization-tools/job-fit-analyzer/re-comparison.md
-- **JD Parsing:** optimization-tools/resume-analyzer/jd-parsing-17-point.md
+- **JD Parsing:** optimization-tools/resume-analyzer/jd-parsing.md
 - **Evidence Matching:** optimization-tools/bullet-optimizer/evidence-matching.md
 
 ---
@@ -563,7 +563,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 - **Core Routing (Phase 1):** optimization-tools/resume-analyzer/entry-router.md
 - **Incremental Updates:** optimization-tools/job-fit-analyzer/incremental-updates.md
 - **Re-Comparison:** optimization-tools/job-fit-analyzer/re-comparison.md
-- **JD Parsing:** optimization-tools/resume-analyzer/jd-parsing-17-point.md
+- **JD Parsing:** optimization-tools/resume-analyzer/jd-parsing.md
 - **Evidence Matching:** optimization-tools/bullet-optimizer/evidence-matching.md
 
 ---
