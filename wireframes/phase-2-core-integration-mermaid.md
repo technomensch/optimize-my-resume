@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added Calibrated Scoring (Industry, Role, Context) -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-2/`, `core/adjacent-technical.md`, `core/industry-context.md`
+**Related Modules:** `optimization-tools/bullet-optimizer/`, `core/adjacent-technical.md`, `core/industry-context.md`
 
 ---
 
@@ -54,8 +54,8 @@ flowchart TD
 - Calibrated Fit Score
 
 ## Files Involved
-- `phases/phase-2/evidence-matching.md`
-- `phases/phase-2-blocking-gates.md`
+- `optimization-tools/bullet-optimizer/evidence-matching.md`
+- `optimization-tools/bullet-optimizer-blocking-gates.md`
 - `core/adjacent-technical.md`
 - `core/industry-context.md`
 - `core/role-type-validation.md`

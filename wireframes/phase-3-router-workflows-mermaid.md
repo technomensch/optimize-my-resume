@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added Bullet Optimization & Guardrail Integration -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-3/`, `core/format-rules.md`
+**Related Modules:** `optimization-tools/job-fit-analyzer/`, `core/format-rules.md`
 
 ---
 
@@ -48,9 +48,9 @@ graph TD
 - State-aware greeting messages
 
 ## Files Involved
-- `phases/phase-3/workflow-router.md`
-- `phases/phase-3/incremental-updates.md`
-- `phases/phase-3/re-comparison.md`
+- `optimization-tools/job-fit-analyzer/workflow-router.md`
+- `optimization-tools/job-fit-analyzer/incremental-updates.md`
+- `optimization-tools/job-fit-analyzer/re-comparison.md`
 
 ## Related Phases
 - **Previous:** **Phase 2: Core Integration**

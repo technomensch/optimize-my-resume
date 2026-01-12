@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added v6.3.x Fit Gates and 17-Point Check Integration -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-1/`, `core/fit-thresholds.md`
+**Related Modules:** `optimization-tools/resume-analyzer/`, `core/fit-thresholds.md`
 
 ---
 
@@ -57,8 +57,8 @@ Phase 1 establishes the system's foundation by processing primary inputs: the us
 - Preliminary Fit Assessment Report (with Gap analysis)
 
 ## Files Involved
-- `phases/phase-1/job-history-v2-creation.md`
-- `phases/phase-1/jd-parsing-17-point.md`
+- `optimization-tools/resume-analyzer/job-history-v2-creation.md`
+- `optimization-tools/resume-analyzer/jd-parsing-17-point.md`
 - `core/fit-thresholds.md`
 - `core/portfolio-weighting.md`
 

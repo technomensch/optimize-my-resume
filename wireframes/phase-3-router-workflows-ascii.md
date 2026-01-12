@@ -2,7 +2,7 @@
 
 **Version:** 1.1 <!-- v1.1 Change: Added Bullet Optimization & Guardrail Integration -->
 **Last Updated:** 2026-01-05
-**Related Modules:** `phases/phase-3/`, `core/format-rules.md`
+**Related Modules:** `optimization-tools/job-fit-analyzer/`, `core/format-rules.md`
 
 ---
 
@@ -59,9 +59,9 @@ Phase 3 contains the "brains" of the system's runtime. The Workflow Router handl
 - Progress Diffs ("Score +12%")
 
 ## Files Involved
-- `phases/phase-3/workflow-router.md`
+- `optimization-tools/job-fit-analyzer/workflow-router.md`
 - `core/format-rules.md` (Guardrails #2, #15, #20)
-- `phases/phase-3/re-comparison.md`
+- `optimization-tools/job-fit-analyzer/re-comparison.md`
 
 ## Related Phases
 - **Previous:** **Phase 2: Core Integration**

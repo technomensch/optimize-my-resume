@@ -152,9 +152,9 @@
 **Branch:** `v6.0.1-foundation` | **Status:** Complete | **Date:** 2025-12-28
 
 **Files Created:**
-- [x] `phases/phase-1/job-history-v2-creation.md` - 12-section schema
-- [x] `phases/phase-1/jd-parsing-17-point.md` - 17-point JD parser with hard/soft skill classification
-- [x] `phases/phase-1/entry-router.md` - 5-scenario routing logic
+- [x] `optimization-tools/resume-analyzer/job-history-v2-creation.md` - 12-section schema
+- [x] `optimization-tools/resume-analyzer/jd-parsing-17-point.md` - 17-point JD parser with hard/soft skill classification
+- [x] `optimization-tools/resume-analyzer/entry-router.md` - 5-scenario routing logic
 
 **Notes:** Foundation modules created but not yet integrated into modes.
 
@@ -164,12 +164,12 @@
 **Branch:** `v6.0.2-core-integration` | **Status:** Complete | **Date:** 2025-12-29
 
 **Files Created:**
-- [x] `phases/phase-2/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
+- [x] `optimization-tools/bullet-optimizer/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
 - [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (v2.0 schema generation, next steps guidance)
-- [x] `phases/phase-2/` - 17-point parser integration, evidence matching, blocking gates
-- [x] `phases/phase-3/` - v2.0 backward compatibility with upgrade recommendations
+- [x] `optimization-tools/bullet-optimizer/` - 17-point parser integration, evidence matching, blocking gates
+- [x] `optimization-tools/job-fit-analyzer/` - v2.0 backward compatibility with upgrade recommendations
 
 **Notes:** Core integration complete. Phases 1 and 3 now use v2.0 schema. Phase 2 supports both v1.0 and v2.0 formats.
 
@@ -179,9 +179,9 @@
 **Branch:** `v6.0.3-router-workflows` | **Status:** Complete | **Date:** 2025-12-29
 
 **Files Created:**
-- [x] `phases/phase-3/workflow-router.md` - Complete 8-scenario routing system
-- [x] `phases/phase-3/incremental-updates.md` - Add/edit/remove positions (created by Opus)
-- [x] `phases/phase-3/re-comparison.md` - JD re-comparison with diff output (created by Opus)
+- [x] `optimization-tools/job-fit-analyzer/workflow-router.md` - Complete 8-scenario routing system
+- [x] `optimization-tools/job-fit-analyzer/incremental-updates.md` - Add/edit/remove positions (created by Opus)
+- [x] `optimization-tools/job-fit-analyzer/re-comparison.md` - JD re-comparison with diff output (created by Opus)
 - [x] `jd_parsed/` - Cache directory for parsed JDs
 
 **Files Modified:**
@@ -203,7 +203,7 @@
 **Branch:** `v6.0.4-summary-polish` | **Status:** Complete | **Date:** 2025-12-29 <!-- v6.0.0 Change -->
 
 **Files Created:** <!-- v6.0.0 Change -->
-- [x] `phases/phase-4/summary-generation.md` - Master + per-JD summaries (created by Opus, 646 lines) <!-- v6.0.0 Change -->
+- [x] `optimization-tools/narrative-generator/summary-generation.md` - Master + per-JD summaries (created by Opus, 646 lines) <!-- v6.0.0 Change -->
 
 **Files Modified:** <!-- v6.0.0 Change -->
 - [x] `docs/CHANGELOG.md` - Complete v6.0.0 release entry with 4-phase documentation <!-- v6.0.0 Change -->
@@ -254,7 +254,7 @@
 - [x] Comprehensive Quality Assurance Rules (phrase variation, symbol consistency, verb tense, keyword diversity)
 - [x] Automated implementation plan workflow
 
-**Notes:** Documentation-focused release improving user experience and developer onboarding. Completes terminology alignment started with `/phases/` folder rename. v6.1.7 adds critical grammar, quality assurance standards, and mandatory proofreading warnings.
+**Notes:** Documentation-focused release improving user experience and developer onboarding. Completes terminology alignment started with `/optimization-tools/` folder rename. v6.1.7 adds critical grammar, quality assurance standards, and mandatory proofreading warnings.
 
 ---
 
@@ -432,7 +432,7 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 **Files Modified:**
 - `core/fit-thresholds.md` (v5.0 → v5.1)
-- `phases/phase-2/evidence-matching.md` (v1.0 → v1.1)
+- `optimization-tools/bullet-optimizer/evidence-matching.md` (v1.0 → v1.1)
 - `PROJECT-INSTRUCTIONS.md` (v6.1.7 → v6.1.9)
 - `quick-start-phase.md` (v6.1.7 → v6.1.9)
 
