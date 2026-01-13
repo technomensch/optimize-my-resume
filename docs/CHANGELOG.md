@@ -1,6 +1,6 @@
 # Changelog
 
-## Current Version: v8.4.0 <!-- v8.4.0 Issue #31 -->
+## Current Version: v8.4.2 <!-- v8.4.2 Release -->
 
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
@@ -10,6 +10,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
+
+### v8.4.2 - Documentation Modernization & Path Resolution
+- **Phase Terminology Removal**: Replaced all legacy "Phase 1/2/3/4" references with functional tool names (Resume Analyzer, Bullet Optimizer, Job Fit Analyzer, Narrative Generator) across `PROJECT-INSTRUCTIONS.md`, `Project-GUI-Instructions.md`, and `README.md`.
+- **Path Resolution Documentation**: Added `<path_resolution>` section to `Project-GUI-Instructions.md` explaining Claude Web Artifact paths (`/files/`) vs. local repository paths.
+- **Upload Guide**: Created `<upload_guide>` section documenting minimum and modular file sets for Claude Projects usage.
+- **Repository-Wide Alignment**: Synchronized terminology across all core documentation for improved user experience and clarity.
+
+### v8.4.1 - Version Synchronization & Backlog Management
+- **Version Sync Protocol**: Corrected 7-version drift in `PROJECT-INSTRUCTIONS.md` and `Project-GUI-Instructions.md` (v7.1.1 → v8.4.0).
+- **ADR-004 Enhancement**: Added "Version Management Protocol" to [ADR-004](../decisions/ADR-004-shadow-modularization.md) documenting synchronization requirements.
+- **Backlog Organization**: Moved Multi-JD Context Management plan to `docs/plans/backlog/` and created Issue #45 for future tracking.
+- **Lessons Learned**: Added "Lesson 2: Version Header Synchronization" to [Shadow Modularization Lessons](../lessons-learned/architecture/Lessons_Learned_Shadow_Modularization_Strategy.md).
 
 ### v8.4.0 - Job History Template Extraction (Issue #31)
 - **Modular XML Schema**: Extracted the 13-section XML job history structure into a dedicated module to reduce token consumption and improve maintainability.

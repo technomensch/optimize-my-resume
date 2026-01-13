@@ -3,7 +3,37 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v8.4.0 <!-- v8.4.0 Issue #31 -->
+## Current Version: v8.4.2 <!-- v8.4.2 Release -->
+
+---
+
+## v8.4.2 - Documentation Modernization & Path Resolution (COMPLETE) <!-- v8.4.2 Release -->
+
+**Branch:** `v8.4.2-update-doc-instructions-for-web` | **Status:** Complete | **Date:** 2026-01-13
+**Plan:** [v8.4.2 Implementation Plan](docs/plans/v8.4.2-update-doc-instructions-for-web.md)
+
+**Implementation Approach:** Repository-wide terminology modernization and Claude Web Artifact path resolution documentation.
+
+### Key Features
+- [x] **Phase Terminology Removal**: Replaced all "Phase 1/2/3/4" references with tool names (Resume Analyzer, Bullet Optimizer, Job Fit Analyzer, Narrative Generator).
+- [x] **Path Resolution**: Added `<path_resolution>` section for Claude Web Artifacts (`/files/`) vs. local repository paths.
+- [x] **Upload Guide**: Created `<upload_guide>` section for minimum and modular Claude Projects setup.
+- [x] **Repository-Wide Alignment**: Synchronized terminology across `PROJECT-INSTRUCTIONS.md`, `Project-GUI-Instructions.md`, `README.md`, and all core documentation.
+
+---
+
+## v8.4.1 - Version Synchronization & Backlog Management (COMPLETE) <!-- v8.4.1 Release -->
+
+**Branch:** `v8.4.1-version-sync-and-backlog` | **Status:** Complete | **Date:** 2026-01-13
+**Plan:** [v8.4.1 Implementation Plan](docs/plans/v8.4.1-version-sync-and-backlog.md)
+
+**Implementation Approach:** Correcting 7-version drift and formalizing version synchronization protocol.
+
+### Key Features
+- [x] **Version Sync**: Corrected `PROJECT-INSTRUCTIONS.md` and `Project-GUI-Instructions.md` from v7.1.1 to v8.4.0.
+- [x] **ADR-004 Enhancement**: Added "Version Management Protocol" to Shadow Modularization ADR.
+- [x] **Backlog Organization**: Moved Multi-JD Context Management to backlog and created Issue #45.
+- [x] **Lessons Learned**: Documented "Lesson 2: Version Header Synchronization" in architecture lessons.
 
 ---
 
