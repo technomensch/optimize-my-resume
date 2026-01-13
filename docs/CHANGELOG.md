@@ -1,6 +1,6 @@
 # Changelog
 
-## Current Version: v8.3.1 <!-- v8.3.1 Issue #43 -->
+## Current Version: v8.4.0 <!-- v8.4.0 Issue #31 -->
 
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
@@ -9,6 +9,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
+
+
+### v8.4.0 - Job History Template Extraction (Issue #31)
+- **Modular XML Schema**: Extracted the 13-section XML job history structure into a dedicated module to reduce token consumption and improve maintainability.
+- **Shadow Modularization**: Implemented the ADR-004 pattern for the template system, keeping the Gold Master synchronized while enabling modular consumption by the GUI.
 
 ### v8.3.1 - Bullet Generation Improvements & Governance (Issue #42, #43, #44)
 - **Causal Impact Linking** (Issue #43): Mandating syntactic links between qualitative claims and hard metrics using "Causal Connectors."

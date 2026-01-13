@@ -187,6 +187,8 @@
 <!-- ========================================================================== -->
 <!-- v6.2.0 Addition: Comprehensive template system for cross-LLM consistency -->
 
+<!-- SILENT SYNC: Job History Template -->
+<modular_reference file="optimization-tools/resume-analyzer/job-history-template.md" />
 <job_history_template_system>
   <version>1.0</version>
   <created>January 2, 2026</created>
@@ -568,6 +570,7 @@
     - Established dual-format architecture
   </version_history_template_system>
 </job_history_template_system>
+<!-- END SILENT SYNC: Job History Template -->
 
 <!-- ========================================================================== -->
 <!-- PHASE 1: FULL RESUME ANALYSIS                                               -->

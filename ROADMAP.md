@@ -3,9 +3,8 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v8.3.1 <!-- v8.3.1 Issue #43 -->
-## In Development: v8.4.0 (Job History Template Extraction)
-## Planned: v8.5.0 (Multi-JD Context Management)
+## Current Version: v8.4.0 <!-- v8.4.0 Issue #31 -->
+## In Development: [v8.5.0 (Multi-JD Context Management)](docs/plans/v8.5.0-multi-jd-context-management.md)
 
 ---
 
@@ -21,6 +20,20 @@
 - [x] **Action Verb Visuals** (Issue #43): Adding ASCII block indicators for verb distribution.
 - [x] **Chronology Depth Logic** (Issue #44): Standardizing resume depth based on recency and tenure.
 - [x] **Governance Guardrails** (Issue #42): Codified Modularity Compliance (#30) and Workflow Lifecycle Compliance (#31).
+
+---
+
+## v8.4.0 - Job History Template Extraction (COMPLETE) <!-- Issue #31 -->
+
+**Branch:** `v8.4.0-extract-job-history-template` | **Status:** Complete | **Date:** 2026-01-13
+**Plan:** [v8.4.0 Implementation Plan](docs/plans/v8.4.0-extract-job-history-template.md)
+
+**Implementation Approach:** Extracting the 13-section XML job history template and its validation/conversion logic from the GUI instructions into a dedicated functional module. Follows Shadow Modularization (ADR-004).
+
+### Key Features
+- [x] **XML Schema Extraction**: Formalized the `job_history_template_system` in [job-history-template.md](optimization-tools/resume-analyzer/job-history-template.md).
+- [x] **Token Optimization**: Reduced GUI prompt size by replacing monolithic XML logic with modular references.
+- [x] **Shadow Modularization**: Gold Master maintains a synchronized copy while the GUI uses a lightweight reference.
 
 ---
 

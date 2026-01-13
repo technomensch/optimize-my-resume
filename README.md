@@ -1,4 +1,4 @@
-# Optimize My Resume v7.1.1
+# Optimize My Resume v8.4.0
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -433,8 +433,12 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 7.1.1 (January 12, 2026) <!-- v7.1.1 issue #34 -->
-**Released:** January 12, 2026
+**Current Version:** 8.4.0 (January 13, 2026) <!-- v8.4.0 issue #31 -->
+**Released:** January 13, 2026
+
+### What's New in v8.4.0:
+- **Job History Template Extraction** - Extracted the 13-section XML job history structure into a dedicated module to reduce token consumption and improve maintainability. (Issue #31)
+- **Shadow Modularization (ADR-004)** - Gold Master maintains a synchronized copy while the GUI uses a lightweight reference.
 
 ### What's New in v7.1.1:
 - **Metric Preservation Guardrail** - New CRITICAL guardrail ensuring hard metrics are preserved during re-writes. (Issue #34)
