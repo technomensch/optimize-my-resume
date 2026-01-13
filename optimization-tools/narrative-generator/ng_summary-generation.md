@@ -543,7 +543,7 @@ DURING PER-JD CUSTOMIZATION:
 
 ### Guardrail #3: Professional Summary Abstraction
 
-> **Implementation Target:** [summary-generation.md](optimization-tools/narrative-generator/summary-generation.md).
+> **Implementation Target:** [summary-generation.md](optimization-tools/narrative-generator/ng_summary-generation.md).
 
 **Instruction Text:**
 ```xml
@@ -590,7 +590,7 @@ ORIGINAL GUARDRAIL #3:
 
 ### Guardrail #13: Summary-to-Bullets Metric Reconciliation
 
-> **Implementation Target:** [summary-generation.md](optimization-tools/narrative-generator/summary-generation.md).
+> **Implementation Target:** [summary-generation.md](optimization-tools/narrative-generator/ng_summary-generation.md).
 
 **Instruction Text:**
 ```xml
@@ -620,7 +620,7 @@ ORIGINAL GUARDRAIL #3:
 
 ### Guardrail #15: Phrase Repetition Enforcement (Secondary)
 
-> **Implementation Target:** [format-rules.md](core/format-rules.md) (primary) and [summary-generation.md](optimization-tools/narrative-generator/summary-generation.md) (secondary).
+> **Implementation Target:** [format-rules.md](core/format-rules.md) (primary) and [summary-generation.md](optimization-tools/narrative-generator/ng_summary-generation.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -728,10 +728,10 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 
 ## Related Protocols
 
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
-- **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md`
-- **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/workflow-router.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
+- **Evidence Matching:** `optimization-tools/bullet-optimizer/bo_evidence-matching.md`
+- **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
 
 ---
 

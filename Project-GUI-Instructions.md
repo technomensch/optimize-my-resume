@@ -1,9 +1,10 @@
-# Optimize-My-Resume System v8.4.2 (GUI Instructions)
+# Optimize-My-Resume System v8.4.3 (GUI Instructions)
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 8.4.2 (January 13, 2026)                                          --> <!-- v8.4.2 Release: Documentation Updates for Web Artifacts -->
+<!-- Version: 8.4.3 (January 13, 2026)                                          --> 
+<!-- v8.4.3 Release: Updated artifact/modular file names with prefixes         -->
 <!-- Last Updated: January 13, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
@@ -20,14 +21,14 @@
   <claude_web_artifact>
     When using this system as a Claude Project with uploaded files:
     - Files uploaded to Project Knowledge are accessible via /files/[filename.md]
-    - Example: optimization-tools/resume-analyzer/job-history-creation.md → /files/job-history-creation.md
+    - Example: optimization-tools/resume-analyzer/ra_job-history-creation.md → /files/job-history-creation.md
     - The system will auto-resolve paths based on context
   </claude_web_artifact>
   
   <local_repository>
     When using the full repository locally or with Claude Desktop:
     - Use paths relative to project root
-    - Example: optimization-tools/resume-analyzer/job-history-creation.md
+    - Example: optimization-tools/resume-analyzer/ra_job-history-creation.md
   </local_repository>
 
   <modular_reference_behavior>
@@ -49,24 +50,24 @@
     For reduced token usage, upload only the modules you need:
     
     <for_resume_analysis>
-      - optimization-tools/resume-analyzer/job-history-creation.md
-      - optimization-tools/resume-analyzer/entry-router.md
-      - optimization-tools/resume-analyzer/job-history-template.md
-      - optimization-tools/resume-analyzer/resume-analyzer-display.md
+      - optimization-tools/resume-analyzer/ra_job-history-creation.md
+      - optimization-tools/resume-analyzer/ra_entry-router.md
+      - optimization-tools/resume-analyzer/ra_job-history-template.md
+      - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md
     </for_resume_analysis>
 
     <for_bullet_optimization>
-      - optimization-tools/bullet-optimizer/evidence-matching.md
-      - optimization-tools/bullet-optimizer/bullet-generation-logic.md
+      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
+      - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md
     </for_bullet_optimization>
 
     <for_job_fit_analysis>
-      - optimization-tools/job-fit-analyzer/job-fit-assessment.md
-      - optimization-tools/job-fit-analyzer/workflow-router.md
+      - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md
+      - optimization-tools/job-fit-analyzer/jfa_workflow-router.md
     </for_job_fit_analysis>
 
     <for_narrative_generation>
-      - optimization-tools/narrative-generator/summary-generation.md
+      - optimization-tools/narrative-generator/ng_summary-generation.md
     </for_narrative_generation>
   </modular_setup>
 </upload_guide>
@@ -85,20 +86,20 @@
 
   <available_modules>
     <!-- Resume Analyzer: Foundation -->
-    - optimization-tools/resume-analyzer/job-history-creation.md (12-section schema)
-    - optimization-tools/resume-analyzer/jd-parsing.md (JD parsing protocol)
-    - optimization-tools/resume-analyzer/entry-router.md (5-scenario routing logic)
+    - optimization-tools/resume-analyzer/ra_job-history-creation.md (12-section schema)
+    - optimization-tools/resume-analyzer/ra_jd-parsing.md (JD parsing protocol)
+    - optimization-tools/resume-analyzer/ra_entry-router.md (5-scenario routing logic)
 
     <!-- Bullet Optimizer: Core Integration -->
-    - optimization-tools/bullet-optimizer/evidence-matching.md (requirement-by-requirement gap analysis)
+    - optimization-tools/bullet-optimizer/bo_evidence-matching.md (requirement-by-requirement gap analysis)
 
     <!-- Job Fit Analyzer: Router Phase 3: Router & Workflows Workflows -->
-    - optimization-tools/job-fit-analyzer/workflow-router.md (complete 8-scenario routing system)
-    - optimization-tools/job-fit-analyzer/incremental-updates.md (add/edit/remove positions)
-    - optimization-tools/job-fit-analyzer/re-comparison.md (JD re-comparison with diff output)
+    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (complete 8-scenario routing system)
+    - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md (add/edit/remove positions)
+    - optimization-tools/job-fit-analyzer/jfa_re-comparison.md (JD re-comparison with diff output)
 
     <!-- Narrative Generator: Summary Phase 4: Summary & Polish Polish -->
-    - optimization-tools/narrative-generator/summary-generation.md (master + per-JD summary customization)
+    - optimization-tools/narrative-generator/ng_summary-generation.md (master + per-JD summary customization)
   </available_modules>
 
   <v6_0_0_release_notes>
@@ -115,7 +116,7 @@
   <priority>CRITICAL - Execute BEFORE phase detection</priority>
 
   <purpose>
-    Before executing any phase, consult optimization-tools/job-fit-analyzer/workflow-router.md to:
+    Before executing any phase, consult optimization-tools/job-fit-analyzer/jfa_workflow-router.md to:
     1. Detect user state (hasJobHistory, hasJD, hasResume)
     2. Identify user intent (which workflow to execute)
     3. Confirm with user before proceeding
@@ -159,14 +160,14 @@
       Condition: User says "add position", "edit position", "remove position"
       Route: Incremental Update Handler
       Action: Add/edit/remove positions in job history creation
-      Handler: optimization-tools/job-fit-analyzer/incremental-updates.md
+      Handler: optimization-tools/job-fit-analyzer/jfa_incremental-updates.md
     </scenario>
 
     <scenario id="7" name="re_comparison">
       Condition: User says "compare again", "re-run", "updated history"
       Route: Re-Comparison Handler
       Action: Re-run JD analysis with updated job history + diff output
-      Handler: optimization-tools/job-fit-analyzer/re-comparison.md
+      Handler: optimization-tools/job-fit-analyzer/jfa_re-comparison.md
     </scenario>
 
     <scenario id="8" name="ambiguous_input">
@@ -184,7 +185,7 @@
   </override_commands>
 
   <execution_rule>
-    ALWAYS route through optimization-tools/job-fit-analyzer/workflow-router.md FIRST before executing any phase.
+    ALWAYS route through optimization-tools/job-fit-analyzer/jfa_workflow-router.md FIRST before executing any phase.
 
     The router:
     - Detects user state and intent
@@ -214,7 +215,7 @@
   <current_version>2.0</current_version>
 
   <schema_location>
-    Job History Schema job history creation is defined in: optimization-tools/resume-analyzer/job-history-creation.md
+    Job History Schema job history creation is defined in: optimization-tools/resume-analyzer/ra_job-history-creation.md
   </schema_location>
 
   <key_changes_from_v1_0>
@@ -241,7 +242,7 @@
 <!-- JOB HISTORY TEMPLATE SYSTEM                                                -->
 <!-- ========================================================================== -->
 
-<modular_reference file="optimization-tools/resume-analyzer/job-history-template.md" />
+<modular_reference file="optimization-tools/resume-analyzer/ra_job-history-template.md" />
 
 <!-- ========================================================================== -->
 <!-- PHASE 1: FULL RESUME ANALYSIS                                               -->
@@ -311,7 +312,7 @@
   </behavior>
 
   <job_history_creation>
-    After extracting resume data, generate job history in job history creation format per optimization-tools/resume-analyzer/job-history-creation.md:
+    After extracting resume data, generate job history in job history creation format per optimization-tools/resume-analyzer/ra_job-history-creation.md:
 
     FOR EACH position in resume:
       1. Extract metadata (job_title, company, dates)
@@ -327,7 +328,7 @@
          - If a resume bullet is just a duty (e.g., "Wrote reports"), put it in Responsibilities, NOT Achievements.
          - If a bullet has a result (e.g., "Reduced time by 50%"), put it here.
       
-      4. Categorize skills using optimization-tools/resume-analyzer/jd-parsing.md classification rules:
+      4. Categorize skills using optimization-tools/resume-analyzer/ra_jd-parsing.md classification rules:
          - Run each skill through hard vs soft categorization logic
          - Separate into hard_skills_demonstrated and soft_skills_demonstrated arrays
       5. Extract education (if mentioned in context of this role)
@@ -607,7 +608,7 @@
   </behavior>
 </phase>
 
-<modular_reference file="optimization-tools/bullet-optimizer/bullet-generation-logic.md" />
+<modular_reference file="optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md" />
 
 <!-- ========================================================================== -->
 <!-- PHASE 3: KEYWORD INPUT HANDLING                                            -->
@@ -860,7 +861,7 @@
 <!-- MODULARIZED JOB FIT ASSESSMENT SYSTEM                                      -->
 <!-- ========================================================================== -->
 
-<modular_reference file="optimization-tools/job-fit-analyzer/job-fit-assessment.md">
+<modular_reference file="optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md">
   <component name="real_world_hiring_context" />
   <component name="portfolio_project_weighting" />
   <component name="phase_1_initial_fit_assessment" />
@@ -878,7 +879,7 @@
 <!-- MODULARIZED RESUME ANALYZER DISPLAY SYSTEM                                 -->
 <!-- ========================================================================== -->
 
-<modular_reference file="optimization-tools/resume-analyzer/resume-analyzer-display.md">
+<modular_reference file="optimization-tools/resume-analyzer/ra_resume-analyzer-display.md">
   <component name="bullet_color_coding_rules" />
   <component name="bullet_metrics_detection_rules" />
   <component name="bullet_display_and_grouping_rules" />
@@ -928,7 +929,7 @@
 <!-- QUALITY ASSURANCE RULES - GRAMMAR, CONSISTENCY, VARIATION                 -->
 <!-- ========================================================================== -->
 
-<modular_reference file="optimization-tools/resume-analyzer/quality-gates-guardrails.md" />
+<modular_reference file="optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md" />
 
 <!-- ========================================================================== -->
 <!-- CHARACTER AND WORD LIMITS                                                  -->

@@ -1,0 +1,529 @@
+﻿Epic #,Feature #,Story #,Column1,AC/BR #,Rule Typ,Epic Title,Feature Title,User Story Title,User Story Statement,Acceptance Criteria,Business Rule,User Story Title Column,Functional Title / Description
+1,0,0,0,,,Resume Analyzer,,,,,,,"Allow users to upload their resume and receive a comprehensive quality analysis, including scores, recommendations, and a structured job history they can use for future applications."
+1,1,0,0,,,,Resume Upload,,,,,,Allow users to upload their resume in commonly used file formats.
+1,1,1,0,,,,,,"**As a** user, **I want to** upload my resume as a PDF file, **so that** the system can analyze its content.",,,User Story Title: PDF Document Ingestion,PDF Document Ingestion
+1,1,1,0,AC01,ACPTCRIT,,,,,"When I upload a PDF file, the system accepts it without error.",,,
+1,1,1,0,AC02,ACPTCRIT,,,,,"When I upload a file that is not a PDF, the system displays an appropriate error message.",,,
+1,1,1,0,,ACPTCRIT,,,,,The system extracts readable text from the PDF for analysis.,,,
+1,1,1,0,BR01,BUSRULE,,,,,,PDF files must be 10MB or less in size.,,
+1,1,2,0,,,,,,"**As a** user, **I want to** upload my resume as a Microsoft Word document (DOCX), **so that** the system can analyze its content.",,,User Story Title: Word Document Ingestion,Word Document Ingestion
+1,1,2,0,AC01,ACPTCRIT,,,,,"When I upload a DOCX file, the system accepts it without error.",,,
+1,1,2,0,AC02,ACPTCRIT,,,,,"When I upload a file that is not a DOCX, the system displays an appropriate error message.",,,
+1,1,2,0,,ACPTCRIT,,,,,The system extracts readable text from the document for analysis.,,,
+1,1,2,0,BR01,BUSRULE,,,,,,DOCX files must be 10MB or less in size.,,
+1,1,3,0,,,,,,"**As a** user, **I want to** upload my resume as a plain text file (TXT), **so that** the system can analyze its content.",,,User Story Title: Plain Text Ingestion,Plain Text Ingestion
+1,1,3,0,AC01,ACPTCRIT,,,,,"When I upload a TXT file, the system accepts it without error.",,,
+1,1,3,0,AC02,ACPTCRIT,,,,,The system uses the text content directly for analysis.,,,
+1,1,3,0,BR01,BUSRULE,,,,,,TXT files must be 5MB or less in size.,,
+1,1,4,0,,,,,,"**As a** user, **I want to** upload my resume as a Rich Text Format file (RTF), **so that** the system can analyze its content.",,,User Story Title: Rich Text Ingestion,Rich Text Ingestion
+1,1,4,0,AC01,ACPTCRIT,,,,,"When I upload an RTF file, the system accepts it without error.",,,
+1,1,4,0,AC02,ACPTCRIT,,,,,The system extracts readable text from the RTF for analysis.,,,
+1,1,4,0,BR01,BUSRULE,,,,,,RTF files must be 10MB or less in size.,,
+1,1,5,0,,,,,,"**As a** user, **I want to** upload my resume as a Markdown file (MD), **so that** the system can analyze its content.",,,User Story Title: Markdown Ingestion,Markdown Ingestion
+1,1,5,0,AC01,ACPTCRIT,,,,,"When I upload an MD file, the system accepts it without error.",,,
+1,1,5,0,AC02,ACPTCRIT,,,,,The system processes Markdown formatting to extract readable text.,,,
+1,1,5,0,BR01,BUSRULE,,,,,,MD files must be 5MB or less in size.,,
+1,1,6,0,,,,,,"**As a** user, **I want to** paste my resume text directly into the system, **so that** I can use the system without having a file saved on my computer.",,,User Story Title: Direct Text Input,Direct Text Input
+1,1,6,0,AC01,ACPTCRIT,,,,,The system provides a text input area where I can paste content.,,,
+1,1,6,0,AC02,ACPTCRIT,,,,,"When I paste text and submit, the system accepts it for analysis.",,,
+1,1,6,0,,ACPTCRIT,,,,,The system handles special characters and formatting gracefully.,,,
+1,1,7,0,,,,,,"**As a** user, **I want** the system to automatically detect whether I uploaded a resume or a job description, **so that** it can route me to the correct workflow.",,,User Story Title: Automated Content Categorization,Automated Content Categorization
+1,1,7,0,AC01,ACPTCRIT,,,,,"When I upload a resume, the system identifies it as a resume.",,,
+1,1,7,0,AC02,ACPTCRIT,,,,,"When I upload a job description, the system identifies it as a job description.",,,
+1,1,7,0,,ACPTCRIT,,,,,"When the content type is unclear, the system asks me to confirm what I uploaded.",,,
+1,2,0,0,,,,Resume Parsing,,,,,,Extract structured information from the uploaded resume content.
+1,2,1,0,,,,,,"**As a** system, **I want to** identify and extract job titles from each position in the resume, **so that** I can categorize the user's work history.",,,User Story Title: Job Title Extraction,Job Title Extraction
+1,2,1,0,AC01,ACPTCRIT,,,,,"For each position listed, the system captures the job title.",,,
+1,2,1,0,AC02,ACPTCRIT,,,,,"If a job title cannot be determined, the system flags it for user clarification.",,,
+1,2,2,0,,,,,,"**As a** system, **I want to** identify and extract company names from each position in the resume, **so that** I can track where the user has worked.",,,User Story Title: Company Name Extraction,Company Name Extraction
+1,2,2,0,AC01,ACPTCRIT,,,,,"For each position listed, the system captures the company name.",,,
+1,2,2,0,AC02,ACPTCRIT,,,,,"If a company name cannot be determined, the system flags it for user clarification.",,,
+1,2,3,0,,,,,,"**As a** system, **I want to** identify and extract start and end dates for each position, **so that** I can calculate employment duration.",,,User Story Title: Employment Duration Calculation,Employment Duration Calculation
+1,2,3,0,AC01,ACPTCRIT,,,,,"For each position, the system captures the start date.",,,
+1,2,3,0,AC02,ACPTCRIT,,,,,"For each position, the system captures the end date (or ""Present"" if current).",,,
+1,2,3,0,,ACPTCRIT,,,,,The system calculates the duration of each position.,,,
+1,2,4,0,,,,,,"**As a** system, **I want to** identify and extract individual bullet points from each position, **so that** I can analyze them individually.",,,User Story Title: Bullet Point Extraction,Bullet Point Extraction
+1,2,4,0,AC01,ACPTCRIT,,,,,"For each position, the system captures all bullet points.",,,
+1,2,4,0,AC02,ACPTCRIT,,,,,Bullet points are associated with their parent position.,,,
+1,2,5,0,,,,,,"**As a** system, **I want to** determine whether each position was remote, hybrid, or on-site, **so that** I can include this context in the analysis.",,,User Story Title: Work Environment Classification,Work Environment Classification
+1,2,5,0,AC01,ACPTCRIT,,,,,"If location type is mentioned, the system captures it.",,,
+1,2,5,0,AC02,ACPTCRIT,,,,,"If location type is not mentioned, the system marks it as unknown.",,,
+1,2,6,0,,,,,,"**As a** system, **I want to** identify skills mentioned in the resume, **so that** I can categorize them for analysis.",,,User Story Title: Core Competency Identification,Core Competency Identification
+1,2,6,0,AC01,ACPTCRIT,,,,,The system identifies technical skills (hard skills).,,,
+1,2,6,0,AC02,ACPTCRIT,,,,,The system identifies interpersonal skills (soft skills).,,,
+1,2,6,0,,ACPTCRIT,,,,,Skills are associated with the positions where they were demonstrated.,,,
+1,3,0,0,,,,Resume Quality Scoring,,,,,,Evaluate the resume against quality criteria and provide scores.
+1,3,1,0,,,,,,"**As a** user, **I want to** see an overall score for my resume, **so that** I understand its general quality at a glance.",,,User Story Title: Quality Index Calculation,Quality Index Calculation
+1,3,1,0,AC01,ACPTCRIT,,,,,"The system displays a single overall score (e.g., letter grade or percentage).",,,
+1,3,1,0,AC02,ACPTCRIT,,,,,The score is based on multiple weighted factors.,,,
+1,3,2,0,,,,,,"**As a** user, **I want to** know how well my resume will perform with Applicant Tracking Systems, **so that** I can ensure it gets past automated screening.",,,User Story Title: ATS Compatibility Scoring,ATS Compatibility Scoring
+1,3,2,0,AC01,ACPTCRIT,,,,,The system provides an ATS compatibility score.,,,
+1,3,2,0,AC02,ACPTCRIT,,,,,The score considers bullet point length.,,,
+1,3,2,0,,ACPTCRIT,,,,,The score considers header structure.,,,
+1,3,2,0,,ACPTCRIT,,,,,The score considers contact information formatting.,,,
+1,3,3,0,,,,,,"**As a** user, **I want to** know the quality of my resume content, **so that** I can improve my writing.",,,User Story Title: Narrative Impact Scoring,Narrative Impact Scoring
+1,3,3,0,AC01,ACPTCRIT,,,,,The system provides a content quality score.,,,
+1,3,3,0,AC02,ACPTCRIT,,,,,The score considers action verb strength.,,,
+1,3,3,0,,ACPTCRIT,,,,,The score considers verb tense consistency.,,,
+1,3,3,0,,ACPTCRIT,,,,,The score considers action verb diversity.,,,
+1,3,4,0,,,,,,"**As a** user, **I want to** know how well my resume demonstrates measurable impact, **so that** I can add more metrics where needed.",,,User Story Title: Metric Density Evaluation,Metric Density Evaluation
+1,3,4,0,AC01,ACPTCRIT,,,,,The system provides a quantifiable impact score.,,,
+1,3,4,0,AC02,ACPTCRIT,,,,,"The system identifies bullets that contain metrics (numbers, percentages, dollar amounts).",,,
+1,3,4,0,,ACPTCRIT,,,,,The system identifies bullets that lack metrics.,,,
+1,3,4,0,BR01,BUSRULE,,,,,,The target is for 70-80% of bullets to contain quantifiable metrics.,,
+1,3,5,0,,,,,,"**As a** user, **I want to** know how well my resume covers relevant skills and industry keywords, **so that** I can ensure I'm presenting my qualifications effectively.",,,User Story Title: Keyword Strategy Assessment,Keyword Strategy Assessment
+1,3,5,0,AC01,ACPTCRIT,,,,,The system provides a skills and keywords score.,,,
+1,3,5,0,AC02,ACPTCRIT,,,,,The system identifies relevant industry terms present in the resume.,,,
+1,4,0,0,,,,Per-Bullet Analysis,,,,,,Provide detailed analysis for each individual bullet point in the resume.
+1,4,1,0,,,,,,"**As a** user, **I want to** see whether each bullet point contains quantified metrics, **so that** I know which bullets need strengthening.",,,User Story Title: Metric Presence Detection,Metric Presence Detection
+1,4,1,0,AC01,ACPTCRIT,,,,,Each bullet displays an indicator showing if metrics are present.,,,
+1,4,1,0,AC02,ACPTCRIT,,,,,"The system recognizes percentages, currency values, and numeric quantities as metrics.",,,
+1,4,2,0,,,,,,"**As a** user, **I want to** see the strength and category of each bullet's action verb, **so that** I can improve weak verbs and ensure diversity.",,,User Story Title: Verb Category Classification,Verb Category Classification
+1,4,2,0,AC01,ACPTCRIT,,,,,Each bullet displays its action verb category.,,,
+1,4,2,0,AC02,ACPTCRIT,,,,,The system flags weak or passive action verbs.,,,
+1,4,3,0,,,,,,"**As a** user, **I want to** know if my bullet points are the right length, **so that** they display properly in ATS systems.",,,User Story Title: Character Count Validation,Character Count Validation
+1,4,3,0,AC01,ACPTCRIT,,,,,Each bullet displays its character count.,,,
+1,4,3,0,AC02,ACPTCRIT,,,,,The system flags bullets that are too short.,,,
+1,4,3,0,,ACPTCRIT,,,,,The system flags bullets that are too long.,,,
+1,4,3,0,BR01,BUSRULE,,,,,,Bullets should be between 100 and 210 characters.,,
+1,4,4,0,,,,,,"**As a** user, **I want to** see specific recommendations for improving each bullet, **so that** I know exactly what to fix.",,,User Story Title: Optimization Guidance Generation,Optimization Guidance Generation
+1,4,4,0,AC01,ACPTCRIT,,,,,"If a bullet has issues, the system provides actionable suggestions.",,,
+1,4,4,0,AC02,ACPTCRIT,,,,,Suggestions are prioritized by severity.,,,
+1,5,0,0,,,,Action Verb Analysis,,,,,,Analyze the variety and strength of action verbs used across the resume.
+1,5,1,0,,,,,,"**As a** user, **I want to** see my action verbs organized by category, **so that** I can ensure I'm demonstrating a range of capabilities.",,,User Story Title: Categorize Action Verbs,Categorize Action Verbs
+1,5,1,0,AC01,ACPTCRIT,,,,,"The system groups action verbs into categories (e.g., Built, Led, Managed, Improved, Collaborated).",,,
+1,5,1,0,AC02,ACPTCRIT,,,,,Each bullet's verb is assigned to a category.,,,
+1,5,2,0,,,,,,"**As a** user, **I want to** see a visual representation of my verb category distribution, **so that** I can identify over-used or under-used categories.",,,User Story Title: Display Verb Distribution,Display Verb Distribution
+1,5,2,0,AC01,ACPTCRIT,,,,,The system displays the percentage of bullets in each verb category.,,,
+1,5,2,0,AC02,ACPTCRIT,,,,,The system highlights categories that are under-represented.,,,
+1,5,2,0,,ACPTCRIT,,,,,The system highlights categories that are over-represented.,,,
+1,5,2,0,BR01,BUSRULE,,,,,,Each verb category should represent at least 5% of total bullets.,,
+1,5,2,0,BR02,BUSRULE,,,,,,No verb category should exceed 40% of total bullets.,,
+1,5,3,0,,,,,,"**As a** user, **I want to** see my action verbs color-coded by category, **so that** I can visually assess diversity at a glance.",,,User Story Title: Color-Code Action Verbs,Color-Code Action Verbs
+1,5,3,0,AC01,ACPTCRIT,,,,,Each verb category has a distinct color.,,,
+1,5,3,0,AC02,ACPTCRIT,,,,,The first word of each bullet is displayed in its category color.,,,
+1,6,0,0,,,,Hiring Manager Perspective,,,,,,Analyze the resume from an external hiring manager's point of view.
+1,6,1,0,,,,,,"**As a** user, **I want to** see what job titles a hiring manager would infer from my resume, **so that** I can identify if my true role is being communicated.",,,User Story Title: Infer Job Titles from Work Performed,Infer Job Titles from Work Performed
+1,6,1,0,AC01,ACPTCRIT,,,,,"For each position, the system suggests what job title a reader would perceive.",,,
+1,6,1,0,AC02,ACPTCRIT,,,,,"The inferred title is based on achievements and responsibilities, not the stated title.",,,
+1,6,1,0,,ACPTCRIT,,,,,The system explains why it inferred each title.,,,
+1,6,2,0,,,,,,"**As a** user, **I want to** see what seniority level my resume conveys, **so that** I can ensure I'm positioning myself appropriately.",,,User Story Title: Seniority Alignment Assessment,Seniority Alignment Assessment
+1,6,2,0,AC01,ACPTCRIT,,,,,The system assesses apparent seniority based on scope and impact described.,,,
+1,6,2,0,AC02,ACPTCRIT,,,,,"Factors include team size, budget responsibility, and strategic scope.",,,
+1,6,3,0,,,,,,"**As a** user, **I want to** see a synthesized summary of my career progression, **so that** I understand how my trajectory appears to others.",,,User Story Title: Career Progression Summary,Career Progression Summary
+1,6,3,0,AC01,ACPTCRIT,,,,,The system provides a narrative summary of the user's career arc.,,,
+1,6,3,0,AC02,ACPTCRIT,,,,,The narrative is based on the inferred titles and progression.,,,
+1,7,0,0,,,,Issue Prioritization,,,,,,Organize identified issues by severity to help users prioritize fixes.
+1,7,1,0,,,,,,"**As a** user, **I want to** see my resume issues organized by severity, **so that** I can fix the most critical problems first.",,,User Story Title: Issue Severity Classification,Issue Severity Classification
+1,7,1,0,AC01,ACPTCRIT,,,,,"Issues are categorized as Blocker, Risk, or Tweak.",,,
+1,7,1,0,AC02,ACPTCRIT,,,,,Blockers are issues that may cause automatic rejection.,,,
+1,7,1,0,,ACPTCRIT,,,,,Risks are issues that significantly lower resume impact.,,,
+1,7,1,0,,ACPTCRIT,,,,,Tweaks are minor improvements for polish.,,,
+1,7,2,0,,,,,,"**As a** user, **I want to** see a quick count of issues by severity, **so that** I understand the overall scope of improvements needed.",,,User Story Title: Repair Scope Aggregation,Repair Scope Aggregation
+1,7,2,0,AC01,ACPTCRIT,,,,,The system displays the count of Blockers.,,,
+1,7,2,0,AC02,ACPTCRIT,,,,,The system displays the count of Risks.,,,
+1,7,2,0,,ACPTCRIT,,,,,The system displays the count of Tweaks.,,,
+1,7,3,0,,,,,,"**As a** user, **I want to** see a consolidated list of all repairs needed, **so that** I have a clear action plan.",,,User Story Title: Actionable Fix Prioritization,Actionable Fix Prioritization
+1,7,3,0,AC01,ACPTCRIT,,,,,"The list is ordered by severity (Blockers first, then Risks, then Tweaks).",,,
+1,7,3,0,AC02,ACPTCRIT,,,,,Each item references the specific location (position and bullet).,,,
+1,7,3,0,,ACPTCRIT,,,,,Each item includes a suggested fix.,,,
+1,8,0,0,,,,Job History Generation,,,,,,"Create a structured, reusable document containing the user's complete work history."
+1,8,1,0,,,,,,"**As a** user, **I want** the system to create a structured record of my work history from my resume, **so that** I can reuse it for future job applications.",,,User Story Title: Master Profile Consolidation,Master Profile Consolidation
+1,8,1,0,AC01,ACPTCRIT,,,,,The job history contains all positions extracted from the resume.,,,
+1,8,1,0,AC02,ACPTCRIT,,,,,"Each position includes dates, company, title, responsibilities, and achievements.",,,
+1,8,1,0,,ACPTCRIT,,,,,The job history includes a master skills inventory.,,,
+1,8,2,0,,,,,,"**As a** user, **I want** my job history to include an automatically generated professional summary, **so that** I have a starting point for my resume header.",,,User Story Title: Summary Synthesis Generation,Summary Synthesis Generation
+1,8,2,0,AC01,ACPTCRIT,,,,,The job history includes a 2-3 paragraph professional summary.,,,
+1,8,2,0,AC02,ACPTCRIT,,,,,The summary synthesizes the user's career highlights and expertise.,,,
+1,8,3,0,,,,,,"**As a** user, **I want to** download my job history to my computer, **so that** I can save it for future use.",,,User Story Title: Profile Export Functionality,Profile Export Functionality
+1,8,3,0,AC01,ACPTCRIT,,,,,The system provides a download option.,,,
+1,8,3,0,AC02,ACPTCRIT,,,,,The downloaded file is in a format I can open and read.,,,
+1,8,4,0,,,,,,"**As a** user, **I want to** choose the format for my job history download, **so that** I can use the format that works best for my needs.",,,User Story Title: Cross-Platform Compatibility Export,Cross-Platform Compatibility Export
+1,8,4,0,AC01,ACPTCRIT,,,,,The system offers at least two export format options.,,,
+1,8,4,0,AC02,ACPTCRIT,,,,,One format is optimized for human readability.,,,
+1,8,4,0,,ACPTCRIT,,,,,One format is optimized for importing into other tools.,,,
+1,8,0,0,BR01,BUSRULE,,,,,,"(12-Section Schema) Every job history file MUST follow a strictly defined structure with 12 sections (Personal Info, Master Summary, Education, Certifications, Hard Skills, Soft Skills, Job History, Projects, Awards, Publications/Speaking, Volunteer, Additional Info).",,
+1,8,0,0,BR02,BUSRULE,,,,,,(Standardized Tags) All AI models MUST use identical XML tag names without synonyms for all sections and metadata fields.,,
+1,8,0,0,BR03,BUSRULE,,,,,,"(No Skipped Sections) Mandatory sections that have no data MUST be marked as ""Not applicable"" rather than being omitted.",,
+1,8,0,0,BR04,BUSRULE,,,,,,"(Master Skills Inventory) All skills identified in individual roles MUST be aggregated into a comprehensive ""Master Skills Inventory"".",,
+1,8,0,0,BR05,BUSRULE,,,,,,(Promotion Handling) Multiple roles or promotions at the same company MUST be shown as separate entries with their own dates and responsibilities to demonstrate career progression.,,
+1,8,0,0,BR06,BUSRULE,,,,,,"(Metric Traceability) Every metric (e.g., $, %, multipliers) MUST be uniquely tied to the specific position where it was achieved.",,
+2,0,0,0,,,Job Fit Analyzer,,,,,,,Allow users to compare their experience against a specific job description to understand how well they match the requirements.
+2,1,0,0,,,,Job Description Input,,,,,,Allow users to provide a job description for comparison.
+2,1,1,0,,,,,,"**As a** user, **I want to** paste a job description into the system, **so that** I can compare it against my experience.",,,User Story Title: JD Content Ingestion,JD Content Ingestion
+2,1,1,0,AC01,ACPTCRIT,,,,,The system provides a text input area for the job description.,,,
+2,1,1,0,AC02,ACPTCRIT,,,,,The system accepts job descriptions of typical length.,,,
+2,1,2,0,,,,,,"**As a** system, **I want to** verify that the pasted content is a job description, **so that** I don't analyze irrelevant content.",,,User Story Title: JD Integrity Validation,JD Integrity Validation
+2,1,2,0,AC01,ACPTCRIT,,,,,The system detects if the content appears to be a job description.,,,
+2,1,2,0,AC02,ACPTCRIT,,,,,The system warns the user if the content does not appear to be a job description.,,,
+2,1,2,0,,ACPTCRIT,,,,,The system can distinguish job descriptions from LinkedIn articles or other content.,,,
+2,2,0,0,,,,Job Description Analysis,,,,,,Extract and categorize requirements from the job description.
+2,2,1,0,,,,,,"**As a** system, **I want to** identify skills marked as required in the job description, **so that** I can assess the user's match.",,,User Story Title: Mandatory Skill Identification,Mandatory Skill Identification
+2,2,1,0,AC01,ACPTCRIT,,,,,"The system identifies skills labeled as ""required"" or ""must have.""",,,
+2,2,1,0,AC02,ACPTCRIT,,,,,Required skills are listed separately from preferred skills.,,,
+2,2,2,0,,,,,,"**As a** system, **I want to** identify skills marked as preferred in the job description, **so that** I can assess the user's additional qualifications.",,,User Story Title: Desirable Attribute Discovery,Desirable Attribute Discovery
+2,2,2,0,AC01,ACPTCRIT,,,,,"The system identifies skills labeled as ""preferred"" or ""nice to have.""",,,
+2,2,2,0,AC02,ACPTCRIT,,,,,Preferred skills are listed separately from required skills.,,,
+2,2,3,0,,,,,,"**As a** system, **I want to** identify years of experience required, **so that** I can compare against the user's background.",,,User Story Title: Experience Benchmark Extraction,Experience Benchmark Extraction
+2,2,3,0,AC01,ACPTCRIT,,,,,"The system identifies stated experience requirements (e.g., ""5+ years"").",,,
+2,2,3,0,AC02,ACPTCRIT,,,,,"The system identifies the type of experience required (e.g., ""in product management"").",,,
+2,2,4,0,,,,,,"**As a** system, **I want to** identify education requirements, **so that** I can compare against the user's qualifications.",,,User Story Title: Academic Prerequisite Identification,Academic Prerequisite Identification
+2,2,4,0,AC01,ACPTCRIT,,,,,The system identifies required degrees or certifications.,,,
+2,2,4,0,AC02,ACPTCRIT,,,,,The system distinguishes required from preferred education.,,,
+2,2,5,0,,,,,,"**As a** system, **I want to** identify work location requirements, **so that** I can flag compatibility issues.",,,User Story Title: Geographic Eligibility Checking,Geographic Eligibility Checking
+2,2,5,0,AC01,ACPTCRIT,,,,,"The system identifies if the role is remote, hybrid, or on-site.",,,
+2,2,5,0,AC02,ACPTCRIT,,,,,"The system identifies geographic restrictions (e.g., ""must be in California"").",,,
+2,3,0,0,,,,Fit Score Calculation,,,,,,Calculate how well the user matches the job requirements.
+2,3,1,0,,,,,,"**As a** user, **I want to** see an overall fit score for a job, **so that** I can quickly assess if I should apply.",,,User Story Title: Strategic Alignment Scoring,Strategic Alignment Scoring
+2,3,1,0,AC01,ACPTCRIT,,,,,The system displays a percentage fit score.,,,
+2,3,1,0,AC02,ACPTCRIT,,,,,The score reflects how many requirements the user meets.,,,
+2,3,2,0,,,,,,"**As a** system, **I want to** weight required skills more heavily than preferred skills, **so that** the fit score accurately reflects job priorities.",,,User Story Title: Multi-Tier Skill Weighting,Multi-Tier Skill Weighting
+2,3,2,0,AC01,ACPTCRIT,,,,,Required skills contribute more to the score than preferred skills.,,,
+2,3,2,0,AC02,ACPTCRIT,,,,,The weighting is transparent to the user.,,,
+2,3,3,0,,,,,,"**As a** user, **I want to** understand what my fit score means, **so that** I can make an informed decision about applying.",,,User Story Title: Match Level Categorization,Match Level Categorization
+2,3,3,0,AC01,ACPTCRIT,,,,,"Scores above 90% are labeled as ""Excellent Match.""",,,
+2,3,3,0,AC02,ACPTCRIT,,,,,"Scores between 80-89% are labeled as ""Good Match with Minor Gaps.""",,,
+2,3,3,0,,ACPTCRIT,,,,,"Scores between 75-79% are labeled as ""Weak Match.""",,,
+2,3,3,0,,ACPTCRIT,,,,,"Scores below 75% are labeled as ""Poor Match.""",,,
+2,4,0,0,,,,Requirement Matching,,,,,,Show the user which specific requirements they meet or miss.
+2,4,1,0,,,,,,"**As a** user, **I want to** see which job requirements I meet, **so that** I understand my strengths for this role.",,,User Story Title: Critical Constraint Verification,Critical Constraint Verification
+2,4,1,0,AC01,ACPTCRIT,,,,,Matched requirements are clearly listed.,,,
+2,4,1,0,AC02,ACPTCRIT,,,,,"For each match, the system shows which part of my experience demonstrates it.",,,
+2,4,2,0,,,,,,"**As a** user, **I want to** see which job requirements I partially meet, **so that** I understand where I have some relevant experience.",,,User Story Title: Desirable Fit Enhancement,Desirable Fit Enhancement
+2,4,2,0,AC01,ACPTCRIT,,,,,Partially matched requirements are clearly listed.,,,
+2,4,2,0,AC02,ACPTCRIT,,,,,The system explains why the match is partial.,,,
+2,4,3,0,,,,,,"**As a** user, **I want to** see which job requirements I do not meet, **so that** I understand my gaps.",,,User Story Title: Qualification Gap Analysis,Qualification Gap Analysis
+2,4,3,0,AC01,ACPTCRIT,,,,,Missing requirements are clearly listed.,,,
+2,4,3,0,AC02,ACPTCRIT,,,,,The system explains why no match was found.,,,
+2,5,0,0,,,,Blocking Conditions,,,,,,Identify fundamental mismatches that make a job unsuitable.
+2,5,1,0,,,,,,"**As a** user, **I want to** be warned if a job's location requirements conflict with my situation, **so that** I don't waste time on incompatible roles.",,,User Story Title: Flag Location Incompatibility,Flag Location Incompatibility
+2,5,1,0,AC01,ACPTCRIT,,,,,"If the job requires on-site and I'm remote-only, the system warns me.",,,
+2,5,1,0,AC02,ACPTCRIT,,,,,"If the job has geographic restrictions I don't meet, the system warns me.",,,
+2,5,2,0,,,,,,"**As a** user, **I want to** be warned if I'm missing critical required skills, **so that** I can make an informed decision about applying.",,,User Story Title: Flag Critical Skill Gaps,Flag Critical Skill Gaps
+2,5,2,0,AC01,ACPTCRIT,,,,,The system identifies skills that appear multiple times or are emphasized in the job description.,,,
+2,5,2,0,AC02,ACPTCRIT,,,,,"If I'm missing these critical skills, the system displays a warning.",,,
+3,0,0,0,,,Resume Customizer,,,,,,,Allow users to generate tailored resume content optimized for a specific job description.
+3,1,0,0,,,,Bullet Optimization,,,,,,Improve existing resume bullets or generate new ones.
+3,1,1,0,,,,,,"**As a** user, **I want to** receive improved versions of my current resume bullets, **so that** I can strengthen my existing content.",,,User Story Title: Bullet Tailoring Algorithm,Bullet Tailoring Algorithm
+3,1,1,0,AC01,ACPTCRIT,,,,,"For each bullet I provide, the system suggests improved versions.",,,
+3,1,1,0,AC02,ACPTCRIT,,,,,Improvements maintain the factual accuracy of my original statement.,,,
+3,1,1,0,,ACPTCRIT,,,,,"Improvements address identified issues (weak verbs, missing metrics, length).",,,
+3,1,2,0,,,,,,"**As a** user, **I want to** receive new resume bullets tailored to a specific job description, **so that** my resume is optimized for that application.",,,User Story Title: Keyword Infusion Strategy,Keyword Infusion Strategy
+3,1,2,0,AC01,ACPTCRIT,,,,,Generated bullets incorporate relevant keywords from the job description.,,,
+3,1,2,0,AC02,ACPTCRIT,,,,,Generated bullets are based only on experience from my job history.,,,
+3,1,2,0,,ACPTCRIT,,,,,Generated bullets meet length and formatting requirements.,,,
+3,1,2,0,BR01,BUSRULE,,,,,,The system will not claim experience I don't have.,,
+3,1,2,0,BR02,BUSRULE,,,,,,All bullets must be based on evidenced experience.,,
+3,1,3,0,,,,,,"**As a** system, **I want to** ensure generated bullets use a variety of action verb categories, **so that** the resume demonstrates a range of capabilities.",,,User Story Title: Linguistic Variety Enforcement,Linguistic Variety Enforcement
+3,1,3,0,AC01,ACPTCRIT,,,,,Generated bullets collectively use all five action verb categories.,,,
+3,1,3,0,AC02,ACPTCRIT,,,,,No single category is over-represented.,,,
+3,2,0,0,,,,Professional Summary Generation,,,,,,Generate customized professional summary content.
+3,2,1,0,,,,,,"**As a** user, **I want to** generate a comprehensive professional summary, **so that** I have a reusable summary for my resume.",,,User Story Title: Master Brand Synthesis,Master Brand Synthesis
+3,2,1,0,AC01,ACPTCRIT,,,,,The summary is 2-3 paragraphs.,,,
+3,2,1,0,AC02,ACPTCRIT,,,,,The summary synthesizes my career highlights.,,,
+3,2,1,0,,ACPTCRIT,,,,,The summary includes key skills and achievements.,,,
+3,2,2,0,,,,,,"**As a** user, **I want to** generate a summary tailored to a specific job description, **so that** my resume header is optimized for that application.",,,User Story Title: Targeted Value Proposition,Targeted Value Proposition
+3,2,2,0,AC01,ACPTCRIT,,,,,The summary is 3-4 sentences.,,,
+3,2,2,0,AC02,ACPTCRIT,,,,,The summary incorporates keywords from the job description.,,,
+3,2,2,0,,ACPTCRIT,,,,,The summary highlights qualifications relevant to the job.,,,
+3,3,0,0,,,,Quality Validation,,,,,,Ensure all generated content meets quality standards.
+3,3,1,0,,,,,,"**As a** system, **I want to** verify that all generated bullets meet quality requirements, **so that** users receive polished, ready-to-use content.",,,User Story Title: Automated Quality Gatekeeping,Automated Quality Gatekeeping
+3,3,1,0,AC01,ACPTCRIT,,,,,All bullets meet length requirements.,,,
+3,3,1,0,AC02,ACPTCRIT,,,,,All bullets start with past-tense action verbs.,,,
+3,3,1,0,,ACPTCRIT,,,,,All bullets are grammatically correct.,,,
+3,3,2,0,,,,,,"**As a** system, **I want to** automatically fix common quality issues, **so that** users don't receive flawed content.",,,User Story Title: Autonomous Content Correction,Autonomous Content Correction
+3,3,2,0,AC01,ACPTCRIT,,,,,"The system detects and corrects bullets starting with ""-ing"" words.",,,
+3,3,2,0,AC02,ACPTCRIT,,,,,The system removes repeated phrases across bullets.,,,
+3,4,0,0,,,,Export and Delivery,,,,,,Deliver finalized resume content in usable formats.
+3,4,1,0,,,,,,"**As a** user, **I want to** receive my optimized bullets in plain text format, **so that** I can easily copy and paste them into my resume.",,,User Story Title: Plain Text Content Export,Plain Text Content Export
+3,4,1,0,AC01,ACPTCRIT,,,,,The export contains no special formatting.,,,
+3,4,1,0,AC02,ACPTCRIT,,,,,I can copy the text directly into any document.,,,
+3,4,2,0,,,,,,"**As a** user, **I want to** be reminded to proofread the generated content, **so that** I catch any errors before submitting my resume.",,,User Story Title: Grammar & Tone Verification Guidance,Grammar & Tone Verification Guidance
+3,4,2,0,AC01,ACPTCRIT,,,,,The system displays a recommendation to perform a secondary grammar check.,,,
+3,4,2,0,AC02,ACPTCRIT,,,,,The recommendation appears with the final output.,,,
+4,0,0,0,,,Narrative Builder,,,,,,,Help users discover and articulate hidden achievements and metrics through guided questioning.
+4,1,0,0,,,,Probing Questions,,,,,,Ask targeted questions to uncover additional achievements and metrics.
+4,1,1,0,,,,,,"**As a** user, **I want to** be asked about the size of teams I managed or worked with, **so that** I can add this context to my experience.",,,User Story Title: Structural Scope Discovery,Structural Scope Discovery
+4,1,1,0,AC01,ACPTCRIT,,,,,"For relevant positions, the system asks about team size.",,,
+4,1,1,0,AC02,ACPTCRIT,,,,,My answers are recorded for use in my job history.,,,
+4,1,2,0,,,,,,"**As a** user, **I want to** be asked about budgets I managed, **so that** I can demonstrate financial responsibility.",,,User Story Title: Fiscal Impact Discovery,Fiscal Impact Discovery
+4,1,2,0,AC01,ACPTCRIT,,,,,"For relevant positions, the system asks about budget responsibility.",,,
+4,1,2,0,AC02,ACPTCRIT,,,,,My answers are recorded for use in my job history.,,,
+4,1,3,0,,,,,,"**As a** user, **I want to** be asked about the quantifiable impact of my work, **so that** I can add metrics to my achievements.",,,User Story Title: Quantifiable Success Discovery,Quantifiable Success Discovery
+4,1,3,0,AC01,ACPTCRIT,,,,,"The system asks about time savings, cost reductions, and efficiency gains.",,,
+4,1,3,0,AC02,ACPTCRIT,,,,,The system asks about user impact (how many people were affected).,,,
+4,1,4,0,,,,,,"**As a** user, **I want to** be asked about significant challenges I faced, **so that** I can articulate my problem-solving abilities.",,,User Story Title: S.T.A.R. Context Discovery,S.T.A.R. Context Discovery
+4,1,4,0,AC01,ACPTCRIT,,,,,The system asks about obstacles and how I overcame them.,,,
+4,1,4,0,AC02,ACPTCRIT,,,,,My answers are recorded for use in my job history.,,,
+4,2,0,0,,,,Job History Enrichment,,,,,,Update the user's job history with newly discovered information.
+4,2,1,0,,,,,,"**As a** system, **I want to** add newly discovered information to the user's job history, **so that** future analyses benefit from the enriched data.",,,User Story Title: Data Profile Enrichment,Data Profile Enrichment
+4,2,1,0,AC01,ACPTCRIT,,,,,New information is added to the appropriate position.,,,
+4,2,1,0,AC02,ACPTCRIT,,,,,Existing information is not overwritten unless the user confirms.,,,
+4,2,2,0,,,,,,"**As a** system, **I want to** update the version number when changes are made, **so that** there is a clear record of modifications.",,,User Story Title: Chronological Audit Trail,Chronological Audit Trail
+4,2,2,0,AC01,ACPTCRIT,,,,,The version number is incremented when changes are saved.,,,
+4,3,0,0,,,,Incremental Updates,,,,,,"Allow users to add, edit, or remove positions without full re-analysis."
+4,3,1,0,,,,,,"**As a** user, **I want to** add a new position to my job history, **so that** I can include recent experience without re-analyzing my entire resume.",,,User Story Title: Chronological Profile Extension,Chronological Profile Extension
+4,3,1,0,AC01,ACPTCRIT,,,,,I can add a new position with all relevant information.,,,
+4,3,1,0,AC02,ACPTCRIT,,,,,The new position is placed in chronological order.,,,
+4,3,1,0,,ACPTCRIT,,,,,"Running totals (years of experience, skills) are updated.",,,
+4,3,2,0,,,,,,"**As a** user, **I want to** edit information in an existing position, **so that** I can correct errors or add details.",,,User Story Title: Position Record Refinement,Position Record Refinement
+4,3,2,0,AC01,ACPTCRIT,,,,,I can modify any field in an existing position.,,,
+4,3,2,0,AC02,ACPTCRIT,,,,,My changes are saved and reflected in the job history.,,,
+4,3,3,0,,,,,,"**As a** user, **I want to** remove a position from my job history, **so that** I can exclude irrelevant experience.",,,User Story Title: Profile Curation Management,Profile Curation Management
+4,3,3,0,AC01,ACPTCRIT,,,,,I can select a position to remove.,,,
+4,3,3,0,AC02,ACPTCRIT,,,,,The system asks me to confirm before removing.,,,
+4,3,3,0,,ACPTCRIT,,,,,Running totals are updated after removal.,,,
+4,0,0,0,BR01,BUSRULE,,,,,,(BAR/CAR Achievement Format) Achievements MUST be documented using a structured Context-Action-Result (CAR) or Background-Action-Result (BAR) format.,,
+4,0,0,0,BR02,BUSRULE,,,,,,(Individual Contribution Validation) The system MUST distinguish between team-wide accomplishments and the user's specific individual contribution.,,
+4,0,0,0,BR03,BUSRULE,,,,,,"(Surgical Update Philosophy) When building the narrative, the system MUST perform ""surgical updates""—adding or enhancing specific details without removing, rewriting, or losing existing valid content.",,
+4,0,0,0,BR04,BUSRULE,,,,,,"(Honest Limitations Disclosure) Any noted constraints or limited exposures (e.g., ""basic familiarity only"") MUST be captured in an ""Honest Limitations"" section to prevent over-claiming in the optimized resume.",,
+4,0,0,0,BR05,BUSRULE,,,,,,"(Evidence Linkage) Every skill or achievement identified during the narrative build MUST be linked to specific evidence (using company, title, and dates).",,
+4,0,0,0,BR06,BUSRULE,,,,,,(Hard/Soft Skill Classification) Skills MUST be classified as HARD (measurable technical knowledge) or SOFT (interpersonal/behavioral) using the standardized project decision tree.,,
+5,0,0,0,,,User Interface,,,,,,,Provide a visual interface for interacting with the system.
+5,1,0,0,,,,Model Selection,,,,,,Allow users to choose which AI model to use for analysis.
+5,1,1,0,,,,,,"**As a** user, **I want to** choose which AI model to use, **so that** I can balance speed, quality, and cost.",,,User Story Title: Compute Tier Selection,Compute Tier Selection
+5,1,1,0,AC01,ACPTCRIT,,,,,The system displays available model options.,,,
+5,1,1,0,AC02,ACPTCRIT,,,,,Each option includes a description of its characteristics.,,,
+5,1,1,0,AC03,ACPTCRIT,,,,,I can select a model before analysis begins.,,,
+5,1,2,0,,,,,,"**As a** system, **I want to** require the user to select a model before starting analysis, **so that** they make an informed choice.",,,User Story Title: Model Policy Enforcement,Model Policy Enforcement
+5,1,2,0,AC01,ACPTCRIT,,,,,"The ""Analyze"" button is disabled until a model is selected.",,,
+5,1,2,0,AC02,ACPTCRIT,,,,,A message prompts the user to select a model.,,,
+5,1,3,0,,,,,,"**As a** user, **I want to** see which models require a paid subscription, **so that** I don't select an option I can't use.",,,User Story Title: Subscription Transparency Display,Subscription Transparency Display
+5,1,3,0,AC01,ACPTCRIT,,,,,Models requiring a paid subscription are clearly marked.,,,
+5,1,3,0,AC02,ACPTCRIT,,,,,"If I select a paid model but don't have a subscription, I receive an error message.",,,
+5,2,0,0,,,,Token Usage Information,,,,,,Help users understand and manage their usage limits.
+5,2,1,0,,,,,,"**As a** user, **I want to** see how many tokens each model uses, **so that** I can plan my usage within my limits.",,,User Story Title: Resource Consumption Estimation,Resource Consumption Estimation
+5,2,1,0,AC01,ACPTCRIT,,,,,The system displays estimated token usage per model.,,,
+5,2,1,0,AC02,ACPTCRIT,,,,,The information is displayed before I start analysis.,,,
+5,2,2,0,,,,,,"**As a** user, **I want to** understand my daily usage limits, **so that** I can use the system strategically.",,,User Story Title: Allocation Awareness Display,Allocation Awareness Display
+5,2,2,0,AC01,ACPTCRIT,,,,,"The system explains the usage limit (e.g., tokens per time period).",,,
+5,2,2,0,AC02,ACPTCRIT,,,,,The system explains that limits are shared across all features.,,,
+5,3,0,0,,,,Error Handling,,,,,,Display helpful error messages when problems occur.
+5,3,1,0,,,,,,"**As a** user, **I want to** understand when I've hit my usage limit, **so that** I know when I can try again.",,,User Story Title: Concurrency Limit Management,Concurrency Limit Management
+5,3,1,0,AC01,ACPTCRIT,,,,,The system displays a clear message when the limit is reached.,,,
+5,3,1,0,AC02,ACPTCRIT,,,,,The message includes when the limit will reset.,,,
+5,3,2,0,,,,,,"**As a** user, **I want to** understand when analysis fails, **so that** I know how to resolve the issue.",,,User Story Title: Graceful Degradation Handling,Graceful Degradation Handling
+5,3,2,0,AC01,ACPTCRIT,,,,,The system displays a clear error message.,,,
+5,3,2,0,AC02,ACPTCRIT,,,,,"The message suggests possible solutions (e.g., try again, shorten resume).",,,
+5,3,3,0,,,,,,"**As a** user, **I want to** retry a failed analysis, **so that** I can attempt to complete the process.",,,User Story Title: System Recovery Retry,System Recovery Retry
+5,3,3,0,AC01,ACPTCRIT,,,,,The system allows me to retry after a failure.,,,
+5,3,3,0,AC02,ACPTCRIT,,,,,"After multiple failures, the system provides more detailed guidance.",,,
+5,4,0,0,,,,Visual Results Display,,,,,,"Present analysis results in a visually appealing, easy-to-understand format."
+5,4,1,0,,,,,,"**As a** user, **I want to** see a visual summary of my analysis results, **so that** I can understand my overall status quickly.",,,User Story Title: Executive Insight Visualization,Executive Insight Visualization
+5,4,1,0,AC01,ACPTCRIT,,,,,The summary includes my overall score.,,,
+5,4,1,0,AC02,ACPTCRIT,,,,,The summary includes counts of issues by severity.,,,
+5,4,1,0,,ACPTCRIT,,,,,The summary is displayed prominently at the top of the results.,,,
+5,4,2,0,,,,,,"**As a** user, **I want to** expand and collapse position details, **so that** I can focus on one position at a time.",,,User Story Title: Information Hierarchy Management,Information Hierarchy Management
+5,4,2,0,AC01,ACPTCRIT,,,,,Each position has a header I can click to expand or collapse.,,,
+5,4,2,0,AC02,ACPTCRIT,,,,,"When collapsed, only the position summary is visible.",,,
+5,4,2,0,,ACPTCRIT,,,,,"When expanded, all bullet details are visible.",,,
+5,4,3,0,,,,,,"**As a** user, **I want to** see a chart showing my action verb distribution, **so that** I can quickly assess diversity.",,,User Story Title: Linguistic Balance Visualization,Linguistic Balance Visualization
+5,4,3,0,AC01,ACPTCRIT,,,,,The chart shows a bar for each verb category.,,,
+5,4,3,0,AC02,ACPTCRIT,,,,,The bars are proportional to the percentage of bullets in each category.,,,
+5,4,3,0,,ACPTCRIT,,,,,The chart uses the same colors as the verb color coding.,,,
+5,4,4,0,,,,,,"**As a** user, **I want to** expand or collapse all position sections at once, **so that** I can quickly navigate the report.",,,User Story Title: UI State Mass-Toggle,UI State Mass-Toggle
+5,4,4,0,AC01,ACPTCRIT,,,,,"The system provides an ""Expand All"" button.",,,
+5,4,4,0,AC02,ACPTCRIT,,,,,"The system provides a ""Collapse All"" button.",,,
+5,4,4,0,,ACPTCRIT,,,,,"Clicking ""Expand All"" opens all position sections.",,,
+5,4,4,0,,ACPTCRIT,,,,,"Clicking ""Collapse All"" closes all position sections.",,,
+5,5,0,0,,,,Cross-LLM Consistency,,,,,,Ensure job history output is consistent regardless of which AI model is used.
+5,5,1,0,,,,,,"**As a** system, **I want to** use standardized templates for job history generation, **so that** any AI model produces identical structure.",,,User Story Title: Schema Consistency Enforcement,Schema Consistency Enforcement
+5,5,1,0,AC01,ACPTCRIT,,,,,All AI models reference the same job history template.,,,
+5,5,1,0,AC02,ACPTCRIT,,,,,Output structure is identical regardless of which model is used.,,,
+5,5,2,0,,,,,,"**As a** system, **I want to** generate job history in both XML and Markdown formats, **so that** the output is optimized for both machine and human consumption.",,,User Story Title: Multi-Format Schema Delivery,Multi-Format Schema Delivery
+5,5,2,0,AC01,ACPTCRIT,,,,,The system generates an XML-structured file for machine readability.,,,
+5,5,2,0,AC02,ACPTCRIT,,,,,The system generates a Markdown file for human presentation.,,,
+5,5,2,0,,ACPTCRIT,,,,,The XML file is the source of truth.,,,
+5,5,3,0,,,,,,"**As a** system, **I want to** validate job history files against the schema, **so that** I can catch structural errors.",,,User Story Title: Structural Integrity Verification,Structural Integrity Verification
+5,5,3,0,AC01,ACPTCRIT,,,,,The system can validate job history files.,,,
+5,5,3,0,AC02,ACPTCRIT,,,,,Validation catches missing sections.,,,
+5,5,3,0,,ACPTCRIT,,,,,Validation catches malformed tags.,,,
+5,5,4,0,,,,,,"**As a** user, **I want to** convert my job history from XML to Markdown, **so that** I can view it in a human-readable format.",,,User Story Title: Schema-Aware Format Transformation,Schema-Aware Format Transformation
+5,5,4,0,AC01,ACPTCRIT,,,,,The system can convert from XML to Markdown.,,,
+5,5,4,0,AC02,ACPTCRIT,,,,,The converted file maintains all content.,,,
+6,0,0,0,,,Local Development Mode,,,,,,,"Allow users to run the Resume Analyzer locally using Ollama, without requiring a Claude API subscription."
+6,1,0,0,,,,Ollama Integration,,,,,,Connect to a local Ollama instance for AI processing.
+6,1,1,0,,,,,,"**As a** user, **I want to** see whether Ollama is running on my computer, **so that** I know if I can use the analyzer.",,,User Story Title: Backend Health Monitoring,Backend Health Monitoring
+6,1,1,0,AC01,ACPTCRIT,,,,,"The system displays Ollama connection status (Connected, Disconnected, Checking).",,,
+6,1,1,0,AC02,ACPTCRIT,,,,,"When connected, the system shows how many models are available.",,,
+6,1,1,0,,ACPTCRIT,,,,,"When disconnected, the system provides instructions to start Ollama.",,,
+6,1,2,0,,,,,,"**As a** user, **I want to** manually refresh the Ollama connection status, **so that** I can retry after starting Ollama.",,,User Story Title: Connection State Synchronization,Connection State Synchronization
+6,1,2,0,AC01,ACPTCRIT,,,,,"The system provides a ""Check Status"" button.",,,
+6,1,2,0,AC02,ACPTCRIT,,,,,Clicking the button rechecks the Ollama connection.,,,
+6,1,3,0,,,,,,"**As a** user, **I want to** see a clear warning if Ollama is not running, **so that** I know how to fix the issue.",,,User Story Title: Service Status Awareness,Service Status Awareness
+6,1,3,0,AC01,ACPTCRIT,,,,,"If Ollama is not running, display a warning banner.",,,
+6,1,3,0,AC02,ACPTCRIT,,,,,The warning includes the command to start Ollama.,,,
+6,2,0,0,,,,Local Model Selection,,,,,,Allow users to select from locally installed Ollama models.
+6,2,1,0,,,,,,"**As a** user, **I want to** see which Ollama models I have installed, **so that** I can choose one for analysis.",,,User Story Title: Local Resource Inventory,Local Resource Inventory
+6,2,1,0,AC01,ACPTCRIT,,,,,The system shows only models that are installed locally.,,,
+6,2,1,0,AC02,ACPTCRIT,,,,,Each model shows a name and description.,,,
+6,2,1,0,,ACPTCRIT,,,,,One model is marked as recommended.,,,
+6,2,2,0,,,,,,"**As a** user, **I want** the system to automatically select the recommended model if available, **so that** I can start analyzing quickly.",,,User Story Title: Cognitive Model Defaulting,Cognitive Model Defaulting
+6,2,2,0,AC01,ACPTCRIT,,,,,"If the recommended model is installed, it is pre-selected.",,,
+6,2,2,0,AC02,ACPTCRIT,,,,,Users can still change to a different model.,,,
+6,2,3,0,,,,,,"**As a** user, **I want to** see how to install additional models, **so that** I can expand my options.",,,User Story Title: Setup Guidance Delivery,Setup Guidance Delivery
+6,2,3,0,AC01,ACPTCRIT,,,,,"If configured models are not installed, the system shows installation instructions.",,,
+6,2,3,0,AC02,ACPTCRIT,,,,,Instructions include the correct `ollama pull` commands.,,,
+6,3,0,0,,,,Supported Local Models,,,,,,Support multiple open-source models via Ollama.
+6,3,1,0,,,,,,"**As a** user, **I want to** use the Llama 3.1 model, **so that** I can get balanced speed and quality (recommended).",,,User Story Title: Llama Architecture Compatibility,Llama Architecture Compatibility
+6,3,1,0,AC01,ACPTCRIT,,,,,Llama 3.1 is available as a model option.,,,
+6,3,1,0,AC02,ACPTCRIT,,,,,Llama 3.1 is marked as the recommended model.,,,
+6,3,2,0,,,,,,"**As a** user, **I want to** use the Mistral model, **so that** I can get fast analysis for shorter resumes.",,,User Story Title: Mistral Architecture Compatibility,Mistral Architecture Compatibility
+6,3,2,0,AC01,ACPTCRIT,,,,,Mistral is available as a model option.,,,
+6,3,3,0,,,,,,"**As a** user, **I want to** use the Gemma 2 model, **so that** I can get detailed technical analysis.",,,User Story Title: Gemma Architecture Compatibility,Gemma Architecture Compatibility
+6,3,3,0,AC01,ACPTCRIT,,,,,Gemma 2 is available as a model option.,,,
+6,3,4,0,,,,,,"**As a** user, **I want to** use the Qwen 2.5 model, **so that** I can get creative bullet rewrites.",,,User Story Title: Qwen Architecture Compatibility,Qwen Architecture Compatibility
+6,3,4,0,AC01,ACPTCRIT,,,,,Qwen 2.5 is available as a model option.,,,
+6,3,5,0,,,,,,"**As a** user, **I want to** use the Phi-3 model, **so that** I can get precise technical details.",,,User Story Title: Phi Architecture Compatibility,Phi Architecture Compatibility
+6,3,5,0,AC01,ACPTCRIT,,,,,Phi-3 is available as a model option.,,,
+6,4,0,0,,,,Local File Upload,,,,,,Allow users to upload resume files from their computer.
+6,4,1,0,,,,,,"**As a** user, **I want to** upload a text file from my computer, **so that** I don't have to copy and paste.",,,User Story Title: Local Multi-Format Ingestion,Local Multi-Format Ingestion
+6,4,1,0,AC01,ACPTCRIT,,,,,The system provides a file upload area.,,,
+6,4,1,0,AC02,ACPTCRIT,,,,,I can click to browse for a file.,,,
+6,4,1,0,,ACPTCRIT,,,,,The system accepts .txt files.,,,
+6,4,1,0,,ACPTCRIT,,,,,The file contents are loaded into the input area.,,,
+6,5,0,0,,,,Local Error Handling,,,,,,Provide helpful error messages for local mode issues.
+6,5,1,0,,,,,,"**As a** user, **I want to** understand when there's a connection problem with Ollama, **so that** I can fix it.",,,User Story Title: Connectivity Fault Notification,Connectivity Fault Notification
+6,5,1,0,AC01,ACPTCRIT,,,,,The system explains that Ollama cannot be reached.,,,
+6,5,1,0,AC02,ACPTCRIT,,,,,The error provides troubleshooting steps.,,,
+6,5,1,0,,ACPTCRIT,,,,,The error includes the command to start Ollama.,,,
+6,5,2,0,,,,,,"**As a** user, **I want to** understand when the model produces invalid output, **so that** I can try again or switch models.",,,User Story Title: Parsing Fault Recovery,Parsing Fault Recovery
+6,5,2,0,AC01,ACPTCRIT,,,,,The system explains that the response has a syntax error.,,,
+6,5,2,0,AC02,ACPTCRIT,,,,,The error suggests switching models.,,,
+6,5,2,0,,ACPTCRIT,,,,,The error suggests simplifying the resume.,,,
+6,5,3,0,,,,,,"**As a** user, **I want to** see debug information when troubleshooting, **so that** I can diagnose issues.",,,User Story Title: Operational Transparency Toggle,Operational Transparency Toggle
+6,5,3,0,AC01,ACPTCRIT,,,,,The system provides a toggle to show/hide debug info.,,,
+6,5,3,0,AC02,ACPTCRIT,,,,,Debug info includes Ollama status and selected model.,,,
+6,5,3,0,,ACPTCRIT,,,,,Debug info references browser console for detailed logs.,,,
+6,5,4,0,,,,,,"**As a** user, **I want to** be reminded that my data is not saved, **so that** I remember to download my results.",,,User Story Title: Data Persistence Awareness,Data Persistence Awareness
+6,5,4,0,AC01,ACPTCRIT,,,,,The system displays a warning that data is not saved.,,,
+6,5,4,0,AC02,ACPTCRIT,,,,,The warning encourages downloading results before closing.,,,
+7,0,0,0,,,GUI for Additional Features,,,,,,,"Provide visual interfaces for the Job Fit Analyzer, Resume Customizer, and Narrative Builder features, following the design patterns established by the Resume Analyzer GUI."
+7,1,0,0,,,,Job Fit Analyzer GUI,,,,,,Visual interface for comparing user experience against job descriptions.
+7,1,1,0,,,,,,"**As a** user, **I want to** paste or upload a job description in the GUI as a standalone action, **so that** I can compare it against my experience at any time.",,,User Story Title: Standalone JD Intake Interface,Standalone JD Intake Interface
+7,1,1,0,AC01,ACPTCRIT,,,,,The system provides a text area to paste a job description.,,,
+7,1,1,0,AC02,ACPTCRIT,,,,,The system provides a file upload option for job descriptions.,,,
+7,1,1,0,,ACPTCRIT,,,,,The interface matches the Resume Analyzer's input design.,,,
+7,1,2,0,,,,,,"**As a** user, **I want to** select which job history to use for comparison, **so that** I can use the most current version.",,,User Story Title: Source Profile Selection,Source Profile Selection
+7,1,2,0,AC01,ACPTCRIT,,,,,The system shows available job history files.,,,
+7,1,2,0,AC02,ACPTCRIT,,,,,I can select which file to use for comparison.,,,
+7,1,2,0,,ACPTCRIT,,,,,The system indicates which file was last used.,,,
+7,1,3,0,,,,,,"**As a** user, **I want to** see my fit score displayed visually, **so that** I can quickly understand my match level.",,,User Story Title: Strategic Fit Visualization,Strategic Fit Visualization
+7,1,3,0,AC01,ACPTCRIT,,,,,"The fit score is displayed as a large, prominent number.",,,
+7,1,3,0,AC02,ACPTCRIT,,,,,"The score is color-coded by match level (green for excellent, yellow for good, red for poor).",,,
+7,1,3,0,,ACPTCRIT,,,,,"The match level label is displayed (Excellent Match, Good Match, etc.).",,,
+7,1,4,0,,,,,,"**As a** user, **I want to** see a visual list of matched requirements, **so that** I know my strengths.",,,User Story Title: Matched Constraint List,Matched Constraint List
+7,1,4,0,AC01,ACPTCRIT,,,,,Matched requirements are displayed with a green checkmark.,,,
+7,1,4,0,AC02,ACPTCRIT,,,,,Each match shows the source evidence from my job history.,,,
+7,1,4,0,,ACPTCRIT,,,,,The list is expandable/collapsible.,,,
+7,1,5,0,,,,,,"**As a** user, **I want to** see a visual list of missing requirements, **so that** I know my gaps.",,,User Story Title: Identified Gap Enumeration,Identified Gap Enumeration
+7,1,5,0,AC01,ACPTCRIT,,,,,Missing requirements are displayed with a red X.,,,
+7,1,5,0,AC02,ACPTCRIT,,,,,Required skills are distinguished from preferred skills.,,,
+7,1,5,0,,ACPTCRIT,,,,,The list is expandable/collapsible.,,,
+7,1,6,0,,,,,,"**As a** user, **I want to** see blocking conditions displayed prominently, **so that** I don't waste time on incompatible roles.",,,User Story Title: Critical Blocker Notification,Critical Blocker Notification
+7,1,6,0,AC01,ACPTCRIT,,,,,Blocking conditions are displayed at the top of the results.,,,
+7,1,6,0,AC02,ACPTCRIT,,,,,Blockers use red/warning styling to draw attention.,,,
+7,1,6,0,,ACPTCRIT,,,,,Each blocker explains why it's a dealbreaker.,,,
+7,1,7,0,,,,,,"**As a** user, **I want to** download my fit analysis, **so that** I can save it for reference.",,,User Story Title: Analysis Asset Export,Analysis Asset Export
+7,1,7,0,AC01,ACPTCRIT,,,,,The system provides a download button.,,,
+7,1,7,0,AC02,ACPTCRIT,,,,,"The export includes the fit score, matches, and gaps.",,,
+7,1,7,0,,ACPTCRIT,,,,,"I can choose between formats (Markdown, plain text).",,,
+7,2,0,0,,,,Resume Customizer GUI,,,,,,Visual interface for generating and optimizing resume content.
+7,2,1,0,,,,,,"**As a** user, **I want to** select which bullets to optimize from a visual list, **so that** I can focus on specific content.",,,User Story Title: Optimization Scope Selection,Optimization Scope Selection
+7,2,1,0,AC01,ACPTCRIT,,,,,My current bullets are displayed in a list.,,,
+7,2,1,0,AC02,ACPTCRIT,,,,,I can select/deselect bullets using checkboxes.,,,
+7,2,1,0,,ACPTCRIT,,,,,I can select all or none with a single click.,,,
+7,2,2,0,,,,,,"**As a** user, **I want to** specify the target job or industry, **so that** the optimization is tailored.",,,User Story Title: Optimization Context Injection,Optimization Context Injection
+7,2,2,0,AC01,ACPTCRIT,,,,,The system provides an input for target job title.,,,
+7,2,2,0,AC02,ACPTCRIT,,,,,The system provides an optional input for job description.,,,
+7,2,2,0,,ACPTCRIT,,,,,The system provides an optional input for industry.,,,
+7,2,3,0,,,,,,"**As a** user, **I want to** see my original bullets next to the optimized versions, **so that** I can compare them.",,,User Story Title: Comparative Result Visualization,Comparative Result Visualization
+7,2,3,0,AC01,ACPTCRIT,,,,,Original bullet is displayed on the left.,,,
+7,2,3,0,AC02,ACPTCRIT,,,,,Optimized bullet is displayed on the right.,,,
+7,2,3,0,,ACPTCRIT,,,,,"Differences are highlighted (added keywords, stronger verbs).",,,
+7,2,4,0,,,,,,"**As a** user, **I want to** accept or reject each optimization individually, **so that** I maintain control.",,,User Story Title: Individual Correction Acceptance,Individual Correction Acceptance
+7,2,4,0,AC01,ACPTCRIT,,,,,Each optimization has Accept and Reject buttons.,,,
+7,2,4,0,AC02,ACPTCRIT,,,,,Accepted optimizations are marked with a checkmark.,,,
+7,2,4,0,,ACPTCRIT,,,,,Rejected optimizations can be re-optimized or kept original.,,,
+7,2,5,0,,,,,,"**As a** user, **I want to** request alternative versions of an optimization, **so that** I can choose the best fit.",,,User Story Title: Regenerative Variation Request,Regenerative Variation Request
+7,2,5,0,AC01,ACPTCRIT,,,,,"Each optimization has a ""Try Again"" button.",,,
+7,2,5,0,AC02,ACPTCRIT,,,,,Clicking generates up to 3 alternative versions.,,,
+7,2,5,0,,ACPTCRIT,,,,,I can select from the alternatives.,,,
+7,2,6,0,,,,,,"**As a** user, **I want to** copy my optimized bullets to the clipboard, **so that** I can paste them into my resume.",,,User Story Title: Immediate Content Transfer,Immediate Content Transfer
+7,2,6,0,AC01,ACPTCRIT,,,,,"The system provides a ""Copy All"" button.",,,
+7,2,6,0,AC02,ACPTCRIT,,,,,Each bullet has an individual copy button.,,,
+7,2,6,0,,ACPTCRIT,,,,,The system confirms when content is copied.,,,
+7,2,7,0,,,,,,"**As a** user, **I want to** request a professional summary through the GUI, **so that** I can generate resume header content.",,,User Story Title: Professional Brand Synthesis Interface,Professional Brand Synthesis Interface
+7,2,7,0,AC01,ACPTCRIT,,,,,"The system provides a ""Generate Summary"" button.",,,
+7,2,7,0,AC02,ACPTCRIT,,,,,I can choose between master summary and job-specific summary.,,,
+7,2,7,0,,ACPTCRIT,,,,,The generated summary is displayed in an editable text area.,,,
+7,2,8,0,,,,,,"**As a** user, **I want to** download all my optimized content, **so that** I can use it in my resume.",,,User Story Title: Tailored Asset Acquisition,Tailored Asset Acquisition
+7,2,8,0,AC01,ACPTCRIT,,,,,The system provides a download button for accepted optimizations.,,,
+7,2,8,0,AC02,ACPTCRIT,,,,,The export is in plain text format for easy pasting.,,,
+7,2,8,0,,ACPTCRIT,,,,,The export is organized by position.,,,
+7,3,0,0,,,,Narrative Builder GUI,,,,,,Visual interface for discovering hidden achievements through probing questions.
+7,3,1,0,,,,,,"**As a** user, **I want to** start building my narrative directly via probing questions, **so that** I can capture my achievements even before performing a full resume analysis.",,,User Story Title: Interview-Style Achievement Discovery,Interview-Style Achievement Discovery
+7,3,1,0,AC01,ACPTCRIT,,,,,Questions are displayed one at a time in a conversational format.,,,
+7,3,1,0,AC02,ACPTCRIT,,,,,Previous questions and answers are visible above.,,,
+7,3,1,0,,ACPTCRIT,,,,,The interface resembles a chat or interview.,,,
+7,3,1,0,,ACPTCRIT,,,,,The system can suggest trigger-ing a Resume Analysis if it detects missing foundational context during the narrative build.,,,
+7,3,2,0,,,,,,"**As a** user, **I want to** type my answers to probing questions, **so that** I can provide detailed responses.",,,User Story Title: Conversational Response Capture,Conversational Response Capture
+7,3,2,0,AC01,ACPTCRIT,,,,,Each question has a text area for my answer.,,,
+7,3,2,0,AC02,ACPTCRIT,,,,,I can submit my answer with Enter or a button.,,,
+7,3,2,0,,ACPTCRIT,,,,,Answers auto-save as drafts.,,,
+7,3,3,0,,,,,,"**As a** user, **I want to** skip questions I can't answer now, **so that** I can complete them later.",,,User Story Title: Non-Linear Session Navigation,Non-Linear Session Navigation
+7,3,3,0,AC01,ACPTCRIT,,,,,"Each question has a ""Skip"" button.",,,
+7,3,3,0,AC02,ACPTCRIT,,,,,Skipped questions are saved for later.,,,
+7,3,3,0,,ACPTCRIT,,,,,I can see a count of skipped questions.,,,
+7,3,4,0,,,,,,"**As a** user, **I want to** see metrics the system extracted from my answers, **so that** I can verify accuracy.",,,User Story Title: Extract Evidence Verification,Extract Evidence Verification
+7,3,4,0,AC01,ACPTCRIT,,,,,Extracted metrics are highlighted in my answers.,,,
+7,3,4,0,AC02,ACPTCRIT,,,,,I can confirm or correct extracted values.,,,
+7,3,4,0,,ACPTCRIT,,,,,Confirmed metrics are marked with a checkmark.,,,
+7,3,5,0,,,,,,"**As a** user, **I want to** preview how my job history will look with new information, **so that** I can review before saving.",,,User Story Title: Preview Enriched Job History,Preview Enriched Job History
+7,3,5,0,AC01,ACPTCRIT,,,,,The system shows a preview of the enriched position.,,,
+7,3,5,0,AC02,ACPTCRIT,,,,,New information is highlighted.,,,
+7,3,5,0,,ACPTCRIT,,,,,I can approve or edit before saving.,,,
+7,3,5,0,BR01,BUSRULE,,,,,,"(Template Alignment) The preview MUST reflect the 12-section structure defined in the Job History Template (Metadata, Summary, Responsibilities, Achievements, Hard Skills, Soft Skills, Tools, Metrics, Industry, Methodology, Decisions, Team Scope).",,
+7,3,5,0,BR02,BUSRULE,,,,,,(BAR/CAR Transformation) Information extracted from interview answers MUST be transformed into the structured CAR (Context-Action-Result) format within the `<achievement>` tags.,,
+7,3,5,0,BR03,BUSRULE,,,,,,"(Section-Specific Updating) The system MUST highlight which specific sections of the XML template (e.g., Section 7: Job History vs Section 5: Hard Skills) are being enriched by the current session.",,
+7,3,5,0,BR04,BUSRULE,,,,,,(Metric Attribution) All metrics previewed in `<impact_metrics>` MUST be cross-referenced against the `<key_achievements>` section to ensure internal consistency within the position block.,,
+7,3,5,0,BR05,BUSRULE,,,,,,(Schema Validation) The preview MUST be rendered from a valid XML stream that adheres to the `job_history_template.xml` schema before being displayed to the user.,,
+7,3,6,0,,,,,,"**As a** user, **I want to** save my enriched job history, **so that** future analyses use the new information.",,,User Story Title: Profile Evolution Preservation,Profile Evolution Preservation
+7,3,6,0,AC01,ACPTCRIT,,,,,"The system provides a ""Save"" button.",,,
+7,3,6,0,AC02,ACPTCRIT,,,,,Saving increments the job history version.,,,
+7,3,6,0,AC03,ACPTCRIT,,,,,The system confirms successful save.,,,
+7,4,0,0,,,,Multi-Feature Navigation,,,,,,Allow users to navigate between all features in a unified interface.
+7,4,1,0,,,,,,"**As a** user, **I want to** see a navigation menu for all features, **so that** I can switch between them.",,,User Story Title: Centralized Module Navigation,Centralized Module Navigation
+7,4,1,0,AC01,ACPTCRIT,,,,,A navigation bar or sidebar shows all available features.,,,
+7,4,1,0,AC02,ACPTCRIT,,,,,"Features include: Resume Analyzer, Job Fit Analyzer, Resume Customizer, Narrative Builder.",,,
+7,4,1,0,AC03,ACPTCRIT,,,,,The current feature is highlighted.,,,
+7,4,2,0,,,,,,"**As a** user, **I want** my session data to persist when I switch features, **so that** I don't lose my work.",,,User Story Title: Cross-Module State Retention,Cross-Module State Retention
+7,4,2,0,AC01,ACPTCRIT,,,,,Switching features preserves my current analysis.,,,
+7,4,2,0,AC02,ACPTCRIT,,,,,I can return to a feature and continue where I left off.,,,
+7,4,2,0,AC03,ACPTCRIT,,,,,The system warns if I'm about to lose unsaved work.,,,
+7,4,3,0,,,,,,"**As a** user, **I want to** see suggested next steps based on my current state, **so that** I can follow the most logical path (Enrich -> Customize).",,,User Story Title: Display Workflow Guidance,Display Workflow Guidance
+7,4,3,0,AC01,ACPTCRIT,,,,,"After Resume Analyzer, suggest Narrative Builder (to enrich data) or Job Fit Analyzer (to check a specific JD).",,,
+7,4,3,0,AC02,ACPTCRIT,,,,,"After Narrative Builder, suggest Resume Customizer (to apply the new narrative to the resume).",,,
+7,4,3,0,AC03,ACPTCRIT,,,,,Suggestions explain the benefit of each next step.,,,
+7,4,3,0,AC04,ACPTCRIT,,,,,Job Fit Analyzer is presented as a utility that can be accessed at any time regardless of the core optimization path.,,,
+7,4,4,0,,,,,,"**As a** user, **I want to** see my progress through the overall workflow, **so that** I know how much I've completed.",,,User Story Title: Workflow Completion Monitoring,Workflow Completion Monitoring
+7,4,4,0,AC01,ACPTCRIT,,,,,The system shows which features I've completed.,,,
+7,4,4,0,AC02,ACPTCRIT,,,,,"Each feature shows a completion status (Not Started, In Progress, Complete).",,,
+7,4,4,0,AC03,ACPTCRIT,,,,,Progress is saved across sessions if I download/upload my data.,,,
+7,5,0,0,,,,Consistent Design System,,,,,,Ensure all feature GUIs use consistent visual design.
+7,5,1,0,,,,,,"**As a** user, **I want** all features to use the same color scheme, **so that** the application feels cohesive.",,,User Story Title: Universal Color Scheme Uniformity,Universal Color Scheme Uniformity
+7,5,1,0,AC01,ACPTCRIT,,,,,All features use the dark slate theme.,,,
+7,5,1,0,AC02,ACPTCRIT,,,,,Primary actions use blue.,,,
+7,5,1,0,AC03,ACPTCRIT,,,,,"Warnings use orange, errors use red, success uses green.",,,
+7,5,2,0,,,,,,"**As a** user, **I want** buttons, inputs, and cards to look the same across features, **so that** I can predict interactions.",,,User Story Title: Interaction Pattern Predictability,Interaction Pattern Predictability
+7,5,2,0,AC01,ACPTCRIT,,,,,All buttons have consistent styling.,,,
+7,5,2,0,AC02,ACPTCRIT,,,,,All text areas have consistent styling.,,,
+7,5,2,0,AC03,ACPTCRIT,,,,,All cards and containers have consistent styling.,,,
+7,5,3,0,,,,,,"**As a** user, **I want** error messages to look and behave consistently, **so that** I can recognize and resolve issues.",,,User Story Title: Standardized Feedback Delivery,Standardized Feedback Delivery
+7,5,3,0,AC01,ACPTCRIT,,,,,All error messages use the same red notification style.,,,
+7,5,3,0,AC02,ACPTCRIT,,,,,All error messages include actionable guidance.,,,
+7,5,3,0,AC03,ACPTCRIT,,,,,Error icons are consistent across features.,,,
+7,5,4,0,,,,,,"**As a** user, **I want** loading states to look the same across features, **so that** I know when the system is working.",,,User Story Title: Synchronous State Visualization,Synchronous State Visualization
+7,5,4,0,AC01,ACPTCRIT,,,,,All features use the same spinner component.,,,
+7,5,4,0,AC02,ACPTCRIT,,,,,Loading text describes what's happening.,,,
+7,5,4,0,AC03,ACPTCRIT,,,,,Buttons are disabled during loading.,,,

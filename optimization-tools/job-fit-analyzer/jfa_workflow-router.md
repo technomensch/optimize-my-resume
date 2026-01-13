@@ -3,7 +3,7 @@
 **Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
 **Created:** 2025-12-29
 **Purpose:** Complete routing system that detects user intent and routes to appropriate workflow
-**Extends:** optimization-tools/resume-analyzer/entry-router.md
+**Extends:** optimization-tools/resume-analyzer/ra_entry-router.md
 **Note:** v7.1.0 introduces strategic assessment methodology with 85/75/65/55 fit thresholds and rare skill overrides.
 
 ---
@@ -22,7 +22,7 @@ This protocol extends the Phase 1 entry router with additional routing scenarios
 
 ## Core Routing (from Phase 1)
 
-**See:** optimization-tools/resume-analyzer/entry-router.md for complete implementation
+**See:** optimization-tools/resume-analyzer/ra_entry-router.md for complete implementation
 
 ### Scenario 1: New User (Phase 1)
 - **Condition:** hasResume = true AND hasJobHistory = false
@@ -90,7 +90,7 @@ What would you like to do?
 Please select 1-3 or describe the change."
 ```
 
-**Handler:** See optimization-tools/job-fit-analyzer/incremental-updates.md for complete workflow
+**Handler:** See optimization-tools/job-fit-analyzer/jfa_incremental-updates.md for complete workflow
 
 **Workflow Summary:**
 - **Add:** Collect all job history creation fields → Insert chronologically → Recalculate aggregates → Save
@@ -131,7 +131,7 @@ If you previously analyzed a JD (e.g., 'Google Product Manager'), I can reuse it
 Otherwise, please paste the job description."
 ```
 
-**Handler:** See optimization-tools/job-fit-analyzer/re-comparison.md for complete workflow
+**Handler:** See optimization-tools/job-fit-analyzer/jfa_re-comparison.md for complete workflow
 
 **Workflow Summary:**
 - Check for cached JD → Load if exists, ask to paste if not
@@ -396,7 +396,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ```xml
 <entry_point_routing>
-  Before executing any phase, consult optimization-tools/job-fit-analyzer/workflow-router.md to:
+  Before executing any phase, consult optimization-tools/job-fit-analyzer/jfa_workflow-router.md to:
   1. Detect user state (hasJobHistory, hasJD, hasResume)
   2. Identify user intent (which workflow to execute)
   3. Confirm with user before proceeding
@@ -414,7 +414,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
   ALWAYS route through workflow-router.md first before executing any phase.
 
-  NOTE: This router extends optimization-tools/resume-analyzer/entry-router.md (5 core scenarios)
+  NOTE: This router extends optimization-tools/resume-analyzer/ra_entry-router.md (5 core scenarios)
         with 3 additional scenarios from Phase 3.
 </entry_point_routing>
 ```
@@ -457,9 +457,9 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ---
 
-- **Re-Comparison:** optimization-tools/job-fit-analyzer/re-comparison.md
-- **JD Parsing:** optimization-tools/resume-analyzer/jd-parsing.md
-- **Evidence Matching:** optimization-tools/bullet-optimizer/evidence-matching.md
+- **Re-Comparison:** optimization-tools/job-fit-analyzer/jfa_re-comparison.md
+- **JD Parsing:** optimization-tools/resume-analyzer/ra_jd-parsing.md
+- **Evidence Matching:** optimization-tools/bullet-optimizer/bo_evidence-matching.md
 
 ---
 
@@ -467,7 +467,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #18: Skill/Metric Conflict Resolution
 
-> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/workflow-router.md](optimization-tools/job-fit-analyzer/workflow-router.md).
+> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -487,7 +487,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #23: User State Persistence Consistency
 
-> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/workflow-router.md](optimization-tools/job-fit-analyzer/workflow-router.md).
+> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -510,7 +510,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #25: Confirmation Tracking Guardrail
 
-> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/workflow-router.md](optimization-tools/job-fit-analyzer/workflow-router.md).
+> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -532,7 +532,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ### Guardrail #27: Output Format Consistency Scanner
 
-> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/workflow-router.md](optimization-tools/job-fit-analyzer/workflow-router.md).
+> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
 **Instruction Text:**
 ```xml
@@ -560,11 +560,11 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ## Related Files
 
-- **Core Routing (Phase 1):** optimization-tools/resume-analyzer/entry-router.md
-- **Incremental Updates:** optimization-tools/job-fit-analyzer/incremental-updates.md
-- **Re-Comparison:** optimization-tools/job-fit-analyzer/re-comparison.md
-- **JD Parsing:** optimization-tools/resume-analyzer/jd-parsing.md
-- **Evidence Matching:** optimization-tools/bullet-optimizer/evidence-matching.md
+- **Core Routing (Phase 1):** optimization-tools/resume-analyzer/ra_entry-router.md
+- **Incremental Updates:** optimization-tools/job-fit-analyzer/jfa_incremental-updates.md
+- **Re-Comparison:** optimization-tools/job-fit-analyzer/jfa_re-comparison.md
+- **JD Parsing:** optimization-tools/resume-analyzer/ra_jd-parsing.md
+- **Evidence Matching:** optimization-tools/bullet-optimizer/bo_evidence-matching.md
 
 ---
 

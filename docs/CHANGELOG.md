@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
 
+### v8.4.3 - File Prefix Standardization (Modular Identification)
+- **File Renaming**: Updated all modular file names in `optimization-tools` with prefixes (`ra_`, `bo_`, `jfa_`, `ng_`) to make them easily identifiable in Claude's flat file architecture.
+- **Reference Updates**: Updated all internal file paths and references across core documentation and modular files to reflect the new naming convention.
+- **Rationale**: Since Claude Projects flatten directory structures, unique prefixes prevent file name collisions and improve "at-a-glance" identification of module types.
+
 ### v8.4.2 - Documentation Modernization & Path Resolution
 - **Phase Terminology Removal**: Replaced all legacy "Phase 1/2/3/4" references with functional tool names (Resume Analyzer, Bullet Optimizer, Job Fit Analyzer, Narrative Generator) across `PROJECT-INSTRUCTIONS.md`, `Project-GUI-Instructions.md`, and `README.md`.
 - **Path Resolution Documentation**: Added `<path_resolution>` section to `Project-GUI-Instructions.md` explaining Claude Web Artifact paths (`/files/`) vs. local repository paths.
@@ -40,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/job hi
 - **Token Efficiency** - Replaced ~800 lines of system logic in `Project-GUI-Instructions.md` with an active `<modular_reference>`.
 
 ### v8.2.0 - Job Fit Assessment Module (Issue #29)
-- **Shadow Modularization** - Extracted Job Fit Assessment logic to [job-fit-assessment.md](optimization-tools/job-fit-analyzer/job-fit-assessment.md).
+- **Shadow Modularization** - Extracted Job Fit Assessment logic to [job-fit-assessment.md](optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md).
 - **Token Optimization** - Replaced ~1,000 lines of redundant logic in `Project-GUI-Instructions.md` with an active `<modular_reference>`.
 - **Gold Master Protection** - Implemented "Silent Sync" HTML comments in `PROJECT-INSTRUCTIONS.md`.
 
@@ -574,7 +579,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/job hi
   - **FIX (12)**: Logic corrections and gap-filling tests
 
 #### Changed
-- **Scoring Formula** - `optimization-tools/bullet-optimizer/evidence-matching.md` updated with priority-weighted calculation
+- **Scoring Formula** - `optimization-tools/bullet-optimizer/bo_evidence-matching.md` updated with priority-weighted calculation
 - **System Instructions** - `PROJECT-INSTRUCTIONS.md` and `quick-start-phase.md` updated with skill priority weights
 - **Core Configuration** - `core/fit-thresholds.md` now includes skill-level priority weights alongside category weights
 
@@ -711,12 +716,12 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 1 (v6.0.1) - Foundation
 
 **Added:**
-- **Job History Schema job history creation** (`optimization-tools/resume-analyzer/job-history-creation.md`)
+- **Job History Schema job history creation** (`optimization-tools/resume-analyzer/ra_job-history-creation.md`)
   - 12 sections: metadata, professional_summary, core_responsibilities, key_achievements, hard_skills_demonstrated, soft_skills_demonstrated, education, certifications, tools_technologies, impact_metrics, industry_domain, team_scope
   - Structured format for evidence-based matching
   - Version tracking (schema_version field)
 
-- **Standard JD Parser** (`optimization-tools/resume-analyzer/jd-parsing.md`)
+- **Standard JD Parser** (`optimization-tools/resume-analyzer/ra_jd-parsing.md`)
   - Complete extraction schema: company, job_title, location, work_lifestyle, remote_restrictions, employee_type, travel_required, clearance, salary_range, required_experience, required_education, job_responsibilities
   - **Hard vs Soft Skill Classification:** Decision tree logic for accurate categorization
   - Skills separated: skills_needed/wanted (HARD), soft_skills_needed/wanted (SOFT)
@@ -724,7 +729,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
   - Dual extraction strategy: structured JDs (high confidence) vs conversational JDs (fallback)
   - Inference for missing fields ("Not specified" vs empty arrays)
 
-- **Entry Point Router** (`optimization-tools/resume-analyzer/entry-router.md`)
+- **Entry Point Router** (`optimization-tools/resume-analyzer/ra_entry-router.md`)
   - 5 core routing scenarios with context detection
   - JD validation heuristics (length, keywords, structure checks)
   - Anti-false-positive measures for LinkedIn posts/articles
@@ -740,7 +745,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 2 (v6.0.2) - Core Integration
 
 **Added:**
-- **Evidence-Based Matching** (`optimization-tools/bullet-optimizer/evidence-matching.md`)
+- **Evidence-Based Matching** (`optimization-tools/bullet-optimizer/bo_evidence-matching.md`)
   - **Requirement-by-requirement analysis:** Every JD requirement gets individual status
   - **Two-part check system:** Evidence match + keyword presence (ATS optimization)
   - **Status determination:** [MATCHED], [PARTIAL], [MISSING] with color-coding
@@ -785,7 +790,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 3 (v6.0.3) - Router & Workflows
 
 **Added:**
-- **Complete Workflow Router** (`optimization-tools/job-fit-analyzer/workflow-router.md`)
+- **Complete Workflow Router** (`optimization-tools/job-fit-analyzer/jfa_workflow-router.md`)
   - **8 routing scenarios:**
     1. New user (no job history) → Mode 1
     2. JD comparison (has job history + JD) → Mode 3
@@ -800,13 +805,13 @@ This major release transforms the system from a simple 3-mode analyzer into a co
   - **Context detection:** Checks hasJobHistory, hasJD, hasResume
   - **User confirmation:** Always confirms before executing mode
 
-- **Incremental Updates** (`optimization-tools/job-fit-analyzer/incremental-updates.md`)
+- **Incremental Updates** (`optimization-tools/job-fit-analyzer/jfa_incremental-updates.md`)
   - **Add position:** Collect job history creation fields → Insert chronologically → Recalculate aggregates
   - **Edit position:** Select → Show current values → Update → Recalculate
   - **Remove position:** Select → Confirm → Remove → Recalculate
   - **Automatic recalculation:** Years of experience, skills aggregation
 
-- **JD Re-Comparison** (`optimization-tools/job-fit-analyzer/re-comparison.md`)
+- **JD Re-Comparison** (`optimization-tools/job-fit-analyzer/jfa_re-comparison.md`)
   - **JD caching:** Saves parsed JDs for future reference (`jd_parsed/` directory)
   - **Version tracking:** v1, v2, v3 comparisons stored
   - **Diff output:**
@@ -835,7 +840,7 @@ This major release transforms the system from a simple 3-mode analyzer into a co
 #### Phase 4 (v6.0.4) - Summary & Polish
 
 **Added:**
-- **Professional Summary Generator** (`optimization-tools/narrative-generator/summary-generation.md`)
+- **Professional Summary Generator** (`optimization-tools/narrative-generator/ng_summary-generation.md`)
   - **Master summary (Mode 1):** Comprehensive 3-4 sentence summary
     - Sentence 1: Role + Scope (title, years, industry)
     - Sentence 2: Achievements + Metrics (quantified results)

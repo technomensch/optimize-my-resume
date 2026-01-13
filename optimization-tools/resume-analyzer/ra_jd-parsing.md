@@ -727,7 +727,7 @@ Before finalizing JD parse:
 
 ### Guardrail #7: Skill Categorization Consistency
 
-> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/jd-parsing.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/ra_jd-parsing.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -749,7 +749,7 @@ Before finalizing JD parse:
 
 ### Guardrail #10: JD Keyword Density Validation
 
-> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/jd-parsing.md).
+> **Implementation Target:** Add to [jd-parsing.md](optimization-tools/resume-analyzer/ra_jd-parsing.md).
 
 **Instruction Text:**
 ```xml
@@ -879,10 +879,10 @@ After parsing JD, the parsing output feeds into evidence matching:
 
 ## Related Protocols
 
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
 - **Skills Categorization:** Use classification rules from this document
-- **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md` (v6.0.2)
-- **Entry Router:** `optimization-tools/resume-analyzer/entry-router.md`
+- **Evidence Matching:** `optimization-tools/bullet-optimizer/bo_evidence-matching.md` (v6.0.2)
+- **Entry Router:** `optimization-tools/resume-analyzer/ra_entry-router.md`
 
 ---
 

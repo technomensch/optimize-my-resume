@@ -217,7 +217,7 @@ EXTRACT:
 ### Step 4: Run Evidence Matching
 
 ```
-Use evidence matching protocol (optimization-tools/bullet-optimizer/evidence-matching.md):
+Use evidence matching protocol (optimization-tools/bullet-optimizer/bo_evidence-matching.md):
 
 FOR EACH requirement in cached_jd.jd_parsed:
   1. Search current_job_history for evidence
@@ -628,10 +628,10 @@ System:
 
 ## Related Protocols
 
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
-- **Evidence Matching:** `optimization-tools/bullet-optimizer/evidence-matching.md`
-- **Incremental Updates:** `optimization-tools/job-fit-analyzer/incremental-updates.md`
-- **Summary Generation:** `optimization-tools/narrative-generator/summary-generation.md` (future)
+- **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
+- **Evidence Matching:** `optimization-tools/bullet-optimizer/bo_evidence-matching.md`
+- **Incremental Updates:** `optimization-tools/job-fit-analyzer/jfa_incremental-updates.md`
+- **Summary Generation:** `optimization-tools/narrative-generator/ng_summary-generation.md` (future)
 
 ---
 

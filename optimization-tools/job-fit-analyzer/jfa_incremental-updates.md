@@ -620,7 +620,7 @@ For optional fields (achievements, education):
 
 ### Guardrail #6: Data Loss Prevention during Updates
 
-> **Implementation Target:** [incremental-updates.md](optimization-tools/job-fit-analyzer/incremental-updates.md).
+> **Implementation Target:** [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md).
 
 **Instruction Text:**
 ```xml
@@ -663,7 +663,7 @@ For optional fields (achievements, education):
 
 ### Guardrail #16: Master Skills Inventory Protection
 
-> **Implementation Target:** [PROJECT-INSTRUCTIONS.md](PROJECT-INSTRUCTIONS.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/incremental-updates.md) (secondary).
+> **Implementation Target:** [PROJECT-INSTRUCTIONS.md](PROJECT-INSTRUCTIONS.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -685,7 +685,7 @@ For optional fields (achievements, education):
 
 ### Guardrail #21a: Skill Inventory Context Verification (Original) <!-- v6.3.0 Change: Restored original guardrail -->
 
-> **Implementation Target:** [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/incremental-updates.md) (secondary).
+> **Implementation Target:** [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -699,7 +699,7 @@ For optional fields (achievements, education):
 
 ### Guardrail #21b: Limitation-to-Bullet Cross-Check (Secondary) <!-- v6.3.0 Change: Renamed from #21 to #21b to distinguish from original -->
 
-> **Implementation Target:** [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/incremental-updates.md) (secondary).
+> **Implementation Target:** [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -793,10 +793,10 @@ Flow:
 
 ## Related Protocols
 
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
 - **Skills Categorization:** Use classification rules from phase-1 docs
-- **Re-Comparison:** `optimization-tools/job-fit-analyzer/re-comparison.md`
-- **Summary Generation:** `optimization-tools/narrative-generator/summary-generation.md` (future)
+- **Re-Comparison:** `optimization-tools/job-fit-analyzer/jfa_re-comparison.md`
+- **Summary Generation:** `optimization-tools/narrative-generator/ng_summary-generation.md` (future)
 
 ---
 

@@ -60,7 +60,7 @@
 **Implementation Approach:** Extracting the 13-section XML job history template and its validation/conversion logic from the GUI instructions into a dedicated functional module. Follows Shadow Modularization (ADR-004).
 
 ### Key Features
-- [x] **XML Schema Extraction**: Formalized the `job_history_template_system` in [job-history-template.md](optimization-tools/resume-analyzer/job-history-template.md).
+- [x] **XML Schema Extraction**: Formalized the `job_history_template_system` in [ra_job-history-template.md](optimization-tools/resume-analyzer/ra_job-history-template.md).
 - [x] **Token Optimization**: Reduced GUI prompt size by replacing monolithic XML logic with modular references.
 - [x] **Shadow Modularization**: Gold Master maintains a synchronized copy while the GUI uses a lightweight reference.
 
@@ -81,7 +81,7 @@
 **Implementation Approach:** Extracted Job Fit Assessment logic into a modular component. Implemented "Shadow Modularization" with Silent Sync in the Gold Master and an Active Reference in the GUI Entry Point. (Issue #29)
 
 ### Key Features
-- [x] **New Module**: `optimization-tools/job-fit-analyzer/job-fit-assessment.md`
+- [x] **New Module**: `optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md`
 - [x] **Silent Sync**: HTML comments in `PROJECT-INSTRUCTIONS.md`.
 - [x] **Active Reference**: `<modular_reference>` in `Project-GUI-Instructions.md`.
 - [x] **Token Efficiency**: ~1,000 lines removed from GUI context.
@@ -232,9 +232,9 @@
 **Branch:** `v6.0.1-foundation` | **Status:** Complete | **Date:** 2025-12-28
 
 **Files Created:**
-- [x] `optimization-tools/resume-analyzer/job-history-creation.md` - 12-section schema
-- [x] `optimization-tools/resume-analyzer/jd-parsing.md` - JD parsing protocol with hard/soft skill classification
-- [x] `optimization-tools/resume-analyzer/entry-router.md` - 5-scenario routing logic
+- [x] `optimization-tools/resume-analyzer/ra_job-history-creation.md` - 12-section schema
+- [x] `optimization-tools/resume-analyzer/ra_jd-parsing.md` - JD parsing protocol with hard/soft skill classification
+- [x] `optimization-tools/resume-analyzer/ra_entry-router.md` - 5-scenario routing logic
 
 **Notes:** Foundation modules created but not yet integrated into modes.
 
@@ -244,7 +244,7 @@
 **Branch:** `v6.0.2-core-integration` | **Status:** Complete | **Date:** 2025-12-29
 
 **Files Created:**
-- [x] `optimization-tools/bullet-optimizer/evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
+- [x] `optimization-tools/bullet-optimizer/bo_evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
 - [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (job history creation schema generation, next steps guidance)
@@ -259,9 +259,9 @@
 **Branch:** `v6.0.3-router-workflows` | **Status:** Complete | **Date:** 2025-12-29
 
 **Files Created:**
-- [x] `optimization-tools/job-fit-analyzer/workflow-router.md` - Complete 8-scenario routing system
-- [x] `optimization-tools/job-fit-analyzer/incremental-updates.md` - Add/edit/remove positions (created by Opus)
-- [x] `optimization-tools/job-fit-analyzer/re-comparison.md` - JD re-comparison with diff output (created by Opus)
+- [x] `optimization-tools/job-fit-analyzer/jfa_workflow-router.md` - Complete 8-scenario routing system
+- [x] `optimization-tools/job-fit-analyzer/jfa_incremental-updates.md` - Add/edit/remove positions (created by Opus)
+- [x] `optimization-tools/job-fit-analyzer/jfa_re-comparison.md` - JD re-comparison with diff output (created by Opus)
 - [x] `jd_parsed/` - Cache directory for parsed JDs
 
 **Files Modified:**
@@ -283,7 +283,7 @@
 **Branch:** `v6.0.4-summary-polish` | **Status:** Complete | **Date:** 2025-12-29 <!-- v6.0.0 Change -->
 
 **Files Created:** <!-- v6.0.0 Change -->
-- [x] `optimization-tools/narrative-generator/summary-generation.md` - Master + per-JD summaries (created by Opus, 646 lines) <!-- v6.0.0 Change -->
+- [x] `optimization-tools/narrative-generator/ng_summary-generation.md` - Master + per-JD summaries (created by Opus, 646 lines) <!-- v6.0.0 Change -->
 
 **Files Modified:** <!-- v6.0.0 Change -->
 - [x] `docs/CHANGELOG.md` - Complete v6.0.0 release entry with 4-phase documentation <!-- v6.0.0 Change -->
@@ -512,7 +512,7 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 **Files Modified:**
 - `core/fit-thresholds.md` (v5.0 → v5.1)
-- `optimization-tools/bullet-optimizer/evidence-matching.md` (v1.0 → v1.1)
+- `optimization-tools/bullet-optimizer/bo_evidence-matching.md` (v1.0 → v1.1)
 - `PROJECT-INSTRUCTIONS.md` (v6.1.7 → v6.1.9)
 - `quick-start-phase.md` (v6.1.7 → v6.1.9)
 

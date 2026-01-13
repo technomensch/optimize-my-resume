@@ -603,7 +603,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #5: honest_limitations Enforcement
 
-> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -628,7 +628,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #21: Skill Inventory Context Verification
 
-> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md).
+> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md).
 
 **Instruction Text:**
 ```xml
@@ -650,7 +650,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #24: Alternatives Presentation Consistency
 
-> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
+> **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -681,7 +681,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #16: Master Skills Inventory Protection (Secondary)
 
-> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/incremental-updates.md](optimization-tools/job-fit-analyzer/incremental-updates.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -694,7 +694,7 @@ EXAMPLE OUTPUT:
 
 ### Guardrail #1: Metric Isolation & Traceability (Secondary)
 
-> **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/evidence-matching.md) (secondary).
+> **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (secondary).
 
 **Instruction Text:**
 ```xml
@@ -820,9 +820,9 @@ IF quality < 0.5:
 
 ## Related Protocols
 
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
-- **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/workflow-router.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
+- **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
 - **Blocking Gates:** Defined in Phase 3 (workflow-router.md)
 
 ---

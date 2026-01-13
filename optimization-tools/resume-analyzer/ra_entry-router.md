@@ -736,9 +736,9 @@ OUTPUT: Gap analysis + recommendations
 
 - **Phase 1:** `PROJECT-INSTRUCTIONS.md` → Phase 1 section
 - **Phase 2:** See `PROJECT-INSTRUCTIONS.md` → Core Process (Phase 2)
-- **Phase 3:** `optimization-tools/job-fit-analyzer/workflow-router.md`
-- **JD Parsing:** `optimization-tools/resume-analyzer/jd-parsing.md`
-- **Job History Creation:** `optimization-tools/resume-analyzer/job-history-creation.md`
+- **Phase 3:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
+- **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
+- **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
 
 ---
 
