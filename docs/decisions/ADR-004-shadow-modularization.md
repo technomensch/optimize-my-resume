@@ -81,3 +81,40 @@ Extract logic into a module (e.g., `job-fit-assessment.md`). Replace that logic 
 
 **Created:** 2026-01-12
 **Last Updated:** 2026-01-12
+
+---
+
+## Version Management Protocol
+
+**Scope:** This protocol applies to version headers in `PROJECT-INSTRUCTIONS.md` and `Project-GUI-Instructions.md`.
+
+**Problem:** The Shadow Modularization pattern handles logic synchronization but doesn't address version header synchronization. This led to version drift: both files remained at v7.1.1 while the project reached v8.4.0 because Gemini AI was updating logic via modular references but not updating version headers.
+
+**Solution:**
+
+### Version Header Locations
+Both files have version information in three places:
+- Line 1: `# Optimize-My-Resume System vX.X.X`
+- Line 6: `<!-- Version: X.X.X (Date) -->`
+- Line 7: `<!-- Last Updated: Date -->`
+
+### Synchronization Rule
+When releasing a new version:
+1. Update `ROADMAP.md` with the new version
+2. Update `CHANGELOG.md` with release notes
+3. **Update version headers in BOTH instruction files** (PROJECT-INSTRUCTIONS.md and Project-GUI-Instructions.md)
+4. Keep versions synchronized—both files must always show the same version number
+
+### Why Both Files Need Version Headers
+- `PROJECT-INSTRUCTIONS.md`: Used in LLM chatbot (users see this version)
+- `Project-GUI-Instructions.md`: Used in Claude Artifact/local dev environments (users see this version)
+- Both are independent deployments with separate visibility, so both need accurate version info
+
+### When to Update
+Update version headers when:
+- Completing a versioned release (v8.x.x)
+- Merging feature branches to main
+- **NOT needed** for hotfixes or documentation-only changes to other files
+
+**Created:** 2026-01-13
+**Related:** v8.4.1 version synchronization fix

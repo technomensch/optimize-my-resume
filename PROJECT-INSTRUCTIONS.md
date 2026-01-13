@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v7.1.1
+# Optimize-My-Resume System v8.4.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 7.1.1 (January 12, 2026)                                          --> <!-- v7.1.1: Metric Preservation & Technical Exception Patch -->
-<!-- Last Updated: January 12, 2026                                             -->
+<!-- Version: 8.4.0 (January 13, 2026)                                          --> <!-- v8.4.0: Job History Template Extraction -->
+<!-- Last Updated: January 13, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 

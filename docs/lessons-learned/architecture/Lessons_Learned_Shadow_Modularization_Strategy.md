@@ -117,6 +117,23 @@ Every core file now includes a `<system_maintenance_rule>` block in the first 50
 **Application:** Applied to v8.1 extraction of display logic.
 **Result:** Guardrails prevent developers from forgetting to sync.
 
+### **Lesson 2: Version Header Synchronization**
+**Pattern:** Version headers in `PROJECT-INSTRUCTIONS.md` and `Project-GUI-Instructions.md` must be updated together during version releases.
+
+**Problem Discovered (v8.4.1):**
+- Both instruction files remained at v7.1.1 while project progressed to v8.4.0
+- Gemini AI was updating logic via modular references but not updating version headers
+- No documented protocol for version synchronization existed in the knowledge graph
+
+**Solution Applied:**
+- Added "Version Management Protocol" section to ADR-004
+- Updated `<system_maintenance_rule>` blocks in both instruction files to include explicit version header guidance
+- Created release checklist in maintenance protocol
+
+**Application:** When releasing any v8.x.x version, update version headers in both files as part of release process. Include in release checklist: "Update version headers in both instruction files (lines 1, 6, 7)."
+
+**Result:** Version headers now explicitly part of maintenance protocol, preventing future drift. Shadow Modularization now covers both logic synchronization AND version synchronization.
+
 ---
 
 ## Conclusion
