@@ -14,6 +14,8 @@
 - [Chat History Bloat](#chat-history-bloat) - Gitignore pattern needed
 - [Plan File Location](#plan-file-location) - Temporary vs. permanent
 - [Deleting Feature Branches](#deleting-feature-branches) - Loss of audit trail
+- [Agent Governance Drift](#agent-governance-drift) - Omission of workflow steps (Issue #42)
+- [Absolute Path Regression](#absolute-path-regression) - Breaking documentation portability
 
 ---
 
@@ -142,6 +144,40 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 **Why:** The *history of decisions* is as valuable as the code. Squashed merges in main hide the intermediate steps.
 
 **See:** [ADR-006: Strict Branch Preservation](../decisions/ADR-006-strict-branch-preservation.md)
+
+---
+
+## Agent Process Gotchas
+
+### Agent Governance Drift
+
+**Symptom:** The AI agent executes complex technical fixes but "forgets" to create GitHub issues, set milestones, or update the roadmap.
+
+**Gotcha:** AI reasoning defaults to "Problem Solution" (coding) rather than "Project Management" (governance) under high technical focus.
+
+**Fix:**
+1.  **Enforce Guardrail #31**: Workflow Lifecycle Compliance.
+2.  **Plan First**: Mandate that planning artifacts include issue/branch IDs before any `replace_file_content` calls.
+
+**Why:** Lack of an audit trail makes it impossible to track *why* a change happened 6 months later.
+
+**See:** [Issue #42](https://github.com/technomensch/optimize-my-resume/issues/42)
+
+---
+
+### Absolute Path Regression
+
+**Symptom:** Documentation links or terminal commands fail when the project is moved to a different machine or user.
+
+**Gotcha:** Hardcoding `/Users/[Username]/...` paths in documentation or code snippets.
+
+**Fix:**
+1.  **Always use Relative Paths**: Use `./filename` or repo-relative paths like `optimization-tools/...`.
+2.  **Sanitization Pass**: Periodically run `grep -r "Users/" .` to catch leaked absolute paths.
+
+**Why:** Absolute paths destroy repository portability and shareability.
+
+**See:** [Lessons Learned: Relative File Paths](../lessons-learned/architecture/Lessons_Learned_Relative_File_Paths.md)
 
 ---
 

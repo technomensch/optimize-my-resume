@@ -3,8 +3,32 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v8.2.0 <!-- v8.2.0 issue #29 -->
-## In Development: v8.3.0
+## Current Version: v8.3.1 <!-- v8.3.1 Issue #43 -->
+## In Development: v8.3.0 (Quality Gates Extraction)
+## Planned: v8.4.0 (Job History Template Extraction)
+
+---
+
+## v8.3.1 - Bullet Generation Improvements & Governance (COMPLETE) <!-- Issue #42, #43, #44 -->
+
+**Branch:** `v8.3.1-new-guardrails` | **Status:** Complete | **Date:** 2026-01-13
+
+**Implementation Approach:** Consolidating high-precision bullet generation logic and architectural governance into modular components. Strictly follows the v8 Shadow Modularization pattern (Module → Gold Master Sync → GUI Reference).
+
+### Key Features
+- [x] **Causal Impact Linking** (Issue #43): Mandating syntactic links between Action and Metric.
+- [x] **Portfolio Employment Labeling** (Issue #43): Enforcing "(Independent Project)" for portfolio entries.
+- [x] **Action Verb Visuals** (Issue #43): Adding ASCII block indicators for verb distribution.
+- [x] **Chronology Depth Logic** (Issue #44): Standardizing resume depth based on recency and tenure.
+- [x] **Governance Guardrails** (Issue #42): Codified Modularity Compliance (#30) and Workflow Lifecycle Compliance (#31).
+
+---
+
+## v8.3.0 - Quality Gates Module Extraction (IN DEVELOPMENT) <!-- v8.3.0 issue #32 -->
+
+**Branch:** `v8.3-quality-gates-extraction` | **Status:** In Development | **Date:** 2026-01-12
+
+**Implementation Approach:** Extracting Quality Assurance rules and Guardrails into a modular component to reduce context overhead. (Issue #32)
 
 ---
 
@@ -571,4 +595,4 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 ---
 
-**Last Updated:** 2026-01-10 (v7.0.0 - Local Development Environment with Ollama Integration) <!-- v7.0.0 Change: Updated from v6.5.1 -->
+**Last Updated:** 2026-01-13 (v8.3.1 - Bullet Generation Improvements & Governance)

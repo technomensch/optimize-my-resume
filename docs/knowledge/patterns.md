@@ -16,6 +16,8 @@
 - [Silent Sync](#silent-sync) - Preserving gold master integrity
 - [Metric Preservation Guardrail](#metric-preservation-guardrail) - Data integrity audit
 - [Value-Driven User Stories](#value-driven-user-stories) - Benefit-focused requirements
+- [Causal Impact Linking](#causal-impact-linking) - Syntactic action-to-metric mapping
+- [Governance Lifecycle](#governance-lifecycle) - Enforced project management flow
 
 ---
 
@@ -199,6 +201,37 @@ Keywords → Category:
 - **Pattern:** [Noun] [Capability/Outcome] rather than [Verb] [Object]
 
 **See:** [Requirements Document](../../docs/requirements/requirements.md)
+
+---
+
+### Causal Impact Linking
+
+**Problem:** Bullets often state qualitative achievements without explicitly linking them to available hard metrics.
+**Solution:** Synthesis of [Action Verb] + [Object/Task] + [Causal Connector] + [Hard Metric Impact].
+**When to use:** Resume bullet optimization, performance reporting.
+
+**Quick Reference:**
+- Use causal connectors: "...resulting in...", "...enabling...", "...cutting time by..."
+- Never stop at the qualitative claim if data exists.
+- Forces "so-what" clarity for hiring managers.
+
+**See:** `causal_impact_linking` in [v8.3.1 Plan](../plans/v8.3.1-bullet-generation-improvements.md)
+
+---
+
+### Governance Lifecycle
+
+**Problem:** Technical execution often drifts from project management visibility (missing issues, untracked branches).
+**Solution:** A mandatory 4-step sequence (Issue -> Branch -> Roadmap -> Plan) BEFORE coding.
+**When to use:** All feature development, patches, and architectural changes.
+
+**Quick Reference:**
+1. `gh issue create` (Establish ID)
+2. `git checkout -b` (Establish locality)
+3. Update `ROADMAP.md`/`CHANGELOG.md` (Establish history)
+4. Save plan to `docs/plans/` (Establish intent)
+
+**See:** [Guardrail #31](../../PROJECT-INSTRUCTIONS.md)
 
 ---
 

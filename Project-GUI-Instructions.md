@@ -932,6 +932,8 @@
   </behavior>
 </phase>
 
+<modular_reference file="optimization-tools/bullet-optimizer/bullet-generation-logic.md" />
+
 <!-- ========================================================================== -->
 <!-- PHASE 3: KEYWORD INPUT HANDLING                                            -->
 <!-- ========================================================================== -->

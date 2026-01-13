@@ -767,5 +767,29 @@
         Correction: "Managed 20 API calls across 6 systems to ensure team alignment."
       </example>
     </metric_preservation_guardrail>
+
+    <!-- v8.3.1 Issue #42 -->
+    <guardrail id="30">
+      <name>modularity_compliance</name>
+      <priority>CRITICAL</priority>
+      <instruction>You MUST NOT modify logic directly in the GUI context. Ensure all system logic follows the v8 hub-and-spoke modular architecture.</instruction>
+      <process>
+        1. [NEW] Create standalone module in /optimization-tools/.
+        2. [SHADOW] Add "Silent Sync" HTML markers in Gold Master (PROJECT-INSTRUCTIONS.md).
+        3. [MODULAR] Replace GUI logic with &lt;modular_reference file="..." /&gt;.
+      </process>
+    </guardrail>
+
+    <guardrail id="31">
+      <name>workflow_lifecycle_compliance</name>
+      <priority>CRITICAL</priority>
+      <instruction>You MUST NOT proceed to planning or execution without first establishing the necessary project management infrastructure.</instruction>
+      <steps>
+        1. Identify or create a GitHub Issue (gh issue create).
+        2. Establish a dedicated feature/patch branch.
+        3. Update ROADMAP.md and CHANGELOG.md status.
+        4. Save implementation plan to docs/plans/[branch-name].md.
+      </steps>
+    </guardrail>
   </system_guardrails>
 </quality_assurance_rules>

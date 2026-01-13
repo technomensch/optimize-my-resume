@@ -58,7 +58,7 @@ This "Lessons Learned" document serves as a persistent reminder. Any future viol
 
 ### Metrics of Success
 **Before:**
-- ❌ `[PROJECT-INSTRUCTIONS.md](file:///Users/mkaplan/Documents/GitHub/optimize-my-resume/PROJECT-INSTRUCTIONS.md)`
+- ❌ `[PROJECT-INSTRUCTIONS.md](PROJECT-INSTRUCTIONS.md)`
 **After:**
 - ✅ `[PROJECT-INSTRUCTIONS.md](PROJECT-INSTRUCTIONS.md)`
 

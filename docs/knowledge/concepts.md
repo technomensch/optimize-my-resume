@@ -18,6 +18,8 @@
 - [Automation Strategy](#automation-strategy) - Manual triggers vs. automatic execution
 - [Shadow Modularization](#shadow-modularization) - Integrity vs. optimization balance
 - [Action Verb Categories](#action-verb-categories) - 5-part classification framework
+- [Portfolio Employment Safety](#portfolio-employment-safety) - Distinguishing W2 from projects
+- [Chronology Depth Control](#chronology-depth-control) - Balancing recency and significance
 
 ---
 
@@ -224,8 +226,66 @@ Forcing verb diversity avoids "one-note" resumes (e.g., only "Managed" or only "
 
 #### Cross-References
 
-- **Implementation:** [core/verb-categories.md](../../core/verb-categories.md)
+- **See:** [Implementation](../../core/verb-categories.md)
 - **Pattern:** [[patterns.md#metric-preservation-guardrail]] (often paired)
+
+---
+
+### Portfolio Employment Safety
+
+**Category:** Concept
+**Tags:** #safety #background-checks #portfolio #labeling
+
+#### Quick Summary
+
+Distinguishing between independent portfolio projects and W2 employment to prevent legal/ethical misrepresentation during background checks.
+
+#### Details
+
+**The Risk:**
+Naming a portfolio project with a company-like header (e.g., "Resume Optimizer at GitHub") implies a formal employment relationship. If a background check service (e.g., The Work Number) shows no record, the candidate may be disqualified for "misrepresentation."
+
+**The Solution:**
+Explicitly label all non-W2 projects with a standard suffix.
+- **Standard Label:** `(Independent Project)` or `(Portfolio Project)`.
+- **Target Location:** Position 0 or any non-employer achievement section.
+
+#### Key Insight
+
+Accuracy in *nature of employment* is as critical as accuracy in *technical achievements*.
+
+#### Cross-References
+
+- **ADR:** To be created.
+- **Plan:** [v8.3.1 Plan](../plans/v8.3.1-bullet-generation-improvements.md)
+- **Rule:** `portfolio_employment_labeling`
+
+---
+
+### Chronology Depth Control
+
+**Category:** Concept
+**Tags:** #resume-writing #chronology #logic #curation
+
+#### Quick Summary
+
+A logic-based approach to determining resume record depth, balancing the "standard" 10-year rule with high-tenure significance.
+
+#### Details
+
+**The "Fade Out" Rules:**
+1.  **Recency Threshold (6 years):** Positions ending within the last 6 years warrant full, high-impact bullet generation (3-5 bullets).
+2.  **Tenure Exception (5+ years):** Older positions represent a "Significant Career Chunk" if the tenure was long. They warrant standard bullets (2-3) regardless of age.
+3.  **Ancient History:** Positions older than 10 years with short tenure should be summarized or listed without bullets to save space for modern skills.
+
+#### Key Insight
+
+Resume depth is a function of *Impact * Recency*, not just a static calendar cutoff.
+
+#### Cross-References
+
+- **Plan:** [v8.3.1 Plan](../plans/v8.3.1-bullet-generation-improvements.md)
+- **Rule:** `chronology_depth_logic`
 
 ---
 

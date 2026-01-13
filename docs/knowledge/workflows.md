@@ -13,6 +13,7 @@
 - [ADR Creation](#adr-creation) - Formalize decisions
 - [Patch Workflow](#patch-workflow) - Bug fixes and improvements
 - [Session Summary](#session-summary) - Preserve context before limits
+- [Governance Lifecycle](#governance-lifecycle) - Mandatory project management steps
 
 ---
 
@@ -213,6 +214,23 @@ git commit -m "docs: ..."          # Commit with semantic type
 cp .claude/skills/*.md ~/.claude/commands/   # Install skills
 # Restart Claude Code after skill changes
 ```
+
+---
+
+### Governance Lifecycle
+
+**Purpose:** Ensure all technical work is tracked, versioned, and documented for longitudinal project health.
+
+**Quick Steps:**
+1.  **Issue Creation:** `gh issue create --title "..." --body "..."`
+2.  **Branch Management:** `git checkout -b [version]-[slug]`
+3.  **Roadmap Sync:** Update `ROADMAP.md` and `docs/CHANGELOG.md` to "Pending" or "Planned."
+4.  **Implementation Planning:** Save `docs/plans/[branch-name].md`.
+5.  **Execution:** Only after steps 1-4 are approved.
+
+**When to use:** All non-trivial changes, feature work, and architectural optimizations.
+
+**See:** [Guardrail #31](../../PROJECT-INSTRUCTIONS.md)
 
 ---
 

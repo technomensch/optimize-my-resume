@@ -2048,6 +2048,92 @@
 <!-- END SILENT SYNC: Job Fit Assessment -->
 
 <!-- ========================================================================== -->
+<!-- BULLET GENERATION RULES (v8.3.1)                                          -->
+<!-- ========================================================================== -->
+
+<!-- SILENT SYNC: Bullet Generation Improvements -->
+<bullet_generation_rules>
+
+<rule id="causal_impact_linking">
+  <priority>HIGH</priority>
+  <trigger>When a bullet point describes a qualitative improvement (e.g., "aligned outputs," "supported scale," "ensured accuracy").</trigger>
+  <instruction>
+    You must NOT stop at the qualitative claim. You must immediately link it to the specific hard metric found in the source data using a "Causal Connector."
+  </instruction>
+  <syntax_formula>
+    [Action Verb] + [Object/Task] + [Causal Connector] + [Hard Metric Impact]
+  </syntax_formula>
+  <causal_connectors>
+    - "...resulting in a [X]% reduction..."
+    - "...enabling [X]..."
+    - "...which prevented [X]..."
+    - "...cutting time by [X]..."
+  </causal_connectors>
+  <bad_example>
+    "Established information architecture that aligned agent outputs with user needs." (Vague outcome)
+  </bad_example>
+  <good_example>
+    "Established information architecture that aligned agent outputs with user needs, reducing token usage by 16% while maintaining capabilities." (Explicit Impact)
+  </good_example>
+</rule>
+
+<rule id="portfolio_employment_labeling">
+  <priority>CRITICAL</priority>
+  <trigger>When generating bullets for the "Portfolio Project" or any entry listed as "Independent" in Job History.</trigger>
+  <instruction>
+    You MUST append "(Independent Project)" or "(Portfolio Project)" to the position title to distinguish it from W2 employment. This prevents misrepresentation during background checks.
+  </instruction>
+  <example>
+    **Resume Optimizer** (Independent Project) | technomensch/optimize-my-resume
+  </example>
+</rule>
+
+<rule id="action_verb_visuals">
+  <priority>MEDIUM</priority>
+  <trigger>When displaying the Action Verb Distribution summary.</trigger>
+  <instruction>
+    Include ASCII block characters (████░░░░░░) to visually represent the percentage distribution of each category (Built, Lead, Managed, Improved, Collaborate) for instant analysis.
+  </instruction>
+</rule>
+
+<rule id="chronology_depth_logic">
+  <priority>HIGH</priority>
+  <description>Determines which positions warrant full bullet generation based on recency and tenure.</description>
+  
+  <parameters>
+    <current_year>2026</current_year>
+    <recency_threshold_years>6</recency_threshold_years>
+    <tenure_significance_threshold_years>5</tenure_significance_threshold_years>
+  </parameters>
+
+  <logic_steps>
+    <step id="1_calculate_gap">
+      Calculate `Years_Since_End` = `Current_Year` - `Job_End_Year`.
+    </step>
+    
+    <step id="2_apply_inclusion_rules">
+      <condition type="mandatory_inclusion">
+        IF `Years_Since_End` <= 6 OR Job is "Present":
+        THEN Generate full bullets (3-5).
+      </condition>
+      
+      <condition type="tenure_exception">
+        IF `Years_Since_End` > 6 AND `Job_Duration_Years` >= 5:
+        THEN Generate standard bullets (2-3) (Reason: "Relevant Career Chunk").
+      </condition>
+      
+      <condition type="space_permitting">
+        IF `Years_Since_End` > 6 AND `Job_Duration_Years` < 5:
+        THEN Include ONLY IF total resume length < 2 pages. Otherwise, summarize or list as "Previous Experience."
+      </condition>
+    </step>
+  </logic_steps>
+</rule>
+
+</bullet_generation_rules>
+<!-- END SILENT SYNC: Bullet Generation Improvements -->
+
+<!-- ========================================================================== -->
 <!-- CRITICAL FORMATTING RULES                                                  -->
 <!-- ========================================================================== -->
 
@@ -3675,6 +3761,32 @@
         Correction: "Managed 20 API calls across 6 systems to ensure team alignment."
       </example>
     </metric_preservation_guardrail>
+
+    <!-- v8.3.1 Issue #42 -->
+    <!-- SILENT SYNC: Governance Guardrails -->
+    <guardrail id="30">
+      <name>modularity_compliance</name>
+      <priority>CRITICAL</priority>
+      <instruction>You MUST NOT modify logic directly in the GUI context. Ensure all system logic follows the v8 hub-and-spoke modular architecture.</instruction>
+      <process>
+        1. [NEW] Create standalone module in /optimization-tools/.
+        2. [SHADOW] Add "Silent Sync" HTML markers in Gold Master (PROJECT-INSTRUCTIONS.md).
+        3. [MODULAR] Replace GUI logic with &lt;modular_reference file="..." /&gt;.
+      </process>
+    </guardrail>
+
+    <guardrail id="31">
+      <name>workflow_lifecycle_compliance</name>
+      <priority>CRITICAL</priority>
+      <instruction>You MUST NOT proceed to planning or execution without first establishing the necessary project management infrastructure.</instruction>
+      <steps>
+        1. Identify or create a GitHub Issue (gh issue create).
+        2. Establish a dedicated feature/patch branch.
+        3. Update ROADMAP.md and CHANGELOG.md status.
+        4. Save implementation plan to docs/plans/[branch-name].md.
+      </steps>
+    </guardrail>
+    <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>
 <!-- END SILENT SYNC: Quality Gates & Guardrails -->
