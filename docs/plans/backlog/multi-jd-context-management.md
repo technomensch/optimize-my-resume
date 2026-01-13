@@ -1,11 +1,9 @@
 # Implementation Plan - v8.5.0: Multi-JD Context Management
 
-Establish a formal system for managing multiple Job Descriptions (JDs) within a single optimization session. This includes archiving JD history, supporting comparative scoring across multiple targets, and implementing context-switching commands.
+Establish a formal system for managing multiple Job Descriptions (JDs) within a single optimization session. This includes context-switching commands and comparative scoring across multiple targets.
 
-## User Review Required
-
-> [!IMPORTANT]
-> This change introduces a new directory structure for JD storage: `job-data/jds/`. Each JD will be stored as a unique XML file to prevent overwriting.
+> [!NOTE]
+> **Deferred Feature:** JD history archiving (`jd_v1.txt`, `jd_v2.txt`, etc.) and persistent storage in `job-data/jds/` is deferred to a future version for local test builds only (not the Claude artifact).
 
 ## Proposed Changes
 
@@ -13,7 +11,6 @@ Establish a formal system for managing multiple Job Descriptions (JDs) within a 
 
 #### [NEW] [jd-context-manager.md](../../optimization-tools/job-fit-analyzer/jd-context-manager.md)
 - Define logic for `gh_issue_detect_jd` (automatic detection of multi-JD scenarios).
-- Implement `<jd_history_archiving_rules>`: Store JDs as `jd_v1.txt`, `jd_v2.txt`, etc.
 - Implement `<context_switching_commands>`: Allow user to say "Switch to the [Company] JD".
 - Implement `multi_jd_comparative_scoring`: Compare one resume against all active JDs in a single report.
 
@@ -40,9 +37,6 @@ Establish a formal system for managing multiple Job Descriptions (JDs) within a 
 
 ## Verification Plan
 
-### Automated Tests
-- Validate that the system can index 3+ unique JD files in the `job-data/jds/` directory.
-
 ### Manual Verification
-- Perform a "Switch to JD 2" command simulation.
+- Perform a "Switch to JD 2" command simulation within a single session.
 - Generate a "Comparative Fit Report" for two different companies.

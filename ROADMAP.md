@@ -4,7 +4,6 @@
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
 ## Current Version: v8.4.0 <!-- v8.4.0 Issue #31 -->
-## In Development: [v8.5.0 (Multi-JD Context Management)](docs/plans/v8.5.0-multi-jd-context-management.md)
 
 ---
 
@@ -586,6 +585,7 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 ## Backlog (Unprioritized)
 
+- [ ] **Multi-JD Context Management** - In-session context switching and comparative scoring across multiple JDs. [Plan](docs/plans/backlog/multi-jd-context-management.md)
 - [ ] Batch JD comparison (compare resume to multiple JDs at once)
 - [ ] Keyword frequency analysis (after 3+ JD comparisons, show most-requested skills)
 - [ ] Export job history to different formats (JSON, PDF, etc.)
