@@ -8,6 +8,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+### v8.3.1 - Precision Bullet Logic & Governance Lifecycle (2026-01-13) <!-- v8.3.1 Change -->
+
+#### Added - Governance Lifecycle Compliance (Issue #42)
+- **Problem:** AI agents often skip Project Management (PM) steps (issues, branches, roadmaps) during intense technical execution.
+- **Solution:** Codified **Guardrail #31 (Workflow Lifecycle Compliance)**.
+- **Mandatory Sequence:** `gh issue create` -> `git checkout -b` -> `ROADMAP.md` update -> `docs/plans/` -> **THEN** execution.
+- **Enforcement:** The system now checks for these artifacts before allowing core logic modifications.
+
+#### Added - Shadow Modularization Pattern (Issue #42)
+- **Problem:** Modularizing logic into standalone files risks fragmenting the "Gold Master" and increasing the likelihood of divergence.
+- **Solution:** Implemented the **Shadow Modularization** pattern (ADR-004).
+- **Structure:**
+  - **Module**: Standalone MD file (e.g., `bullet-generation-logic.md`).
+  - **Shadow**: `PROJECT-INSTRUCTIONS.md` keeps a copy of the logic wrapped in `<!-- SILENT SYNC -->` comments.
+  - **Reference**: `Project-GUI-Instructions.md` uses `<modular_reference />` to reduce prompt overhead without losing system integrity.
+
+#### Meta-Work - Knowledge Graph Expansion
+- **Patterns:** Added "Causal Impact Linking" and "Governance Lifecycle" to `patterns.md`.
+- **Concepts:** Added "Portfolio Employment Safety" and "Chronology Depth Control" to `concepts.md`.
+- **Gotchas:** Added "Agent Governance Drift" and "Absolute Path Regression" to `gotchas.md`.
+
+#### Impact
+- ✅ **Prompt Optimization:** Reduced `Project-GUI-Instructions.md` size by ~1.5k lines across v8.3.0 and v8.3.1.
+- ✅ **Process Integrity:** Guaranteed audit trail for all future changes.
+- ✅ **Portability:** Enforced relative path usage in all new documentation.
+
+---
+
+### v8.3.0 - Quality Gates Module Extraction (2026-01-12) <!-- v8.3.0 Change -->
+
+#### Added - Modularization Infrastructure (Issue #32)
+- **Extraction:** Moved ~770 lines of XML quality rules and system guardrails from the GUI context to a dedicated module.
+- **File:** `optimization-tools/resume-analyzer/quality-gates-guardrails.md`
+- **Result:** Drastic reduction in token usage for every GUI analysis session without loss of validation quality.
+
+#### Documentation Cleanup
+- Removed redundant/empty headers in `Project-GUI-Instructions.md` from previous partial extractions.
+- Standardized the `<modular_reference />` tag format for all extracted components.
+
+---
+
 ---
 
 ### v6.3.1.1 - Implementing Guardrail Core Modules (2026-01-04) <!-- v6.3.1.1 Change -->
