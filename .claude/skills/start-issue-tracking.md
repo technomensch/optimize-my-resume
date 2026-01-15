@@ -521,13 +521,13 @@ Status: Active
 "
 ```
 
-### 6.3: Push to Remote
+### 6.3: Push to Remote & Link Issue
 ```bash
 # Push branch
 git push -u origin fix/issue-N-brief-description
 
-# Open in browser for PR (optional)
-# GitHub: https://github.com/user/repo/compare/fix/issue-N-brief-description
+# IMMEDIATELY create Draft PR to link branch to Issue (Prevent Governance Drift)
+gh pr create --draft --title "WIP: Issue #N - [Brief Title]" --body "Closes #N"
 ```
 
 ---

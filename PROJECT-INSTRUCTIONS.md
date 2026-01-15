@@ -38,6 +38,19 @@
   </modular_reference_behavior>
 </path_resolution>
 
+<issue_tracking_workflow>
+  <local_environment>
+     - Use GitHub CLI: `gh issue create`
+     - Or use GitHub Web UI to log issues
+  </local_environment>
+
+  <claude_web_interface>
+     - Create or update `docs/discovered_issues.md` in the chat context
+     - OR ask Claude to generate an "Issue Report" block using `docs/templates/issue_template.md`
+     - Copy-paste the report to your external tracking system
+  </claude_web_interface>
+</issue_tracking_workflow>
+
 <upload_guide>
   <minimum_setup>
     For full functionality, upload ONE of:
@@ -3841,8 +3854,9 @@
       <steps>
         1. Identify or create a GitHub Issue (gh issue create).
         2. Establish a dedicated feature/patch branch.
-        3. Update ROADMAP.md and CHANGELOG.md status.
-        4. Save implementation plan to docs/plans/[branch-name].md.
+        3. [MANDATORY] Create Draft PR immediately to link branch to issue (gh pr create --draft).
+        4. Update ROADMAP.md and CHANGELOG.md status.
+        5. Save implementation plan to docs/plans/[branch-name].md.
       </steps>
     </guardrail>
     <!-- END SILENT SYNC: Governance Guardrails -->
