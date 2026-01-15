@@ -29,6 +29,9 @@ Use `/start-issue-tracking` when:
 - You need to create a handoff for another developer
 - You're starting work on a complex issue that needs tracking
 
+**CRITICAL RULE:**
+- When creating the GitHub Issue, you **MUST** use the `--body-file` flag to populate the description with your detailed `solution-approach.md`. Never use a manual summary.
+
 **Do NOT use for:**
 - Simple typo fixes or trivial changes
 - Work that's already complete (use `/lessons-learned` instead)
@@ -162,6 +165,8 @@ mkdir -p docs/enhancements/ENH-NNN/
 ### 4.1: Main Issue Document Template
 
 **File:** `docs/issues/issue-N/issue-N-{slug}.md`
+
+> **Note:** The `gh issue create` command below MUST use the `--body-file` flag pointing to `solution-approach.md` (or this description file) to ensure all technical details are visible in the GitHub UI. Do not use manual summaries.
 
 ```markdown
 # Issue #N: [Title]
