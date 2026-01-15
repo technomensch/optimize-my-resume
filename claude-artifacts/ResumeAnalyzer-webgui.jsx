@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle, FileText, Download, ChevronDown, ChevronUp, Loader, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
-import OllamaService from '../services/ollamaService';
-import modelsConfig from '../config/models.json';
+import React, { useState } from 'react';
+import { AlertCircle, CheckCircle, FileText, Download, ChevronDown, ChevronUp, Loader, BarChart3, Info, AlertTriangle, XCircle } from 'lucide-react';
 
-export default function ResumeAnalyzer() {
+export default function Phase1ResumeAnalyzer() {
   const [resumeText, setResumeText] = useState('');
   const [analyzed, setAnalyzed] = useState(false);
   const [expandedPositions, setExpandedPositions] = useState(new Set());
@@ -11,42 +9,34 @@ export default function ResumeAnalyzer() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedModel, setSelectedModel] = useState('');
-  const [availableModels, setAvailableModels] = useState([]);
-  const [ollamaStatus, setOllamaStatus] = useState('checking');
+  const [modelError, setModelError] = useState('');
+  const [showTokenInfo, setShowTokenInfo] = useState(false);
+  const [failureCount, setFailureCount] = useState(0);
   const [debugMode, setDebugMode] = useState(false);
 
-  // Load models from config on mount
-  const models = modelsConfig.ollama;
-
-  // Check Ollama status and available models on mount
-  useEffect(() => {
-    checkOllamaStatus();
-  }, []);
-
-  const checkOllamaStatus = async () => {
-    setOllamaStatus('checking');
-    const isHealthy = await OllamaService.checkHealth();
-    if (isHealthy) {
-      const models = await OllamaService.listModels();
-      setAvailableModels(models.map(m => m.name));
-      setOllamaStatus('connected');
-
-      // Auto-select recommended model if available
-      // Handle :latest tag matching
-      const recommended = modelsConfig.ollama.find(m => m.recommended);
-      if (recommended) {
-        const isAvailable = models.some(m =>
-          m.name === recommended.id ||
-          (m.name === `${recommended.id}:latest` && !recommended.id.includes(':'))
-        );
-        if (isAvailable) {
-          setSelectedModel(recommended.id);
-        }
-      }
-    } else {
-      setOllamaStatus('disconnected');
+  const models = [
+    {
+      id: 'claude-haiku-4-20250514',
+      name: '⚡ Haiku',
+      desc: 'Fast, fewest tokens (short resumes)',
+      tier: 'free',
+      tokenUsage: 'low'
+    },
+    {
+      id: 'claude-sonnet-4-20250514',
+      name: '🎯 Sonnet',
+      desc: 'Balanced, moderate tokens (recommended)',
+      tier: 'free',
+      tokenUsage: 'moderate'
+    },
+    {
+      id: 'claude-opus-4-20250514',
+      name: '⭐ Opus',
+      desc: 'Most capable, most tokens (complex resumes, Pro only)',
+      tier: 'pro',
+      tokenUsage: 'high'
     }
-  };
+  ];
 
   const togglePosition = (id) => {
     const newSet = new Set(expandedPositions);
@@ -141,36 +131,172 @@ export default function ResumeAnalyzer() {
       return;
     }
 
-    if (ollamaStatus !== 'connected') {
-      setError('Ollama is not connected. Please make sure Ollama is running with: ollama serve');
-      return;
-    }
-
     setLoading(true);
     setError(null);
+    setModelError('');
 
     try {
-      console.log(`Analyzing resume with model: ${selectedModel}`);
-      const result = await OllamaService.analyzeResume(selectedModel, resumeText);
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          max_tokens: 8000,  // v6.5.4 FIX: Increased from 5000 to prevent JSON truncation
+          messages: [
+            {
+              role: 'user',
+              content: `You are analyzing a resume. Return ONLY valid JSON with no markdown.
 
-      if (!result.success) {
-        throw new Error(result.error);
+RESUME:
+${resumeText}
+
+CRITICAL: Keep ALL text fields concise (under 150 chars each). Be brief and direct.
+
+Return JSON with this structure. For repairsNeeded, ONLY include the issue description (brief, 1 sentence). Save detailed suggestions for per-bullet context.
+
+Identify these repair types:
+- Metrics: bullets without quantified impact (%, $, numbers, time)
+- Character count: bullets under 100 or over 210 chars
+- Verb distribution: any category with fewer than 5% of total bullets
+- Weak verbs: Responsible, Helped, Worked on, Participated
+- Verb repetition: same category used twice in one position
+- No impact: bullets lacking clear business outcome
+
+{
+  "verdict": "one sentence summary",
+  "blockers": 0,
+  "risks": 0,
+  "tweaks": 0,
+  "totalBullets": 0,
+  "bulletsWithMetrics": 0,
+  "verbDistribution": {
+    "Built": 0,
+    "Lead": 0,
+    "Managed": 0,
+    "Improved": 0,
+    "Collaborate": 0
+  },
+  "averageCharCount": 100,
+  "totalWordCount": 0,
+  "repairsNeeded": [
+    {
+      "severity": "risk",
+      "position": "Position 1: Job Title",
+      "bulletNumber": 1,
+      "issue": "Brief issue only (no suggestion here)"
+    }
+  ],
+  "positions": [
+    {
+      "id": 1,
+      "title": "Job Title",
+      "company": "Company Name",
+      "dates": "Jan 2020 - Dec 2021",
+      "duration": "2 years",
+      "inferredTitle": "Inferred Job Title",
+      "seniority": "Senior",
+      "reasoning": "Brief: why this title, what scope shows (max 100 chars)",
+      "skillsHard": ["skill1", "skill2"],
+      "skillsSoft": ["skill1", "skill2"],
+      "bullets": [
+        {
+          "text": "Complete bullet text",
+          "verb": "Built",
+          "category": "Built",
+          "hasMetrics": true,
+          "metrics": ["50%", "$100K"],
+          "charCount": 150,
+          "recommendation": "Specific fix (only if has issues, max 100 chars)"
+        }
+      ]
+    }
+  ]
+}`
+            }
+          ]
+        })
+      });
+
+      const data = await response.json();
+
+      // Debug logging
+      console.log('API Response status:', response.status);
+      console.log('API Response data type:', data.type);
+      console.log('API Response has content:', !!data.content);
+      if (data.content) {
+        console.log('Content array length:', data.content.length);
+        console.log('First content item:', data.content[0]);
+      }
+      console.log('Has error:', !!data.error);
+
+      // Check for rate limit exceeded
+      if (data.type === 'exceeded_limit' && data.windows) {
+        const window = Object.values(data.windows)[0];
+        const resetTime = new Date(window.resets_at * 1000);
+        const now = new Date();
+        const minutesUntilReset = Math.ceil((resetTime - now) / 60000);
+        const hoursUntilReset = Math.floor(minutesUntilReset / 60);
+        const remainingMinutes = minutesUntilReset % 60;
+
+        let timeMessage = '';
+        if (hoursUntilReset > 0) {
+          timeMessage = `${hoursUntilReset} hour${hoursUntilReset > 1 ? 's' : ''}${remainingMinutes > 0 ? ` and ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}` : ''}`;
+        } else {
+          timeMessage = `${minutesUntilReset} minute${minutesUntilReset !== 1 ? 's' : ''}`;
+        }
+
+        const resetTimeFormatted = resetTime.toLocaleTimeString('en-US', {
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        });
+
+        setError(
+          `🚦 **Rate Limit Reached**\n\n` +
+          `You've used your token allocation for this 5-hour window. This limit is shared across ALL Claude features (chat, artifacts, analysis).\n\n` +
+          `**Token Limits by Plan:**\n` +
+          `• Free tier: 500,000 tokens per 5-hour window\n` +
+          `• Pro tier: 2,500,000 tokens per 5-hour window (5x more)\n\n` +
+          `**When will it reset?**\n` +
+          `• Your limit resets in **${timeMessage}**\n` +
+          `• Reset time: **${resetTimeFormatted}**\n\n` +
+          `**What you can do:**\n\n` +
+          `1️⃣ **Wait for reset** - Your tokens will automatically refresh at reset time\n\n` +
+          `2️⃣ **Upgrade to Pro** - Get 5x more tokens plus Opus model access\n\n` +
+          `3️⃣ **Use tokens strategically:**\n` +
+          `   • Haiku uses fewer tokens than Sonnet/Opus\n` +
+          `   • Consider shorter resumes or analyzing in parts\n\n` +
+          `**Pro Tip:** Check your token usage in claude.ai settings to track consumption across all features.`
+        );
+        setLoading(false);
+        return;
       }
 
-      console.log('Ollama response:', result.text);
+      if (data.error) {
+        // Check if Opus access denied (Pro plan required)
+        if (data.error.message &&
+          (data.error.message.includes('permission') ||
+            data.error.message.includes('access') ||
+            data.error.message.toLowerCase().includes('unauthorized'))) {
+          setModelError('Opus requires a Pro plan. Please select Sonnet or Haiku.');
+          setSelectedModel('claude-sonnet-4-20250514'); // Auto-switch to Sonnet
+        } else {
+          setError(`API Error: ${data.error.message}`);
+        }
+        setLoading(false);
+        return;
+      }
 
-      // Parse the JSON response
-      let analysisText = result.text.trim();
-
-      // Remove markdown code blocks if present
+      let analysisText = data.content[0].text.trim();
       analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '');
 
-      // Find JSON boundaries
       const jsonStart = analysisText.indexOf('{');
       const jsonEnd = analysisText.lastIndexOf('}');
 
       if (jsonStart === -1 || jsonEnd === -1) {
-        throw new Error('No JSON found in Ollama response');
+        throw new Error('No JSON found in response');
       }
 
       const jsonString = analysisText.substring(jsonStart, jsonEnd + 1);
@@ -178,52 +304,86 @@ export default function ResumeAnalyzer() {
 
       setAnalysis(parsedAnalysis);
       setAnalyzed(true);
+      setFailureCount(0); // Reset on success
     } catch (err) {
       console.error('Analysis error:', err);
       console.error('Error type:', err.constructor.name);
       console.error('Error message:', err.message);
 
+      // Categorize error types more precisely
       const isJSONParseError = err instanceof SyntaxError && err.message.includes('JSON');
       const isNetworkError = err.message.includes('fetch') || err.message.includes('network');
       const isEmptyResponse = err.message.includes('No JSON found');
 
-      if (isNetworkError || err.message.includes('Ollama')) {
-        setError(
-          `**Ollama Connection Error**\n\n` +
-          `Cannot connect to Ollama. Please check:\n\n` +
-          `1. Ollama is running: \`ollama serve\`\n` +
-          `2. Ollama is accessible at http://localhost:11434\n` +
-          `3. The selected model is installed: \`ollama pull ${selectedModel}\`\n\n` +
-          `Click "Check Status" button to retry connection.`
-        );
+      if (isNetworkError) {
+        setError('Network error. Please check your connection and try again.');
       } else if (isEmptyResponse) {
+        const newFailureCount = failureCount + 1;
+        setFailureCount(newFailureCount);
+
         setError(
-          `**Analysis Failed - Empty Response**\n\n` +
-          `The model returned an incomplete response. This usually happens when:\n\n` +
-          `1️⃣ **Resume is too complex** - Try a simpler resume or reduce content\n` +
-          `2️⃣ **Model limitations** - Try a different model (Llama 3.1 recommended)\n` +
-          `3️⃣ **Ollama timeout** - The model took too long to respond\n\n` +
+          `**Analysis Failed - Empty Response (Attempt ${newFailureCount})**\n\n` +
+          `The API returned an incomplete response. This usually happens when:\n\n` +
+          `1️⃣ **Resume is too complex** - Too many positions or bullets\n` +
+          `2️⃣ **API timeout** - Processing took too long\n` +
+          `3️⃣ **Model capacity** - Selected model can't handle this resume size\n\n` +
           `**Try these solutions:**\n\n` +
-          `• Switch to Llama 3.1 (most reliable)\n` +
-          `• Reduce resume to 3-4 positions\n` +
-          `• Keep bullets under 200 chars`
+          `📝 **Reduce resume size:**\n` +
+          `   • Remove oldest positions (keep most recent 3-4)\n` +
+          `   • Reduce bullets to 2-3 per position\n` +
+          `   • Remove extra whitespace/formatting\n\n` +
+          `⚡ **Switch to Haiku:**\n` +
+          `   • Faster processing\n` +
+          `   • Better for larger resumes\n` +
+          `   • Uses fewer tokens\n\n` +
+          `🔄 **If problem persists after ${3 - newFailureCount} more attempts:**\n` +
+          `   • Split resume into 2 parts (analyze separately)\n` +
+          `   • Try again later when API is less busy`
         );
       } else if (isJSONParseError) {
-        setError(
-          `**JSON Parsing Failed**\n\n` +
-          `The model response has a syntax error. This can happen with:\n\n` +
-          `• Very long or complex resumes\n` +
-          `• Models that struggle with JSON formatting\n\n` +
-          `**Try these solutions:**\n\n` +
-          `1. **Switch to Llama 3.1** (best JSON accuracy)\n` +
-          `2. **Simplify resume:**\n` +
-          `   • Remove oldest positions\n` +
-          `   • Keep 2-3 bullets per position\n` +
-          `   • Limit to 4-5 positions maximum\n` +
-          `3. **Try again** - Sometimes models produce better output on retry`
-        );
+        const newFailureCount = failureCount + 1;
+        setFailureCount(newFailureCount);
+
+        // Extract position info if available
+        const positionMatch = err.message.match(/position (\d+)/);
+        const errorPosition = positionMatch ? parseInt(positionMatch[1]) : null;
+
+        if (newFailureCount < 3) {
+          setError(
+            `**JSON Parsing Failed (Attempt ${newFailureCount}/3)**\n\n` +
+            `The AI-generated response has a syntax error${errorPosition ? ` around character ${errorPosition}` : ''}. This happens when the model makes a mistake formatting the analysis.\n\n` +
+            `**Most likely cause:** Resume too complex for this model\n\n` +
+            `**What to try:**\n` +
+            `1. **Switch to Haiku** (most reliable for resumes)\n` +
+            `2. **Simplify your resume:**\n` +
+            `   • Remove oldest positions\n` +
+            `   • Keep bullets under 200 chars\n` +
+            `   • 2-3 bullets per position max\n` +
+            `3. Wait 10-15 seconds and retry\n\n` +
+            `💡 Haiku is faster and makes fewer JSON errors than Sonnet/Opus`
+          );
+        } else {
+          setError(
+            `**After 3 attempts, this appears to be a persistent issue.**\n\n` +
+            `**Resume Length Guidelines:**\n` +
+            `• Target: 350-500 words total\n` +
+            `• Maximum: 3 bullets per position\n` +
+            `• Limit: 4-5 positions maximum\n\n` +
+            `**Your Options:**\n\n` +
+            `1️⃣ **Significantly reduce resume size:**\n` +
+            `   • Keep only 3 most recent positions\n` +
+            `   • 2 bullets per position maximum\n\n` +
+            `2️⃣ **Use Haiku model:**\n` +
+            `   • Better handling of complex resumes\n` +
+            `   • Faster processing\n\n` +
+            `3️⃣ **Split into 2 parts:**\n` +
+            `   • Part 1: Positions 1-2 only\n` +
+            `   • Part 2: Positions 3-4 only\n` +
+            `   • Analyze separately`
+          );
+        }
       } else {
-        setError(`**Unexpected Error**\n\n${err.message}\n\nPlease try again or switch models.`);
+        setError(`**Unexpected Error**\n\n${err.message}\n\nPlease report this error if it persists.`);
       }
     } finally {
       setLoading(false);
@@ -253,11 +413,11 @@ Total Jobs: ${analysis.positions.length}
   <dates>${p.dates}</dates>
   <duration>${p.duration}</duration>
   <seniority>${p.seniority}</seniority>
-
+  
   <bullets>
 ${p.bullets.map(b => `    <bullet>${b.text}</bullet>`).join('\n')}
   </bullets>
-
+  
   <hard_skills>${p.skillsHard.join(', ')}</hard_skills>
   <soft_skills>${p.skillsSoft.join(', ')}</soft_skills>
 </position>
@@ -268,7 +428,7 @@ ${p.bullets.map(b => `    <bullet>${b.text}</bullet>`).join('\n')}
       // Markdown format
       content = `# Job History Summary
 
-**Generated:** ${timestamp}
+**Generated:** ${timestamp}  
 **Total Positions:** ${analysis.positions.length}
 
 ---
@@ -277,9 +437,9 @@ ${p.bullets.map(b => `    <bullet>${b.text}</bullet>`).join('\n')}
       analysis.positions.forEach(p => {
         content += `## ${p.inferredTitle}
 
-**Company:** ${p.company}
-**Dates:** ${p.dates}
-**Duration:** ${p.duration}
+**Company:** ${p.company}  
+**Dates:** ${p.dates}  
+**Duration:** ${p.duration}  
 **Seniority:** ${p.seniority}
 
 ### Key Responsibilities
@@ -288,7 +448,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
 
 ### Skills Demonstrated
 
-**Hard Skills:** ${p.skillsHard.join(', ')}
+**Hard Skills:** ${p.skillsHard.join(', ')}  
 **Soft Skills:** ${p.skillsSoft.join(', ')}
 
 ---
@@ -337,78 +497,40 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
     };
   };
 
-  // Filter models to only show ones that are actually installed
-  // Handle Ollama's :latest tag - treat "model" and "model:latest" as the same
-  const displayModels = models.filter(model => {
-    if (availableModels.length === 0) return true;
-
-    // Check exact match first
-    if (availableModels.includes(model.id)) return true;
-
-    // If model.id doesn't have a tag, check if model:latest exists
-    if (!model.id.includes(':')) {
-      return availableModels.includes(`${model.id}:latest`);
-    }
-
-    return false;
-  });
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Session Warning Banner - adapted for Ollama */}
+        {/* Session Warning Banner */}
         <div className="bg-amber-900/40 border border-amber-700 rounded-lg p-4 mb-8">
           <p className="text-amber-100">
             💾 <span className="font-semibold">Remember:</span> This tool only exists in your current Claude session. Your resume data is not saved anywhere. Download or save anything you want to keep before you close this chat!
           </p>
         </div>
 
-        {/* Ollama Status Display - matching Token Usage style from original */}
+        {/* Token Usage Display - v6.5.4 Added both Free/Pro tiers */}
         <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 mb-8">
-          <div className={`flex items-center justify-between ${ollamaStatus === 'connected'
-            ? 'text-green-400'
-            : ollamaStatus === 'disconnected'
-              ? 'text-red-400'
-              : 'text-blue-400'
-            }`}>
-            <div className="flex items-center gap-3">
-              {ollamaStatus === 'connected' && (
-                <>
-                  <CheckCircle className="w-5 h-5" />
-                  <div>
-                    <div className="text-white font-medium mb-1">Local Development Mode - Ollama</div>
-                    <div className="text-slate-400 text-sm">
-                      {availableModels.length} model{availableModels.length !== 1 ? 's' : ''} available • Unlimited usage
-                    </div>
-                  </div>
-                </>
-              )}
-              {ollamaStatus === 'disconnected' && (
-                <>
-                  <AlertCircle className="w-5 h-5" />
-                  <div>
-                    <div className="text-white font-medium mb-1">Ollama Not Running</div>
-                    <div className="text-slate-400 text-sm">
-                      Start Ollama with: <code className="bg-slate-900/50 px-2 py-1 rounded">ollama serve</code>
-                    </div>
-                  </div>
-                </>
-              )}
-              {ollamaStatus === 'checking' && (
-                <>
-                  <Loader className="w-5 h-5 animate-spin" />
-                  <div className="text-white font-medium">Checking Ollama status...</div>
-                </>
-              )}
-            </div>
-            <button
-              onClick={checkOllamaStatus}
-              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm transition flex items-center gap-2"
-            >
-              <RefreshCw className="w-4 h-4" />
-              Check Status
-            </button>
+          <div className="flex items-center gap-2 text-white font-medium mb-2">
+            <BarChart3 className="w-5 h-5 text-blue-400" />
+            Token Usage
           </div>
+          <div className="flex items-baseline gap-2 mb-2">
+            <span className="text-slate-300">Estimated Available:</span>
+            <span className="text-green-400 font-semibold text-lg">~500,000 tokens</span>
+          </div>
+          <div className="grid grid-cols-2 gap-4 text-sm mb-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+              <span className="text-slate-400">Free: 500K / 5-hour window</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+              <span className="text-slate-400">Pro: 2.5M / 5-hour window</span>
+            </div>
+          </div>
+          <p className="text-slate-500 text-xs flex items-center gap-1">
+            <Info className="w-3 h-3" />
+            Token balance is approximate. Actual usage tracked by Claude across all features.
+          </p>
         </div>
 
         <div className="mb-12">
@@ -443,91 +565,129 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               <label className="block text-white font-medium mb-2">Paste Your Resume</label>
               <textarea
                 value={resumeText}
-                onChange={(e) => setResumeText(e.target.value)}
+                onChange={(e) => {
+                  setResumeText(e.target.value);
+                  setFailureCount(0); // Reset failure count when user edits
+                }}
                 placeholder="Paste your complete resume here..."
                 className="w-full h-48 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
               />
             </div>
 
-            {/* Model Selection */}
+            {/* Model Selection with Token Guidance */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
                 <label className="text-white font-medium">
                   Select Model <span className="text-red-400">*</span>
                 </label>
-                {availableModels.length > 0 && (
-                  <span className="text-slate-400 text-sm">
-                    {displayModels.length} of {models.length} configured models available
-                  </span>
-                )}
+                <button
+                  onClick={() => setShowTokenInfo(!showTokenInfo)}
+                  type="button"
+                  className="text-slate-400 hover:text-slate-300 text-sm flex items-center gap-1 transition"
+                >
+                  <Info className="w-4 h-4" />
+                  Token usage info
+                </button>
               </div>
+
+              {/* Collapsible Token Info */}
+              {showTokenInfo && (
+                <div className="mb-3 p-4 bg-blue-900/20 border border-blue-700 rounded-lg text-sm">
+                  <p className="font-semibold text-blue-300 mb-3 flex items-center gap-2">
+                    <Info className="w-4 h-4" />
+                    Token Usage Guide
+                  </p>
+                  <div className="space-y-2 text-slate-300">
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400">⚡</span>
+                      <div>
+                        <strong className="text-white">Haiku:</strong> Uses fewest tokens (~3K per analysis)
+                        <br />
+                        <span className="text-xs text-slate-400">Best for: Short resumes (1-3 positions), quick analysis</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400">🎯</span>
+                      <div>
+                        <strong className="text-white">Sonnet:</strong> Moderate tokens (~5K per analysis)
+                        <br />
+                        <span className="text-xs text-slate-400">Best for: Most resumes (3-6 positions), balanced quality</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-blue-400">⭐</span>
+                      <div>
+                        <strong className="text-white">Opus:</strong> Most tokens (~8K per analysis)
+                        <br />
+                        <span className="text-xs text-slate-400">Best for: Complex resumes (6+ positions), maximum quality (Pro only)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-blue-700">
+                    <p className="text-slate-300 text-xs font-medium mb-2">Token Limits:</p>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+                        <span className="text-slate-400">Free: 500K / 5-hour window</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                        <span className="text-slate-400">Pro: 2.5M / 5-hour window</span>
+                      </div>
+                    </div>
+                    <p className="text-slate-400 text-xs mt-2">
+                      💡 <strong>Multi-phase tip:</strong> Using Phase 2/3 later? Start with Haiku or Sonnet to conserve tokens.
+                    </p>
+                  </div>
+                </div>
+              )}
 
               <select
                 value={selectedModel}
                 onChange={(e) => {
                   setSelectedModel(e.target.value);
+                  setModelError('');
                   setError('');
                 }}
-                disabled={ollamaStatus !== 'connected'}
                 className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
               >
                 <option value="">Choose a model...</option>
-                {displayModels.map(model => (
+                {models.map(model => (
                   <option key={model.id} value={model.id}>
                     {model.name} - {model.desc}
                   </option>
                 ))}
               </select>
 
+              {/* Simplified help text - always visible */}
               <p className="text-slate-400 text-sm mt-2">
-                💡 {displayModels.find(m => m.recommended)?.name || 'Llama 3.1'} is recommended for best results.
-                All models run locally and are free.
+                💡 Not sure? Sonnet works great for most resumes. Click "Token usage info" above for details.
               </p>
-
-              {availableModels.length > 0 && displayModels.length < models.length && (
-                <details className="mt-3">
-                  <summary className="cursor-pointer p-3 bg-slate-700/50 border border-slate-600 rounded-lg text-sm text-slate-400 hover:bg-slate-700 transition">
-                    <span className="font-medium">ℹ️ {models.length - displayModels.length} additional model{models.length - displayModels.length !== 1 ? 's' : ''} available (click to install)</span>
-                  </summary>
-                  <div className="mt-2 p-3 bg-slate-700/50 border border-slate-600 rounded-lg text-sm">
-                    <p className="text-slate-300 text-xs mb-2">
-                      Install these models to expand your options:
-                    </p>
-                    <div className="space-y-1">
-                      {models
-                        .filter(m => !availableModels.includes(m.id))
-                        .map(m => (
-                          <code key={m.id} className="block bg-slate-900/50 px-2 py-1 rounded text-blue-400 text-xs">
-                            ollama pull {m.id}
-                          </code>
-                        ))
-                      }
-                    </div>
-                  </div>
-                </details>
-              )}
             </div>
+
+            {/* Model Error Display */}
+            {modelError && (
+              <div className="mb-6 p-4 bg-yellow-900/30 border border-yellow-700 rounded-lg flex gap-3">
+                <AlertCircle className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-yellow-300 font-semibold">Model Access Issue</p>
+                  <p className="text-yellow-200 text-sm">{modelError}</p>
+                </div>
+              </div>
+            )}
 
             {error && (
               <div className="mb-6 p-4 bg-red-900/30 border border-red-700 rounded-lg flex gap-3">
                 <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div className="flex-1 text-red-300 text-sm whitespace-pre-wrap">
                   {error.split('\n').map((line, i) => {
+                    // Handle bold text **text**
                     const parts = line.split(/(\*\*.*?\*\*)/g);
                     return (
                       <p key={i} className={i > 0 ? 'mt-1' : ''}>
                         {parts.map((part, j) => {
                           if (part.startsWith('**') && part.endsWith('**')) {
                             return <strong key={j} className="text-red-200 font-semibold">{part.slice(2, -2)}</strong>;
-                          }
-                          // Handle inline code
-                          if (part.includes('`')) {
-                            return part.split(/(`[^`]+`)/g).map((segment, k) => {
-                              if (segment.startsWith('`') && segment.endsWith('`')) {
-                                return <code key={k} className="bg-slate-900/50 px-1 py-0.5 rounded text-red-200">{segment.slice(1, -1)}</code>;
-                              }
-                              return <span key={k}>{segment}</span>;
-                            });
                           }
                           return <span key={j}>{part}</span>;
                         })}
@@ -547,9 +707,8 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                     {debugMode && (
                       <div className="mt-2 p-2 bg-slate-900/50 rounded text-xs font-mono">
                         <p className="text-slate-400">Debug info is logged to browser console (F12)</p>
-                        <p className="text-slate-400 mt-1">Check Console tab for detailed response</p>
-                        <p className="text-slate-400 mt-1">Ollama status: {ollamaStatus}</p>
-                        <p className="text-slate-400 mt-1">Selected model: {selectedModel || 'none'}</p>
+                        <p className="text-slate-400 mt-1">Check Console tab for detailed API response</p>
+                        <p className="text-slate-400 mt-1">Failure count: {failureCount}</p>
                       </div>
                     )}
                   </div>
@@ -559,18 +718,12 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
 
             <button
               onClick={analyzeResume}
-              disabled={loading || !selectedModel || ollamaStatus !== 'connected'}
-              className={`w-full ${!selectedModel || ollamaStatus !== 'connected'
+              disabled={loading || !selectedModel}
+              className={`w-full ${!selectedModel
                 ? 'bg-slate-600 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700'
                 } disabled:bg-slate-600 text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2`}
-              title={
-                !selectedModel
-                  ? 'Please select a model first'
-                  : ollamaStatus !== 'connected'
-                    ? 'Ollama is not connected'
-                    : ''
-              }
+              title={!selectedModel ? 'Please select a model first' : ''}
             >
               {loading && <Loader className="w-5 h-5 animate-spin" />}
               {loading ? 'Analyzing Resume...' : 'Analyze Resume'}
@@ -584,13 +737,9 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
           </div>
         )}
 
-        {/* Analysis Results - Same as original, but with analysis data */}
         {analyzed && analysis && (
           <>
-            {/* All the analysis display code from the original component */}
-            {/* I'll include the key sections but keep it manageable */}
-
-            {/* Section 1: Hiring Manager Perspective */}
+            {/* Section 1: Hiring Manager Perspective Preamble */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
               <h2 className="text-2xl font-semibold text-white mb-6">Hiring Manager Perspective</h2>
               <div className="bg-slate-700 rounded-lg p-6">
@@ -915,6 +1064,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                             <div className="space-y-4">
                               {position.bullets.map((bullet, idx) => (
                                 <div key={idx} className="bg-slate-700 rounded-lg p-4">
+                                  {/* v6.5.4 Issue #28 Fix: Removed duplicate verb badge - verb shown in audit table only */}
                                   <div className="flex items-start gap-3 mb-3">
                                     <span className={bullet.hasMetrics ? 'text-green-400' : 'text-slate-500'}>
                                       {bullet.hasMetrics ? '✓' : '-'}
@@ -1005,7 +1155,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                             <h4 className="text-white font-semibold mb-2">Position Summary:</h4>
                             <div className="text-sm text-slate-300 space-y-1">
                               <p>Total bullets: {position.bullets.length} | With metrics: {position.bullets.filter(b => b.hasMetrics).length} ({Math.round((position.bullets.filter(b => b.hasMetrics).length / position.bullets.length) * 100)}%)</p>
-                              {position.confidence && <p>Confidence: {position.confidence}</p>}
+                              <p>Confidence: {position.confidence}</p>
                             </div>
                           </div>
                         </div>
