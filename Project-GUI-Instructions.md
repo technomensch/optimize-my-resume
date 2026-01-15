@@ -37,6 +37,15 @@
   </modular_reference_behavior>
 </path_resolution>
 
+<issue_tracking_guide>
+  <instruction>
+    If you encounter an error or bug during this session:
+    1. Ask me to "Log this as an issue".
+    2. I will generate an Issue Report using the `docs/templates/issue_template.md` format.
+    3. You can then copy-paste this report to your tracking system or `docs/discovered_issues.md`.
+  </instruction>
+</issue_tracking_guide>
+
 <!-- v8.4.2 Change: Added upload guide for modular Claude usage -->
 <upload_guide>
   <minimum_setup>

@@ -38,6 +38,19 @@
   </modular_reference_behavior>
 </path_resolution>
 
+<issue_tracking_workflow>
+  <local_environment>
+     - Use GitHub CLI: `gh issue create`
+     - Or use GitHub Web UI to log issues
+  </local_environment>
+
+  <claude_web_interface>
+     - Create or update `docs/discovered_issues.md` in the chat context
+     - OR ask Claude to generate an "Issue Report" block using `docs/templates/issue_template.md`
+     - Copy-paste the report to your external tracking system
+  </claude_web_interface>
+</issue_tracking_workflow>
+
 <upload_guide>
   <minimum_setup>
     For full functionality, upload ONE of:
