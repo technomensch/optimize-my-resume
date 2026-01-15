@@ -99,4 +99,39 @@ This module contains high-precision rules for impact quantification, portfolio s
   </examples>
 </rule>
 
+<!-- SILENT SYNC: Automatic Clean Output for Copy-Paste -->
+<rule id="automatic_final_output">
+  <priority>CRITICAL</priority>
+  <trigger>At the end of Bullet Optimization (Phase 2) or Job Fit Analysis (Phase 3)</trigger>
+  <trigger_keyword>automatic_plain_text_export</trigger_keyword>
+  
+  <instruction>
+    Your PRIMARY output for the final result must be a clean, copy-paste ready block of text.
+    STOP completely after generating this block.
+    Do NOT ask "What would you like to do next?" immediately.
+    Do NOT display metadata tags (e.g., [Category], [Score], ✓) in this final block.
+  </instruction>
+
+  <format>
+    ### ✨ Final Optimized Bullets (Copy & Paste)
+    
+    [Position Name]
+    • [Clean Bullet 1 text without badges]
+    • [Clean Bullet 2 text without badges]
+    • [Clean Bullet 3 text without badges]
+    
+    ( Repeat for other positions if applicable )
+  </format>
+
+  <next_steps_logic>
+    AFTER displaying the clean block, add a small footer:
+    
+    ---
+    options:
+    1. Show detailed analysis (metrics, reasoning, & confidence scores)
+    2. Optimize another bullet
+    3. Return to main menu
+  </next_steps_logic>
+</rule>
+
 </bullet_generation_rules>

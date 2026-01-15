@@ -232,11 +232,12 @@
 
   <automatic_plain_text_export> <!-- v6.1.10 Change: Added automatic plain text file generation -->
     <priority>high</priority>
-    <trigger>After automatic_quality_gate passes and all bullets finalized</trigger>
+    <priority>high</priority>
+    <trigger>After automatic_quality_gate passes and all bullets finalized (Phase 2 & 3)</trigger>
 
     <instruction>
-      Automatically generate a plain text export file after quality validation passes.
-      This provides users with clean, copy-paste ready bullets without markdown formatting.
+      Automatically generate a clean, copy-paste ready block of text as the PRIMARY output.
+      This serves Phase 2 (Bullet Optimizer) and Phase 3 (Job Fit Analyzer).
     </instruction>
 
     <step_1_verify_chronological_order> <!-- v6.1.11 Change: Added chronological order verification -->

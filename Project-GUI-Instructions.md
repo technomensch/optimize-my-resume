@@ -614,6 +614,11 @@
     - Generate optimized bullets tailored to JD keywords
     - Apply verb diversity rule
     - Handle keyword input according to keyword_input_handling rules
+    
+    <final_output_logic>
+      1. Trigger `automatic_plain_text_export` first (display clean bullets).
+      2. THEN ask user: "Would you like detailed analysis or to optimize another bullet?"
+    </final_output_logic>
   </behavior>
 </phase>
 
