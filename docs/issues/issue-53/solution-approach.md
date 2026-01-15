@@ -1,43 +1,97 @@
 # Issue #53 - Solution Approach
 
-**Last Updated:** 2026-01-15
+**Last Updated:** 2026-01-15 (Detailed)
+**Branch:** `v8.4.5-analyzer-updates`
 
 ---
 
-## Changes Required
-
-### 1. Local Analyzer Updates
+## 1. Local Analyzer Updates
 **File:** `src/components/ResumeAnalyzer-local.jsx`
 
-*   **Terminology:** Header changed from "Phase 1: Resume Analyzer" to "Resume Analyzer".
-*   **Version:** Add `v8.4.2` badge to header.
-*   **Portfolio:** Append `(Independent Project)` to Company details if title contains "Project".
-*   **Cleanup:** Remove "Section X:" prefixes.
+### A. Terminology & Versioning (Header)
+**Location:** Around line 416
+**Change:** Update H1 to remove "Phase 1" and add v8.4.2 badge.
 
 ```javascript
-/* Exact Code Changes Detailed in Plan v8.4.5-analyzer-updates.md */
-// Header Change:
-// <h1 ...>Resume Analyzer <span className="text-sm bg-blue-600...">v8.4.2</span></h1>
+// [OLD]
+<h1 className="text-4xl font-bold text-white mb-2">Phase 1: Resume Analyzer</h1>
 
-// Portfolio Logic:
-// const isPortfolio = position.title.toLowerCase().includes('project');
-// <h3 ...>{position.company} {isPortfolio && <span className="text-gray-400 text-sm">(Independent Project)</span>}</h3>
+// [NEW]
+<h1 className="text-4xl font-bold text-white mb-2">
+  Resume Analyzer 
+  <span className="text-sm bg-blue-600 text-white px-2 py-1 rounded-full align-middle ml-2">v8.4.2</span>
+</h1>
 ```
 
-### 2. WebGUI Artifact Updates
-**File:** `claude-artifacts/ResumeAnalyze-webgui.jsx`
+### B. Portfolio Labeling Logic
+**Location:** Inside `analysis.positions.map((position) => { ... })` function (around line 1000).
+**Change:**
+1.  Define `isPortfolio` check at start of map function.
+2.  Add `(Independent Project)` label to Company display.
 
-*   **Export:** Rename default export to `ResumeAnalyzer`.
-*   **Header:** Aligned with local version.
-*   **Tips:** Remove "Phase 2/3" reference from multi-phase tip.
+```javascript
+// 1. Inside map function (start):
+const isPortfolio = position.title.toLowerCase().includes('project');
+
+// 2. In Company display (around line 863):
+// [OLD]
+// <p><span className="font-semibold">Company:</span> {position.company}</p>
+
+// [NEW]
+<p>
+  <span className="font-semibold">Company:</span> {position.company}
+  {isPortfolio && <span className="text-gray-400 text-sm ml-2">(Independent Project)</span>}
+</p>
+```
+
+### C. UI Cleanup (Remove Comments)
+**Location:** Throughout file.
+**Change:** Remove outdated "Section X:" comments to avoid confusion.
+- Remove: `{/* Section 1: Hiring Manager Perspective */}`
+- Remove: `{/* Section 2: Executive Summary */}`
+- Remove: `{/* Section 3: Overall Statistics */}`
+- Remove: `{/* Section 4: Prioritized Repairs Summary */}`
+- Remove: `{/* Section 5: Position-by-Position Analysis */}`
+- Remove: `{/* Section 6: Job History Export */}`
 
 ---
 
-## Files to Modify
-1. `src/components/ResumeAnalyzer-local.jsx`
-2. `claude-artifacts/ResumeAnalyze-webgui.jsx`
+## 2. WebGUI Artifact Updates
+**File:** `claude-artifacts/ResumeAnalyzer-webgui.jsx`
 
-## Estimated Time
-- Development: 1 hour
-- Testing: 0.5 hours
-- **Total:** 1.5 hours
+### A. Terminology & Versioning (Header)
+**Location:** Around line 537
+**Change:** Align with local analyzer.
+
+```javascript
+// [OLD]
+<h1 className="text-4xl font-bold text-white mb-2">Phase 1: Resume Analyzer</h1>
+
+// [NEW]
+<h1 className="text-4xl font-bold text-white mb-2">
+  Resume Analyzer 
+  <span className="text-sm bg-blue-600 text-white px-2 py-1 rounded-full align-middle ml-2">v8.4.2</span>
+</h1>
+```
+
+### B. Portfolio Labeling Logic
+**Location:** Inside `analysis.positions.map` (around line 995).
+**Change:**
+
+```javascript
+// 1. Inside map function:
+const isPortfolio = position.title.toLowerCase().includes('project');
+
+// 2. In Company display (around line 1011):
+// [OLD]
+// <p><span className="font-semibold">Company:</span> {position.company}</p>
+
+// [NEW]
+<p>
+  <span className="font-semibold">Company:</span> {position.company}
+  {isPortfolio && <span className="text-gray-400 text-sm ml-2">(Independent Project)</span>}
+</p>
+```
+
+### C. UI Cleanup
+**Change:** Remove the same "Section X:" comments as in the local analyzer to keep code clean.
