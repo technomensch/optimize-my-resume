@@ -3854,8 +3854,9 @@
       <steps>
         1. Identify or create a GitHub Issue (gh issue create).
         2. Establish a dedicated feature/patch branch.
-        3. Update ROADMAP.md and CHANGELOG.md status.
-        4. Save implementation plan to docs/plans/[branch-name].md.
+        3. [MANDATORY] Create Draft PR immediately to link branch to issue (gh pr create --draft).
+        4. Update ROADMAP.md and CHANGELOG.md status.
+        5. Save implementation plan to docs/plans/[branch-name].md.
       </steps>
     </guardrail>
     <!-- END SILENT SYNC: Governance Guardrails -->

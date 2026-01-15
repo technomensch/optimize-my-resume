@@ -235,6 +235,7 @@ cp .claude/skills/*.md ~/.claude/commands/   # Install skills
 *   **Local Git Repository:**
     1.  `gh issue create --title "..." --body "..."`
     2.  `git checkout -b [version]-[slug]`
+    3.  `gh pr create --draft --body "Closes #..."` (Mandatory to link branch)
 
 *   **Claude Web Interface:**
     1.  Create/Update `docs/discovered_issues.md` (or ask Claude to generate an Issue Report block).
