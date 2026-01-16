@@ -1,11 +1,11 @@
-# Optimize-My-Resume System v8.4.3 (GUI Instructions)
+# Optimize-My-Resume System v8.5.1 (GUI Instructions)
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 8.4.3 (January 13, 2026)                                          --> 
-<!-- v8.4.3 Release: Updated artifact/modular file names with prefixes         -->
-<!-- Last Updated: January 13, 2026                                             -->
+<!-- Version: 8.5.1 (January 16, 2026)                                          -->
+<!-- v8.5.1 Release: Issue #56 - Resume Analyzer Report UX Enhancement         -->
+<!-- Last Updated: January 16, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 
@@ -281,11 +281,11 @@
           </sub_section>
         </section>
 
-        <section id="2" name="Hiring Manager Perspective">
-          <reference>Implement per hiring_manager_perspective_rules</reference>
-          - Display inferred title, confidence, and reasoning for each position.
-          - Display auto-generated job history summary (job history creation) for each position (per job_history_summary_generation_rules).
-          - Format: <position_structure><position id="N">...content...</position></position_structure>
+        <section id="2" name="Resume Narrative Analysis">
+          <reference>Implement per resume_narrative_analysis_rules</reference>
+          - Display holistic career narrative analysis (primary identity, career arc, narrative strength).
+          - Display auto-generated job history summary (job history creation) for each position (per job_history_summary_display_rules).
+          - Format: Holistic analysis section followed by position-by-position breakdowns with collapse/expand functionality.
         </section>
 
         <section id="3" name="Job History Export">
@@ -897,7 +897,10 @@
   <component name="bullet_color_coding_rules" />
   <component name="bullet_metrics_detection_rules" />
   <component name="bullet_display_and_grouping_rules" />
-  <component name="hiring_manager_perspective_rules" />
+  <component name="quick_action_checklist_rules" />
+  <component name="overall_grade_display" />
+  <component name="resume_narrative_analysis_rules" />
+  <component name="job_history_summary_display_rules" />
   <component name="job_history_summary_generation_rules" />
   <component name="job_history_export_functionality" />
   <component name="per_bullet_audit_rules" />
