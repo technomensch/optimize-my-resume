@@ -195,7 +195,6 @@ Identify these repair types:
       "company": "Company Name",
       "dates": "Jan 2020 - Dec 2021",
       "duration": "2 years",
-      "inferredTitle": "Inferred Job Title",
       "seniority": "Senior",
       "reasoning": "Brief: why this title, what scope shows (max 100 chars)",
       "skillsHard": ["skill1", "skill2"],
@@ -408,7 +407,7 @@ Total Jobs: ${analysis.positions.length}
 `;
       analysis.positions.forEach(p => {
         content += `<position id="${p.id}">
-  <job_title>${p.inferredTitle}</job_title>
+  <job_title>${p.title}</job_title>
   <company>${p.company}</company>
   <dates>${p.dates}</dates>
   <duration>${p.duration}</duration>
@@ -435,7 +434,7 @@ ${p.bullets.map(b => `    <bullet>${b.text}</bullet>`).join('\n')}
 
 `;
       analysis.positions.forEach(p => {
-        content += `## ${p.inferredTitle}
+        content += `## ${p.title}
 
 **Company:** ${p.company}  
 **Dates:** ${p.dates}  
@@ -1006,10 +1005,10 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <h3 className="text-lg font-semibold text-white mb-2">
-                              Position {position.id}: "For this position, I think your job title might have been {position.inferredTitle}"
+                              Position {position.id}
                             </h3>
                             <div className="text-sm text-slate-300 space-y-1">
-                              <p><span className="font-semibold">Inferred Title:</span> {position.inferredTitle}</p>
+                              {/* Inferred title removed - narrative analysis provides holistic guidance */}
                               <p>
                                 <span className="font-semibold">Company:</span> {position.company}
                                 {isPortfolio && <span className="text-gray-400 text-sm ml-2">(Independent Project)</span>}
