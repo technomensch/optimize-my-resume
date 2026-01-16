@@ -247,11 +247,13 @@ Overall Grade = (ATS Format * 0.25) + (Content Quality * 0.35) +
 - `claude-artifacts/ResumeAnalyzer-webgui.jsx` (lines 740-1168)
   - Add new state variables: narrativeAnalysis, expandedJobHistories, overallGrade, quickActions
   - Add new functions: toggleJobHistory, calculateOverallGrade, generateQuickActions
+  - Remove `position.inferred` field display (no longer generated in JSON)
   - Update JSON prompt structure for v6.6.0
   - Add version header per Rule 3
 
 - `src/components/ResumeAnalyzer-local.jsx` (lines 593-1018)
   - Mirror ALL changes from webgui (maintain feature parity)
+  - Remove `position.inferred` field display
   - Add version header per Rule 3
 
 ### Supporting Documentation

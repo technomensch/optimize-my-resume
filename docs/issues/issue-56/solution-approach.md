@@ -75,6 +75,12 @@ The Resume Analyzer report is too verbose and repetitive, causing:
 </hiring_manager_perspective_rules>
 ```
 
+**Data Structure Changes:**
+- **Remove `inferred` field** from position objects in analysis JSON
+  - Currently: `position.inferred` contains the AI-inferred job title
+  - Rationale: No longer needed since per-position title inference is being replaced with holistic narrative analysis
+  - Affects: Both `.jsx` files (UI display) and prompt instructions (JSON generation)
+
 **New Section:**
 ```xml
 <resume_narrative_analysis_rules>
