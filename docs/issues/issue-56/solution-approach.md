@@ -76,16 +76,82 @@ The Resume Analyzer report is too verbose and repetitive, causing:
 ```
 
 **Data Structure Changes:**
-- **Remove `inferred` field** from position objects in analysis JSON
-  - Currently: `position.inferred` contains the AI-inferred job title
+- **Remove `inferredTitle` field** from position objects in analysis JSON
+  - Currently: `position.inferredTitle` contains the AI-inferred job title
   - Rationale: No longer needed since per-position title inference is being replaced with holistic narrative analysis
   - Affects: Both `.jsx` files (UI display) and prompt instructions (JSON generation)
+
+**Exact Code Changes for `inferredTitle` Removal:**
+
+#### Location 1: Position Card Header
+**File:** `claude-artifacts/ResumeAnalyzer-webgui.jsx` (lines 1008-1012)
+
+**REMOVE:**
+```jsx
+<h3 className="text-lg font-semibold text-white mb-2">
+  Position {position.id}: "For this position, I think your job title might have been {position.inferredTitle}"
+</h3>
+<div className="text-sm text-slate-300 space-y-1">
+  <p><span className="font-semibold">Inferred Title:</span> {position.inferredTitle}</p>
+```
+
+**REPLACE WITH:**
+```jsx
+<h3 className="text-lg font-semibold text-white mb-2">
+  Position {position.id}
+</h3>
+<div className="text-sm text-slate-300 space-y-1">
+  {/* Inferred title removed - narrative analysis provides holistic guidance */}
+```
+
+#### Location 2: JSON Prompt Schema
+**File:** `claude-artifacts/ResumeAnalyzer-webgui.jsx` (line 198)
+
+**REMOVE:**
+```javascript
+"inferredTitle": "Inferred Job Title",
+```
+
+#### Location 3: XML Export
+**File:** `claude-artifacts/ResumeAnalyzer-webgui.jsx` (line 411)
+
+**CHANGE FROM:**
+```javascript
+<job_title>${p.inferredTitle}</job_title>
+```
+
+**CHANGE TO:**
+```javascript
+<job_title>${p.title}</job_title>
+```
+
+#### Location 4: Markdown Export
+**File:** `claude-artifacts/ResumeAnalyzer-webgui.jsx` (line 438)
+
+**CHANGE FROM:**
+```javascript
+content += `## ${p.inferredTitle}
+```
+
+**CHANGE TO:**
+```javascript
+content += `## ${p.title}
+```
+
+#### Apply Same Changes to Local Component
+**File:** `src/components/ResumeAnalyzer-local.jsx`
+- Apply ALL four changes above (maintain feature parity)
 
 **New Section:**
 ```xml
 <resume_narrative_analysis_rules>
   <priority>HIGH</priority>
-  <applies_to>Phase 1 Resume Analysis - After Executive Summary</applies_to>
+  <applies_to>Resume Analysis - After Executive Summary</applies_to>
+
+  <terminology_note>
+    IMPORTANT: Do NOT use "Phase 1" terminology (removed in Issue #55).
+    Use "Resume Analysis" or "Resume Analyzer" instead.
+  </terminology_note>
 
   <purpose>
     Analyze the resume holistically to answer:
