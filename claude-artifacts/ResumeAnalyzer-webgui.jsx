@@ -739,7 +739,6 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
 
         {analyzed && analysis && (
           <>
-            {/* Section 1: Hiring Manager Perspective Preamble */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
               <h2 className="text-2xl font-semibold text-white mb-6">Hiring Manager Perspective</h2>
               <div className="bg-slate-700 rounded-lg p-6">
@@ -749,7 +748,6 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               </div>
             </div>
 
-            {/* Section 2: Executive Summary */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
               <h2 className="text-2xl font-semibold text-white mb-6">Executive Summary</h2>
 
@@ -809,7 +807,6 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               </div>
             </div>
 
-            {/* Section 3: Overall Statistics */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
               <h2 className="text-2xl font-semibold text-white mb-6">Overall Statistics</h2>
 
@@ -897,7 +894,6 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               </div>
             </div>
 
-            {/* Section 4: Prioritized Repairs Summary */}
             {analysis.repairsNeeded && analysis.repairsNeeded.length > 0 && (
               <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
                 <h2 className="text-2xl font-semibold text-white mb-6">Prioritized Repairs Summary</h2>
@@ -972,7 +968,6 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               </div>
             )}
 
-            {/* Section 5: Position-by-Position Analysis */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold text-white">Position-by-Position Analysis</h2>
@@ -1166,7 +1161,6 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
               </div>
             </div>
 
-            {/* Section 6: Job History Export */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8">
               <h2 className="text-2xl font-semibold text-white mb-6">Download Your Job History</h2>
 
