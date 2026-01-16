@@ -442,11 +442,11 @@ Lower priority items documented in issue-56-report-ux-enhancement.md sections 6-
 
 All files will increment versions per `docs/prompts/dev/Update_Doc_Prompt.md`:
 
-- **PROJECT-INSTRUCTIONS.md**: v8.4.2 → v8.4.3 (MINOR - new features)
-- **Project-GUI-Instructions.md**: v8.4.3 → v8.4.4 (MINOR - sync with PROJECT)
-- **ra_resume-analyzer-display.md**: Create/add version tracking
-- **ResumeAnalyzer-webgui.jsx**: Add version header per Rule 3
-- **ResumeAnalyzer-local.jsx**: Add version header per Rule 3
+- **PROJECT-INSTRUCTIONS.md**: v8.4.2 → v8.5.1 (MINOR - new features, aligned with branch name)
+- **Project-GUI-Instructions.md**: v8.4.3 → v8.5.1 (MINOR - sync with PROJECT)
+- **ra_resume-analyzer-display.md**: Create/add version tracking (v8.5.1)
+- **ResumeAnalyzer-webgui.jsx**: Add version header per Rule 3 (v8.5.1)
+- **ResumeAnalyzer-local.jsx**: Add version header per Rule 3 (v8.5.1)
 
 ---
 
