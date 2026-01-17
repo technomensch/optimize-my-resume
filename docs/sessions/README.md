@@ -1,8 +1,8 @@
 # Session Summaries Index
 
-**Total Sessions:** 1
-**Last Session:** 2026-01-12
-**Last Updated:** 2026-01-12
+**Total Sessions:** 3
+**Last Session:** 2026-01-16
+**Last Updated:** 2026-01-16
 
 ---
 
@@ -28,7 +28,9 @@ Sessions are organized by month in YYYY-MM/ directories:
 docs/sessions/
 ├── 2026-01/
 │   ├── 2026-01-02_memory-system-design.md
-│   └── 2026-01-02_job-history-updates.md
+│   ├── 2026-01-12_v8-modularization-progress.md
+│   ├── 2026-01-15_workflow-refactor-efficiency.md
+│   └── 2026-01-16_v8.5.3-shadow-sync-completion.md
 ├── 2025-12/
 │   └── ...
 └── template.md
@@ -36,8 +38,10 @@ docs/sessions/
 
 ---
 
-## 2026-01 (0 sessions)
+## 2026-01 (3 sessions)
 
+- [2026-01-16 - v8.5.3 Shadow Sync Completion](2026-01/2026-01-16_v8.5.3-shadow-sync-completion.md) - Fixed PROJECT-INSTRUCTIONS.md references, completed Shadow Sync for Issue #56.
+- [2026-01-15 - Workflow Refactor & Efficiency](2026-01/2026-01-15_workflow-refactor-efficiency.md) - Extracted 9 templates, refactored 4 workflows for < 12KB compliance, created `/doc-update` workflow.
 - [2026-01-12 - v8.x Modularization Progress](2026-01/2026-01-12_v8-modularization-progress.md) - v8.2 completion, v8.x cleanup, branch restoration, v8.3 launch.
 
 ---
@@ -87,4 +91,4 @@ ls docs/sessions/2026-01/
 ---
 
 **Created:** 2026-01-02
-**Last Updated:** 2026-01-02
+**Last Updated:** 2026-01-16

@@ -1,3 +1,8 @@
+// Resume Analyzer - Local React Component Version
+// Version: 8.5.3 (January 16, 2026)
+// Feature: Resume Narrative Analysis with Holistic Career Assessment
+// Last Updated: v8.5.3 - Replaced per-position inference with holistic narrative analysis
+
 import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, FileText, Download, ChevronDown, ChevronUp, Loader, AlertTriangle, XCircle, RefreshCw } from 'lucide-react';
 import OllamaService from '../services/ollamaService';
@@ -413,7 +418,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
 
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-white mb-2">
-            Resume Analyzer <span className="text-sm bg-blue-600 text-white px-2 py-1 rounded-full align-middle ml-2">v8.4.2</span>
+            Resume Analyzer <span className="text-sm bg-blue-600 text-white px-2 py-1 rounded-full align-middle ml-2">v8.5.3</span>
           </h1>
           <p className="text-slate-300 text-lg">Transform your resume into a comprehensive job history database</p>
         </div>
@@ -590,15 +595,121 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
             {/* All the analysis display code from the original component */}
             {/* I'll include the key sections but keep it manageable */}
 
-            {/* Section 1: Hiring Manager Perspective */}
-            <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
-              <h2 className="text-2xl font-semibold text-white mb-6">Hiring Manager Perspective</h2>
-              <div className="bg-slate-700 rounded-lg p-6">
-                <p className="text-slate-200 italic">
-                  "I just read your resume as if I was an external hiring manager or recruiter. I ignored the titles on your resume and wanted to tell you what I interpreted your job title, or titles, was for each position."
-                </p>
+            {/* Section 1: Resume Narrative Analysis */}
+            {analysis.narrativeAnalysis && (
+              <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
+                <h2 className="text-2xl font-semibold text-white mb-6">Resume Narrative Analysis</h2>
+
+                {/* Primary Identity */}
+                <div className="bg-slate-700 rounded-lg p-6 mb-6">
+                  <h3 className="text-white font-semibold mb-3">Primary Identity Detected</h3>
+                  <p className="text-slate-200">{analysis.narrativeAnalysis.primaryIdentity}</p>
+                  <span className="text-sm text-slate-400 mt-2 inline-block">
+                    {analysis.narrativeAnalysis.identityClear ? '✅ CLEAR' : '⚠️ UNCLEAR'}
+                  </span>
+                </div>
+
+                {/* Career Arc */}
+                <div className="bg-slate-700 rounded-lg p-6 mb-6">
+                  <h3 className="text-white font-semibold mb-3">Career Arc</h3>
+                  <p className="text-slate-200">{analysis.narrativeAnalysis.careerArc}</p>
+                  <span className="text-sm text-slate-400 mt-2 inline-block">
+                    {analysis.narrativeAnalysis.arcCohesive ? '✅ COHESIVE' : '⚠️ DISJOINTED'}
+                  </span>
+                </div>
+
+                {/* Narrative Strength Score */}
+                <div className="bg-slate-700 rounded-lg p-6 mb-6">
+                  <h3 className="text-white font-semibold mb-3">Narrative Strength</h3>
+                  <div className="flex items-center gap-4">
+                    <div className="text-3xl font-bold text-blue-400">
+                      {analysis.narrativeAnalysis.narrativeStrength}/100
+                    </div>
+                    <div className="flex-1">
+                      <div className="w-full bg-slate-600 rounded-full h-3">
+                        <div
+                          className="bg-blue-500 h-3 rounded-full transition-all"
+                          style={{ width: `${analysis.narrativeAnalysis.narrativeStrength}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* What's Working */}
+                {analysis.narrativeAnalysis.whatsWorking && (
+                  <div className="bg-green-900/20 border border-green-700 rounded-lg p-6 mb-6">
+                    <h3 className="text-white font-semibold mb-3">✅ What's Working</h3>
+                    <div className="text-slate-200 whitespace-pre-line">
+                      {analysis.narrativeAnalysis.whatsWorking}
+                    </div>
+                  </div>
+                )}
+
+                {/* Confusion Points */}
+                {analysis.narrativeAnalysis.confusionPoints && analysis.narrativeAnalysis.confusionPoints.length > 0 && (
+                  <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-6 mb-6">
+                    <h3 className="text-white font-semibold mb-3">⚠️ Potential Confusion Points</h3>
+                    {analysis.narrativeAnalysis.confusionPoints.map((point, idx) => (
+                      <div key={idx} className="mb-4 last:mb-0">
+                        <h4 className="text-white font-semibold mb-2">{point.title}</h4>
+                        <p className="text-slate-300 mb-1"><strong>The Issue:</strong> {point.issue}</p>
+                        <p className="text-slate-300 mb-1"><strong>The Fix:</strong> {point.fix}</p>
+                        <p className="text-slate-400 text-sm italic">Hiring Manager Question: {point.question}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Role Fit Matrix */}
+                {analysis.narrativeAnalysis.roleFitMatrix && (
+                  <div className="bg-slate-700 rounded-lg p-6 mb-6">
+                    <h3 className="text-white font-semibold mb-3">🎯 Which Roles Will See You As a Strong Fit?</h3>
+
+                    <div className="mb-4">
+                      <h4 className="text-green-400 font-semibold mb-2">Strong Match (90%+ fit):</h4>
+                      <ul className="list-disc list-inside text-slate-200 space-y-1">
+                        {analysis.narrativeAnalysis.roleFitMatrix.strong.map((role, idx) => (
+                          <li key={idx}>{role}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {analysis.narrativeAnalysis.roleFitMatrix.moderate && analysis.narrativeAnalysis.roleFitMatrix.moderate.length > 0 && (
+                      <div className="mb-4">
+                        <h4 className="text-yellow-400 font-semibold mb-2">Moderate Match (70-85% fit):</h4>
+                        <ul className="list-disc list-inside text-slate-200 space-y-1">
+                          {analysis.narrativeAnalysis.roleFitMatrix.moderate.map((role, idx) => (
+                            <li key={idx}>{role}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {analysis.narrativeAnalysis.roleFitMatrix.weak && analysis.narrativeAnalysis.roleFitMatrix.weak.length > 0 && (
+                      <div>
+                        <h4 className="text-red-400 font-semibold mb-2">Weak Match (&lt;60% fit):</h4>
+                        <ul className="list-disc list-inside text-slate-200 space-y-1">
+                          {analysis.narrativeAnalysis.roleFitMatrix.weak.map((role, idx) => (
+                            <li key={idx}>{role}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Strengthening Recommendations */}
+                {analysis.narrativeAnalysis.strengtheningRecommendations && (
+                  <div className="bg-blue-900/20 border border-blue-700 rounded-lg p-6">
+                    <h3 className="text-white font-semibold mb-3">💡 Narrative Strengthening Recommendations</h3>
+                    <div className="text-slate-200 whitespace-pre-line">
+                      {analysis.narrativeAnalysis.strengtheningRecommendations}
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
+            )}
 
             {/* Section 2: Executive Summary */}
             <div className="bg-slate-800 rounded-lg border border-slate-700 p-8 mb-8">
@@ -857,7 +968,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <h3 className="text-lg font-semibold text-white mb-2">
-                              Position {position.id}
+                              Position {position.id}: {position.title}
                             </h3>
                             <div className="text-sm text-slate-300 space-y-1">
                               {/* Inferred title removed - narrative analysis provides holistic guidance */}
@@ -879,11 +990,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
 
                       {isExpanded && (
                         <div className="p-6 bg-slate-800 border-t border-slate-600">
-                          {/* Reasoning */}
-                          <div className="mb-6">
-                            <h4 className="text-white font-semibold mb-2">Why I Think This Was Your Role:</h4>
-                            <p className="text-slate-300">{position.reasoning || position.whyThisRole}</p>
-                          </div>
+                          {/* Reasoning removed - replaced with holistic Resume Narrative Analysis at report level */}
 
                           {/* Skills Demonstrated */}
                           <div className="mb-6 grid grid-cols-2 gap-6">

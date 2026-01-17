@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-02
-**Entries:** 11
+**Last Updated:** 2026-01-16
+**Entries:** 12
 
 ---
 
@@ -13,6 +13,7 @@
 - [Template-Driven Docs](#template-driven-docs) - Standardized document creation
 - [Four-Pillar Memory](#four-pillar-memory) - Multi-system knowledge capture
 - [Category Auto-Detection](#category-auto-detection) - Keyword-based organization
+- [Shadow Sync Protocol](#shadow-sync-protocol) - Three-tier modular synchronization
 - [Silent Sync](#silent-sync) - Preserving gold master integrity
 - [Metric Preservation Guardrail](#metric-preservation-guardrail) - Data integrity audit
 - [Value-Driven User Stories](#value-driven-user-stories) - Benefit-focused requirements
@@ -85,6 +86,37 @@
 
 ---
 
+### Shadow Sync Protocol
+
+**Problem:** Updating modular files in isolation risks incomplete synchronization across different interfaces
+**Solution:** Verify three-tier synchronization is complete: Module ↔ Gold Master ↔ Optimized Entrypoint (works in any direction)
+**When to use:** Before committing changes to `optimization-tools/`, `PROJECT-INSTRUCTIONS.md`, or `Project-GUI-Instructions.md`
+
+**Quick Reference:**
+- **Module** (`optimization-tools/*/`): Source of truth, authoritative rules
+- **Gold Master** (`PROJECT-INSTRUCTIONS.md`): Complete synchronized copy (used by Claude Artifacts)
+- **Optimized Entrypoint** (`Project-GUI-Instructions.md`): Token-efficient version with modular references
+
+**Verification Checklist (works regardless of which tier was edited first):**
+1. Identify which file(s) changed (MODULAR, GOLD MASTER, or OPTIMIZED ENTRYPOINT)
+2. Verify MODULE and GOLD MASTER have identical rule logic
+3. Verify OPTIMIZED ENTRYPOINT correctly references or mirrors GOLD MASTER
+4. Search for ALL terminology variations (exact, lowercase, snake_case, camelCase) across all three tiers
+5. Test with ACTUAL interface (not just assumption) to confirm changes propagate
+
+**Why It Matters:**
+- Different interfaces read from different prompt sources
+- Claude Artifacts uses PROJECT-INSTRUCTIONS.md (Gold Master)
+- Local dev uses inline prompts in .jsx files
+- Incomplete sync across tiers causes user-visible bugs
+- **v8.5.2 Example:** Updated .jsx files but missed PROJECT-INSTRUCTIONS.md → Claude Artifacts still showed old output
+
+**Run verification:** `/enforce-shadow-sync`
+
+**Learn More:** [Shadow Sync Protocol Lesson (v8.5.3)](../lessons-learned/architecture/Shadow_Sync_Protocol_v8.5.3.md)
+
+---
+
 ### Silent Sync
 
 **Problem:** Modularizing core instructions risks breaking the "Gold Master" source of truth
@@ -98,6 +130,8 @@
 - Preserves integrity while saving tokens for users
 
 **See:** [ADR-004](../decisions/ADR-004-shadow-modularization.md)
+
+**Related:** [Shadow Sync Protocol](#shadow-sync-protocol) - The verification framework for Silent Sync implementation
 
 ---
 
