@@ -1,12 +1,19 @@
-# Optimize-My-Resume System v8.5.1
+# Optimize-My-Resume System v8.5.3
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 8.5.1 (January 16, 2026)                                          -->
-<!-- v8.5.1 Release: Issue #56 - Resume Analyzer Report UX Enhancement -->
+<!-- Version: 8.5.3 (January 16, 2026)                                          -->
+<!-- v8.5.3 Release: Patch - Complete Shadow Sync for Issue #56                -->
 <!-- Last Updated: January 16, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
+<!-- ========================================================================== -->
+<!-- VERSION HISTORY                                                            -->
+<!-- v8.5.3 (2026-01-16) - Fixed remaining "Hiring Manager Perspective"         -->
+<!--   - Line 2521: Updated applies_to in job_history_summary_generation_rules -->
+<!--   - Line 2668: Updated applies_to in job_history_export_functionality      -->
+<!--   - Completes Shadow Sync for Issue #56 (v8.5.1/v8.5.2 work)             -->
+<!-- v8.5.1 (2026-01-16) - Issue #56 - Resume Analyzer Report UX Enhancement   -->
 <!-- ========================================================================== -->
 
 <system_maintenance_rule>
@@ -670,11 +677,11 @@
           </sub_section>
         </section>
 
-        <section id="2" name="Hiring Manager Perspective">
-          <reference>Implement per hiring_manager_perspective_rules</reference>
-          - Display inferred title, confidence, and reasoning for each position.
-          - Display auto-generated job history summary (job history creation) for each position (per job_history_summary_generation_rules).
-          - Format: <position_structure><position id="N">...content...</position></position_structure>
+        <section id="2" name="Resume Narrative Analysis">
+          <reference>Implement per resume_narrative_analysis_rules</reference>
+          - Display holistic career narrative analysis (primary identity, career arc, narrative strength).
+          - Display auto-generated job history summary (job history creation) for each position (per job_history_summary_display_rules).
+          - Format: Holistic analysis section followed by position-by-position breakdowns with collapse/expand functionality.
         </section>
 
         <section id="3" name="Job History Export">
@@ -2518,7 +2525,7 @@
 <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_resume-analyzer-display.md#job_history_summary_generation_rules -->
 <job_history_summary_generation_rules>
   <priority>HIGH</priority>
-  <applies_to>Resume Analyzer - Hiring Manager Perspective section</applies_to>
+  <applies_to>Resume Analyzer - Resume Narrative Analysis section</applies_to>
   
   <purpose>
     Generate comprehensive job history job history creation schema summaries for each position.
@@ -2665,7 +2672,7 @@
 <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_resume-analyzer-display.md#job_history_export_functionality -->
 <job_history_export_functionality>
   <priority>CRITICAL</priority>
-  <applies_to>Resume Analyzer - After hiring manager perspective section</applies_to>
+  <applies_to>Resume Analyzer - After Resume Narrative Analysis section</applies_to>
   
   <download_options>
     <option id="1" format="xml">

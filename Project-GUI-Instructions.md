@@ -1,12 +1,17 @@
-# Optimize-My-Resume System v8.5.1 (GUI Instructions)
+# Optimize-My-Resume System v8.5.3 (GUI Instructions)
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 8.5.1 (January 16, 2026)                                          -->
-<!-- v8.5.1 Release: Issue #56 - Resume Analyzer Report UX Enhancement         -->
+<!-- Version: 8.5.3 (January 16, 2026)                                          -->
+<!-- v8.5.3 Release: Patch - Complete Shadow Sync for Issue #56                -->
 <!-- Last Updated: January 16, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
+<!-- ========================================================================== -->
+<!-- VERSION HISTORY                                                            -->
+<!-- v8.5.3 (2026-01-16) - Patch: Synced with PROJECT-INSTRUCTIONS.md v8.5.3   -->
+<!--   - Fixed remaining Shadow Sync references in Gold Master                  -->
+<!-- v8.5.1 (2026-01-16) - Issue #56 - Resume Analyzer Report UX Enhancement   -->
 <!-- ========================================================================== -->
 
 <system_maintenance_rule>
