@@ -268,20 +268,20 @@ Overall Grade = (ATS Format * 0.25) + (Content Quality * 0.35) +
 
 Before merging to main:
 
-- [ ] Quick Action Checklist correctly prioritizes issues
-- [ ] Resume Narrative Analysis provides holistic, strategic guidance
-- [ ] Job History Summaries collapse/expand without data loss
-- [ ] Visual Grade calculation accurate
-- [ ] Per-bullet recommendations concise (<100 chars)
+- [x] Quick Action Checklist correctly prioritizes issues (v8.5.1)
+- [x] Resume Narrative Analysis provides holistic, strategic guidance (v8.5.2)
+- [x] Job History Summaries collapse/expand without data loss (v8.5.1)
+- [x] Visual Grade calculation accurate (v8.5.1)
+- [x] Per-bullet recommendations concise (<100 chars) (v8.5.1)
 - [ ] Report length reduced by 35%
 - [ ] Scan time reduced by 50% (8min → 4min)
 - [ ] Token usage reduced by ~12,000
-- [ ] All interfaces render correctly (VS Code, Web Artifact, Local React)
+- [x] All interfaces render correctly (VS Code, Web Artifact, Local React) (v8.5.2)
 - [ ] No regressions in existing functionality
 - [ ] All test cases pass
-- [ ] Documentation complete and accurate
+- [x] Documentation complete and accurate (v8.5.2)
 - [ ] Version history updated in all files per Update_Doc_Prompt.md
-- [ ] Knowledge graph updated
+- [ ] Knowledge graph updated (pending)
 
 ---
 

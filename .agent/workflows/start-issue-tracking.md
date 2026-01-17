@@ -167,50 +167,20 @@ mkdir -p docs/enhancements/ENH-NNN/
 
 > **Note:** The `gh issue create` command below MUST use the `--body-file` flag pointing to `solution-approach.md` (or this description file) to ensure all technical details are visible in the GitHub UI. Do not use manual summaries.
 
-**Template**
-```
-markdown
-# Issue Report
-
-**Title:** [Short, descriptive title]
-
-## Context
-- **Environment:** [Local Git Repo / Claude Web Interface]
-- **Tool/Phase:** [e.g., Bullet Optimizer, Resume Analyzer]
-- **Version:** [e.g., v8.4.2]
-
-## Description
-A clear and concise description of the bug or issue.
-
-## Steps to Reproduce
-1. [First Step]
-2. [Second Step]
-3. [and so on...]
-
-## Expected Behavior
-What you expected to happen.
-
-## Actual Behavior
-What actually happened.
-
-## Additional Info
-- [Screenshots, error messages, or context strings]
-```
-
 **Action:**
-Read and use the template from: Template above (in this document)
+Read and use the template from: `docs/workflow-templates/issue_template.md`
 
 ### 4.2: Solution Approach Document
 **File:** `docs/issues/issue-N/solution-approach.md`
 
 **Action:**
-Read and use the template from: Template above (in this document)
+Read and use the template from: `docs/workflow-templates/solution-approach.md`
 
 ### 4.3: Test Cases Document
 **File:** `docs/issues/issue-N/test-cases.md`
 
 **Action:**
-Read and use the template from: Template above (in this document)
+Read and use the template from: `docs/workflow-templates/test-cases.md`
 
 ---
 

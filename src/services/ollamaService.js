@@ -147,6 +147,35 @@ Identify these repair types:
 - Verb repetition: same category used twice in one position
 - No impact: bullets lacking clear business outcome
 
+AFTER analyzing all positions, provide a HOLISTIC Resume Narrative Analysis:
+
+1. What is this person's primary career identity? (one sentence)
+   - Is it CLEAR (✅) or UNCLEAR (⚠️)?
+
+2. What is their career arc? (Early → Mid → Current stage progression)
+   - Is it COHESIVE (✅) or DISJOINTED (⚠️)?
+
+3. Narrative strength score: 0-100 based on career coherence
+   - 85-100: Extremely clear, no confusion
+   - 70-84: Mostly clear, minor gaps
+   - 50-69: Some confusion, needs work
+   - 0-49: Very unclear, major issues
+
+4. What's working well? (Consistent threads, clear progression)
+
+5. What confusion points might a hiring manager spot?
+   - For each: Title, Issue, Fix, Hiring Manager Question
+
+6. Which roles are they a strong/moderate/weak fit for?
+   - Strong Match (90%+ fit): List specific roles
+   - Moderate Match (70-85% fit): List roles with conditions
+   - Weak Match (<60% fit): List poor-fit roles
+
+7. How can they strengthen their narrative based on target roles?
+   - Provide conditional guidance: "If targeting [Role Type]:\n→ [Action 1]\n→ [Action 2]"
+
+Return this in the narrativeAnalysis object shown above. Do NOT provide per-position reasoning fields.
+
 {
   "verdict": "one sentence summary",
   "blockers": 0,
@@ -171,6 +200,28 @@ Identify these repair types:
       "issue": "Brief issue only (no suggestion here)"
     }
   ],
+  "narrativeAnalysis": {
+    "primaryIdentity": "Technical Writer with Infrastructure Documentation Focus",
+    "identityClear": true,
+    "careerArc": "Technical Writer → Senior Technical Writer → Lead Documentation Specialist",
+    "arcCohesive": true,
+    "narrativeStrength": 85,
+    "whatsWorking": "Strong consistency in technical documentation roles with clear progression from individual contributor to leadership. Documentation frameworks and cross-team collaboration are recurring strengths.",
+    "confusionPoints": [
+      {
+        "title": "Job Title Inconsistency",
+        "issue": "Multiple similar-sounding titles across positions",
+        "fix": "Standardize title format in cover letter",
+        "question": "What's the difference between these roles?"
+      }
+    ],
+    "roleFitMatrix": {
+      "strong": ["Technical Writer", "Documentation Lead", "Content Strategist"],
+      "moderate": ["Technical Program Manager", "Developer Relations"],
+      "weak": ["Software Engineer"]
+    },
+    "strengtheningRecommendations": "If targeting Technical Writer roles:\n→ Emphasize documentation framework experience\n→ Highlight cross-team collaboration\n\nIf targeting Documentation Lead roles:\n→ Showcase team leadership examples\n→ Demonstrate strategic documentation planning"
+  },
   "positions": [
     {
       "id": 1,
@@ -178,9 +229,7 @@ Identify these repair types:
       "company": "Company Name",
       "dates": "Jan 2020 - Dec 2021",
       "duration": "2 years",
-      "inferredTitle": "Inferred Job Title",
       "seniority": "Senior",
-      "reasoning": "Brief: why this title, what scope shows (max 100 chars)",
       "skillsHard": ["skill1", "skill2"],
       "skillsSoft": ["skill1", "skill2"],
       "bullets": [
