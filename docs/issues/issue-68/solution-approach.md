@@ -1,4 +1,5 @@
 # Solution Approach: Document v1.2.0
+**Branch:** `feat/issue-68-document-v1-2-0`
 
 ## Shadow Sync Protocol
 This issue requires updates following the Shadow Modularization pattern (ADR-004):
