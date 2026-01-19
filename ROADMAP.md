@@ -3,7 +3,28 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v9.0.0 <!-- v9.0.0 Release -->
+## Current Version: v9.0.2 (Pending) <!-- v9.0.1 Release -->
+
+---
+
+## v9.0.1 - Post-Analysis Narrative Fit Verification (COMPLETE) <!-- v9.0.1 Release -->
+
+**Branch:** `9.0.1-narrative-verification` | **Status:** Complete | **Date:** 2026-01-19
+**Plan:** [v9.0.1 Implementation Plan](docs/plans/v9.0.1-narrative-verification.md)
+
+**Implementation Approach:** Adding post-analysis narrative fit verification to ensure qualitative alignment and requirement coverage.
+
+### Key Features
+- [x] **Narrative Fit Logic (Issue #64):** Automated verification of requirement coverage in generated bullets.
+- [x] **Verification UI:** Real-time feedback matrix on narrative quality and role alignment.
+- [x] **Actionable Recommendations:** Suggesting specific improvements to job history for higher fit scores.
+
+---
+
+## v9.0.2 - Loading State Progress Indicators (PENDING) <!-- v9.0.2 Release -->
+
+**Branch:** `v9.0.2-loading-indicators` | **Status:** Pending
+**Plan:** [v9.0.2 Implementation Plan](docs/plans/v9.0.2-loading-indicators.md)
 
 ---
 

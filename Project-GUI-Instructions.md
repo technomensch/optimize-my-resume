@@ -1,4 +1,4 @@
-# Optimize-My-Resume System v9.0.0 (GUI Instructions)
+# Optimize-My-Resume System v9.0.1 (GUI Instructions) <!-- v9.0.1 Change: Narrative Fit Verification -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->

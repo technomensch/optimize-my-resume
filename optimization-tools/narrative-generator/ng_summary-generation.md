@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 9.0.0 <!-- v9.0.0 Change: Keyword Management & Validation -->
+**Version:** 9.0.1 <!-- v9.0.1 Change: Narrative Fit Verification -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 
@@ -636,6 +636,20 @@ ORIGINAL GUARDRAIL #3:
     Apply Guardrail #15 logic (3+ word phrases repeated 3+ times) across both the Summary and the top 3 visible positions to ensure overall narrative variety.
   </instruction>
 </summary_phrase_repetition_check>
+
+### Guardrail #33: Narrative Fit Verification (Issue #64)
+
+> **Implementation Target:** [summary-generation.md](optimization-tools/narrative-generator/ng_summary-generation.md).
+
+**Instruction Text:**
+```xml
+<narrative_fit_verification>
+  AFTER generating bullets, perform a self-audit:
+  1. Check if the top 3 hard requirements from the JD are addressed by at least one bullet.
+  2. If a top requirement is missing, explicitly note this in the "Optimization Notes" section as a "Narrative Gap".
+  3. Ensure the collective story aligns with the target role level.
+</narrative_fit_verification>
+```
 ```
 
 ---
@@ -746,6 +760,7 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 - v1.0 (2025-12-28): Initial summary generation (master + per-JD customization)
 - v1.1.0 (2025-12-29): Added mandatory secondary grammar check warning as per v6.1.7 update <!-- v1.1.0 Change -->
 - v9.0.0 (2026-01-19): Added keyword management logic and Guardrail #32 reference <!-- v9.0.0 Change -->
+- v9.0.1 (2026-01-19): Added Narrative Fit Verification (Guardrail #33) <!-- v9.0.1 Change -->
 
 ---
 

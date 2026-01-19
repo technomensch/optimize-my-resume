@@ -1,6 +1,6 @@
 # Should-I-Apply WebUI Issues - Resolution Order
 
-## v1.3.0 - Keyword Management & Validation (Phase 1)
+## v9.0.0 - Keyword Management & Validation (COMPLETE)
 **Dependencies:** None
 **Milestone:** Core interactive features
 
@@ -17,13 +17,13 @@
 
 ---
 
-## v1.4.0 - Refinements (Phase 2)
+## v9.0.x - Refinements (Phase 2)
 **Dependencies:** None (can be done in parallel)
 **Milestone:** UX improvements
 
-3. **Issue #57** - Binary File Content Extraction
+3. **Issue #64** - Post-Analysis Narrative Fit Verification
    - Complexity: Medium
-   - Libraries: pdf.js, mammoth.js
+   - No additional API calls
 
 4. **Issue #61** - Industry Transferability Display
    - Complexity: Low
@@ -33,13 +33,13 @@
    - Complexity: Low
    - Pure UI enhancement
 
-6. **Issue #64** - Post-Analysis Narrative Fit Verification
+6. **Issue #57** - Binary File Content Extraction
    - Complexity: Medium
-   - No additional API calls
+   - Libraries: pdf.js, mammoth.js
 
 ---
 
-## v1.5.0 - Documentation Sync (Phase 3)
+## v9.1.0 - Documentation Sync (Phase 3)
 **Dependencies:** None
 **Milestone:** Formal documentation alignment
 
@@ -60,7 +60,7 @@
 
 ---
 
-## v2.0.0 - Advanced Features (Phase 4)
+## v10.0.0 - Advanced Features (Phase 4)
 **Dependencies:** Significant refactoring required
 **Milestone:** Major enhancements
 
@@ -79,10 +79,10 @@
 ## Resolution Strategy
 
 ### Recommended Approach:
-1. **Start with v1.3.0** (#67, #69) - Core functionality
-2. **Parallel work on v1.4.0** (#57, #61, #62, #64) - Can assign multiple devs
-3. **Follow with v1.5.0** (#65, #66, #68) - Documentation cleanup
-4. **Defer v2.0.0** (#58, #60) - Future major release
+1. **Start with v9.0.0** (#67, #69) - Core functionality
+2. **Parallel work on v9.0.x** (#57, #61, #62, #64) - Can assign multiple devs
+3. **Follow with v9.1.0** (#65, #66, #68) - Documentation cleanup
+4. **Defer v10.0.0** (#58, #60) - Future major release
 
 ### Critical Path:
 #67 → #69 (must be sequential)
