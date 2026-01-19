@@ -1,4 +1,5 @@
 # Solution Approach: Update Prompt Wording
+**Branch:** `feat/issue-65-prompt-update`
 
 ## Shadow Sync Protocol
 This issue requires updates following the Shadow Modularization pattern (ADR-004):
