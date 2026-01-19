@@ -1,4 +1,5 @@
 # Solution Approach: Loading State Progress Indicators
+**Branch:** `feat/issue-62-loading-indicators`
 
 ## Overview
 
