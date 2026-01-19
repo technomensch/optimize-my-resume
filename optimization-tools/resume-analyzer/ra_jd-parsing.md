@@ -1,6 +1,6 @@
 # Job Description Parsing Protocol
 
-**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
+**Version:** 9.1.0 <!-- v9.1.0 Change: Documentation Sync -->
 **Created:** 2025-12-28
 **Purpose:** Extract structured data from job descriptions using comprehensive parsing schema
 
@@ -677,12 +677,18 @@ Just work with what's available and set missing optional fields to null.
   "extraction_metadata": {
     "extraction_confidence": "high",
     "extraction_method": "structured",
+    "top_matched_keywords": ["Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5"],
+    "top_missing_keywords": ["Gap 1", "Gap 2", "Gap 3", "Gap 4", "Gap 5"],
     "missing_fields": ["clearance"],
     "inferred_fields": [],
     "ambiguous_skills": []
   }
 }
 ```
+
+<jd_keyword_visibility id="34">
+  **Requirement:** Every analysis summary MUST explicitly list the top 5 matched and top 5 missing keywords to provide immediate feedback on applicant fit.
+</jd_keyword_visibility>
 
 ### Metadata Fields
 
@@ -887,8 +893,8 @@ After parsing JD, the parsing output feeds into evidence matching:
 ---
 
 **Version History:**
-- job history creation (2025-12-28): Comprehensive parsing schema with hard/soft separation, remote work classification
-- v1.0 (2025-12-15): Legacy parsing schema (archived)
+- v9.0.0 (2026-01-19): Initial keyword management integration
+- v9.1.0 (2026-01-19): Documentation Sync - Added JD keyword visibility requirement (Guardrail #34) <!-- v9.1.0 Change -->
 
 ---
 

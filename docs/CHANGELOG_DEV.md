@@ -8,6 +8,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+### v9.1.0 - Documentation Sync (2026-01-19) <!-- v9.1.0 Change -->
+
+#### Meta-Work - Guardrail Synchronization (Issue #65, #66, #68)
+- **Problem:** Modular logic files (`ra_jd-parsing.md`, `jfa_workflow-router.md`, `ng_summary-generation.md`) drift from the Gold Master instructions.
+- **Solution:** Executed a "Documentation Sync" phase to align all modular references.
+- **Sync Targets:**
+  - `PROJECT-INSTRUCTIONS.md` (Gold Master)
+  - `Project-GUI-Instructions.md` (Entrypoint)
+  - `optimization-tools/narrative-generator/ng_summary-generation.md` (Module)
+  - `optimization-tools/resume-analyzer/ra_jd-parsing.md` (Module)
+  - `optimization-tools/job-fit-analyzer/jfa_workflow-router.md` (Module)
+
+#### Added - Documentation Protocol
+- **Keyword Visibility Rule:** Codified as Guardrail #34 in `ra_jd-parsing.md` and `PROJECT-INSTRUCTIONS.md`.
+- **Customization Offer Rule:** Codified as Guardrail #35 in `jfa_workflow-router.md` and `PROJECT-INSTRUCTIONS.md`.
+
+---
+
 ### v8.3.1 - Precision Bullet Logic & Governance Lifecycle (2026-01-13) <!-- v8.3.1 Change -->
 
 #### Added - Governance Lifecycle Compliance (Issue #42)

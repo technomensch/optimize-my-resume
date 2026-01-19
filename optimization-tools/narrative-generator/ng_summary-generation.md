@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 9.0.1 <!-- v9.0.1 Change: Narrative Fit Verification -->
+**Version:** 9.1.0 <!-- v9.1.0 Change: Documentation Sync -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 
@@ -230,18 +230,39 @@ Display during generation (no time estimates):
 
 ### Trigger
 
-After Phase 3 gap analysis completes:
+After Phase 3 analysis completes:
 
 ```
 IF match_score >= 50:
-  ASK: "Would you like me to generate a customized professional summary for this JD?"
+  DISPLAY: "Match Score: [score]/100"
+  DISPLAY: "Matched Keywords: [list of 5]"
+  DISPLAY: "Missing Keywords: [list of 5]"
+  
+  ASK: "Would you like to customize your resume bullets and professional summary for this JD?"
 
-  IF user says "yes":
-    → Generate per-JD summary
-
-ELSE:
-  → Skip (too many gaps, customization won't help)
+  IF user clicks "Optimize My Application":
+    → Generate per-JD summary + bullets
 ```
+
+---
+
+<keyword_display_after_analysis>
+  **Purpose:** Inform the user of their keyword alignment before they decide to optimize.
+  **Display Requirements:**
+  1. **Top 5 Matched Keywords:** Show keywords found in job history that align with JD.
+  2. **Top 5 Missing Keywords:** Show keywords from JD that were not evidenced in job history.
+  3. **Visual Cues:** Matched = Green/Check, Missing = Red/Warning.
+</keyword_display_after_analysis>
+
+---
+
+<webgui_implementation>
+  **Logic Flow:**
+  1. AI analyzes JD vs Job History.
+  2. UI displays Fit Score + Keywords Matrix.
+  3. UI offers a single "Optimize My Application" action button.
+  4. Upon click, AI invokes Guardrail #29 (Metric Preservation) and Guardrail #33 (Narrative Fit) to generate customized content.
+</webgui_implementation>
 
 ---
 
@@ -761,6 +782,7 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 - v1.1.0 (2025-12-29): Added mandatory secondary grammar check warning as per v6.1.7 update <!-- v1.1.0 Change -->
 - v9.0.0 (2026-01-19): Added keyword management logic and Guardrail #32 reference <!-- v9.0.0 Change -->
 - v9.0.1 (2026-01-19): Added Narrative Fit Verification (Guardrail #33) <!-- v9.0.1 Change -->
+- v9.1.0 (2026-01-19): Documentation Sync - Updated prompt wording and keyword display logic <!-- v9.1.0 Change -->
 
 ---
 

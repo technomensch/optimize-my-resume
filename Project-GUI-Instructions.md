@@ -1,4 +1,4 @@
-# Optimize-My-Resume System v9.0.1 (GUI Instructions) <!-- v9.0.1 Change: Narrative Fit Verification -->
+# Optimize-My-Resume System v9.1.0 (GUI Instructions) <!-- v9.1.0 Change: Documentation Sync -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
@@ -8,7 +8,12 @@
 <!-- Last Updated: January 19, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
-<!-- VERSION HISTORY                                                            -->
+<!-- v9.1.0 (2026-01-19) - Documentation Sync (Issue #65, #66, #68)        -->
+<!--   - Standardized keyword visibility (top 5 matched/missing) in analysis summaries -->
+<!--   - Formalized post-analysis customization offer trigger -->
+<!--   - Synchronized narrative generator instructions with WebGUI implementation -->
+<!-- v9.0.1 (2026-01-19) - Narrative Fit Verification (Issue #64)               -->
+<!--   - Added Logic and UI for Guardrail #33: Narrative Fit Verification         -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)        -->
 <!--   - Added Keyword Management UI and logic to WebGUI                        -->
 <!--   - Added Guardrail #32: Custom Keyword Evidence validation checks         -->
@@ -103,19 +108,19 @@
   <available_modules>
     <!-- Resume Analyzer: Foundation -->
     - optimization-tools/resume-analyzer/ra_job-history-creation.md (12-section schema)
-    - optimization-tools/resume-analyzer/ra_jd-parsing.md (JD parsing protocol)
+    - optimization-tools/resume-analyzer/ra_jd-parsing.md (v9.1.0: Added JD keyword visibility)
     - optimization-tools/resume-analyzer/ra_entry-router.md (5-scenario routing logic)
 
     <!-- Bullet Optimizer: Core Integration -->
     - optimization-tools/bullet-optimizer/bo_evidence-matching.md (requirement-by-requirement gap analysis)
 
     <!-- Job Fit Analyzer: Router Phase 3: Router & Workflows Workflows -->
-    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (complete 8-scenario routing system)
+    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (v9.1.0: Added post-analysis customization offer)
     - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md (add/edit/remove positions)
     - optimization-tools/job-fit-analyzer/jfa_re-comparison.md (JD re-comparison with diff output)
 
     <!-- Narrative Generator: Summary Phase 4: Summary & Polish Polish -->
-    - optimization-tools/narrative-generator/ng_summary-generation.md (master + per-JD summary customization)
+    - optimization-tools/narrative-generator/ng_summary-generation.md (v9.1.0: Updated prompt wording and keyword display)
   </available_modules>
 
   <v6_0_0_release_notes>
@@ -150,7 +155,7 @@
     <scenario id="2" name="jd_comparison">
       Condition: hasJobHistory = true AND hasJD = true
       Route: Job Fit Analyzer
-      Action: JD parsing + evidence matching
+      Action: JD parsing + evidence matching + Keyword Visibility (Top 5 matched/missing)
     </scenario>
 
     <scenario id="3" name="bullet_optimization">
@@ -207,6 +212,8 @@
     - Detects user state and intent
     - Validates JD inputs (anti-false-positive)
     - Confirms with user before proceeding
+    - Displays Fit Score + Keywords Matrix after analysis
+    - Offers "Optimize My Application" (Narrative/Bullet customization) for Fit Score >= 50
     - Handles override commands
     - Provides clear error messages when context is missing
   </execution_rule>

@@ -1,6 +1,6 @@
 # Changelog
 
-## Current Version: v9.0.0 <!-- v9.0.0 Release -->
+## Current Version: v9.1.0 <!-- v9.1.0 Release -->
 
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
@@ -10,6 +10,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
+
+### v9.1.0 - Documentation Sync (Issue #65, #66, #68)
+- **Keyword Visibility (Issue #66):** Updated `ra_jd-parsing.md` (Guardrail #34) to require explicit listing of the top 5 matched and missing keywords in analysis summaries.
+- **Customization Offer (Issue #68):** Updated `jfa_workflow-router.md` (Guardrail #35) to formalize the post-analysis offer for narrative and bullet customization when Fit Score >= 50.
+- **Narrative Sync (Issue #65):** Updated `ng_summary-generation.md` to align with the WebGUI implementation, including prompt wording updates and keyword display logic.
+- **Documentation Alignment:** Synchronized `PROJECT-INSTRUCTIONS.md` (Gold Master) and `Project-GUI-Instructions.md` (Entrypoint) with these modular changes.
+
+### v9.0.1 - Narrative Fit Verification (Issue #64)
+- **Narrative Fit Verification (Guardrail #33):** Added logic to `ng_summary-generation.md` and `PROJECT-INSTRUCTIONS.md` to audit generated bullets against top JD requirements.
 
 ### v9.0.0 - Keyword Management & Validation (Issue #67, #69)
 - **Keyword Management UI (Issue #67):** Introduced a new management layer in the WebGUI allowing users to manually defined "USE" (prioritize) and "IGNORE" (exclude) keyword lists.

@@ -3,7 +3,7 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v9.0.2 (Pending) <!-- v9.0.1 Release -->
+## Current Version: v9.1.0 (Complete) <!-- v9.1.0 Release -->
 
 ---
 
@@ -21,9 +21,23 @@
 
 ---
 
-## v9.0.2 - Loading State Progress Indicators (PENDING) <!-- v9.0.2 Release -->
+## v9.1.0 - Documentation Sync (IN PROGRESS) <!-- v9.1.0 Release -->
 
-**Branch:** `v9.0.2-loading-indicators` | **Status:** Pending
+**Branch:** `v9.1.0-documentation-sync` | **Status:** Complete | **Date:** 2026-01-19
+**Plan:** [v9.1.0 Implementation Plan](docs/plans/v9.1.0-documentation-sync.md)
+
+**Implementation Approach:** Sync modular instructions and project documentation to reflect features implemented in Should-I-Apply WebGUI v9.0.x releases. Strictly follows ADR-004 Shadow Modularization.
+
+### Key Features
+- [x] **Issue #65:** Update Post-Analysis Prompt Wording.
+- [x] **Issue #66:** Add JD Keywords Display to Project Instructions.
+- [x] **Issue #68:** Document v1.2.0 Per-JD Customization.
+
+---
+
+## v9.0.2 - Loading State Progress Indicators (BACKLOG) <!-- v9.0.2 Release -->
+
+**Branch:** `v9.0.2-loading-indicators` | **Status:** Backlog
 **Plan:** [v9.0.2 Implementation Plan](docs/plans/v9.0.2-loading-indicators.md)
 
 ---
@@ -675,4 +689,4 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 ---
 
-**Last Updated:** 2026-01-19 (v9.0.0 - Keyword Management & Validation Complete)
+**Last Updated:** 2026-01-19 (v9.1.0 - Documentation Sync Complete)

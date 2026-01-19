@@ -21,7 +21,7 @@
 **Dependencies:** None (can be done in parallel)
 **Milestone:** UX improvements
 
-3. **Issue #64** - Post-Analysis Narrative Fit Verification
+3. **Issue #64** - Post-Analysis Narrative Fit Verification (COMPLETE)
    - Complexity: Medium
    - No additional API calls
 
@@ -29,13 +29,14 @@
    - Complexity: Low
    - References: jfa_job-fit-assessment.md
 
-5. **Issue #62** - Loading State Progress Indicators
-   - Complexity: Low
-   - Pure UI enhancement
-
-6. **Issue #57** - Binary File Content Extraction
+5. **Issue #57** - Binary File Content Extraction
    - Complexity: Medium
    - Libraries: pdf.js, mammoth.js
+
+6. **Issue #62** - Loading State Progress Indicators (BACKLOG)
+   - Complexity: Low
+   - Pure UI enhancement
+   - Moved to v9.1.x backlog
 
 ---
 

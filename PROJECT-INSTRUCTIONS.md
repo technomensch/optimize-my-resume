@@ -1,4 +1,4 @@
-# Optimize-My-Resume System v9.0.1 <!-- v9.0.1 Change: Narrative Fit Verification -->
+# Optimize-My-Resume System v9.1.0 <!-- v9.1.0 Change: Documentation Sync -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
@@ -8,7 +8,12 @@
 <!-- Last Updated: January 19, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
-<!-- VERSION HISTORY                                                            -->
+<!-- v9.1.0 (2026-01-19) - Documentation Sync (Issue #65, #66, #68)        -->
+<!--   - Standardized keyword visibility (top 5 matched/missing) in analysis summaries -->
+<!--   - Formalized post-analysis customization offer trigger -->
+<!--   - Synchronized narrative generator instructions with WebGUI implementation -->
+<!-- v9.0.1 (2026-01-19) - Narrative Fit Verification (Issue #64)               -->
+<!--   - Added Logic and UI for Guardrail #33: Narrative Fit Verification         -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)        -->
 <!--   - Added Keyword Management UI and logic to WebGUI                        -->
 <!--   - Added Guardrail #32: Custom Keyword Evidence validation checks         -->
@@ -3855,6 +3860,17 @@
         3. Ensure the collective story aligns with the target role level.
       </instruction>
     </narrative_fit_verification>
+    <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_jd-parsing.md#jd_keyword_visibility -->
+    <jd_keyword_visibility id="34">
+      <requirement>Every analysis summary MUST explicitly list the top 5 matched and top 5 missing keywords to provide immediate feedback on applicant fit.</requirement>
+    </jd_keyword_visibility>
+
+    <!-- MODULAR_SYNC: optimization-tools/job-fit-analyzer/jfa_workflow-router.md#post_analysis_customization_offer -->
+    <post_analysis_customization_offer id="35">
+      <trigger>After analysis is presented with Fit Score >= 50.</trigger>
+      <offer>Would you like to customize your resume bullets and professional summary for this JD?</offer>
+      <action>Clicking "Optimize My Application" triggers the Narrative/Bullet generation workflow.</action>
+    </post_analysis_customization_offer>
     <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>

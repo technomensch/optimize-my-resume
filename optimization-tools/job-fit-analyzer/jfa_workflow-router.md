@@ -1,6 +1,6 @@
 # Workflow Router - Complete Entry Point System (Phase 3)
 
-**Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
+**Version:** 9.1.0 <!-- v9.1.0 Change: Documentation Sync -->
 **Created:** 2025-12-29
 **Purpose:** Complete routing system that detects user intent and routes to appropriate workflow
 **Extends:** optimization-tools/resume-analyzer/ra_entry-router.md
@@ -341,6 +341,12 @@ This will compare your profile against:
 Proceed with JD fit analysis? (yes/no)"
 ```
 
+<post_analysis_customization_offer id="35">
+  **Trigger:** After analysis is presented with Fit Score >= 50.
+  **Offer:** "Would you like to customize your resume bullets and professional summary for this JD?"
+  **Action:** Clicking "Optimize My Application" triggers the Narrative/Bullet generation workflow.
+</post_analysis_customization_offer>
+
 ### Example: Incremental Update
 ```
 "I detected a request to update your job history.
@@ -579,3 +585,6 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 - Added override commands (re-analyze, start fresh)
 - Added JD validation heuristics
 - Added two-step clarification process
+
+**v9.1.0 (2026-01-19):**
+- Documentation Sync - Added post-analysis customization offer trigger (Guardrail #35) <!-- v9.1.0 Change -->
