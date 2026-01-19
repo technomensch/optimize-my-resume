@@ -1,4 +1,5 @@
 # Solution Approach: Keyword Display Documentation
+**Branch:** `feat/issue-66-keyword-display`
 
 ## Shadow Sync Protocol
 This issue requires updates following the Shadow Modularization pattern (ADR-004) to ensure keyword visibility in **both** GUI and LLM Chat.
