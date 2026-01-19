@@ -1,4 +1,5 @@
 # Solution Approach: Check for Existing Project Files
+**Branch:** `feat/issue-58-project-file-access`
 
 ## Overview
 
