@@ -1,4 +1,4 @@
-# Issue #53: v8.4.5 Analyzer Updates
+# Issue #55: v8.4.5 Analyzer Updates
 
 **Status:** 🔴 ACTIVE
 **Type:** Enhancement
@@ -9,7 +9,7 @@
 **Quick Summary:**
 Consolidate updates for both the local React analyzer (`ResumeAnalyzer-local.jsx`) and the Claude Artifact WebGUI (`ResumeAnalyze-webgui.jsx`) to align with v8.4.2 terminology (removing "Phase" numbering), enforce portfolio labeling guardrails, and improve version visibility.
 
-**Documentation:** [docs/issues/issue-53/](docs/issues/issue-53/)
+**Documentation:** [docs/issues/issue-55/](docs/issues/issue-55/)
 
 **Progress:**
 - [x] Investigation complete
