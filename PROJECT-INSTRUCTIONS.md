@@ -1,18 +1,19 @@
-# Optimize-My-Resume System v8.5.3
+# Optimize-My-Resume System v9.0.0
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 8.5.3 (January 16, 2026)                                          -->
-<!-- v8.5.3 Release: Patch - Complete Shadow Sync for Issue #56                -->
-<!-- Last Updated: January 16, 2026                                             -->
+<!-- Version: 9.0.0 (January 19, 2026)                                          -->
+<!-- v9.0.0 Release: Hub - Keyword Management & Validation (Issue #67, #69)      -->
+<!-- Last Updated: January 19, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 <!-- VERSION HISTORY                                                            -->
+<!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)        -->
+<!--   - Added Keyword Management UI and logic to WebGUI                        -->
+<!--   - Added Guardrail #32: Custom Keyword Evidence validation checks         -->
+<!--   - Updated Summary Generation Protocol with Keyword Preferences            -->
 <!-- v8.5.3 (2026-01-16) - Fixed remaining "Hiring Manager Perspective"         -->
-<!--   - Line 2521: Updated applies_to in job_history_summary_generation_rules -->
-<!--   - Line 2668: Updated applies_to in job_history_export_functionality      -->
-<!--   - Completes Shadow Sync for Issue #56 (v8.5.1/v8.5.2 work)             -->
 <!-- v8.5.1 (2026-01-16) - Issue #56 - Resume Analyzer Report UX Enhancement   -->
 <!-- ========================================================================== -->
 
@@ -840,6 +841,14 @@
     Handle keyword optimization requests that come either with the JD or after bullet generation.
     Always cross-reference keywords against job history to maintain authenticity (see keyword_evidence_principle).
   </purpose>
+
+  <!-- MODULAR_SYNC: optimization-tools/narrative-generator/ng_summary-generation.md#user_keyword_preferences -->
+  <user_keyword_preferences>
+    IF the user provides a list of specific keywords to USE or IGNORE:
+    1. **Strictly Enforce:** Do not use any keyword from the "IGNORE" list.
+    2. **Prioritize:** Ensure valid keywords from the "USE" list are integrated (if evidence exists).
+    3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per Guardrail #32).
+  </user_keyword_preferences>
 
   <timing>
     Keywords can be provided in two ways:
@@ -3823,6 +3832,19 @@
         5. Save implementation plan to docs/plans/[branch-name].md.
       </steps>
     </guardrail>
+
+    <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md#custom_keyword_evidence_guardrail -->
+    <custom_keyword_evidence_guardrail id="32">
+      <priority>HIGH</priority>
+      <trigger>When a user manually requests a keyword that is NOT found in their job history</trigger>
+      <logic>
+        IF user manually requests a keyword that is NOT in the job history:
+        1. **Validation:** Check job history for evidence (synonyms allowed).
+        2. **Warning:** If no evidence is found, you MUST warn the user: "I cannot find evidence of [keyword] in your history. Including it may not be defensible in an interview."
+        3. **Override:** Only proceed if the user explicitly confirms (e.g., "Use it anyway").
+        4. **Integration:** If confirmed but unverified, incorporate it LIGHTLY (do not make it the central theme).
+      </logic>
+    </custom_keyword_evidence_guardrail>
     <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>

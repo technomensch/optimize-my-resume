@@ -792,5 +792,17 @@
         4. Save implementation plan to docs/plans/[branch-name].md.
       </steps>
     </guardrail>
+
+    <custom_keyword_evidence_guardrail id="32">
+      <priority>HIGH</priority>
+      <trigger>When a user manually requests a keyword that is NOT found in their job history</trigger>
+      <logic>
+        IF user manually requests a keyword that is NOT in the job history:
+        1. **Validation:** Check job history for evidence (synonyms allowed).
+        2. **Warning:** If no evidence is found, you MUST warn the user: "I cannot find evidence of [keyword] in your history. Including it may not be defensible in an interview."
+        3. **Override:** Only proceed if the user explicitly confirms (e.g., "Use it anyway").
+        4. **Integration:** If confirmed but unverified, incorporate it LIGHTLY (do not make it the central theme).
+      </logic>
+    </custom_keyword_evidence_guardrail>
   </system_guardrails>
 </quality_assurance_rules>

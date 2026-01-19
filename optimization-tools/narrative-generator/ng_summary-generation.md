@@ -1,6 +1,6 @@
 # Professional Summary Generation Protocol - Phase 4
 
-**Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
+**Version:** 9.0.0 <!-- v9.0.0 Change: Keyword Management & Validation -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
 
@@ -289,6 +289,13 @@ FOR (requirement of gap_analysis) {
 
 // Limit to top 3-5 keywords
 jd_keywords = jd_keywords.slice(0, 5)
+
+<user_keyword_preferences>
+  IF the user provides a list of specific keywords to USE or IGNORE:
+  1. **Strictly Enforce:** Do not use any keyword from the "IGNORE" list.
+  2. **Prioritize:** Ensure valid keywords from the "USE" list are integrated (if evidence exists).
+  3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per Guardrail #32).
+</user_keyword_preferences>
 
 // Fallback: If no partial skills, use matched skills
 IF (jd_keywords.length === 0) {
@@ -738,6 +745,7 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 **Version History:**
 - v1.0 (2025-12-28): Initial summary generation (master + per-JD customization)
 - v1.1.0 (2025-12-29): Added mandatory secondary grammar check warning as per v6.1.7 update <!-- v1.1.0 Change -->
+- v9.0.0 (2026-01-19): Added keyword management logic and Guardrail #32 reference <!-- v9.0.0 Change -->
 
 ---
 

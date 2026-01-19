@@ -1,7 +1,7 @@
 # Common Gotchas & Solutions
 
-**Last Updated:** 2026-01-02
-**Entries:** 7
+**Last Updated:** 2026-01-19
+**Entries:** 10
 
 ---
 
@@ -16,6 +16,9 @@
 - [Deleting Feature Branches](#deleting-feature-branches) - Loss of audit trail
 - [Agent Governance Drift](#agent-governance-drift) - Omission of workflow steps (Issue #42)
 - [Absolute Path Regression](#absolute-path-regression) - Breaking documentation portability
+- [Unverified Skill Hallucination](#unverified-skill-hallucination) - AI fabrication of custom skills
+- [Token Impact of Customization](#token-impact-of-customization) - High cost of multi-tier generation
+- [Binary Extraction Limits](#binary-extraction-limits) - Base64 parsing reliability
 
 ---
 
@@ -178,6 +181,52 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 **Why:** Absolute paths destroy repository portability and shareability.
 
 **See:** [Lessons Learned: Relative File Paths](../lessons-learned/architecture/Lessons_Learned_Relative_File_Paths.md)
+
+---
+
+## Technical Performance Gotchas
+
+### Unverified Skill Hallucination
+
+**Symptom:** Custom keywords added by the user appear in the finalized resume with fabricated metrics or experience (e.g., claiming 3 years of Kubernetes experience when history shows only 3 months).
+
+**Gotcha:** AI defaults to "Helpful" mode, assuming that if the user provides a keyword, it MUST be valid. It will invent context to make it fit.
+
+**Fix:**
+1.  **Guardrail #32**: Implement background verification against job history.
+2.  **User Confirmation**: Require a "Proceed Anyway" acknowledgment.
+3.  **Prompt Instruction**: Explicitly use "exposure" or "familiarity" instead of "expert" for unverified items.
+
+**See:** [Guardrail #32](../../PROJECT-INSTRUCTIONS.md#guardrail-32)
+
+---
+
+### Token Impact of Customization
+
+**Symptom:** AI stops mid-response or crashes with "Token limit exceeded" during customization generation.
+
+**Gotcha:** Customization requires a massive context window (Full Job History + Full JD + Previous Analysis + Generation Prompt). This can easily hit 10K+ tokens in a single `generate` call.
+
+**Fix:**
+1.  **Threshold Gating**: Only offer customization for fit scores > 50%.
+2.  **User Consent**: Never auto-generate; wait for a button click.
+3.  **Summarization**: Compress history into the 12-section XML schema before passing to the generation prompt.
+
+**See:** [Concept: Fit-Score Gating](concepts.md#fit-score-gating)
+
+---
+
+### Binary Extraction Limits
+
+**Symptom:** Results show "Empty Resume" or "Analysis Failed" after uploading a PDF or DOCX.
+
+**Gotcha:** Browser-based base64 encoding of large binary files can struggle with complex layers or images, resulting in partial text extraction.
+
+**Fix:**
+1.  **Text Fallback**: Always offer a copy-paste area as a fallback.
+2.  **Library Upgrade**: Use specialized libraries like `pdf.js` or `mammoth.js` (Issue #1).
+
+**See:** [Session Summary 2026-01-18](../sessions/2026-01/session-summary-2026-01-18-should-i-apply.md#known-limitations)
 
 ---
 
