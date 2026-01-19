@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-16
-**Entries:** 12
+**Last Updated:** 2026-01-19
+**Entries:** 15
 
 ---
 
@@ -19,6 +19,9 @@
 - [Value-Driven User Stories](#value-driven-user-stories) - Benefit-focused requirements
 - [Causal Impact Linking](#causal-impact-linking) - Syntactic action-to-metric mapping
 - [Governance Lifecycle](#governance-lifecycle) - Enforced project management flow
+- [Interactive Tag Toggling](#interactive-tag-toggling) - Manual metadata curation UI
+- [Two-Step Verification](#two-step-verification) - Safety pattern for unverified claims
+- [Lightweight Integration](#lightweight-integration) - Authenticity preservation for low-evidence claims
 
 ---
 
@@ -266,6 +269,54 @@ Keywords → Category:
 4. Save plan to `docs/plans/` (Establish intent)
 
 **See:** [Guardrail #31](../../PROJECT-INSTRUCTIONS.md)
+
+---
+
+## Interaction Patterns
+
+### Interactive Tag Toggling
+
+**Problem:** Users need to curate large sets of tags (keywords/skills) quickly without complex drag-and-drop or form fields.
+**Solution:** Two-column layout with click-to-transfer behavior between "Active" and "Inactive" states.
+**When to use:** Skill management, keyword selection, label assignment.
+
+**Quick Reference:**
+- **Green (Active):** High priority, included in generation.
+- **Gray (Inactive):** Suppressed/Ignored.
+- **Action:** Single click toggles state.
+- **Benefit:** Fast curation for mobile and desktop; clear visual state.
+
+**See:** [Should-I-Apply v1.2.0 Development](../sessions/2026-01/session-summary-2026-01-18_16-52.md#decision-3)
+
+---
+
+### Two-Step Verification (Safety)
+
+**Problem:** Users might unknowingly bridge a gap with an unverified claim, risking interview "gotchas."
+**Solution:** Background validation followed by an explicit modal confirmation for any "unverified" data.
+**When to use:** Custom keyword additions, metric overrides, liability-sensitive claims.
+
+**Quick Reference:**
+1.  **AI Check:** Search history for evidence.
+2.  **Visual Flag:** Show "Unverified" status (Yellow).
+3.  **The Modal:** If unverified items are selected, trigger: "I couldn't verify [X]. Proceeding may make your resume indefensible. Use anyway?"
+
+**See:** [v9.0.0 Keyword Management Roadmap](../ROADMAP.md)
+
+---
+
+### Lightweight Integration
+
+**Problem:** How to include a user-requested skill that isn't backed by job history achievements.
+**Solution:** Mention the skill as a capability or exposure rather than as a quantified achievement.
+**When to use:** Unverified keywords confirmed by the user.
+
+**Quick Reference:**
+- **Full Integration:** "Built [System] using [Tool] achieving [Metric]."
+- **Lightweight:** "Leveraged exposure to [Tool] to support [Workflow]."
+- **Benefit:** Respects user intent without hallucinating specific wins.
+
+**See:** [Lesson: Light Integration vs Full Integration](../sessions/2026-01/session-summary-2026-01-18_16-52.md#lesson-4)
 
 ---
 

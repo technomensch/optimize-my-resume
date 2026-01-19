@@ -1,7 +1,7 @@
 # Workflow Quick References
 
-**Last Updated:** 2026-01-02
-**Entries:** 6
+**Last Updated:** 2026-01-19
+**Entries:** 8
 
 ---
 
@@ -14,6 +14,7 @@
 - [Patch Workflow](#patch-workflow) - Bug fixes and improvements
 - [Session Summary](#session-summary) - Preserve context before limits
 - [Governance Lifecycle](#governance-lifecycle) - Mandatory project management steps
+- [Application Optimization](#application-optimization) - End-to-end fit and customization flow
 
 ---
 
@@ -243,6 +244,31 @@ cp .claude/skills/*.md ~/.claude/commands/   # Install skills
     2.  Copy-paste the Issue Report to a tracking document or external system.
 
 **See:** [Guardrail #31](../../PROJECT-INSTRUCTIONS.md)
+
+---
+
+## Application Workflows
+
+### Application Optimization
+
+**Purpose:** Evaluate fit and generate tailored content for a specific job description.
+
+**Quick Steps:**
+1.  **Run Tool:** Launch `Should-I-Apply` WebGUI.
+2.  **Input Experience:** Provide 12-section Job History (XML) or Resume.
+3.  **Input JD:** Provide complete Job Description.
+4.  **Review Analysis:** Check Fit Score, Strengths, and Gaps.
+5.  **Curate Keywords:** Use Two-Column Hub to toggle USE/IGNORE lists.
+6.  **Verify Claims:** Address Warnings for unverified custom keywords.
+7.  **Generate:** Trigger "Generate Customized Content" (if fitScore >= 50).
+8.  **Finalize:** Review cover letter tips and interview prep.
+
+**Principles:**
+- 🛡️ **Authenticity Above All:** Never bridge gaps by making up metrics.
+- 📉 **Efficiency:** Only customize when the base match is competitive.
+
+**See:** [Pattern: Two-Step Verification](patterns.md#two-step-verification)
+**Implementation:** `Should-I-Apply-webgui.jsx` v1.3.0+
 
 ---
 

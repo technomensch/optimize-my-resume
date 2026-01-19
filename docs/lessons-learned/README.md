@@ -1,8 +1,8 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 18
+**Total Lessons:** 19
 **Categories:** 4
-**Last Updated:** 2026-01-12
+**Last Updated:** 2026-01-19
 
 ---
 
@@ -49,6 +49,11 @@
    - Tags: #architecture #modularization #shadow-modularization #token-optimization
    - Problem: 85k token redundancy and maintenance drift between manual duplicate instruction files.
    - Solution: Pivot to 'Identify and Copy' for Gold Master and 'Extract and Remove' for Optimized Entrypoint.
+6. **[Keyword Authenticity and Verification Logic](architecture/Lessons_Learned_Keyword_Authenticity_and_Verification.md)**
+   - Date: 2026-01-19
+   - Tags: #keywords #verification #guardrail-32 #v9.0.0
+   - Problem: AI hallucination of unverified custom skills during optimization.
+   - Solution: Implement background verification Hub + blocking confirmation + Lightweight Integration pattern.
 
 **Subdirectory:** [architecture/](architecture/)
 
@@ -161,6 +166,7 @@
 - [Relative File Paths](architecture/Lessons_Learned_Relative_File_Paths.md)
 - [Memory System Phase 1](patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 - [Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md)
+- [Keyword Authenticity Logic](architecture/Lessons_Learned_Keyword_Authenticity_and_Verification.md)
 
 **#automation** (3 lessons)
 - [SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)
@@ -268,6 +274,7 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-19: [Keyword Authenticity Logic](architecture/Lessons_Learned_Keyword_Authenticity_and_Verification.md) - Hallucination prevention via verification hub
 - 2026-01-12: [Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md) - Pivot to Gold Master/Optimized Entrypoint pattern
 - 2026-01-12: [Strategic JD Assessment](architecture/Lessons_Learned_Strategic_Assessment_Methodology.md) - Methodology shift to address false negatives
 - 2026-01-10: [Ollama Model Tag Matching](debugging/Lessons_Learned_Ollama_Model_Tag_Matching.md) - Tag normalization for Ollama API integration
@@ -319,15 +326,15 @@ grep -r "#architecture" docs/lessons-learned/
 ## Statistics
 
 **By Category:**
-- Process: 7 lessons (44%)
-- Debugging: 4 lessons (25%)
-- Architecture: 5 lessons (28%)
-- Patterns: 2 lessons (12%)
+- Process: 7 lessons (37%)
+- Debugging: 4 lessons (21%)
+- Architecture: 6 lessons (32%)
+- Patterns: 2 lessons (10%)
 
 **Most Common Tags:**
 1. #process (7 lessons)
 2. #workflow (6 lessons)
-3. #architecture (5 lessons)
+3. #architecture (6 lessons)
 4. #debugging (4 lessons)
 4. #automation, #claude-code, #documentation (3 lessons each)
 5. #skills, #git-hygiene, #planning (2 lessons each)
@@ -335,12 +342,12 @@ grep -r "#architecture" docs/lessons-learned/
 **Timeline:**
 - First lesson: 2025-12-10
 - Latest lesson: 2026-01-12
-- Total span: 31 days
-- Average: ~0.52 lessons per day
+- Total span: 40 days
+- Average: ~0.48 lessons per day
 
 **Content:**
-- Total lessons: 18
-- Estimated total lines: ~12,300 lines
+- Total lessons: 19
+- Estimated total lines: ~13,100 lines
 - Average per lesson: ~770 lines
 
 ---
@@ -355,4 +362,4 @@ grep -r "#architecture" docs/lessons-learned/
 ---
 
 **Created:** 2026-01-02
-**Last Major Update:** 2026-01-12 (Added Strategic vs Strict JD Assessment lesson)
+**Last Major Update:** 2026-01-19 (Added Keyword Authenticity lesson)

@@ -115,17 +115,23 @@ ls -1 docs/enhancements/ 2>/dev/null | grep -E '^ENH-[0-9]+' | sort -V
 
 ### 2.2: Assign Next Number
 
+**IMPORTANT:** Issue numbers are for **LOCAL TRACKING ONLY**. They help identify what the GitHub issue number should be, but are NOT included in the GitHub issue title. GitHub will auto-assign its own issue number.
+
 **For Bugs/Issues:**
 - Format: `issue-N` where N is next sequential number
 - Example: If issue-7 exists, create issue-8
+- **Local directory:** `docs/issues/issue-8/`
+- **GitHub title:** "Binary File Content Extraction" (NO "Issue #8:" prefix)
 
 **For Enhancements:**
 - Format: `ENH-NNN` where NNN is zero-padded (001, 002, etc.)
 - Example: If ENH-001 exists, create ENH-002
+- **Local directory:** `docs/enhancements/ENH-002/`
+- **GitHub title:** "Add Token Usage Display" (NO "ENH-002:" prefix)
 
 **Confirm with user:**
 ```
-I'll create this as [Issue #8 / ENH-002].
+I'll create this as local Issue #8 (GitHub will auto-assign its own number).
 
 Is this correct? (y/n)
 ```
@@ -237,9 +243,10 @@ git add docs/issues/issue-N/
 git add docs/enhancements/ENH-NNN/
 
 # Commit with conventional format
-git commit -m "docs(issue-N): create issue tracking for [title]
+# NOTE: Title does NOT include "Issue #N:" prefix - that's for local tracking only
+git commit -m "docs(issue-N): create issue tracking for [descriptive title]
 
-Issue #N: [Title]
+Issue #N: [Descriptive Title Without Number Prefix]
 Type: [Bug/Enhancement]
 Priority: [Critical/High/Medium/Low]
 
@@ -264,7 +271,8 @@ Status: Active
 git push -u origin fix/issue-N-brief-description
 
 # IMMEDIATELY create Draft PR to link branch to Issue (Prevent Governance Drift)
-gh pr create --draft --title "WIP: Issue #N - [Brief Title]" --body "Closes #N"
+# NOTE: PR title does NOT include "Issue #N:" - GitHub auto-assigns issue numbers
+gh pr create --draft --title "WIP: [Brief Descriptive Title]" --body "Closes #N"
 ```
 
 ---
@@ -277,7 +285,7 @@ gh pr create --draft --title "WIP: Issue #N - [Brief Title]" --body "Closes #N"
 
 **Add entry:**
 ```markdown
-## Issue #N: [Title]
+## Issue #N: [Descriptive Title]
 
 **Status:** 🔴 ACTIVE  
 **Type:** Bug / Enhancement  
@@ -290,6 +298,8 @@ gh pr create --draft --title "WIP: Issue #N - [Brief Title]" --body "Closes #N"
 [One-line description]
 
 **Documentation:** [docs/issues/issue-N/](docs/issues/issue-N/)
+
+**GitHub Issue:** #[auto-assigned-number] (once created)
 
 **Progress:**
 - [ ] Investigation complete
@@ -308,7 +318,7 @@ Add to "Known Issues" section:
 ```markdown
 ## Known Issues
 
-- **Issue #N:** [Title] - [Brief description] ([Status])
+- **Issue #N (GitHub #XX):** [Descriptive Title] - [Brief description] ([Status])
   - Documentation: [Link to issue directory]
   - Workaround: [If available]
 ```
@@ -322,9 +332,10 @@ Add to "Known Issues" section:
 ```markdown
 ✅ **Issue Tracking Initialized**
 
-**Issue #N: [Title]**
+**Local Issue #N: [Descriptive Title]**
 - Status: 🔴 ACTIVE
 - Type: [Bug/Enhancement]
+- GitHub Issue: Will be auto-assigned when created with `gh issue create`
 
 **Files Created:**
 - docs/issues/issue-N/issue-N-description.md
@@ -337,9 +348,10 @@ Add to "Known Issues" section:
 - Pushed: ✅
 
 **Next Steps:**
-1. Begin investigation (solution-approach.md)
-2. Implement chosen solution
-3. Run test cases (test-cases.md)
+1. Create GitHub issue with `gh issue create --title "[Descriptive Title]" --body-file solution-approach.md`
+2. Begin investigation (solution-approach.md)
+3. Implement chosen solution
+4. Run test cases (test-cases.md)
 ```
 
 **Quick Links:**
@@ -347,6 +359,7 @@ Add to "Known Issues" section:
 - Master Tracker: docs/issue-tracker.md
 
 Ready to start work on Issue #N!
+
 
 ---
 

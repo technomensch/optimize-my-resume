@@ -3,7 +3,23 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v8.4.2 <!-- v8.4.2 Release -->
+## Current Version: v9.0.0 <!-- v9.0.0 Release -->
+
+---
+
+## v9.0.0 - Keyword Management & Validation (COMPLETE) <!-- v9.0.0 Release -->
+
+**Branch:** `v9.0.0-keyword-management` | **Status:** Complete | **Date:** 2026-01-19
+**Plan:** [/Users/mkaplan/Documents/GitHub/optimize-my-resume/docs/plans/v9.0.0-keyword-management.md]
+
+**Implementation Approach:** Hub-and-spoke logic implementation for user-defined keyword management, evidence validation, and safety guardrails. Strictly follows ADR-004 Shadow Modularization.
+
+### Key Features
+- [x] **Keyword Management UI (Issue #67):** Manual addition of custom keywords and toggle lists for "USE" vs "IGNORE" in WebGUI.
+- [x] **Keyword Evidence Validation (Issue #69):** Automated scanning of job history for custom keyword evidence with visual "Unverified" status indicators.
+- [x] **Guardrail #32 (Issue #69):** Blocking gate for unverified keywords—requires user confirmation and triggers "lightweight" integration logic to maintain authenticity.
+- [x] **Summary Protocol Update:** Strict enforcement of keyword preferences in customized per-JD summaries.
+- [x] **Shadow Sync Integration:** Modular updates synchronized across Gold Master (`PROJECT-INSTRUCTIONS.md`) and Entrypoint (`Project-GUI-Instructions.md`).
 
 ---
 
@@ -638,4 +654,4 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 
 ---
 
-**Last Updated:** 2026-01-13 (v8.3.1 - Precision Bullets & Shadow Modularization Finalized)
+**Last Updated:** 2026-01-19 (v9.0.0 - Keyword Management & Validation Complete)

@@ -1,6 +1,6 @@
 # Changelog
 
-## Current Version: v8.4.2 <!-- v8.4.2 Release -->
+## Current Version: v9.0.0 <!-- v9.0.0 Release -->
 
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
@@ -10,6 +10,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
+
+### v9.0.0 - Keyword Management & Validation (Issue #67, #69)
+- **Keyword Management UI (Issue #67):** Introduced a new management layer in the WebGUI allowing users to manually defined "USE" (prioritize) and "IGNORE" (exclude) keyword lists.
+- **Evidence Validation Engine (Issue #69):** Implemented automated background scanning that cross-references user-defined keywords against the entire Job History to verify authenticity.
+- **Guardrail #32 (Custom Keyword Evidence):** Added a critical validation gate that warns users when they attempt to include skills not evidenced in their history, ensuring resumes remain defensible in interviews.
+- **Summary Protocol Alignment:** Synchronized the Narrative Generator to strictly respect user keyword preferences during per-JD summary customization.
+- **Visual Verification Indicators:** Added "Verified" vs. "Unverified" status badges to the keyword UI to provide immediate feedback on claim defensibility.
 
 ### v8.4.3 - File Prefix Standardization (Modular Identification)
 - **File Renaming**: Updated all modular file names in `optimization-tools` with prefixes (`ra_`, `bo_`, `jfa_`, `ng_`) to make them easily identifiable in Claude's flat file architecture.

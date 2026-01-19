@@ -1,7 +1,7 @@
 # Core Concepts
 
-**Last Updated:** 2026-01-03
-**Entries:** 11
+**Last Updated:** 2026-01-19
+**Entries:** 14
 
 ---
 
@@ -20,6 +20,8 @@
 - [Action Verb Categories](#action-verb-categories) - 5-part classification framework
 - [Portfolio Employment Safety](#portfolio-employment-safety) - Distinguishing W2 from projects
 - [Chronology Depth Control](#chronology-depth-control) - Balancing recency and significance
+- [Fit-Score Gating](#fit-score-gating) - Conditional feature presentation pattern
+- [Custom Keyword Hub](#custom-keyword-hub) - Centralized skill management logic
 
 ---
 
@@ -286,6 +288,69 @@ Resume depth is a function of *Impact * Recency*, not just a static calendar cut
 
 - **Plan:** [v8.3.1 Plan](../plans/v8.3.1-bullet-generation-improvements.md)
 - **Rule:** `chronology_depth_logic`
+
+---
+
+## Technical/Logic Concepts
+
+### Fit-Score Gating
+
+**Category:** Logic
+**Tags:** #ux #tokens #decision-logic #thresholds
+
+#### Quick Summary
+
+Restricting access to token-intensive or high-compute operations until a minimum confidence threshold is met.
+
+#### Details
+
+**The Constraint:**
+Generating customized bullets and summaries costs ~3,000 to 5,000 additional tokens. It is statistically futile to optimize a resume for a job where the base experience match is low.
+
+**The Solution:**
+Implement a gating threshold (e.g., 50% Fit Score):
+- **>= 50%:** Offer "Optimize Your Application" tools.
+- **< 50%:** Show "Match Low" warning and suggest better-fit roles instead.
+
+#### Key Insight
+
+User friction can be a feature when it prevents wasted resources and false hope.
+
+#### Cross-References
+
+- **Decision:** [Ask User Before Generating Summary](../sessions/2026-01/session-summary-2026-01-18_16-52.md#decision-1)
+- **Module:** [RA Quality Gates](../../optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md)
+
+---
+
+### Custom Keyword Hub
+
+**Category:** Concept
+**Tags:** #ui #data-integrity #keywords #user-intent
+
+#### Quick Summary
+
+A centralized state management pattern for user-defined keyword priorities that overrides JD-only extraction.
+
+#### Details
+
+**Three-List Logic:**
+1.  **EXTRACTED:** Keywords the AI found in the JD (Default state).
+2.  **USE (Prioritize):** Keywords the user explicitly wants emphasized.
+3.  **IGNORE (Exclude):** Keywords the user wants suppressed (e.g., irrelevant tech).
+
+**Authenticity Loop:**
+Custom keywords added by the user must be cross-referenced against the `tools_technologies` and `key_achievements` in the job history before being "Verified."
+
+#### Key Insight
+
+The user knows their "hidden" experience better than the resume; the Hub allows them to bring it forward safely.
+
+#### Cross-References
+
+- **Plan:** [v9.0.0 Keyword Management](../plans/v9.0.0-keyword-management.md)
+- **Concept:** [[concepts.md#keyword-evidence]]
+- **Rule:** [Guardrail #32](../../PROJECT-INSTRUCTIONS.md#guardrail-32)
 
 ---
 

@@ -2,8 +2,8 @@
 
 **Purpose:** Quick-reference navigation across all knowledge domains
 
-**Last Updated:** 2026-01-02
-**Total Entries:** 0 concepts, 0 patterns, 0 gotchas, 0 workflows
+**Last Updated:** 2026-01-19
+**Total Entries:** 14 concepts, 15 patterns, 10 gotchas, 8 workflows
 
 ---
 
@@ -35,7 +35,8 @@ Optimize-My-Resume Project
 └─ Workflows
    ├─ Documentation Update → [workflows.md#doc-update]
    ├─ Plan Mode → [workflows.md#plan-mode]
-   └─ Patch Creation → [workflows.md#patch]
+   ├─ Patch Creation → [workflows.md#patch]
+   └─ Application Optimization → [workflows.md#application-optimization]
 ```
 
 ---
@@ -43,12 +44,19 @@ Optimize-My-Resume Project
 ## Quick Links
 
 **Most Referenced:**
-- (To be populated as knowledge grows)
+- Shadow Modularization → [concepts.md#shadow-modularization]
+- Action Verb Categories → [concepts.md#action-verb-categories]
+- Surgical Updates → [concepts.md#surgical-updates]
 
 **Common Gotchas:**
-- (To be populated as patterns emerge)
+- Skills Not Appearing → [gotchas.md#skills-not-appearing]
+- Unverified Skill Hallucination → [gotchas.md#unverified-skill-hallucination]
+- Lost Content in Updates → [gotchas.md#lost-content-in-updates]
 
 **Recent Additions:**
+- Application Optimization Workflow (2026-01-19)
+- Custom Keyword Hub (2026-01-19)
+- Interactive Tag Toggling Pattern (2026-01-19)
 - Memory System Architecture (2026-01-02)
 
 ---
