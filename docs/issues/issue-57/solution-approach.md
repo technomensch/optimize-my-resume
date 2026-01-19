@@ -1,4 +1,5 @@
 # Solution Approach: Binary File Content Extraction
+**Branch:** `feat/issue-57-binary-file-extraction`
 
 ## Overview
 
