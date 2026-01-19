@@ -1,4 +1,4 @@
-# Optimize-My-Resume System v9.0.0
+# Optimize-My-Resume System v9.0.1 <!-- v9.0.1 Change: Narrative Fit Verification -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
@@ -3845,6 +3845,16 @@
         4. **Integration:** If confirmed but unverified, incorporate it LIGHTLY (do not make it the central theme).
       </logic>
     </custom_keyword_evidence_guardrail>
+
+    <!-- MODULAR_SYNC: optimization-tools/narrative-generator/ng_summary-generation.md#narrative_fit_verification -->
+    <narrative_fit_verification id="33">
+      <instruction>
+        AFTER generating bullets, perform a self-audit:
+        1. Check if the top 3 hard requirements from the JD are addressed by at least one bullet.
+        2. If a top requirement is missing, explicitly note this in the "Optimization Notes" section as a "Narrative Gap".
+        3. Ensure the collective story aligns with the target role level.
+      </instruction>
+    </narrative_fit_verification>
     <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>
