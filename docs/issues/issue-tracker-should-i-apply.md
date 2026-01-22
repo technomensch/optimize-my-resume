@@ -70,6 +70,70 @@
 
 ## Open Issues
 
+### Issue #79: GUI Customized Bullets Using Wrong Context
+
+**Status:** 🔴 ACTIVE
+**Type:** 🐛 Bug
+**Priority:** High
+**Created:** 2026-01-22
+**GitHub Issue:** #79
+
+**Problem Description:**
+After job fit analysis, clicking "Optimize Your Application" generates bullets with:
+- Job title from JD instead of job history
+- Company from JD instead of job history
+- Only 1 position instead of all positions
+
+**Root Cause:**
+Ambiguous prompt in `generateCustomizedContent()` (line 667-734). AI interprets instruction as generating bullets FOR the JD position, not FROM the job history positions.
+
+**Current Behavior:**
+```json
+{
+  "customizedBullets": [
+    { "position": "Staff Engineer", "company": "BigCorp" }  // ❌ From JD
+  ]
+}
+```
+
+**Expected Behavior:**
+```json
+{
+  "customizedBullets": [
+    { "position": "Engineer", "company": "Acme" },          // ✅ From job history
+    { "position": "Senior Engineer", "company": "TechCo" }, // ✅ From job history
+    { "position": "Lead Engineer", "company": "StartupX" }  // ✅ From job history
+  ]
+}
+```
+
+**Affected Files:**
+| File | Changes |
+|------|---------|
+| `Should-I-Apply-webgui.jsx` | Lines 655-734: Rewrite generation prompt with explicit multi-position instructions |
+| `Should-I-Apply-local.jsx` | Same changes as webgui.jsx |
+
+**Solution:**
+- Rewrite opening statement to clarify "positions that meet chronology depth criteria"
+- Make chronology depth logic step 2 (FILTER before generation)
+- Add explicit instructions: "PARSE ALL POSITIONS", "DO NOT use JD's position/company"
+- Add missing guardrails: #3, #13, #15, portfolio_employment_labeling, verb distribution
+- Update character limit to ≤210 chars (ATS compliance)
+
+**Module References:**
+- `optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md` (chronology_depth_logic)
+- `optimization-tools/narrative-generator/ng_summary-generation.md` (Guardrails #3, #13, #15, #33)
+- `optimization-tools/bullet-optimizer/bo_keyword_handling.md` (Guardrail #32)
+- `core/format-rules.md` (character limits)
+- `core/verb-categories.md` (distribution targets)
+
+**Workaround:**
+None - users must manually correct position titles and companies in generated output.
+
+**Documentation:** [docs/issues/issue-79/](docs/issues/issue-79/)
+
+---
+
 ### Issue #57: Binary File Content Extraction
 
 **Status:** 🟡 PENDING
