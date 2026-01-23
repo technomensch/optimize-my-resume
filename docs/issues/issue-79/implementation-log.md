@@ -151,10 +151,27 @@
 - **Labels:** bug, high-priority (added)
 - **Status:** Ready for testing
 
-## Next Steps (USER TESTING PHASE)
+## 2026-01-23: Bug Discovery (v9.2.1)
 
-1. Test with 3-position job history (see test-cases.md for detailed steps)
-2. Verify chronology depth logic filtering works correctly
-3. Verify multi-position output structure
-4. Merge PR to main when testing complete
-5. Move to docs/issues/Closed/issue-79/ when verified
+**Issue:** Generated bullets are not displaying in the UI.
+**Status:** 🔴 BUG IDENTIFIED
+**Impact:** High - Feature is unusable despite successful generation.
+
+### Findings:
+- The LLM *is* generating the JSON correctly (verified via console logs).
+- The `generateWithValidationLoop` is running successfully.
+- **Root Cause:** `validatePositionMetadata` is deleting valid bullets because it cannot find a match in the `referenceHistory`.
+- `parseOriginalHistory` is returning an empty array or failing to extract certain positions, causing the validator to skip those bullets during the `correctedBullets` construction.
+
+### Next Steps:
+- Create v9.2.2 plan to fix the validation logic.
+- Implement robust parsing fallback.
+- Ensure all bullets are preserved in the `correctedContent` even if metadata matches fail.
+
+---
+
+## Next Steps (v9.2.2 PHASE)
+
+1. Implement v9.2.2 fix for bullet display.
+2. Verify with messy job history.
+3. Update GitHub issue #79 with internal findings.
