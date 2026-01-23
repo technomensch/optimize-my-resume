@@ -170,8 +170,69 @@
 
 ---
 
-## Next Steps (v9.2.2 PHASE)
+## 2026-01-23: v9.2.2 Planning Phase - Root Cause Analysis Complete
 
-1. Implement v9.2.2 fix for bullet display.
-2. Verify with messy job history.
-3. Update GitHub issue #79 with internal findings.
+**Status:** 🟡 PLANNING PHASE
+**Finding:** Bug identified and root causes documented
+**Impact:** Critical - Feature unusable despite successful generation
+**Phase:** Switching to implementation (awaiting approval)
+
+### Root Causes Identified
+
+1. **Brittle `parseOriginalHistory()` (Line 3853)**
+   - Returns empty array `[]` on LLM parsing failure
+   - No regex fallback mechanism
+   - Empty reference → `validatePositionMetadata()` can't match → deletes all bullets
+
+2. **Destructive `validatePositionMetadata()` (Line 2548)**
+   - When job not found in reference history, executes `return` before pushing bullet
+   - Logic: `if (!matchingJob) { errors.push(...); return; }` → bullet dropped
+   - Should preserve bullet and downgrade severity to WARNING
+
+3. **No Graceful Degradation**
+   - `validateAndCorrectLLMResponse()` crashes when `referenceHistory.positions` is empty
+   - Should skip position validators and run content-only validators instead
+
+### v9.2.2 Solution Plan
+
+**File:** [docs/plans/v9.2.2-fix-bullet-display-bug.md](../plans/v9.2.2-fix-bullet-display-bug.md)
+
+**Scope:** Critical bugs only (modularization deferred to v9.2.3)
+
+**4 Implementation Tasks:**
+1. Fix `parseOriginalHistory()` with regex fallback (3 patterns + Levenshtein distance)
+2. Fix `validatePositionMetadata()` to be non-destructive (always preserve bullets)
+3. Add `findBestMatch()` helper (4-strategy: exact → fuzzy → Levenshtein → overlap)
+4. Update `validateAndCorrectLLMResponse()` to handle empty reference gracefully
+
+**Expected Outcome:**
+- Bullets display even if history parsing fails (messy input)
+- All historical positions included (filtered by chronology)
+- Keyword coverage report shows accurate counts
+- Regeneration loop continues to work
+
+### v9.2.3 Deferred Work
+
+**File:** [docs/plans/v9.2.3-modularization.md](../plans/v9.2.3-modularization.md)
+
+**Scope:** Modularize validators to reduce file size
+
+- Split 3949 lines into 7 modules under `src/validators/`
+- Keep UI file under 2000 lines for Artifacts compatibility
+- Add unit tests for each validator
+- Maintains all functionality from v9.2.2
+
+**Reason for Deferral:** At 42% token usage, full modularization + implementation risks incomplete work. Split approach ensures v9.2.2 completion first.
+
+---
+
+## Next Steps (v9.2.2 IMPLEMENTATION PHASE)
+
+1. ✅ Create comprehensive analysis (Opus completed)
+2. ✅ Document root causes and fix strategy (this log)
+3. ⏳ Implement v9.2.2 bug fixes in Should-I-Apply-local.jsx
+4. ⏳ Verify bullets display with messy job history
+5. ⏳ Test regeneration loop still works
+6. ⏳ Apply same fixes to Should-I-Apply-webgui.jsx
+7. ⏳ Commit v9.2.2 to origin
+8. ⏳ Plan v9.2.3 modularization (separate session)
