@@ -1,22 +1,31 @@
-# Issue #84: LLM Constraint Workflows and Safety Patterns
+# Issue #84: [Implementation] Safe Validation Pipeline Implementation
 
-**Title:** Standardizing LLM Constraints and Safety Patterns
+**Type:** Enhancement / Safety Implementation
+**Priority:** Critical
 **Status:** 🔴 ACTIVE
-**Priority:** High
-**Created:** 2026-01-23
+**Branch:** `v9.2.2-fix-bullet-display-bug`
 
-## Description
-LLMs frequently ignore negative constraints and fail to stop on errors. This issue standardizes the mitigation strategy by implementing specialized /read-only-analysis and /execute-plan workflows, and formalizing ADR-005.
+## Problem Statement
 
-## Current Behavior
-The model may continue generating code or making "improvements" even when explicitly told not to, leading to loops or deviations from pre-approved plans.
+The job fit analysis validation layer was designed in v9.2.1 but never implemented. This resulted in "hallucinated" position titles being dropped by the UI during generation, causing the "disappearing bullets" bug. 
 
-## Expected Behavior
-The agent should adhere to strict behavioral locks when activated by a slash command, halting on ambiguity and quoting plan sources before modification.
+Additionally, we lack a robust "Gold Master" parsing strategy for job history, making the generation fragile when faced with non-standard history formats.
 
-## Implementation Plan
-See: [v9.2.1.1-working-with-llms.md](../../plans/v9.2.1.1-working-with-llms.md)
+## Goals
+
+1. **Implementation from Scratch**: Build the 13-validator pipeline designed in v9.2.1.
+2. **Safety Patterns**: Incorporate v9.2.2 patterns (Non-destructive validation, Graceful degradation, Regex Fallback).
+3. **Zero Data Loss**: Ensure that failing a validation check never results in the silent deletion of generated content.
+
+## Solution Approach
+
+1. Implement `parseOriginalHistory()` with dual-mode parsing (LLM + Regex).
+2. Implement `validateAndCorrectLLMResponse()` with the full set of 13 guardrail checks.
+3. Integrate the pipeline into the `generateCustomizedContent()` loop.
 
 ## Documentation
-- [Solution Approach](./solution-approach.md)
-- [Test Cases](./test-cases.md)
+
+- **Plan**: [docs/plans/v9.2.2-fix-bullet-display-bug.md](../../plans/v9.2.2-fix-bullet-display-bug.md)
+- **ADR**: [ADR-005: LLM Constraint Engineering](../../decisions/ADR-005-llm-constraint-engineering.md)
+- **Solution Approach**: [./solution-approach.md](./solution-approach.md)
+- **Test Cases**: [./test-cases.md](./test-cases.md)

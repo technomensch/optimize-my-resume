@@ -2445,15 +2445,17 @@ function extractJobHistoryFromLLMOutput(customizedBullets) {
 
 /**
  * Calculates experience level from job history
+ * v9.2.2: Handle object structure from parseOriginalHistory
  */
 function determineExperienceLevel(jobHistory) {
-  if (!jobHistory || jobHistory.length === 0) return 'entry';
+  const positions = Array.isArray(jobHistory) ? jobHistory : (jobHistory?.positions || []);
+  if (positions.length === 0) return 'entry';
 
   // Calculate total years of experience from all positions
   const CURRENT_YEAR = 2026;
   let totalYears = 0;
 
-  jobHistory.forEach(job => {
+  positions.forEach(job => {
     const endYear = job.dates.includes('Present') || job.dates.includes('present')
       ? CURRENT_YEAR
       : parseInt(job.dates.match(/\d{4}$/)?.[0] || CURRENT_YEAR);
@@ -2472,10 +2474,8 @@ function determineExperienceLevel(jobHistory) {
  */
 function autoCorrectPositions(customizedBullets, eligiblePositions, jobHistory) {
   return customizedBullets.map(bullet => {
-    const matchingJob = jobHistory.find(job =>
-      job.position.toLowerCase().includes(bullet.position.toLowerCase()) ||
-      bullet.position.toLowerCase().includes(job.position.toLowerCase())
-    );
+    // v9.2.2: Use findBestMatch for robust correction
+    const matchingJob = findBestMatch(bullet.position, jobHistory);
 
     if (matchingJob) {
       return {
@@ -2487,6 +2487,58 @@ function autoCorrectPositions(customizedBullets, eligiblePositions, jobHistory) 
     }
     return bullet;
   });
+}
+
+/**
+ * Helper: findBestMatch
+ * v9.2.2: 4-strategy matching logic to prevent false negatives in metadata validation
+ */
+function findBestMatch(targetTitle, historyPositions) {
+  if (!targetTitle || !historyPositions || historyPositions.length === 0) return null;
+
+  const cleanTarget = targetTitle.toLowerCase().trim();
+  const targetWords = cleanTarget.split(/\s+/).filter(w => w.length > 2);
+
+  // Strategy 1: Exact match
+  let match = historyPositions.find(hp => hp.position.toLowerCase().trim() === cleanTarget);
+  if (match) return match;
+
+  // Strategy 2: Fuzzy contains
+  match = historyPositions.find(hp =>
+    hp.position.toLowerCase().includes(cleanTarget) ||
+    cleanTarget.includes(hp.position.toLowerCase())
+  );
+  if (match) return match;
+
+  // Strategy 3: Word overlap (> 50%)
+  match = historyPositions.find(hp => {
+    const historyWords = hp.position.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+    const overlap = targetWords.filter(w => historyWords.includes(w)).length;
+    const maxWords = Math.max(targetWords.length, historyWords.length);
+    return maxWords > 0 && overlap / maxWords > 0.5;
+  });
+  if (match) return match;
+
+  // Strategy 4: Levenshtein distance (Distance <= 3)
+  const levenshtein = (a, b) => {
+    const tmp = [];
+    for (let i = 0; i <= a.length; i++) tmp[i] = [i];
+    for (let j = 0; j <= b.length; j++) tmp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        tmp[i][j] = Math.min(
+          tmp[i - 1][j] + 1,
+          tmp[i][j - 1] + 1,
+          tmp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+        );
+      }
+    }
+    return tmp[a.length][b.length];
+  };
+
+  match = historyPositions.find(hp => levenshtein(cleanTarget, hp.position.toLowerCase().trim()) <= 3);
+
+  return match || null;
 }
 
 /**
@@ -2563,25 +2615,27 @@ function validateChronologyDepth(customizedBullets, jobHistory) {
 
 /**
  * Validator 2: Position Metadata
+ * v9.2.2: Fixed to be non-destructive (always preserve bullets)
  */
 function validatePositionMetadata(customizedBullets, jobHistory, jobDescription) {
   const errors = [];
   const correctedBullets = [];
 
   customizedBullets.forEach((bullet, idx) => {
-    const matchingJob = jobHistory.find(jh =>
-      jh.position.toLowerCase().includes(bullet.position.toLowerCase()) ||
-      bullet.position.toLowerCase().includes(jh.position.toLowerCase())
-    );
+    // v9.2.2: Use findBestMatch for robust lookup
+    const matchingJob = findBestMatch(bullet.position, jobHistory);
 
     if (!matchingJob) {
       errors.push({
         type: 'POSITION_NOT_IN_HISTORY',
         index: idx,
         llmPosition: bullet.position,
-        message: `Position "${bullet.position}" not found in job history`,
+        message: `Position "${bullet.position}" not found in job history (using fuzzy matching)`,
+        severity: 'WARNING', // v9.2.2: Downgraded to warning
         requiresRegeneration: false
       });
+      // v9.2.2: ALWAYS preserve bullet even if metadata match fails
+      correctedBullets.push({ ...bullet });
       return;
     }
 
@@ -3684,17 +3738,41 @@ function validateAndCorrectLLMResponse(
   honestLimitations = [],
   candidateProfile = {}
 ) {
+  // v9.2.2 Step 0: Graceful Degradation & Handle object structure
+  const historyPositions = Array.isArray(jobHistory) ? jobHistory : (jobHistory?.positions || []);
+
+  if (historyPositions.length === 0) {
+    console.warn('HIGH WARNING: Reference history is empty or invalid. Skipping validation to prevent data loss.');
+    return {
+      valid: false,
+      errors: [{
+        type: 'EMPTY_REFERENCE_HISTORY',
+        message: 'Reference history is empty. Skipping validation to prevent data loss.',
+        severity: 'HIGH',
+        requiresRegeneration: false
+      }],
+      warnings: ['Validation bypassed due to missing reference history.'],
+      correctedContent: parsedContent,
+      summary: {
+        totalValidators: 0,
+        errorsFound: 1,
+        warningsFound: 1,
+        autoCorrected: []
+      }
+    };
+  }
+
   const allErrors = [];
   const allWarnings = [];
   let correctedBullets = parsedContent.customizedBullets;
 
-  const chronologyResult = validateChronologyDepth(correctedBullets, jobHistory);
+  const chronologyResult = validateChronologyDepth(correctedBullets, historyPositions);
   if (!chronologyResult.valid) {
     allErrors.push(...chronologyResult.errors);
     correctedBullets = chronologyResult.correctedBullets;
   }
 
-  const metadataResult = validatePositionMetadata(correctedBullets, jobHistory, jobDescription);
+  const metadataResult = validatePositionMetadata(correctedBullets, historyPositions, jobDescription);
   if (!metadataResult.valid) {
     allErrors.push(...metadataResult.errors);
     correctedBullets = metadataResult.correctedBullets;
@@ -3716,7 +3794,7 @@ function validateAndCorrectLLMResponse(
     allErrors.push(...formatResult.errors);
   }
 
-  const traceabilityResult = validateMetricTraceability(correctedBullets, jobHistory);
+  const traceabilityResult = validateMetricTraceability(correctedBullets, historyPositions);
   if (!traceabilityResult.valid) {
     allErrors.push(...traceabilityResult.errors);
   }
@@ -3741,12 +3819,12 @@ function validateAndCorrectLLMResponse(
     allErrors.push(...phraseResult.errors);
   }
 
-  const preservationResult = validateMetricPreservation(correctedBullets, jobHistory);
+  const preservationResult = validateMetricPreservation(correctedBullets, historyPositions);
   if (!preservationResult.valid) {
     allErrors.push(...preservationResult.errors);
   }
 
-  const evidenceResult = validateKeywordEvidence(correctedBullets, jobHistory, useKeywords);
+  const evidenceResult = validateKeywordEvidence(correctedBullets, historyPositions, useKeywords);
   if (evidenceResult.warnings) {
     allWarnings.push(...evidenceResult.warnings);
   }
@@ -3868,42 +3946,84 @@ function parseJSONResponse(responseText) {
 
 /**
  * Parses the raw job history narrative into a structured format for validation
+ * v9.2.2: Added regex fallback and parsing metadata
  */
 async function parseOriginalHistory(selectedModel, jobHistorySource, resumeSource) {
   let content = '';
   if (jobHistorySource) content = jobHistorySource.content;
   else if (resumeSource) content = resumeSource.content;
 
-  if (!content) return [];
-
-  // For webgui, we might need a different LLM call pattern if OllamaService isn't exactly the same, 
-  // but assuming same interface for now.
-  const prompt = `Extract ALL positions from this job history. Return ONLY a JSON array of objects.
-  
-  Format:
-  [
-    {
-      "position": "Title",
-      "company": "Company",
-      "dates": "Start-End",
-      "isIndependent": true/false // true if independent, freelance, or portfolio project
-    }
-  ]
-  
-  Content:
-  ${content}`;
+  if (!content) return { positions: [], parsingMethod: 'failed', errors: ['No content to parse'] };
 
   try {
+    // First Pass: LLM Extraction
+    const prompt = `Extract ALL positions from this job history. Return ONLY a JSON array of objects.
+    
+    Format:
+    [
+      {
+        "position": "Title",
+        "company": "Company",
+        "dates": "Start-End",
+        "isIndependent": true/false
+      }
+    ]
+    
+    Content:
+    ${content}`;
+
     const response = await OllamaService.generate(selectedModel, prompt, { temperature: 0 });
-    let text = response.text.trim();
-    text = text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-    const start = text.indexOf('[');
-    const end = text.lastIndexOf(']');
-    return JSON.parse(text.substring(start, end + 1));
+    if (response.success) {
+      let text = response.text.trim();
+      text = text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+      const start = text.indexOf('[');
+      const end = text.lastIndexOf(']');
+      if (start !== -1 && end !== -1) {
+        const positions = JSON.parse(text.substring(start, end + 1));
+        return { positions, parsingMethod: 'llm', errors: [] };
+      }
+    }
   } catch (err) {
-    console.error('Failed to parse original history:', err);
-    return [];
+    console.warn('LLM history parsing failed, falling back to regex:', err);
   }
+
+  // FALLBACK: Regex parsing (v9.2.2 Safety)
+  const positions = [];
+  const lines = content.split('\n');
+
+  // Pattern A: Title at Company (Date range) - common in my resume format
+  const patternA = /^#*\s*([^|\n(]+)\s+(?:at|@)\s+([^|\n(]+)\s*\(([^)]+)\)/;
+  // Pattern B: Title | Company | Dates
+  const patternB = /^#*\s*([^|\n]+)\s*\|\s*([^|\n]+)\s*\|\s*([^|\n]+)/;
+
+  lines.forEach(line => {
+    let match = line.match(patternA);
+    if (match) {
+      positions.push({
+        position: match[1].trim(),
+        company: match[2].trim(),
+        dates: match[3].trim(),
+        isIndependent: match[1].toLowerCase().includes('independent') || match[1].toLowerCase().includes('portfolio')
+      });
+      return;
+    }
+
+    match = line.match(patternB);
+    if (match) {
+      positions.push({
+        position: match[1].trim(),
+        company: match[2].trim(),
+        dates: match[3].trim(),
+        isIndependent: match[1].toLowerCase().includes('independent') || match[1].toLowerCase().includes('portfolio')
+      });
+    }
+  });
+
+  return {
+    positions,
+    parsingMethod: positions.length > 0 ? 'regex' : 'failed',
+    errors: positions.length > 0 ? [] : ['Could not extract any positions from history']
+  };
 }
 
 /**
