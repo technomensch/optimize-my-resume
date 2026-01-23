@@ -32,5 +32,6 @@ To reliably constrain an LLM:
 3.  **Force Explicit Checks:** Make the model "show its work" for the constraint before doing the work.
 
 ## Related Resources
+- **ADR:** [ADR-005 - LLM Constraint Engineering](../../decisions/ADR-005-llm-constraint-engineering.md)
 - **Knowledge Graph:** [patterns.md - LLM Constraint Engineering](../../knowledge/patterns.md#llm-constraint-engineering)
 - **Session:** 2026-01-23 - Bug Fix & Planning

@@ -39,6 +39,13 @@ Use `/start-issue-tracking` when:
 
 ---
 
+## Step 0: Verification & Stop-on-Error (PRE-FLIGHT)
+
+Before initializing the issue tracker, explicitly state: **"MODE: READ-ONLY ANALYSIS. Establishing behavior locks..."** 
+Confirm that you will stop and ask the user directly if you encounter any issues, confusion, or ambiguous code paths.
+
+---
+
 ## Step 1: Verification (INTERACTIVE)
 
 **Ask the user these questions:**
@@ -122,6 +129,8 @@ ls -1 docs/enhancements/ 2>/dev/null | grep -E '^ENH-[0-9]+' | sort -V
 **For Enhancements:**
 - Format: `ENH-NNN` where NNN is zero-padded (001, 002, etc.)
 - Example: If ENH-001 exists, create ENH-002
+- **Local directory:** `docs/enhancements/ENH-002/` (supporting docs)
+- **Main plan:** `docs/plans/v[Major.Minor.0]-ENH-002-{slug}.md`
 
 **Confirm with user:**
 ```
@@ -148,14 +157,17 @@ mkdir -p docs/issues/issue-N/
 
 ### 3.2: For Enhancements
 ```bash
-# Create enhancement directory
+# Create enhancement directory for supporting docs
 mkdir -p docs/enhancements/ENH-NNN/
 
-# Enhancement will contain:
+# Enhancement supporting docs will contain:
 # - ENH-NNN-specification.md (requirements)
-# - implementation-plan.md (step-by-step plan)
+# - solution-approach.md (proposed implementation)
 # - test-cases.md (acceptance criteria)
 # - progress-log.md (work log)
+
+# Main implementation plan will be:
+# docs/plans/v[Major.Minor.0]-ENH-NNN-{slug}.md
 ```
 
 ---
@@ -163,9 +175,15 @@ mkdir -p docs/enhancements/ENH-NNN/
 ## Step 4: Generate Issue Documentation
 
 ### 4.1: Main Issue Document
-**File:** `docs/issues/issue-N/issue-N-{slug}.md`
+**File:** `docs/plans/v[Major.Minor.0]-[issue N]-{slug}.md` (for issues)
+**File:** `docs/plans/v[Major.Minor.Patch]-[issue N]-{slug}.md` (for patches)
 
-> **Note:** The `gh issue create` command below MUST use the `--body-file` flag pointing to `solution-approach.md` (or this description file) to ensure all technical details are visible in the GitHub UI. Do not use manual summaries.
+> **Note:** The `gh issue create` command below MUST use the `--body-file` flag pointing to this implementation plan to ensure all technical details are visible in the GitHub UI. Do not use manual summaries.
+
+This is the final implementation plan and should include at least references to:
+- docs/issues/issue-N/issue-N-description.md
+- docs/issues/issue-N/solution-approach.md
+- docs/issues/issue-N/test-cases.md
 
 **Action:**
 Read and use the template from: `docs/workflow-templates/issue_template.md`
@@ -188,15 +206,15 @@ Read and use the template from: `docs/workflow-templates/test-cases.md`
 
 ### 5.1: Create Feature Branch
 ```bash
-# For bugs
-git checkout -b fix/issue-N-brief-description
+# For issues (new minor version)
+git checkout -b v[Major.Minor.0]-[issue N]-brief-description
 
-# For enhancements
-git checkout -b feat/ENH-NNN-brief-description
+# For patches (patch version)
+git checkout -b v[Major.Minor.Patch]-[issue N]-brief-description
 
 # Examples
-git checkout -b fix/issue-7-json-truncation
-git checkout -b feat/ENH-001-token-tracking
+git checkout -b v9.2.0-issue-7-json-truncation
+git checkout -b v9.1.1-issue-7-json-truncation
 ```
 
 ### 5.2: Initial Commit
@@ -231,7 +249,7 @@ Status: Active
 ### 5.3: Push to Remote & Link Issue
 ```bash
 # Push branch
-git push -u origin fix/issue-N-brief-description
+git push -u origin v[Major.Minor.0]-[issue N]-brief-description
 
 # IMMEDIATELY create Draft PR to link branch to Issue (Prevent Governance Drift)
 gh pr create --draft --title "WIP: Issue #N - [Brief Title]" --body "Closes #N"
@@ -302,7 +320,7 @@ Add to "Known Issues" section:
 - docs/issues/issue-N/test-cases.md
 
 **Git Status:**
-- Branch: fix/issue-N-brief-description
+- Branch: v[Major.Minor.0]-[issue N]-brief-description
 - Committed: ✅
 - Pushed: ✅
 
@@ -366,9 +384,9 @@ Updates progress in issue docs
 ```
 
 **Output:**
-- Creates `docs/issues/issue-7/`
-- Files: issue-7-json-truncation.md, solution-approach.md, test-cases.md
-- Git branch: `fix/issue-7-json-truncation`
+- Creates `docs/issues/issue-7/` (supporting docs)
+- Creates `docs/plans/v9.2.0-issue-7-json-truncation.md` (main implementation plan)
+- Git branch: `v9.2.0-issue-7-json-truncation`
 - Commits and pushes documentation
 
 ### Example 2: Enhancement
@@ -379,9 +397,9 @@ Updates progress in issue docs
 ```
 
 **Output:**
-- Creates `docs/enhancements/ENH-001/`
-- Files: ENH-001-specification.md, implementation-plan.md, test-cases.md
-- Git branch: `feat/ENH-001-token-tracking`
+- Creates `docs/enhancements/ENH-001/` (supporting docs)
+- Creates `docs/plans/v9.2.0-ENH-001-token-tracking.md` (main implementation plan)
+- Git branch: `v9.2.0-ENH-001-token-tracking`
 - Commits and pushes documentation
 
 ---
@@ -452,15 +470,23 @@ git checkout -b fix/issue-N-description
 - `test-cases.md`
 - `implementation-log.md`
 
-**Enhancements:**
+**Enhancements (supporting docs in docs/enhancements/ENH-NNN/):**
 - `ENH-NNN-specification.md` (e.g., ENH-001-specification.md)
-- `implementation-plan.md`
+- `solution-approach.md`
 - `test-cases.md`
 - `progress-log.md`
 
+**Main Implementation Plan:**
+- `docs/plans/v[Major.Minor.0]-ENH-NNN-{slug}.md` (for enhancements)
+- `docs/plans/v[Major.Minor.Patch]-ENH-NNN-{slug}.md` (for enhancement patches)
+
 **Branch Names:**
-- `fix/issue-N-brief-slug` (e.g., fix/issue-7-json-truncation)
-- `feat/ENH-NNN-brief-slug` (e.g., feat/ENH-001-token-tracking)
+- For issues: `v[Major.Minor.0]-[issue N]-brief-slug` (e.g., v9.2.0-issue-7-json-truncation)
+- For patches: `v[Major.Minor.Patch]-[issue N]-brief-slug` (e.g., v9.1.1-issue-7-json-truncation)
+
+**Main Implementation Plan:**
+- For issues: `docs/plans/v[Major.Minor.0]-[issue N]-{slug}.md`
+- For patches: `docs/plans/v[Major.Minor.Patch]-[issue N]-{slug}.md`
 
 ---
 

@@ -1,8 +1,8 @@
 # Session Summaries Index
 
-**Total Sessions:** 4
-**Last Session:** 2026-01-19
-**Last Updated:** 2026-01-19
+**Total Sessions:** 5
+**Last Session:** 2026-01-23
+**Last Updated:** 2026-01-23
 
 ---
 
@@ -38,8 +38,9 @@ docs/sessions/
 
 ---
 
-## 2026-01 (4 sessions)
+## 2026-01 (5 sessions)
 
+- [2026-01-23 - v9.2.2 Bug Fix Planning & LLM Safety Hardening](2026-01/2026-01-23_v9-2-2-bug-fix-and-llm-safety-hardening.md) - Identified v9.2.1 display bug, implemented Issue #80 safety workflows, formalized ADR-005.
 - [2026-01-19 - v9.0.0 Keyword Management & Validation Hub](2026-01/2026-01-19_keyword-management-v9.md) - Implemented Issue #67 (UI) and #69 (Validation), synchronized Shadow Sync components.
 - [2026-01-16 - v8.5.3 Shadow Sync Completion](2026-01/2026-01-16_v8.5.3-shadow-sync-completion.md) - Fixed PROJECT-INSTRUCTIONS.md references, completed Shadow Sync for Issue #56.
 - [2026-01-15 - Workflow Refactor & Efficiency](2026-01/2026-01-15_workflow-refactor-efficiency.md) - Extracted 9 templates, refactored 4 workflows for < 12KB compliance, created `/doc-update` workflow.
