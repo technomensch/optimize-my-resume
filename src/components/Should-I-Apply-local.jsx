@@ -784,31 +784,33 @@ Return ONLY valid JSON with this exact structure:
   }
 }`;
 
-      const result = await OllamaService.generate(selectedModel, generationPrompt, {
-        temperature: 0.3,
-        max_tokens: 4000
+      // Call regeneration loop with all parameters needed for validation
+      const loopResult = await generateWithValidationLoop(
+        selectedModel,
+        generationPrompt,           // The full generation prompt (built earlier in function)
+        jobHistorySource,           // Raw job history for context
+        analysisResult.positionSummary, // Use analysis position summary for JD context
+        keywordsToUse,              // Keywords to incorporate
+        [],                         // Honest limitations (can be extracted from job history or state if added later)
+        {
+          temperature: 0.3,
+          max_tokens: 4000
+        },
+        resumeSource                // NEW: Pass resume source for history parsing
+      );
+
+      // ✅ Use the validated and auto-corrected content
+      setGeneratedContent(loopResult.content);
+
+      // Log validation summary
+      console.log('Validation Report:', {
+        attempts: loopResult.attempts,
+        success: loopResult.success,
+        summary: loopResult.validationResult.summary,
+        totalValidators: 25,
+        errorCount: loopResult.validationResult.errors.length,
+        warningCount: loopResult.validationResult.warnings.length
       });
-
-      if (!result.success) {
-        setSummaryError(`Failed to generate content: ${result.error}`);
-        return;
-      }
-
-      // Parse the response
-      let responseText = result.text.trim();
-      responseText = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-
-      const jsonStart = responseText.indexOf('{');
-      const jsonEnd = responseText.lastIndexOf('}');
-
-      if (jsonStart === -1 || jsonEnd === -1) {
-        throw new Error('No JSON found in response');
-      }
-
-      const jsonString = responseText.substring(jsonStart, jsonEnd + 1);
-      const parsedContent = JSON.parse(jsonString);
-
-      setGeneratedContent(parsedContent);
 
       // Auto-expand the new section
       const newExpanded = new Set(expandedSections);
@@ -2267,8 +2269,8 @@ Return ONLY valid JSON with this exact structure:
                                 <div>
                                   <p className="text-slate-400 text-xs mb-1">Role Alignment</p>
                                   <span className={`px-2 py-1 rounded text-xs font-medium ${generatedContent.narrativeVerification.roleLevelAlignment === 'Aligned'
-                                      ? 'bg-green-900/30 text-green-400'
-                                      : 'bg-yellow-900/30 text-yellow-400'
+                                    ? 'bg-green-900/30 text-green-400'
+                                    : 'bg-yellow-900/30 text-yellow-400'
                                     }`}>
                                     {generatedContent.narrativeVerification.roleLevelAlignment}
                                   </span>
@@ -2404,4 +2406,1544 @@ Return ONLY valid JSON with this exact structure:
       </div>
     </div>
   );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RESUME OPTIMIZATION HELPERS & VALIDATORS
+// ═══════════════════════════════════════════════════════════════
+
+/**
+ * Extract job history from LLM's parsed output for validation
+ */
+function extractJobHistoryFromLLMOutput(customizedBullets) {
+  return customizedBullets.map(pos => ({
+    position: pos.position,
+    company: pos.company,
+    dates: pos.dates,
+    bullets: pos.bullets.map(b => b.text)
+  }));
+}
+
+/**
+ * Calculates experience level from job history
+ */
+function determineExperienceLevel(jobHistory) {
+  if (!jobHistory || jobHistory.length === 0) return 'entry';
+
+  // Calculate total years of experience from all positions
+  const CURRENT_YEAR = 2026;
+  let totalYears = 0;
+
+  jobHistory.forEach(job => {
+    const endYear = job.dates.includes('Present') || job.dates.includes('present')
+      ? CURRENT_YEAR
+      : parseInt(job.dates.match(/\d{4}$/)?.[0] || CURRENT_YEAR);
+    const startYear = parseInt(job.dates.match(/^\d{4}/)?.[0] || endYear);
+    totalYears += (endYear - startYear);
+  });
+
+  if (totalYears <= 2) return 'entry';
+  if (totalYears <= 5) return 'mid';
+  if (totalYears <= 10) return 'senior';
+  return 'principal';
+}
+
+/**
+ * Auto-corrects position metadata to match job history
+ */
+function autoCorrectPositions(customizedBullets, eligiblePositions, jobHistory) {
+  return customizedBullets.map(bullet => {
+    const matchingJob = jobHistory.find(job =>
+      job.position.toLowerCase().includes(bullet.position.toLowerCase()) ||
+      bullet.position.toLowerCase().includes(job.position.toLowerCase())
+    );
+
+    if (matchingJob) {
+      return {
+        ...bullet,
+        position: matchingJob.position, // Replace with exact title from history
+        company: matchingJob.company,   // Replace with exact company from history
+        dates: matchingJob.dates        // Replace with exact dates from history
+      };
+    }
+    return bullet;
+  });
+}
+
+/**
+ * Validator 1: Chronology Depth
+ */
+function validateChronologyDepth(customizedBullets, jobHistory) {
+  const CURRENT_YEAR = 2026;
+  const RECENCY_THRESHOLD = 6;
+  const TENURE_THRESHOLD = 5;
+
+  const errors = [];
+  const eligiblePositions = [];
+
+  // Step 1: Calculate which positions SHOULD be included
+  jobHistory.forEach((job, idx) => {
+    const endYear = job.dates.includes('Present')
+      ? CURRENT_YEAR
+      : parseInt(job.dates.split('-')[1]);
+    const startYear = parseInt(job.dates.split('-')[0]);
+    const yearsSinceEnd = CURRENT_YEAR - endYear;
+    const jobDuration = endYear - startYear;
+
+    if (yearsSinceEnd <= RECENCY_THRESHOLD || job.dates.includes('Present')) {
+      eligiblePositions.push({ ...job, index: idx, reason: 'Recent/Current', bulletCount: '3-5' });
+    } else if (yearsSinceEnd > RECENCY_THRESHOLD && jobDuration >= TENURE_THRESHOLD) {
+      eligiblePositions.push({ ...job, index: idx, reason: 'Tenure Exception', bulletCount: '2-3' });
+    }
+  });
+
+  // Step 2: Validate LLM included all eligible positions
+  const llmPositionTitles = customizedBullets.map(p => p.position.toLowerCase().trim());
+  const missingPositions = eligiblePositions.filter(ep =>
+    !llmPositionTitles.includes(ep.position.toLowerCase().trim())
+  );
+
+  if (missingPositions.length > 0) {
+    errors.push({
+      type: 'MISSING_POSITIONS',
+      message: `Missing ${missingPositions.length} chronology-eligible position(s)`,
+      positions: missingPositions.map(p => p.position),
+      requiresRegeneration: false // Auto-corrected by skeleton
+    });
+  }
+
+  // Step 3: Validate LLM didn't include ineligible positions
+  const extraPositions = customizedBullets.filter(cb => {
+    const matchingJob = jobHistory.find(jh =>
+      jh.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
+    );
+    if (!matchingJob) return true; // Position not in job history at all
+
+    const isEligible = eligiblePositions.some(ep =>
+      ep.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
+    );
+    return !isEligible;
+  });
+
+  if (extraPositions.length > 0) {
+    errors.push({
+      type: 'EXTRA_POSITIONS',
+      message: `Included ${extraPositions.length} ineligible position(s)`,
+      positions: extraPositions.map(p => p.position),
+      requiresRegeneration: false // Auto-corrected by removal
+    });
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    eligiblePositions,
+    correctedBullets: errors.length > 0 ? autoCorrectPositions(customizedBullets, eligiblePositions, jobHistory) : customizedBullets
+  };
+}
+
+/**
+ * Validator 2: Position Metadata
+ */
+function validatePositionMetadata(customizedBullets, jobHistory, jobDescription) {
+  const errors = [];
+  const correctedBullets = [];
+
+  customizedBullets.forEach((bullet, idx) => {
+    const matchingJob = jobHistory.find(jh =>
+      jh.position.toLowerCase().includes(bullet.position.toLowerCase()) ||
+      bullet.position.toLowerCase().includes(jh.position.toLowerCase())
+    );
+
+    if (!matchingJob) {
+      errors.push({
+        type: 'POSITION_NOT_IN_HISTORY',
+        index: idx,
+        llmPosition: bullet.position,
+        message: `Position "${bullet.position}" not found in job history`,
+        requiresRegeneration: false
+      });
+      return;
+    }
+
+    const correctedBullet = { ...bullet };
+
+    const isIndependent = matchingJob.isIndependent ||
+      matchingJob.position.toLowerCase().includes('independent') ||
+      matchingJob.position.toLowerCase().includes('portfolio') ||
+      matchingJob.company.toLowerCase().includes('personal project') ||
+      matchingJob.company.toLowerCase().includes('independent');
+
+    if (bullet.position !== matchingJob.position) {
+      const hasSuffix = bullet.position.includes('(Independent Project)') ||
+        bullet.position.includes('(Portfolio Project)');
+
+      if (isIndependent && hasSuffix) {
+        // This is valid labeling, don't flag as error
+      } else {
+        errors.push({
+          type: 'WRONG_POSITION_TITLE',
+          index: idx,
+          llmValue: bullet.position,
+          correctValue: isIndependent ? `${matchingJob.position} (Independent Project)` : matchingJob.position,
+          message: `Position title mismatch`,
+          requiresRegeneration: false
+        });
+        correctedBullet.position = isIndependent ? `${matchingJob.position} (Independent Project)` : matchingJob.position;
+      }
+    }
+
+    if (bullet.company !== matchingJob.company) {
+      const usedJDCompany = bullet.company === jobDescription.company;
+      errors.push({
+        type: usedJDCompany ? 'USED_JD_COMPANY' : 'WRONG_COMPANY',
+        index: idx,
+        llmValue: bullet.company,
+        correctValue: matchingJob.company,
+        severity: usedJDCompany ? 'CRITICAL' : 'HIGH',
+        message: usedJDCompany
+          ? `Used JD company "${bullet.company}" instead of history company "${matchingJob.company}"`
+          : `Company mismatch`,
+        requiresRegeneration: false
+      });
+      correctedBullet.company = matchingJob.company;
+    }
+
+    if (bullet.dates !== matchingJob.dates) {
+      errors.push({
+        type: 'WRONG_DATES',
+        index: idx,
+        llmValue: bullet.dates,
+        correctValue: matchingJob.dates,
+        message: `Dates mismatch`,
+        requiresRegeneration: false
+      });
+      correctedBullet.dates = matchingJob.dates;
+    }
+
+    correctedBullets.push(correctedBullet);
+  });
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    correctedBullets
+  };
+}
+
+/**
+ * Validator 3: Chronological Order
+ */
+function validateChronologicalOrder(customizedBullets) {
+  const errors = [];
+
+  const bulletsWithYears = customizedBullets.map((bullet, idx) => {
+    const endYear = bullet.dates.includes('Present')
+      ? 9999
+      : parseInt(bullet.dates.split('-')[1]);
+    return { ...bullet, endYear, originalIndex: idx };
+  });
+
+  let isSorted = true;
+  for (let i = 0; i < bulletsWithYears.length - 1; i++) {
+    if (bulletsWithYears[i].endYear < bulletsWithYears[i + 1].endYear) {
+      isSorted = false;
+      errors.push({
+        type: 'WRONG_ORDER',
+        message: `Positions not in reverse chronological order`,
+        requiresRegeneration: false
+      });
+      break;
+    }
+  }
+
+  const sortedBullets = bulletsWithYears
+    .sort((a, b) => b.endYear - a.endYear)
+    .map(({ endYear, originalIndex, ...bullet }) => bullet);
+
+  return {
+    valid: isSorted,
+    errors,
+    correctedBullets: sortedBullets
+  };
+}
+
+/**
+ * Validator 4: Bullet Counts
+ */
+function validateBulletCounts(customizedBullets, eligiblePositions) {
+  const errors = [];
+
+  customizedBullets.forEach((bullet) => {
+    const eligible = eligiblePositions.find(ep =>
+      ep.position.toLowerCase().trim() === bullet.position.toLowerCase().trim()
+    );
+
+    if (!eligible) return;
+
+    const bulletCount = bullet.bullets.length;
+    const expectedRange = eligible.bulletCount;
+    const [min, max] = expectedRange.split('-').map(Number);
+
+    if (bulletCount < min || bulletCount > max) {
+      errors.push({
+        type: 'WRONG_BULLET_COUNT',
+        position: bullet.position,
+        actual: bulletCount,
+        expected: expectedRange,
+        severity: bulletCount === 1 ? 'CRITICAL' : 'HIGH',
+        message: `Position "${bullet.position}" has ${bulletCount} bullet(s), expected ${expectedRange}`,
+        requiresRegeneration: true
+      });
+    }
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 5: Bullet Format
+ */
+function validateBulletFormat(customizedBullets) {
+  const errors = [];
+  const CHAR_LIMIT = 210;
+  const VALID_CATEGORIES = ['Built', 'Lead', 'Managed', 'Improved', 'Collaborate'];
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      if (bullet.text.length > CHAR_LIMIT) {
+        errors.push({
+          type: 'CHAR_LIMIT_EXCEEDED',
+          position: position.position,
+          bulletIndex: bulletIdx,
+          actual: bullet.text.length,
+          limit: CHAR_LIMIT,
+          severity: 'CRITICAL',
+          message: `Bullet exceeds ${CHAR_LIMIT} char limit`,
+          requiresRegeneration: true
+        });
+      }
+
+      if (!VALID_CATEGORIES.includes(bullet.verbCategory)) {
+        errors.push({
+          type: 'INVALID_VERB_CATEGORY',
+          position: position.position,
+          bulletIndex: bulletIdx,
+          message: `Invalid verb category "${bullet.verbCategory}"`,
+          requiresRegeneration: true
+        });
+      }
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 6: Metric Traceability
+ */
+function validateMetricTraceability(customizedBullets, jobHistory) {
+  const errors = [];
+
+  const extractMetrics = (text) => {
+    const patterns = [
+      /\d+%/g,                    // Percentages
+      /\$[\d,]+[KMB]?/gi,        // Dollar amounts
+      /\d+\+?/g,                  // Numbers with optional +
+      /\d+x/gi                    // Multipliers
+    ];
+    const metrics = [];
+    patterns.forEach(pattern => {
+      const matches = text.match(pattern) || [];
+      metrics.push(...matches);
+    });
+    return [...new Set(metrics)];
+  };
+
+  customizedBullets.forEach((position) => {
+    const historyPosition = jobHistory.find(jh =>
+      jh.position.toLowerCase().trim() === position.position.toLowerCase().trim()
+    );
+
+    if (!historyPosition) return;
+
+    const originalMetrics = historyPosition.bullets
+      .flatMap(b => extractMetrics(b))
+      .map(m => m.toLowerCase());
+
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const bulletMetrics = extractMetrics(bullet.text);
+
+      bulletMetrics.forEach(metric => {
+        const metricLower = metric.toLowerCase();
+        if (!originalMetrics.some(om => om === metricLower || metricLower.includes(om) || om.includes(metricLower))) {
+          const otherPositionHasMetric = jobHistory.some((jh) => {
+            if (jh.position === historyPosition.position) return false;
+            const otherMetrics = jh.bullets.flatMap(b => extractMetrics(b)).map(m => m.toLowerCase());
+            return otherMetrics.some(om => om === metricLower);
+          });
+
+          if (otherPositionHasMetric) {
+            errors.push({
+              type: 'METRIC_WRONG_POSITION',
+              position: position.position,
+              bulletIndex: bulletIdx,
+              metric: metric,
+              severity: 'HIGH',
+              message: `Metric "${metric}" in "${position.position}" appears to be from a different position`,
+              requiresRegeneration: true
+            });
+          }
+        }
+      });
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 7: Summary Abstraction
+ */
+function validateSummaryAbstraction(professionalSummary, customizedBullets) {
+  const errors = [];
+
+  if (!professionalSummary || !professionalSummary.text) {
+    return { valid: true, errors: [] };
+  }
+
+  const stopWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'was', 'are', 'were', 'been', 'be', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'that', 'which', 'who', 'whom', 'this', 'these', 'those', 'it', 'its', 'as', 'from', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 'under', 'over']);
+
+  const extractKeywords = (text) => {
+    return text.toLowerCase()
+      .replace(/[^\w\s]/g, '')
+      .split(/\s+/)
+      .filter(word => word.length > 2 && !stopWords.has(word));
+  };
+
+  const summarySentences = professionalSummary.text.split(/[.!?]+/).filter(s => s.trim());
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const bulletKeywords = extractKeywords(bullet.text);
+
+      summarySentences.forEach((sentence, sentIdx) => {
+        const sentenceKeywords = extractKeywords(sentence);
+        if (sentenceKeywords.length === 0) return;
+
+        const overlap = sentenceKeywords.filter(k => bulletKeywords.includes(k));
+        const overlapPercentage = overlap.length / sentenceKeywords.length;
+
+        if (overlapPercentage > 0.50) {
+          errors.push({
+            type: 'SUMMARY_ECHOES_BULLET',
+            sentenceIndex: sentIdx,
+            position: position.position,
+            bulletIndex: bulletIdx,
+            overlapPercentage: Math.round(overlapPercentage * 100),
+            severity: 'HIGH',
+            message: `Summary sentence ${sentIdx + 1} shares ${Math.round(overlapPercentage * 100)}% keywords with bullet`,
+            requiresRegeneration: true
+          });
+        }
+      });
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 8: Verb Diversity
+ */
+function validateVerbDiversity(customizedBullets) {
+  const errors = [];
+
+  customizedBullets.forEach((position) => {
+    const verbCounts = {};
+
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const category = bullet.verbCategory;
+      if (!category) return;
+
+      if (!verbCounts[category]) {
+        verbCounts[category] = [];
+      }
+      verbCounts[category].push(bulletIdx);
+    });
+
+    Object.entries(verbCounts).forEach(([category, indices]) => {
+      if (indices.length > 1) {
+        errors.push({
+          type: 'VERB_CATEGORY_REPEATED',
+          position: position.position,
+          category: category,
+          bulletIndices: indices,
+          count: indices.length,
+          severity: 'MEDIUM',
+          message: `Position "${position.position}" uses verb category "${category}" ${indices.length} times`,
+          requiresRegeneration: true
+        });
+      }
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 9: Summary Metrics
+ */
+function validateSummaryMetrics(professionalSummary, customizedBullets) {
+  const errors = [];
+
+  if (!professionalSummary || !professionalSummary.text) {
+    return { valid: true, errors: [] };
+  }
+
+  const extractMetrics = (text) => {
+    const patterns = [
+      /\d+%/g,
+      /\$[\d,]+[KMB]?/gi,
+      /\d+\+?\s*(years?|yrs?)/gi,
+      /\d+\+?\s*(teams?|engineers?|stakeholders?|members?)/gi,
+      /\d+x/gi,
+      /\b\d{2,}\b/g
+    ];
+    const metrics = [];
+    patterns.forEach(pattern => {
+      const matches = text.match(pattern) || [];
+      metrics.push(...matches);
+    });
+    return [...new Set(metrics)];
+  };
+
+  const summaryMetrics = extractMetrics(professionalSummary.text);
+  const allBulletTexts = customizedBullets.flatMap(pos => pos.bullets.map(b => b.text)).join(' ');
+
+  summaryMetrics.forEach(metric => {
+    if (/\d+\+?\s*(years?|yrs?)/i.test(metric)) return;
+
+    const metricNumber = metric.match(/\d+/)?.[0];
+    if (metricNumber && !allBulletTexts.includes(metricNumber)) {
+      errors.push({
+        type: 'SUMMARY_METRIC_NOT_TRACEABLE',
+        metric: metric,
+        severity: 'HIGH',
+        message: `Summary metric "${metric}" not found in any bullet`,
+        requiresRegeneration: true
+      });
+    }
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 10: Phrase Repetition
+ */
+function validatePhraseRepetition(professionalSummary, customizedBullets) {
+  const errors = [];
+
+  const allTexts = [];
+  if (professionalSummary?.text) allTexts.push(professionalSummary.text);
+  customizedBullets.forEach(pos => pos.bullets.forEach(b => allTexts.push(b.text)));
+
+  const combinedText = allTexts.join(' ').toLowerCase();
+
+  const extractNGrams = (text, n) => {
+    const words = text.replace(/[^\w\s]/g, '').split(/\s+/).filter(w => w.length > 2);
+    const ngrams = {};
+    for (let i = 0; i <= words.length - n; i++) {
+      const phrase = words.slice(i, i + n).join(' ');
+      if (phrase.length > 8) ngrams[phrase] = (ngrams[phrase] || 0) + 1;
+    }
+    return ngrams;
+  };
+
+  [3, 4, 5].forEach(n => {
+    const ngrams = extractNGrams(combinedText, n);
+    Object.entries(ngrams).forEach(([phrase, count]) => {
+      if (count >= 3) {
+        errors.push({
+          type: 'PHRASE_REPEATED',
+          phrase: phrase,
+          count: count,
+          severity: 'MEDIUM',
+          message: `Phrase "${phrase}" repeated ${count} times`,
+          requiresRegeneration: true
+        });
+      }
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 11: Metric Preservation
+ */
+function validateMetricPreservation(customizedBullets, jobHistory) {
+  const errors = [];
+
+  const extractMetrics = (text) => {
+    const patterns = [/\d+%/g, /\$[\d,]+[KMB]?/gi, /\d+x/gi, /\b\d{2,}\b/g];
+    const metrics = [];
+    patterns.forEach(pattern => {
+      const matches = text.match(pattern) || [];
+      metrics.push(...matches.map(m => m.toLowerCase()));
+    });
+    return [...new Set(metrics)];
+  };
+
+  customizedBullets.forEach((position) => {
+    const historyPosition = jobHistory.find(jh =>
+      jh.position.toLowerCase().trim() === position.position.toLowerCase().trim()
+    );
+    if (!historyPosition) return;
+
+    const originalMetrics = historyPosition.bullets.flatMap(b => extractMetrics(b));
+    const optimizedMetrics = position.bullets.flatMap(b => extractMetrics(b.text));
+
+    const lostMetrics = originalMetrics.filter(om =>
+      !optimizedMetrics.some(optM => optM === om || optM.includes(om) || om.includes(optM))
+    );
+
+    if (lostMetrics.length > 0) {
+      errors.push({
+        type: 'METRICS_LOST',
+        position: position.position,
+        lostMetrics: lostMetrics,
+        severity: 'HIGH',
+        message: `Position "${position.position}" lost metrics: ${lostMetrics.join(', ')}`,
+        requiresRegeneration: true
+      });
+    }
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 12: Keyword Evidence
+ */
+function validateKeywordEvidence(customizedBullets, jobHistory, useKeywords) {
+  const warnings = [];
+
+  const allHistoryText = jobHistory.flatMap(jh => jh.bullets).join(' ').toLowerCase();
+  const allOptimizedText = customizedBullets.flatMap(pos => pos.bullets.map(b => b.text)).join(' ').toLowerCase();
+
+  useKeywords.forEach(keyword => {
+    const keywordLower = keyword.toLowerCase().replace(/^custom:\s*/i, '');
+    if (allOptimizedText.includes(keywordLower) && !allHistoryText.includes(keywordLower)) {
+      warnings.push({
+        type: 'KEYWORD_NO_EVIDENCE',
+        keyword: keyword,
+        severity: 'WARNING',
+        message: `Keyword "${keyword}" used but has no evidence in job history`
+      });
+    }
+  });
+
+  return { valid: true, errors: [], warnings };
+}
+
+/**
+ * Validator 13: Narrative Fit
+ */
+function validateNarrativeFit(customizedBullets, narrativeVerification) {
+  const warnings = [];
+
+  if (narrativeVerification?.topRequirementsMet) {
+    const metCount = narrativeVerification.topRequirementsMet.length;
+    if (metCount < 3) {
+      warnings.push({
+        type: 'NARRATIVE_GAP',
+        severity: 'WARNING',
+        message: `Only ${metCount} of top 3 JD requirements addressed`
+      });
+    }
+  }
+
+  if (narrativeVerification?.narrativeGaps?.length > 0) {
+    narrativeVerification.narrativeGaps.forEach(gap => {
+      warnings.push({
+        type: 'NARRATIVE_GAP_ITEM',
+        severity: 'WARNING',
+        message: `Narrative gap: "${gap}" not addressed`
+      });
+    });
+  }
+
+  if (narrativeVerification?.roleLevelAlignment === 'Mismatch') {
+    warnings.push({
+      type: 'ROLE_LEVEL_MISMATCH',
+      severity: 'WARNING',
+      message: 'Role level mismatch between candidate experience and JD'
+    });
+  }
+
+  return { valid: true, errors: [], warnings };
+}
+
+/**
+ * Validator 14: Limitation Enforcement
+ */
+function validateLimitationEnforcement(customizedBullets, honestLimitations) {
+  const errors = [];
+
+  if (!honestLimitations || honestLimitations.length === 0) {
+    return { valid: true, errors: [] };
+  }
+
+  const limitationKeywords = honestLimitations.flatMap(limit => {
+    const matches = limit.match(/(?:no|limited|lacking|without)\s+(\w+(?:\s+\w+)?)/gi) || [];
+    return matches.map(m => m.replace(/^(no|limited|lacking|without)\s+/i, '').toLowerCase());
+  });
+
+  const allBulletText = customizedBullets
+    .flatMap(pos => pos.bullets.map(b => b.text))
+    .join(' ')
+    .toLowerCase();
+
+  limitationKeywords.forEach(keyword => {
+    if (allBulletText.includes(keyword)) {
+      errors.push({
+        type: 'LIMITATION_VIOLATED',
+        keyword: keyword,
+        severity: 'CRITICAL',
+        message: `Claimed skill "${keyword}" but it's listed in honest_limitations`,
+        requiresRegeneration: true
+      });
+    }
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 15: Skill Classification
+ */
+function validateSkillClassification(generatedContent) {
+  const errors = [];
+
+  const hardSkills = generatedContent.hardSkills || generatedContent.technicalSkills || [];
+  const softSkills = generatedContent.softSkills || [];
+
+  const hardSkillsLower = hardSkills.map(s => s.toLowerCase().trim());
+  const softSkillsLower = softSkills.map(s => s.toLowerCase().trim());
+
+  const overlap = hardSkillsLower.filter(s => softSkillsLower.includes(s));
+
+  overlap.forEach(skill => {
+    errors.push({
+      type: 'SKILL_DUAL_CLASSIFICATION',
+      skill: skill,
+      severity: 'MEDIUM',
+      message: `Skill "${skill}" classified as both hard and soft skill`,
+      requiresRegeneration: true
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 16: Budget Enforcement
+ */
+function validateBudgetEnforcement(customizedBullets, professionalSummary) {
+  const errors = [];
+  const MIN_CHAR = 100;
+  const MIN_WORDS = 350;
+  const MAX_WORDS = 500;
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const charCount = bullet.text.length;
+      if (charCount < MIN_CHAR) {
+        errors.push({
+          type: 'BULLET_TOO_SHORT',
+          position: position.position,
+          bulletIndex: bulletIdx,
+          actual: charCount,
+          minimum: MIN_CHAR,
+          severity: 'MEDIUM',
+          message: `Bullet has ${charCount} chars (min ${MIN_CHAR})`,
+          requiresRegeneration: true
+        });
+      }
+    });
+  });
+
+  const allBulletWords = customizedBullets
+    .flatMap(pos => pos.bullets.map(b => b.text))
+    .join(' ')
+    .split(/\s+/)
+    .filter(w => w.length > 0);
+
+  const summaryWords = professionalSummary?.text
+    ? professionalSummary.text.split(/\s+/).filter(w => w.length > 0)
+    : [];
+
+  const totalWords = allBulletWords.length + summaryWords.length;
+
+  if (totalWords < MIN_WORDS) {
+    errors.push({
+      type: 'TOTAL_WORDS_TOO_FEW',
+      actual: totalWords,
+      minimum: MIN_WORDS,
+      severity: 'MEDIUM',
+      message: `Total word count ${totalWords} (min ${MIN_WORDS})`,
+      requiresRegeneration: true
+    });
+  }
+
+  if (totalWords > MAX_WORDS) {
+    errors.push({
+      type: 'TOTAL_WORDS_TOO_MANY',
+      actual: totalWords,
+      maximum: MAX_WORDS,
+      severity: 'MEDIUM',
+      message: `Total word count ${totalWords} (max ${MAX_WORDS})`,
+      requiresRegeneration: true
+    });
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 17: Keyword Density
+ */
+function validateKeywordDensity(customizedBullets, useKeywords) {
+  const errors = [];
+  const MAX_KEYWORDS_PER_BULLET = 3;
+  const MAX_KEYWORD_REPEATS = 2;
+
+  const keywordsLower = useKeywords.map(k => k.toLowerCase().replace(/^custom:\s*/i, ''));
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const bulletLower = bullet.text.toLowerCase();
+      let keywordCount = 0;
+      const keywordCounts = {};
+
+      keywordsLower.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+        const matches = bulletLower.match(regex) || [];
+        if (matches.length > 0) {
+          keywordCount++;
+          keywordCounts[keyword] = matches.length;
+        }
+      });
+
+      if (keywordCount > MAX_KEYWORDS_PER_BULLET) {
+        errors.push({
+          type: 'TOO_MANY_KEYWORDS',
+          position: position.position,
+          bulletIndex: bulletIdx,
+          actual: keywordCount,
+          maximum: MAX_KEYWORDS_PER_BULLET,
+          severity: 'MEDIUM',
+          message: `Bullet has ${keywordCount} keywords (max ${MAX_KEYWORDS_PER_BULLET})`,
+          requiresRegeneration: true
+        });
+      }
+
+      Object.entries(keywordCounts).forEach(([keyword, count]) => {
+        if (count > MAX_KEYWORD_REPEATS) {
+          errors.push({
+            type: 'KEYWORD_REPEATED',
+            position: position.position,
+            bulletIndex: bulletIdx,
+            keyword: keyword,
+            count: count,
+            maximum: MAX_KEYWORD_REPEATS,
+            severity: 'MEDIUM',
+            message: `Keyword "${keyword}" used ${count} times in one bullet`,
+            requiresRegeneration: true
+          });
+        }
+      });
+    });
+  });
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 18: Metric Plausibility
+ */
+function validateMetricPlausibility(customizedBullets) {
+  const errors = [];
+  const warnings = [];
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const highPercentages = bullet.text.match(/\b(\d{3,})\s*%/g) || [];
+      highPercentages.forEach(match => {
+        const value = parseInt(match);
+        if (value > 100 && !bullet.text.toLowerCase().includes('growth') && !bullet.text.toLowerCase().includes('increase')) {
+          warnings.push({
+            type: 'HIGH_PERCENTAGE',
+            position: position.position,
+            bulletIndex: bulletIdx,
+            value: match,
+            severity: 'WARNING',
+            message: `Percentage ${match} may be implausible (>100%)`
+          });
+        }
+      });
+
+      const timeSavings = bullet.text.match(/reduced.*?by\s+(\d+)\s*%/gi) || [];
+      timeSavings.forEach(match => {
+        const value = parseInt(match.match(/\d+/)[0]);
+        if (value > 100) {
+          errors.push({
+            type: 'IMPOSSIBLE_TIME_SAVINGS',
+            position: position.position,
+            bulletIndex: bulletIdx,
+            value: value,
+            severity: 'HIGH',
+            message: `Time savings of ${value}% is impossible`,
+            requiresRegeneration: true
+          });
+        }
+      });
+
+      const largeNumbers = bullet.text.match(/\b(\d{7,})\b/g) || [];
+      largeNumbers.forEach(num => {
+        if (!bullet.text.includes('$') && !bullet.text.toLowerCase().includes('revenue')) {
+          warnings.push({
+            type: 'LARGE_NUMBER',
+            position: position.position,
+            bulletIndex: bulletIdx,
+            value: num,
+            severity: 'WARNING',
+            message: `Large number ${num} may need verification`
+          });
+        }
+      });
+    });
+  });
+
+  return { valid: errors.length === 0, errors, warnings };
+}
+
+/**
+ * Validator 19: Scope Attribution
+ */
+function validateScopeAttribution(customizedBullets, candidateProfile) {
+  const warnings = [];
+
+  const seniorScopePhrases = [
+    'company-wide', 'enterprise-wide', 'organization-wide',
+    'global', 'international', 'multinational',
+    'C-suite', 'executive', 'board',
+    'millions', 'billion',
+    'hundreds of employees', '1000+ employees'
+  ];
+
+  const isJunior = candidateProfile?.experienceLevel === 'junior' ||
+    candidateProfile?.yearsExperience < 3;
+
+  if (!isJunior) {
+    return { valid: true, errors: [], warnings: [] };
+  }
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      const bulletLower = bullet.text.toLowerCase();
+
+      seniorScopePhrases.forEach(phrase => {
+        if (bulletLower.includes(phrase.toLowerCase())) {
+          warnings.push({
+            type: 'SCOPE_MISMATCH',
+            position: position.position,
+            bulletIndex: bulletIdx,
+            phrase: phrase,
+            severity: 'WARNING',
+            message: `Phrase "${phrase}" may be too senior for candidate level`
+          });
+        }
+      });
+    });
+  });
+
+  return { valid: true, errors: [], warnings };
+}
+
+/**
+ * Validator 20: Em-Dash
+ */
+function validateEmDash(customizedBullets, professionalSummary) {
+  const errors = [];
+
+  const checkForEmDash = (text, location) => {
+    if (text.includes('—') || text.includes('–')) {
+      errors.push({
+        type: 'EM_DASH_FOUND',
+        location: location,
+        severity: 'MEDIUM',
+        message: `Em-dash/en-dash found in ${location} - may break ATS`,
+        requiresRegeneration: true
+      });
+    }
+  };
+
+  customizedBullets.forEach((position) => {
+    position.bullets.forEach((bullet, bulletIdx) => {
+      checkForEmDash(bullet.text, `${position.position} bullet ${bulletIdx + 1}`);
+    });
+  });
+
+  if (professionalSummary?.text) {
+    checkForEmDash(professionalSummary.text, 'Professional Summary');
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+
+/**
+ * Validator 21: Verb Distribution
+ */
+function validateVerbDistribution(customizedBullets) {
+  const warnings = [];
+  const VALID_CATEGORIES = ['Built', 'Lead', 'Managed', 'Improved', 'Collaborate'];
+  const THRESHOLD_PERCENT = 5;
+  const BALANCED_MIN = 13;
+  const BALANCED_MAX = 27;
+
+  const categoryCounts = {};
+  VALID_CATEGORIES.forEach(cat => categoryCounts[cat] = 0);
+
+  let totalBullets = 0;
+  customizedBullets.forEach(position => {
+    position.bullets.forEach(bullet => {
+      totalBullets++;
+      const cat = bullet.verbCategory;
+      if (cat && categoryCounts.hasOwnProperty(cat)) {
+        categoryCounts[cat]++;
+      }
+    });
+  });
+
+  const distribution = {};
+  VALID_CATEGORIES.forEach(cat => {
+    const count = categoryCounts[cat];
+    const percent = totalBullets > 0 ? (count / totalBullets) * 100 : 0;
+    let status;
+
+    if (percent >= 28) {
+      status = 'Over-Represented';
+      warnings.push({
+        type: 'VERB_OVER_REPRESENTED',
+        category: cat,
+        percent: Math.round(percent),
+        severity: 'WARNING',
+        message: `"${cat}" over-represented (${Math.round(percent)}%)`
+      });
+    } else if (percent >= BALANCED_MIN && percent <= BALANCED_MAX) {
+      status = 'Well Balanced';
+    } else if (percent >= THRESHOLD_PERCENT) {
+      status = 'Under-Represented';
+      warnings.push({
+        type: 'VERB_UNDER_REPRESENTED',
+        category: cat,
+        percent: Math.round(percent),
+        severity: 'WARNING',
+        message: `"${cat}" under-represented (${Math.round(percent)}%)`
+      });
+    } else {
+      status = 'Critical Gap';
+      warnings.push({
+        type: 'VERB_CRITICAL_GAP',
+        category: cat,
+        percent: Math.round(percent),
+        severity: 'WARNING',
+        message: `"${cat}" critical gap (${Math.round(percent)}%)`
+      });
+    }
+
+    distribution[cat] = { count, percent: Math.round(percent), status };
+  });
+
+  return { valid: true, errors: [], warnings, distribution };
+}
+
+/**
+ * Validator 22: Metrics Density
+ */
+function validateMetricsDensity(customizedBullets) {
+  const warnings = [];
+  const TARGET_MIN = 70;
+  const TARGET_MAX = 80;
+
+  const metricPattern = /\d+%|\$[\d,]+[KMB]?|\d+x|\b\d{2,}\b|\d+\+?\s*(hours?|days?|weeks?|months?|years?)/gi;
+
+  let totalBullets = 0;
+  let bulletsWithMetrics = 0;
+
+  customizedBullets.forEach(position => {
+    position.bullets.forEach(bullet => {
+      totalBullets++;
+      metricPattern.lastIndex = 0;
+      if (metricPattern.test(bullet.text)) {
+        bulletsWithMetrics++;
+      }
+    });
+  });
+
+  const percent = totalBullets > 0 ? (bulletsWithMetrics / totalBullets) * 100 : 0;
+  const metricsReport = {
+    total: totalBullets,
+    withMetrics: bulletsWithMetrics,
+    percent: Math.round(percent),
+    target: `${TARGET_MIN}-${TARGET_MAX}%`,
+    status: percent >= TARGET_MIN ? 'On Target' : 'Below Target'
+  };
+
+  if (percent < TARGET_MIN) {
+    warnings.push({
+      type: 'METRICS_DENSITY_LOW',
+      actual: Math.round(percent),
+      target: TARGET_MIN,
+      severity: 'WARNING',
+      message: `Only ${Math.round(percent)}% of bullets have metrics (target: ${TARGET_MIN}%)`
+    });
+  }
+
+  return { valid: true, errors: [], warnings, metricsReport };
+}
+
+/**
+ * Validator 23: Keyword Evidence Tier
+ */
+function validateKeywordEvidenceTier(customizedBullets, useKeywords) {
+  const warnings = [];
+  const TIER1_VERBS = ['built', 'developed', 'implemented', 'deployed', 'configured', 'managed', 'administered', 'operated', 'maintained', 'engineered', 'architected', 'debugged', 'troubleshot', 'resolved', 'migrated', 'upgraded', 'scaled', 'optimized'];
+  const TIER3_VERBS = ['documented', 'wrote', 'researched', 'evaluated', 'assessed', 'analyzed', 'interviewed', 'gathered', 'trained', 'observed', 'shadowed'];
+
+  const evidenceReport = { tier1: [], tier2: [], tier3: [], notEvidenced: [] };
+
+  const allBulletText = customizedBullets
+    .flatMap(pos => pos.bullets.map(b => b.text.toLowerCase()))
+    .join(' ');
+
+  useKeywords.forEach(keyword => {
+    const keywordLower = keyword.toLowerCase().replace(/^custom:\s*/i, '');
+
+    if (!allBulletText.includes(keywordLower)) {
+      evidenceReport.notEvidenced.push(keyword);
+      return;
+    }
+
+    let evidenceTier = 2;
+
+    customizedBullets.forEach(position => {
+      position.bullets.forEach(bullet => {
+        if (bullet.text.toLowerCase().includes(keywordLower)) {
+          const bulletLower = bullet.text.toLowerCase();
+          const firstWord = bulletLower.split(/\s+/)[0];
+
+          if (TIER3_VERBS.some(v => firstWord.startsWith(v))) {
+            evidenceTier = 3;
+          } else if (TIER1_VERBS.some(v => firstWord.startsWith(v))) {
+            evidenceTier = 1;
+          }
+        }
+      });
+    });
+
+    if (evidenceTier === 3) {
+      warnings.push({
+        type: 'KEYWORD_DOCUMENTATION_ONLY',
+        keyword: keyword,
+        tier: 3,
+        severity: 'WARNING',
+        message: `"${keyword}" has documentation-only evidence`
+      });
+      evidenceReport.tier3.push(keyword);
+    } else if (evidenceTier === 2) {
+      evidenceReport.tier2.push(keyword);
+    } else {
+      evidenceReport.tier1.push(keyword);
+    }
+  });
+
+  return { valid: true, errors: [], warnings, evidenceReport };
+}
+
+/**
+ * Validator 24: Recency Weighting
+ */
+function validateRecencyWeighting(customizedBullets) {
+  const warnings = [];
+
+  if (customizedBullets.length === 0) {
+    return { valid: true, errors: [], warnings: [] };
+  }
+
+  const mostRecent = customizedBullets[0];
+
+  if (mostRecent.bullets.length < 3) {
+    warnings.push({
+      type: 'RECENT_POSITION_FEW_BULLETS',
+      position: mostRecent.position,
+      severity: 'WARNING',
+      message: `Most recent position has ${mostRecent.bullets.length} bullets (recommend 3+)`
+    });
+  }
+
+  const metricPattern = /\d+%|\$[\d,]+|\d+x|\b\d{2,}\b/g;
+  const metricCount = mostRecent.bullets
+    .map(b => (b.text.match(metricPattern) || []).length)
+    .reduce((a, b) => a + b, 0);
+
+  if (metricCount < 2) {
+    warnings.push({
+      type: 'RECENT_POSITION_FEW_METRICS',
+      position: mostRecent.position,
+      severity: 'WARNING',
+      message: `Most recent position has ${metricCount} metrics (recommend 2+)`
+    });
+  }
+
+  return { valid: true, errors: [], warnings };
+}
+
+/**
+ * Validator 25: Acronym Expansion
+ */
+function validateAcronymExpansion(customizedBullets, professionalSummary) {
+  const warnings = [];
+  const commonAcronyms = {
+    'ML': 'Machine Learning', 'AI': 'Artificial Intelligence', 'NLP': 'Natural Language Processing',
+    'API': 'Application Programming Interface', 'CI': 'Continuous Integration', 'CD': 'Continuous Deployment',
+    'AWS': 'Amazon Web Services', 'GCP': 'Google Cloud Platform', 'K8s': 'Kubernetes', 'ETL': 'Extract Transform Load',
+    'SQL': 'Structured Query Language', 'KPI': 'Key Performance Indicator', 'ROI': 'Return on Investment',
+    'SaaS': 'Software as a Service', 'REST': 'Representational State Transfer'
+  };
+
+  const allTexts = [];
+  if (professionalSummary?.text) allTexts.push(professionalSummary.text);
+  customizedBullets.forEach(pos => pos.bullets.forEach(b => allTexts.push(b.text)));
+
+  const combinedText = allTexts.join(' ');
+
+  Object.entries(commonAcronyms).forEach(([acronym, expansion]) => {
+    const acronymRegex = new RegExp(`\\b${acronym}\\b`, 'g');
+    const expansionLower = expansion.toLowerCase();
+
+    if (acronymRegex.test(combinedText)) {
+      const firstAcronymIndex = combinedText.search(acronymRegex);
+      const expansionIndex = combinedText.toLowerCase().indexOf(expansionLower);
+
+      if (expansionIndex === -1 || expansionIndex > firstAcronymIndex) {
+        warnings.push({
+          type: 'ACRONYM_NOT_EXPANDED',
+          acronym: acronym,
+          expansion: expansion,
+          severity: 'LOW',
+          message: `Acronym "${acronym}" not expanded on first use`
+        });
+      }
+    }
+  });
+
+  return { valid: true, errors: [], warnings };
+}
+
+/**
+ * Master validation pipeline
+ */
+function validateAndCorrectLLMResponse(
+  parsedContent,
+  jobHistory,
+  jobDescription,
+  useKeywords = [],
+  honestLimitations = [],
+  candidateProfile = {}
+) {
+  const allErrors = [];
+  const allWarnings = [];
+  let correctedBullets = parsedContent.customizedBullets;
+
+  const chronologyResult = validateChronologyDepth(correctedBullets, jobHistory);
+  if (!chronologyResult.valid) {
+    allErrors.push(...chronologyResult.errors);
+    correctedBullets = chronologyResult.correctedBullets;
+  }
+
+  const metadataResult = validatePositionMetadata(correctedBullets, jobHistory, jobDescription);
+  if (!metadataResult.valid) {
+    allErrors.push(...metadataResult.errors);
+    correctedBullets = metadataResult.correctedBullets;
+  }
+
+  const orderResult = validateChronologicalOrder(correctedBullets);
+  if (!orderResult.valid) {
+    allErrors.push(...orderResult.errors);
+    correctedBullets = orderResult.correctedBullets;
+  }
+
+  const bulletCountResult = validateBulletCounts(correctedBullets, chronologyResult.eligiblePositions);
+  if (!bulletCountResult.valid) {
+    allErrors.push(...bulletCountResult.errors);
+  }
+
+  const formatResult = validateBulletFormat(correctedBullets);
+  if (!formatResult.valid) {
+    allErrors.push(...formatResult.errors);
+  }
+
+  const traceabilityResult = validateMetricTraceability(correctedBullets, jobHistory);
+  if (!traceabilityResult.valid) {
+    allErrors.push(...traceabilityResult.errors);
+  }
+
+  const abstractionResult = validateSummaryAbstraction(parsedContent.professionalSummary, correctedBullets);
+  if (!abstractionResult.valid) {
+    allErrors.push(...abstractionResult.errors);
+  }
+
+  const verbResult = validateVerbDiversity(correctedBullets);
+  if (!verbResult.valid) {
+    allErrors.push(...verbResult.errors);
+  }
+
+  const summaryMetricsResult = validateSummaryMetrics(parsedContent.professionalSummary, correctedBullets);
+  if (!summaryMetricsResult.valid) {
+    allErrors.push(...summaryMetricsResult.errors);
+  }
+
+  const phraseResult = validatePhraseRepetition(parsedContent.professionalSummary, correctedBullets);
+  if (!phraseResult.valid) {
+    allErrors.push(...phraseResult.errors);
+  }
+
+  const preservationResult = validateMetricPreservation(correctedBullets, jobHistory);
+  if (!preservationResult.valid) {
+    allErrors.push(...preservationResult.errors);
+  }
+
+  const evidenceResult = validateKeywordEvidence(correctedBullets, jobHistory, useKeywords);
+  if (evidenceResult.warnings) {
+    allWarnings.push(...evidenceResult.warnings);
+  }
+
+  const narrativeResult = validateNarrativeFit(correctedBullets, parsedContent.narrativeVerification);
+  if (narrativeResult.warnings) {
+    allWarnings.push(...narrativeResult.warnings);
+  }
+
+  const limitationResult = validateLimitationEnforcement(correctedBullets, honestLimitations);
+  if (!limitationResult.valid) {
+    allErrors.push(...limitationResult.errors);
+  }
+
+  const skillResult = validateSkillClassification(parsedContent);
+  if (!skillResult.valid) {
+    allErrors.push(...skillResult.errors);
+  }
+
+  const budgetResult = validateBudgetEnforcement(correctedBullets, parsedContent.professionalSummary);
+  if (!budgetResult.valid) {
+    allErrors.push(...budgetResult.errors);
+  }
+
+  const densityResult = validateKeywordDensity(correctedBullets, useKeywords);
+  if (!densityResult.valid) {
+    allErrors.push(...densityResult.errors);
+  }
+
+  const plausibilityResult = validateMetricPlausibility(correctedBullets);
+  if (!plausibilityResult.valid) {
+    allErrors.push(...plausibilityResult.errors);
+  }
+  if (plausibilityResult.warnings) {
+    allWarnings.push(...plausibilityResult.warnings);
+  }
+
+  const scopeResult = validateScopeAttribution(correctedBullets, candidateProfile);
+  if (scopeResult.warnings) {
+    allWarnings.push(...scopeResult.warnings);
+  }
+
+  const emDashResult = validateEmDash(correctedBullets, parsedContent.professionalSummary);
+  if (!emDashResult.valid) {
+    allErrors.push(...emDashResult.errors);
+  }
+
+  const verbDistResult = validateVerbDistribution(correctedBullets);
+  if (verbDistResult.warnings) {
+    allWarnings.push(...verbDistResult.warnings);
+  }
+
+  const metricsDensityResult = validateMetricsDensity(correctedBullets);
+  if (metricsDensityResult.warnings) {
+    allWarnings.push(...metricsDensityResult.warnings);
+  }
+
+  const evidenceTierResult = validateKeywordEvidenceTier(correctedBullets, useKeywords);
+  if (evidenceTierResult.warnings) {
+    allWarnings.push(...evidenceTierResult.warnings);
+  }
+
+  const recencyResult = validateRecencyWeighting(correctedBullets);
+  if (recencyResult.warnings) {
+    allWarnings.push(...recencyResult.warnings);
+  }
+
+  const acronymResult = validateAcronymExpansion(correctedBullets, parsedContent.professionalSummary);
+  if (acronymResult.warnings) {
+    allWarnings.push(...acronymResult.warnings);
+  }
+
+  return {
+    valid: allErrors.length === 0,
+    errors: allErrors,
+    warnings: allWarnings,
+    summary: {
+      totalValidators: 25,
+      errorsFound: allErrors.length,
+      warningsFound: allWarnings.length,
+      autoCorrected: ['chronologicalOrder', 'positionMetadata', 'chronologyDepth']
+    },
+    reports: {
+      verbDistribution: verbDistResult.distribution,
+      metricsDensity: metricsDensityResult.metricsReport,
+      keywordEvidence: evidenceTierResult.evidenceReport
+    },
+    correctedContent: {
+      ...parsedContent,
+      customizedBullets: correctedBullets
+    }
+  };
+}
+
+/**
+ * LLM Call wrapper
+ */
+async function callLLM(model, prompt, options) {
+  const result = await OllamaService.generate(model, prompt, options);
+  if (!result.success) {
+    throw new Error(`LLM call failed: ${result.error}`);
+  }
+  return result.text;
+}
+
+/**
+ * JSON response parser
+ */
+function parseJSONResponse(responseText) {
+  let cleaned = responseText.trim();
+  cleaned = cleaned.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  const jsonStart = cleaned.indexOf('{');
+  const jsonEnd = cleaned.lastIndexOf('}');
+  if (jsonStart === -1 || jsonEnd === -1) {
+    throw new Error('No JSON found in response');
+  }
+  return JSON.parse(cleaned.substring(jsonStart, jsonEnd + 1));
+}
+
+/**
+ * Parses the raw job history narrative into a structured format for validation
+ */
+async function parseOriginalHistory(selectedModel, jobHistorySource, resumeSource) {
+  let content = '';
+  if (jobHistorySource) content = jobHistorySource.content;
+  else if (resumeSource) content = resumeSource.content;
+
+  if (!content) return [];
+
+  const prompt = `Extract ALL positions from this job history. Return ONLY a JSON array of objects.
+  
+  Format:
+  [
+    {
+      "position": "Title",
+      "company": "Company",
+      "dates": "Start-End",
+      "isIndependent": true/false // true if independent, freelance, or portfolio project
+    }
+  ]
+  
+  Content:
+  ${content}`;
+
+  try {
+    const response = await OllamaService.generate(selectedModel, prompt, { temperature: 0 });
+    let text = response.text.trim();
+    text = text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+    const start = text.indexOf('[');
+    const end = text.lastIndexOf(']');
+    return JSON.parse(text.substring(start, end + 1));
+  } catch (err) {
+    console.error('Failed to parse original history:', err);
+    return [];
+  }
+}
+
+/**
+ * Generation loop
+ */
+async function generateWithValidationLoop(
+  selectedModel,
+  baseGenerationPrompt,
+  jobHistorySource,
+  jobDescription,
+  keywordsToUse,
+  honestLimitations,
+  ollmaOptions = { temperature: 0.3, max_tokens: 4000 },
+  resumeSource = null // Added for history parsing
+) {
+  const MAX_ATTEMPTS = 3;
+  let attempt = 0;
+  let validationResult = null;
+  let parsedContent = null;
+
+  // NEW: Get a stable reference history BEFORE the loop
+  const referenceHistory = await parseOriginalHistory(selectedModel, jobHistorySource, resumeSource);
+  console.log('Reference History for Validation:', referenceHistory);
+
+  while (attempt < MAX_ATTEMPTS) {
+    attempt++;
+    let prompt = baseGenerationPrompt;
+
+    if (attempt > 1 && validationResult?.errors?.length > 0) {
+      const regenErrors = validationResult.errors.filter(e => e.requiresRegeneration);
+      if (regenErrors.length > 0) {
+        const errorMessages = regenErrors.map(e => `- ${e.message}`).join('\n');
+        prompt = `${baseGenerationPrompt}\n\nCRITICAL: Previous attempt failed validation - MUST FIX:\n${errorMessages}\n\nPlease regenerate addressing these issues.`;
+      }
+    }
+
+    try {
+      const response = await callLLM(selectedModel, prompt, ollmaOptions);
+      parsedContent = parseJSONResponse(response);
+
+      validationResult = validateAndCorrectLLMResponse(
+        parsedContent,
+        referenceHistory, // Use stable reference
+        jobDescription,
+        keywordsToUse,
+        honestLimitations,
+        { experienceLevel: determineExperienceLevel(referenceHistory) }
+      );
+
+      const regenErrors = validationResult.errors.filter(e => e.requiresRegeneration);
+      if (regenErrors.length === 0) break;
+    } catch (err) {
+      console.error(`Attempt ${attempt} failed:`, err);
+      if (attempt >= MAX_ATTEMPTS) throw err;
+    }
+  }
+
+  return {
+    content: validationResult.correctedContent,
+    validationResult,
+    attempts: attempt,
+    success: validationResult.errors.filter(e => e.requiresRegeneration).length === 0
+  };
 }

@@ -1,31 +1,47 @@
 {
   "ollama": [
     {
-      "id": "llama3.1:8b",
-      "name": "🦙 Llama 3.1",
-      "desc": "Recommended - Great balance of speed and quality",
+      "id": "llama3.1:8b-instruct-fp16",
+      "name": "🦙 Llama 3.1 8B FP16 ",
+      "desc": "Recommended",
       "recommended": true
     },
     {
-      "id": "mistral",
+      "id": "mistral:latest",
       "name": "⚡ Mistral",
-      "desc": "Fast - Quick analysis for shorter resumes"
+      "desc": "Fastest"
+    },
+    {
+      "id": "llama3.3:70b-instruct-q4_K_M",
+      "name": "⚡ Llama 3.3 70B",
+      "desc": "Smartest"
+    },
+    {
+      "id": "phi3:latest",
+      "name": "🎯 Phi3",
+      "desc": "Decisive"
     },
     {
       "id": "gemma2:9b",
-      "name": "📊 Gemma 2",
-      "desc": "Analytical - Detailed technical analysis"
+      "name": "🎯 Gemma2 9B",
+      "desc": "Thorough"
+    },
+    {
+      "id": "Qwen 2.5 32B",
+      "name": "Gemma 2",
+      "desc": "Code Expert"
+    },
+    {
+      "id": "deepseek-coder:33b",
+      "name": "✨ DeepSeek Coder 33B",
+      "desc": ""
     },
     {
       "id": "qwen2.5:7b",
-      "name": "✨ Qwen 2.5",
-      "desc": "Creative - Best for bullet rewrites"
-    },
-    {
-      "id": "phi3",
-      "name": "🎯 Phi-3",
-      "desc": "Precise - Accurate technical details"
+      "name": "✨ Qwen 2.5 7B",
+      "desc": "Creative"
     }
+
   ],
   "claude": [
     {

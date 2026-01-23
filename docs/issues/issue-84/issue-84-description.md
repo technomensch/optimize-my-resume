@@ -1,4 +1,4 @@
-# Issue #80: LLM Constraint Workflows and Safety Patterns
+# Issue #84: LLM Constraint Workflows and Safety Patterns
 
 **Title:** Standardizing LLM Constraints and Safety Patterns
 **Status:** 🔴 ACTIVE

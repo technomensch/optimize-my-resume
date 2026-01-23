@@ -14,7 +14,7 @@ This session addressed a critical bug in the v9.2.1 release where generated bull
 ## What We Built
 
 - **Implementation Plan:** [v9.2.2-fix-bullet-display-bug.md](../../plans/v9.2.2-fix-bullet-display-bug.md) - Plan to fix the metadata validation data loss.
-- **Issue Tracking:** [docs/issues/issue-80/](../../issues/issue-80/) - Initialized tracking for LLM safety workflows.
+- **Issue Tracking:** [docs/issues/issue-84/](../../issues/issue-84/) - Initialized tracking for LLM safety workflows.
 - **Workflows:**
     - [read-only-analysis.md](../../.agent/workflows/read-only-analysis.md) - Enforced non-destructive exploration state.
     - [execute-plan.md](../../.agent/workflows/execute-plan.md) - Zero-deviation literal execution mode.
@@ -46,18 +46,18 @@ This session addressed a critical bug in the v9.2.1 release where generated bull
 
 **Created:**
 - `docs/plans/v9.2.2-fix-bullet-display-bug.md`
-- `docs/plans/v9.2.1.1-issue-80-working-with-llms.md`
+- `docs/plans/v9.2.1.1-issue-84-working-with-llms.md`
 - `.agent/workflows/read-only-analysis.md`
 - `.agent/workflows/execute-plan.md`
 - `docs/decisions/ADR-005-llm-constraint-engineering.md`
 - `docs/lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md`
-- `docs/issues/issue-80/*`
+- `docs/issues/issue-84/*`
 
 ## Commits Created
 
 ```bash
 8a6775e - docs: update issue 79 and create v9.2.2 plan for bullet display fix
-e87a2d1 - docs(issue-80): create issue tracking for LLM constraints and safety patterns
+e87a2d1 - docs(issue-84): create issue tracking for LLM constraints and safety patterns
 ```
 
 ## Lessons Learned
