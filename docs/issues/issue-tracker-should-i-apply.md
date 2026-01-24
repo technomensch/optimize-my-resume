@@ -72,63 +72,70 @@
 
 ### Issue #79: GUI Customized Bullets Using Wrong Context
 
-**Status:** 🔴 ACTIVE
+**Status:** 🔴 ACTIVE (v9.2.4 - Bug Fixes Pending)
 **Type:** 🐛 Bug
 **Priority:** High
 **Created:** 2026-01-22
 **GitHub Issue:** #79
+**Branch:** `v9.2.3-modularization`
 
-**Problem Description:**
-After job fit analysis, clicking "Optimize Your Application" generates bullets with:
-- Job title from JD instead of job history
-- Company from JD instead of job history
-- Only 1 position instead of all positions
+---
 
-**Root Cause:**
-Ambiguous prompt in `generateCustomizedContent()` (line 667-734). AI interprets instruction as generating bullets FOR the JD position, not FROM the job history positions.
+#### Version Progress
 
-**Current Behavior:**
-```json
-{
-  "customizedBullets": [
-    { "position": "Staff Engineer", "company": "BigCorp" }  // ❌ From JD
-  ]
-}
-```
+| Version | Status | Scope | Session |
+|---------|--------|-------|---------|
+| v9.2.1 | ✅ Complete | Prompt rewrite (2407 lines) | 01-opus |
+| v9.2.2 | ✅ Complete | 25 validators (4076 lines) | 03-gemini |
+| v9.2.3 | ⚠️ Needs Commit | Modularization (8 modules, 1752 lines) | 05-gemini |
+| **v9.2.4** | 🎯 **NEXT** | Bug fixes + more modules | TBD |
 
-**Expected Behavior:**
-```json
-{
-  "customizedBullets": [
-    { "position": "Engineer", "company": "Acme" },          // ✅ From job history
-    { "position": "Senior Engineer", "company": "TechCo" }, // ✅ From job history
-    { "position": "Lead Engineer", "company": "StartupX" }  // ✅ From job history
-  ]
-}
-```
+---
 
-**Affected Files:**
-| File | Changes |
-|------|---------|
-| `Should-I-Apply-webgui.jsx` | Lines 655-734: Rewrite generation prompt with explicit multi-position instructions |
-| `Should-I-Apply-local.jsx` | Same changes as webgui.jsx |
+#### v9.2.3 Completed Work (Uncommitted)
 
-**Solution:**
-- Rewrite opening statement to clarify "positions that meet chronology depth criteria"
-- Make chronology depth logic step 2 (FILTER before generation)
-- Add explicit instructions: "PARSE ALL POSITIONS", "DO NOT use JD's position/company"
-- Add missing guardrails: #3, #13, #15, portfolio_employment_labeling, verb distribution
-- Update character limit to ≤210 chars (ATS compliance)
+**Modules Created in `src/validators/bullet-generation/`:**
+- `core-validators.js` (305 lines) - ChronologyDepth, PositionMetadata, etc.
+- `guardrail-validators.js` (371 lines) - Metric*, Summary*, Phrase*
+- `content-validators.js` (340 lines) - Limitation, Skill, Budget, KeywordDensity
+- `shared-validators.js` (209 lines) - VerbDistribution, MetricsDensity
+- `secondary-validators.js` (92 lines) - RecencyWeighting, AcronymExpansion
+- `history-parser.js` (102 lines) - parseOriginalHistory + regex fallback
+- `matching-helper.js` (71 lines) - findBestMatch + Levenshtein
+- `validator-pipeline.js` (229 lines) - Master validation orchestrator
 
-**Module References:**
-- `optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md` (chronology_depth_logic)
-- `optimization-tools/narrative-generator/ng_summary-generation.md` (Guardrails #3, #13, #15, #33)
-- `optimization-tools/bullet-optimizer/bo_keyword_handling.md` (Guardrail #32)
-- `core/format-rules.md` (character limits)
-- `core/verb-categories.md` (distribution targets)
+**JSX Reduction:** 4076 → ~2500 lines (-38%)
 
-**Workaround:**
-None - users must manually correct position titles and companies in generated output.
+---
+
+#### Remaining Bugs (v9.2.4 Scope)
+
+1. 🔴 **Company from JD** - First job shows JD company instead of history company
+   - Location: `core-validators.js:validatePositionMetadata()` line 153
+   - Fix: Add explicit null/empty check
+
+2. 🔴 **Missing Company** - Second job has no company name
+   - Location: Same as Bug 1
+   - Fix: Same - handle undefined/empty string
+
+3. 🔴 **Missing Positions** - Other job history positions not displayed
+   - Location: `core-validators.js:validateChronologyDepth()` line 96
+   - Fix: Add `addMissingPositionSkeletons()` function
+
+---
+
+#### v9.2.4 Plan
+
+**Bug Fixes:**
+- Fix company validation in `validatePositionMetadata()`
+- Add skeleton creation for missing positions
+
+**Further Modularization:**
+- Extract `generation-helpers.js` (~90 lines)
+- Extract `prompt-templates.js` (~200 lines)
+- Target: JSX < 2300 lines
+
+---
 
 **Documentation:** [docs/issues/issue-79/](docs/issues/issue-79/)
 

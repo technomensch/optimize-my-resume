@@ -1,9 +1,9 @@
 # Implementation Log: Issue #79
 
 **Issue:** GUI Customized Bullets Using Wrong Context
-**Status:** ✅ COMPLETE (TESTING PHASE)
+**Status:** 🟡 IN PROGRESS (v9.2.4 - Bug Fixes)
 **Created:** 2026-01-22
-**Completed:** 2026-01-22
+**Last Updated:** 2026-01-23
 
 ---
 
@@ -226,13 +226,102 @@
 
 ---
 
-## Next Steps (v9.2.2 IMPLEMENTATION PHASE)
+## v9.2.2 COMPLETE ✅ (2026-01-23 Session 03-gemini)
 
-1. ✅ Create comprehensive analysis (Opus completed)
-2. ✅ Document root causes and fix strategy (this log)
-3. ⏳ Implement v9.2.2 bug fixes in Should-I-Apply-local.jsx
-4. ⏳ Verify bullets display with messy job history
-5. ⏳ Test regeneration loop still works
-6. ⏳ Apply same fixes to Should-I-Apply-webgui.jsx
-7. ⏳ Commit v9.2.2 to origin
-8. ⏳ Plan v9.2.3 modularization (separate session)
+**Implementer:** Gemini
+**Branch:** `v9.2.2-fix-bullet-display-bug`
+**Outcome:** 25 validators implemented, 4076 lines
+
+### What Was Done:
+- ✅ Implemented `parseOriginalHistory()` with LLM + 3 regex fallback patterns
+- ✅ Implemented `findBestMatch()` 4-strategy fuzzy matching (exact → contains → Levenshtein → word overlap)
+- ✅ Fixed `validatePositionMetadata()` to be non-destructive (always preserves bullets)
+- ✅ Added `generateWithValidationLoop()` with 3-attempt regeneration
+- ✅ Added graceful degradation for empty reference history
+
+### User Testing Results:
+**3 bugs discovered:**
+1. 🔴 **Company from JD** - First job shows JD company instead of history company
+2. 🔴 **Missing Company** - Second job has no company name
+3. 🔴 **Missing Positions** - Other job history positions not displayed
+
+---
+
+## v9.2.3 COMPLETE ✅ (2026-01-23 Session 05-gemini)
+
+**Implementer:** Gemini
+**Branch:** `v9.2.3-modularization` (same as v9.2.2 - incremental)
+**Outcome:** 8 modules extracted, JSX reduced 38%
+
+### Modules Created:
+
+| Module | Lines | Purpose |
+|--------|-------|---------|
+| core-validators.js | 305 | ChronologyDepth, PositionMetadata, ChronologicalOrder, BulletCounts, Format |
+| guardrail-validators.js | 371 | Metric*, Summary*, Phrase*, NarrativeFit |
+| content-validators.js | 340 | Limitation, Skill, Budget, KeywordDensity, etc. |
+| shared-validators.js | 209 | VerbDistribution, MetricsDensity, KeywordEvidenceTier |
+| secondary-validators.js | 92 | RecencyWeighting, AcronymExpansion |
+| history-parser.js | 102 | parseOriginalHistory + regex fallback |
+| matching-helper.js | 71 | findBestMatch + Levenshtein |
+| validator-pipeline.js | 229 | Master `validateAndCorrectLLMResponse()` |
+| **Total** | **1752** | |
+
+### JSX Reduction:
+- Should-I-Apply-local.jsx: 4076 → 2513 lines (-38%)
+- Should-I-Apply-webgui.jsx: 4076 → 2526 lines (-38%)
+
+### Status: ⚠️ NEEDS COMMIT
+All changes are uncommitted. Requires manual commit before v9.2.4.
+
+---
+
+## v9.2.4 PLANNED 🎯 (Next)
+
+**Goal:** Fix the 3 remaining bugs + further modularization
+
+### Part A: Bug Fixes
+
+#### Bug 1 & 2: Company Issues
+**Location:** `core-validators.js:validatePositionMetadata()` lines 153-167
+**Root Cause:** `bullet.company` may be `undefined` (not caught by `!== matchingJob.company`)
+**Fix:** Add explicit null/empty check before comparison
+
+#### Bug 3: Missing Positions
+**Location:** `core-validators.js:validateChronologyDepth()` lines 31-98
+**Root Cause:** `autoCorrectPositions()` only MAPS over existing bullets - cannot ADD missing positions
+**Fix:** Create `addMissingPositionSkeletons()` function to add skeleton entries for missing positions
+
+### Part B: Further Modularization
+
+**Target:** Reduce JSX from 2513 → ~2200 lines
+
+| New Module | Lines | Purpose |
+|------------|-------|---------|
+| generation-helpers.js | ~90 | callLLM, parseJSONResponse, generateWithValidationLoop |
+| prompt-templates.js | ~200 | ANALYSIS_PROMPT_TEMPLATE, GENERATION_PROMPT_TEMPLATE |
+
+### Files to Modify (v9.2.4):
+- `core-validators.js` - Bug fixes (+30 lines)
+- `generation-helpers.js` - Create (~90 lines)
+- `prompt-templates.js` - Create (~200 lines)
+- `index.js` - Add new exports (+2 lines)
+- `Should-I-Apply-local.jsx` - Import new modules (-290 lines)
+- `Should-I-Apply-webgui.jsx` - Same changes (-290 lines)
+
+### Verification Criteria:
+1. First job shows history company (not JD company)
+2. Second job shows company name (not empty)
+3. All eligible positions displayed
+4. `wc -l` shows JSX < 2300 lines
+
+---
+
+## Version Timeline
+
+| Version | Status | Scope | Session |
+|---------|--------|-------|---------|
+| v9.2.1 | ✅ Complete | Prompt changes (2407 lines) | 01-opus |
+| v9.2.2 | ✅ Complete | 25 validators (4076 lines) | 03-gemini |
+| v9.2.3 | ⚠️ Needs Commit | Modularization (8 modules) | 05-gemini |
+| **v9.2.4** | 🎯 **NEXT** | Bug fixes + more modules | TBD |
