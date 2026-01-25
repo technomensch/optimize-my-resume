@@ -1,9 +1,9 @@
 # Implementation Log: Issue #79
 
 **Issue:** GUI Customized Bullets Using Wrong Context
-**Status:** 🟡 IN PROGRESS (v9.2.4 - Bug Fixes)
+**Status:** 🔴 IN PROGRESS (v9.2.5 - Null-Coalescing Fix, Attempt-3)
 **Created:** 2026-01-22
-**Last Updated:** 2026-01-23
+**Last Updated:** 2026-01-25
 
 ---
 
@@ -323,5 +323,61 @@ All changes are uncommitted. Requires manual commit before v9.2.4.
 |---------|--------|-------|---------|
 | v9.2.1 | ✅ Complete | Prompt changes (2407 lines) | 01-opus |
 | v9.2.2 | ✅ Complete | 25 validators (4076 lines) | 03-gemini |
-| v9.2.3 | ⚠️ Needs Commit | Modularization (8 modules) | 05-gemini |
-| **v9.2.4** | 🎯 **NEXT** | Bug fixes + more modules | TBD |
+| v9.2.3 | ✅ Complete | Modularization (8 modules) | 05-gemini |
+| v9.2.4 | ✅ Complete | Bug fixes + more modules | 02-gemini |
+| **v9.2.5** | 🔴 **IN PROGRESS** | Null-coalescing fix (attempt-3) | 01-opus |
+
+---
+
+## v9.2.4 COMPLETE ✅ (2026-01-24 Session 02-gemini)
+
+**Implementer:** Gemini (bug fixes) + Opus (experienceContent fix)
+**Branch:** `v9.2.4-issue-79-attempt-2` (incremental)
+**Outcome:** Bug fixes applied, further modularization
+
+### What Was Done:
+- ✅ Fixed company validation in `validatePositionMetadata()` (line 186) - added null/empty check
+- ✅ Added `addMissingPositionSkeletons()` function (lines 32-40) - creates skeleton entries for missing positions
+- ✅ Fixed `experienceContent` scope in `generateCustomizedContent()` - variable was undefined
+- ✅ Created `generation-helpers.js` (91 lines) - extracted callLLM, parseJSONResponse, generateWithValidationLoop
+- ✅ Created `prompt-templates.js` (272 lines) - extracted ANALYSIS_PROMPT_TEMPLATE, GENERATION_PROMPT_TEMPLATE
+
+### JSX Further Reduced:
+- Should-I-Apply-local.jsx: 2513 → 2184 lines (-13%)
+- Should-I-Apply-webgui.jsx: 2526 → 2187 lines (-13%)
+
+### Testing Results:
+**Issue persists:** Bullets still not rendering (Summary works, bullets section empty)
+
+---
+
+## v9.2.5 IN PROGRESS 🔴 (2026-01-25 Session 01-opus)
+
+**Goal:** Fix validation pipeline null handling (Issue #79 attempt-3)
+**Branch:** `v9.2.5-issue-79-attempt-3`
+
+### Root Cause Analysis:
+**Location:** `validator-pipeline.js:75`
+
+```javascript
+let correctedBullets = parsedContent.customizedBullets;  // ❌ NO NULL CHECK
+```
+
+### Failure Chain:
+1. LLM returns response without `customizedBullets` field (or undefined)
+2. `correctedBullets` becomes `undefined`
+3. `validateChronologyDepth()` tries `.map()` on undefined → silent crash
+4. Pipeline returns `customizedBullets: undefined`
+5. JSX checks `?.length` → silently renders nothing
+
+**Why Summary works but Bullets don't:**
+Summary validators use `parsedContent.professionalSummary` directly. Bullet validators depend on `correctedBullets` being initialized first.
+
+### Fix Required:
+1. Add null-coalescing: `parsedContent.customizedBullets || []`
+2. Add guard clause for empty bullets array (return `requiresRegeneration: true`)
+3. Add defensive array check in `validateChronologyDepth`
+
+### Files to Modify:
+- `validator-pipeline.js:75` - Add null-coalescing + guard clause
+- `core-validators.js:45` - Add defensive array check

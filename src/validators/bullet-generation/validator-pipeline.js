@@ -72,7 +72,16 @@ export function validateAndCorrectLLMResponse(
 
     const allErrors = [];
     const allWarnings = [];
-    let correctedBullets = parsedContent.customizedBullets;
+    let correctedBullets = parsedContent.customizedBullets || [];
+
+    if (correctedBullets.length === 0) {
+        return {
+            valid: false,
+            errors: [{ type: 'EMPTY_CUSTOMIZED_BULLETS', message: 'LLM returned no customized bullets', requiresRegeneration: true }],
+            correctedContent: parsedContent,
+            summary: { totalValidators: 0, errorsFound: 1 }
+        };
+    }
 
     // Run validators sequentially
     const chronologyResult = validateChronologyDepth(correctedBullets, historyPositions);

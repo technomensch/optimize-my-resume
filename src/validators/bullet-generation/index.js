@@ -29,5 +29,12 @@ export * from './history-parser.js';
 // Matching helper (findBestMatch + Levenshtein)
 export * from './matching-helper.js';
 
+
 // Master validation pipeline
 export * from './validator-pipeline.js';
+
+// Generation helpers (callLLM, validateWithLoop, etc.)
+export * from './generation-helpers.js';
+
+// Prompt templates and builders
+export * from './prompt-templates.js';

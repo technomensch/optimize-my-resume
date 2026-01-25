@@ -26,9 +26,26 @@ export function autoCorrectPositions(customizedBullets, eligiblePositions, jobHi
 }
 
 /**
+ * Creates skeleton position entries for positions missing from LLM output
+ * Skeletons have empty bullets array - will trigger WRONG_BULLET_COUNT for regeneration
+ */
+export function addMissingPositionSkeletons(customizedBullets, missingPositions) {
+    const skeletons = missingPositions.map(mp => ({
+        position: mp.position,
+        company: mp.company,
+        dates: mp.dates,
+        bullets: [] // Empty triggers regeneration
+    }));
+    return [...customizedBullets, ...skeletons];
+}
+
+/**
  * Validator: Chronology Depth
  */
 export function validateChronologyDepth(customizedBullets, jobHistory) {
+    if (!customizedBullets || !Array.isArray(customizedBullets)) {
+        return { valid: false, errors: [{ type: 'INVALID_INPUT', message: 'customizedBullets is not an array' }], correctedBullets: [], eligiblePositions: [] };
+    }
     const CURRENT_YEAR = 2026;
     const RECENCY_THRESHOLD = 6;
     const TENURE_THRESHOLD = 5;
@@ -67,6 +84,7 @@ export function validateChronologyDepth(customizedBullets, jobHistory) {
         });
     }
 
+
     // Step 3: Validate LLM didn't include ineligible positions
     const extraPositions = customizedBullets.filter(cb => {
         const matchingJob = jobHistory.find(jh =>
@@ -89,11 +107,29 @@ export function validateChronologyDepth(customizedBullets, jobHistory) {
         });
     }
 
+    // Bug 3 Fix: Add skeletons for missing positions
+    let intermediateBullets = customizedBullets;
+    if (missingPositions.length > 0) {
+        intermediateBullets = addMissingPositionSkeletons(intermediateBullets, missingPositions);
+    }
+
+    // Filter extra positions from intermediateBullets
+    const filteredBullets = intermediateBullets.filter(cb => {
+        const matchingJob = jobHistory.find(jh =>
+            jh.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
+        );
+        if (!matchingJob) return false; // Remove if not in history
+
+        return eligiblePositions.some(ep =>
+            ep.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
+        );
+    });
+
     return {
         valid: errors.length === 0,
         errors,
         eligiblePositions,
-        correctedBullets: errors.length > 0 ? autoCorrectPositions(customizedBullets, eligiblePositions, jobHistory) : customizedBullets
+        correctedBullets: filteredBullets
     };
 }
 
@@ -150,7 +186,7 @@ export function validatePositionMetadata(customizedBullets, jobHistory, jobDescr
             }
         }
 
-        if (bullet.company !== matchingJob.company) {
+        if (!bullet.company || bullet.company.trim() === '' || bullet.company !== matchingJob.company) {
             const usedJDCompany = bullet.company === jobDescription.company;
             errors.push({
                 type: usedJDCompany ? 'USED_JD_COMPANY' : 'WRONG_COMPANY',
