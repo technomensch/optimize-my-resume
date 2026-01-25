@@ -87,15 +87,11 @@ export function validateChronologyDepth(customizedBullets, jobHistory) {
 
     // Step 3: Validate LLM didn't include ineligible positions
     const extraPositions = customizedBullets.filter(cb => {
-        const matchingJob = jobHistory.find(jh =>
-            jh.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
-        );
+        const matchingJob = findBestMatch(cb.position, jobHistory);
         if (!matchingJob) return true; // Position not in job history at all
 
-        const isEligible = eligiblePositions.some(ep =>
-            ep.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
-        );
-        return !isEligible;
+        const matchedEligible = findBestMatch(cb.position, eligiblePositions);
+        return !matchedEligible;
     });
 
     if (extraPositions.length > 0) {
@@ -115,14 +111,11 @@ export function validateChronologyDepth(customizedBullets, jobHistory) {
 
     // Filter extra positions from intermediateBullets
     const filteredBullets = intermediateBullets.filter(cb => {
-        const matchingJob = jobHistory.find(jh =>
-            jh.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
-        );
+        const matchingJob = findBestMatch(cb.position, jobHistory);
         if (!matchingJob) return false; // Remove if not in history
 
-        return eligiblePositions.some(ep =>
-            ep.position.toLowerCase().trim() === cb.position.toLowerCase().trim()
-        );
+        const matchedEligible = findBestMatch(cb.position, eligiblePositions);
+        return matchedEligible !== null;
     });
 
     return {
