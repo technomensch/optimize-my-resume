@@ -38,12 +38,14 @@ export default function ShouldIApply() {
   // State management
   const [step, setStep] = useState('input'); // 'input', 'analyzing', 'results'
   const [selectedModel, setSelectedModel] = useState('');
+  const [generationModel, setGenerationModel] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [failureCount, setFailureCount] = useState(0);
   const [debugMode, setDebugMode] = useState(false);
   const [availableModels, setAvailableModels] = useState([]);
   const [ollamaStatus, setOllamaStatus] = useState('checking');
+  const [lastGenerationResult, setLastGenerationResult] = useState(null);
 
   // Load models from config on mount
   const models = modelsConfig.ollama;
@@ -454,18 +456,27 @@ export default function ShouldIApply() {
       });
 
       if (!result.success) {
-        throw new Error(result.error);
+        throw new Error(`Ollama error: ${result.error || 'Unknown error'}`);
       }
+
+      // Log full response for debugging
+      console.log('LLM Response (first 300 chars):', result.text.substring(0, 300));
 
       // Parse the response
       let analysisText = result.text.trim();
+
+      // Check for empty response
+      if (!analysisText || analysisText.length < 10) {
+        throw new Error(`Model "${selectedModel}" returned empty response. Ensure Ollama is running and model is available.`);
+      }
+
       analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '');
 
       const jsonStart = analysisText.indexOf('{');
       const jsonEnd = analysisText.lastIndexOf('}');
 
       if (jsonStart === -1 || jsonEnd === -1) {
-        throw new Error('No JSON found in response');
+        throw new Error(`Model "${selectedModel}" returned non-JSON text. First 150 chars: ${analysisText.substring(0, 150)}`);
       }
 
       const jsonString = analysisText.substring(jsonStart, jsonEnd + 1);
@@ -482,17 +493,30 @@ export default function ShouldIApply() {
 
     } catch (err) {
       console.error('Analysis error:', err);
+      console.error('Error details:', err.message);
 
       const newFailureCount = failureCount + 1;
       setFailureCount(newFailureCount);
 
+      // Determine error type for better messaging
+      let errorMsg = err.message;
+      let suggestion = 'Click "Analyze Fit" to retry.';
+
+      if (errorMsg.includes('empty response')) {
+        suggestion = 'Ensure Ollama is running: `ollama serve` in terminal, then retry.';
+      } else if (errorMsg.includes('not available') || errorMsg.includes('model')) {
+        suggestion = `Model "${selectedModel}" may not be installed. Try: \`ollama pull ${selectedModel}\``;
+      } else if (errorMsg.includes('non-JSON')) {
+        suggestion = 'Switch to a different model - this one may not follow JSON format.';
+      } else if (errorMsg.includes('timeout')) {
+        suggestion = 'Model timeout. Try a faster model like mistral:7b.';
+      }
+
       if (newFailureCount < 3) {
         setError(
           `**Analysis Failed (Attempt ${newFailureCount}/3)**\n\n` +
-          `The API response could not be parsed. This may be due to:\n\n` +
-          `• Complex job description\n` +
-          `• Model timeout\n\n` +
-          `**Try:** Click "Analyze Fit" again, or switch to a faster model like Mistral.`
+          `${errorMsg}\n\n` +
+          `**Suggestion:** ${suggestion}`
         );
       } else {
         setError(
@@ -605,6 +629,77 @@ export default function ShouldIApply() {
     } catch (err) {
       console.error('Generation error:', err);
       setSummaryError(`Failed to generate content: ${err.message}`);
+    } finally {
+      setGeneratingSummary(false);
+    }
+  };
+
+  // Regenerate bullets with different model (ENH-001)
+  const regenerateBullets = async (modelToUse) => {
+    if (!analysisResult || !generatedContent) return;
+
+    setGeneratingSummary(true);
+    setSummaryError(null);
+
+    try {
+      // Build experienceContent from available sources
+      let experienceContent = '';
+      if (jobHistorySource) {
+        experienceContent = `JOB HISTORY NARRATIVE:\n${jobHistorySource.content}`;
+      } else if (resumeSource) {
+        if (resumeSource.isBinary) {
+          experienceContent = `[Binary file: ${resumeSource.filename}]\nNote: This is a ${resumeSource.mimeType} file. Please extract and analyze the resume content.`;
+        } else {
+          experienceContent = `RESUME:\n${resumeSource.content}`;
+        }
+      }
+
+      const generationPrompt = buildGenerationPrompt(
+        experienceContent,
+        jobDescription,
+        analysisResult,
+        keywordsToUse,
+        keywordsToIgnore
+      );
+
+      // Call regeneration loop with specified model
+      const loopResult = await generateWithValidationLoop(
+        modelToUse,
+        generationPrompt,
+        jobHistorySource,
+        analysisResult.positionSummary,
+        keywordsToUse,
+        [],
+        {
+          temperature: 0.3,
+          max_tokens: 4000
+        },
+        resumeSource
+      );
+
+      setGeneratedContent(loopResult.content);
+      setLastGenerationResult({
+        success: loopResult.success,
+        attempts: loopResult.attempts,
+        model: modelToUse
+      });
+
+      console.log('Regeneration Report:', {
+        model: modelToUse,
+        attempts: loopResult.attempts,
+        success: loopResult.success,
+        errorCount: loopResult.validationResult.errors.length
+      });
+
+    } catch (err) {
+      console.error('Regeneration error:', err);
+      setSummaryError(`Failed to regenerate: ${err.message}`);
+      setLastGenerationResult({
+        success: false,
+        attempts: 3,
+        model: modelToUse,
+        error: err.message
+      });
     } finally {
       setGeneratingSummary(false);
     }
@@ -1909,6 +2004,47 @@ export default function ShouldIApply() {
 
                   {generatedContent && (
                     <div className="mt-4 space-y-6">
+                      {/* Model Selection & Regeneration Controls */}
+                      <div className="flex items-center gap-4 p-3 bg-slate-800 rounded-lg border border-slate-700">
+                        <label className="text-sm text-slate-300 font-medium flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                          Regenerate with model:
+                        </label>
+                        <select
+                          value={generationModel}
+                          onChange={(e) => setGenerationModel(e.target.value)}
+                          className="bg-slate-700 text-white rounded px-3 py-1.5 text-sm border border-slate-600 hover:border-slate-500 focus:border-blue-500 focus:outline-none"
+                          disabled={generatingSummary}
+                        >
+                          <option value="">Select a model...</option>
+                          {availableModels.map(m => (
+                            <option key={m} value={m}>{m}</option>
+                          ))}
+                        </select>
+
+                        <button
+                          onClick={() => {
+                            if (generationModel) {
+                              regenerateBullets(generationModel);
+                            }
+                          }}
+                          disabled={generatingSummary || !generationModel}
+                          className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:hover:bg-slate-600 text-white rounded text-sm font-medium transition"
+                        >
+                          <RefreshCw className="w-4 h-4" />
+                          {generatingSummary ? 'Regenerating...' : 'Regenerate'}
+                        </button>
+
+                        {lastGenerationResult && !lastGenerationResult.success && (
+                          <div className="flex items-center gap-2 ml-auto px-3 py-1.5 bg-amber-900/30 border border-amber-700 rounded">
+                            <AlertCircle className="w-4 h-4 text-amber-400" />
+                            <span className="text-amber-300 text-xs">
+                              Attempt {lastGenerationResult.attempts}/3 failed — try different model
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
                       {/* Generated Professional Summary */}
                       {generatedContent.professionalSummary && (
                         <div>

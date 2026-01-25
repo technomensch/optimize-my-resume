@@ -67,6 +67,10 @@ export default function ShouldIApply() {
   const [showUnverifiedWarning, setShowUnverifiedWarning] = useState(false);
   const [pendingGeneration, setPendingGeneration] = useState(false);
 
+  // Model regeneration (ENH-001)
+  const [generationModel, setGenerationModel] = useState('');
+  const [lastGenerationResult, setLastGenerationResult] = useState(null);
+
   // Model configuration (same as ResumeAnalyzer)
   const models = [
     {
@@ -466,6 +470,12 @@ export default function ShouldIApply() {
 
       // Parse the response
       let analysisText = data.content[0].text.trim();
+      console.log('[runAnalysis] LLM response (first 300 chars):', analysisText.substring(0, 300));
+
+      if (!analysisText || analysisText.length < 10) {
+        throw new Error('empty response: API returned empty or too-short response');
+      }
+
       analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '');
 
       const jsonStart = analysisText.indexOf('{');
@@ -493,18 +503,28 @@ export default function ShouldIApply() {
       const newFailureCount = failureCount + 1;
       setFailureCount(newFailureCount);
 
+      const errorMsg = err.message || 'Unknown error';
+      let suggestion = 'Click "Analyze Fit" again to retry.';
+
+      if (errorMsg.includes('empty response')) {
+        suggestion = 'The API did not return a response. Try again, or check your API connection.';
+      } else if (errorMsg.includes('JSON')) {
+        suggestion = 'Simplify the job description and try again, or use a different model.';
+      } else if (errorMsg.includes('permission') || errorMsg.includes('access')) {
+        suggestion = 'Switch to Haiku or Sonnet model if using Opus.';
+      }
+
       if (newFailureCount < 3) {
         setError(
           `**Analysis Failed (Attempt ${newFailureCount}/3)**\n\n` +
-          `The API response could not be parsed. This may be due to:\n\n` +
-          `• Complex job description format\n` +
-          `• API timeout\n\n` +
-          `**Try:** Click "Analyze Fit" again, or switch to Haiku model.`
+          `Error: ${errorMsg}\n\n` +
+          `**Try:** ${suggestion}`
         );
       } else {
         setError(
           `**Persistent Error After 3 Attempts**\n\n` +
-          `Suggestions:\n` +
+          `Last error: ${errorMsg}\n\n` +
+          `**Suggestions:**\n` +
           `• Simplify the job description (remove excessive formatting)\n` +
           `• Use Haiku model for more reliable parsing\n` +
           `• Try a shorter resume/job history`
@@ -526,6 +546,8 @@ export default function ShouldIApply() {
     setKeywordValidationResults({});
     setShowUnverifiedWarning(false);
     setPendingGeneration(false);
+    setGenerationModel('');
+    setLastGenerationResult(null);
   };
 
   // Generate customized bullets and professional summary for this JD
@@ -612,6 +634,78 @@ export default function ShouldIApply() {
     } catch (err) {
       console.error('Generation error:', err);
       setSummaryError(`Failed to generate content: ${err.message}`);
+    } finally {
+      setGeneratingSummary(false);
+    }
+  };
+
+  // Regenerate bullets with different model (ENH-001)
+  const regenerateBullets = async (modelToUse) => {
+    if (!analysisResult || !modelToUse) return;
+
+    setGeneratingSummary(true);
+    setSummaryError(null);
+
+    try {
+      // Preserve analysis data
+      let experienceContent = '';
+      if (jobHistorySource) {
+        experienceContent = `JOB HISTORY NARRATIVE:\n${jobHistorySource.content}`;
+      } else if (resumeSource) {
+        if (resumeSource.isBinary) {
+          experienceContent = `[Binary file: ${resumeSource.filename}]\nNote: This is a ${resumeSource.mimeType} file. Please extract and analyze the resume content.`;
+        } else {
+          experienceContent = `RESUME:\n${resumeSource.content}`;
+        }
+      }
+
+      const generationPrompt = buildGenerationPrompt(
+        experienceContent,
+        jobDescription,
+        analysisResult,
+        keywordsToUse,
+        keywordsToIgnore
+      );
+
+      // Call regeneration with specified model
+      const loopResult = await generateWithValidationLoop(
+        modelToUse,
+        generationPrompt,
+        jobHistorySource,
+        analysisResult.positionSummary,
+        keywordsToUse,
+        [],
+        {
+          temperature: 0.3,
+          max_tokens: 4000
+        },
+        resumeSource
+      );
+
+      setGeneratedContent(loopResult.content);
+      setLastGenerationResult({
+        model: modelToUse,
+        attempts: loopResult.attempts,
+        success: loopResult.success,
+        errorCount: loopResult.validationResult.errors.length
+      });
+
+      console.log('Regeneration Report:', {
+        model: modelToUse,
+        attempts: loopResult.attempts,
+        success: loopResult.success,
+        errorCount: loopResult.validationResult.errors.length
+      });
+
+    } catch (err) {
+      console.error('Regeneration error:', err);
+      setLastGenerationResult({
+        model: modelToUse,
+        attempts: 3,
+        success: false,
+        error: err.message
+      });
+      setSummaryError(`Regeneration failed with ${modelToUse}: ${err.message}`);
     } finally {
       setGeneratingSummary(false);
     }
@@ -1911,6 +2005,47 @@ export default function ShouldIApply() {
 
                   {generatedContent && (
                     <div className="mt-4 space-y-6">
+                      {/* Model Selection & Regeneration Controls */}
+                      <div className="flex items-center gap-4 p-3 bg-slate-800 rounded-lg border border-slate-700">
+                        <label className="text-sm text-slate-300 font-medium flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                          Regenerate with model:
+                        </label>
+                        <select
+                          value={generationModel}
+                          onChange={(e) => setGenerationModel(e.target.value)}
+                          className="bg-slate-700 text-white rounded px-3 py-1.5 text-sm border border-slate-600 hover:border-slate-500 focus:border-blue-500 focus:outline-none"
+                          disabled={generatingSummary}
+                        >
+                          <option value="">Select a model...</option>
+                          {models.map(m => (
+                            <option key={m.id} value={m.id}>{m.name}</option>
+                          ))}
+                        </select>
+
+                        <button
+                          onClick={() => {
+                            if (generationModel) {
+                              regenerateBullets(generationModel);
+                            }
+                          }}
+                          disabled={generatingSummary || !generationModel}
+                          className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 disabled:hover:bg-slate-600 text-white rounded text-sm font-medium transition"
+                        >
+                          <RefreshCw className="w-4 h-4" />
+                          {generatingSummary ? 'Regenerating...' : 'Regenerate'}
+                        </button>
+
+                        {lastGenerationResult && !lastGenerationResult.success && (
+                          <div className="flex items-center gap-2 ml-auto px-3 py-1.5 bg-amber-900/30 border border-amber-700 rounded">
+                            <AlertCircle className="w-4 h-4 text-amber-400" />
+                            <span className="text-amber-300 text-xs">
+                              Attempt {lastGenerationResult.attempts}/3 failed — try different model
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
                       {/* Generated Professional Summary */}
                       {generatedContent.professionalSummary && (
                         <div>

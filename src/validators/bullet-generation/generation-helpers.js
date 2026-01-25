@@ -44,6 +44,9 @@ export async function generateWithValidationLoop(
     let attempt = 0;
     let validationResult = null;
     let parsedContent = null;
+    const persistentErrors = new Set();
+
+    console.log(`[Generation] Starting with model: ${selectedModel}`);
 
     // Get a stable reference history BEFORE the loop
     const referenceHistory = await parseOriginalHistory(selectedModel, jobHistorySource, resumeSource);
@@ -58,10 +61,15 @@ export async function generateWithValidationLoop(
             if (regenErrors.length > 0) {
                 const errorMessages = regenErrors.map(e => `- ${e.message}`).join('\n');
                 prompt = `${baseGenerationPrompt}\n\nCRITICAL: Previous attempt failed validation - MUST FIX:\n${errorMessages}\n\nPlease regenerate addressing these issues.`;
+
+                // Track persistent errors
+                regenErrors.forEach(e => persistentErrors.add(e.type || e.message));
+                console.log(`[Generation] Attempt ${attempt}/${MAX_ATTEMPTS}: Persistent errors:`, Array.from(persistentErrors));
             }
         }
 
         try {
+            console.log(`[Generation] Attempt ${attempt}/${MAX_ATTEMPTS}: Calling ${selectedModel}...`);
             const response = await callLLM(selectedModel, prompt, ollamaOptions);
             parsedContent = parseJSONResponse(response);
 
@@ -75,17 +83,29 @@ export async function generateWithValidationLoop(
             );
 
             const regenErrors = validationResult.errors.filter(e => e.requiresRegeneration);
-            if (regenErrors.length === 0) break;
+            console.log(`[Generation] Attempt ${attempt}/${MAX_ATTEMPTS}: Validation complete - ${regenErrors.length} critical errors`);
+
+            if (regenErrors.length === 0) {
+                console.log(`[Generation] ✓ Success on attempt ${attempt}`);
+                break;
+            }
         } catch (err) {
-            console.error(`Attempt ${attempt} failed:`, err);
+            console.error(`[Generation] Attempt ${attempt}/${MAX_ATTEMPTS} failed:`, err.message);
+            persistentErrors.add(err.message);
             if (attempt >= MAX_ATTEMPTS) throw err;
         }
+    }
+
+    const finalSuccess = validationResult.errors.filter(e => e.requiresRegeneration).length === 0;
+    console.log(`[Generation] Report - Model: ${selectedModel}, Attempts: ${attempt}, Success: ${finalSuccess}, ErrorCount: ${validationResult.errors.length}`);
+    if (persistentErrors.size > 0) {
+        console.log(`[Generation] Persistent issues:`, Array.from(persistentErrors));
     }
 
     return {
         content: validationResult.correctedContent,
         validationResult,
         attempts: attempt,
-        success: validationResult.errors.filter(e => e.requiresRegeneration).length === 0
+        success: finalSuccess
     };
 }

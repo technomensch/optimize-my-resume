@@ -1,7 +1,7 @@
 # Implementation Log: Issue #79
 
 **Issue:** GUI Customized Bullets Using Wrong Context
-**Status:** 🔴 IN PROGRESS (v9.2.5 - Null-Coalescing Fix, Attempt-3)
+**Status:** 🔴 IN PROGRESS (v9.2.6 - Fuzzy Matching Fix, Attempt-4)
 **Created:** 2026-01-22
 **Last Updated:** 2026-01-25
 
@@ -325,7 +325,8 @@ All changes are uncommitted. Requires manual commit before v9.2.4.
 | v9.2.2 | ✅ Complete | 25 validators (4076 lines) | 03-gemini |
 | v9.2.3 | ✅ Complete | Modularization (8 modules) | 05-gemini |
 | v9.2.4 | ✅ Complete | Bug fixes + more modules | 02-gemini |
-| **v9.2.5** | 🔴 **IN PROGRESS** | Null-coalescing fix (attempt-3) | 01-opus |
+| v9.2.5 | ✅ Complete | Null-coalescing fix (attempt-3) | 01-opus + gemini |
+| **v9.2.6** | 🎯 **NEXT** | Fuzzy matching fix (attempt-4) | TBD |
 
 ---
 
@@ -381,3 +382,35 @@ Summary validators use `parsedContent.professionalSummary` directly. Bullet vali
 ### Files to Modify:
 - `validator-pipeline.js:75` - Add null-coalescing + guard clause
 - `core-validators.js:45` - Add defensive array check
+
+### v9.2.5 Status: ✅ COMPLETE (Gemini implemented)
+- Null-coalescing applied
+- Guard clause added
+- **Issue persists** - not the root cause
+
+---
+
+## v9.2.6 PLANNED 🎯 (2026-01-25)
+
+**Goal:** Fix exact matching in validateChronologyDepth (Issue #79 attempt-4)
+**Plan:** [docs/plans/v9.2.6-issue-79-fuzzy-matching.md](../../plans/v9.2.6-issue-79-fuzzy-matching.md)
+
+### Root Cause Analysis:
+Console showed `errorCount: 2` (not 1), meaning LLM IS generating bullets but they're being filtered.
+
+**Inconsistent matching:**
+| Validator | Matching | Result |
+|-----------|----------|--------|
+| `validateChronologyDepth` (line 118) | EXACT string | Filters positions |
+| `validatePositionMetadata` (line 146) | Fuzzy (`findBestMatch`) | Would preserve |
+
+ChronologyDepth runs FIRST → filters out positions with minor title variations → MetadataValidator never sees them.
+
+### Fix Required:
+Replace 3 exact string matches in `validateChronologyDepth` with `findBestMatch()`:
+- Line 89-98: extraPositions check
+- Line 117-121: filteredBullets check
+- Line 123-125: eligibility check
+
+### Files to Modify:
+- `core-validators.js` - 3 locations

@@ -1,10 +1,10 @@
 # Implementation Plan: ENH-001 Model Selection for Bullet Regeneration
 
 **Enhancement:** ENH-001
-**Version:** v9.3.0
 **Priority:** Medium
 **Status:** Ready for Implementation
 **Created:** 2026-01-25
+**Version:** TBD (to be assigned at implementation)
 
 ---
 
@@ -114,5 +114,5 @@ This enhancement arose from Issue #79 debugging, where a user discovered their 7
 ## Branch
 
 ```bash
-git checkout -b v9.3.0-ENH-001-model-regeneration
+git checkout -b ENH-001-model-regeneration
 ```
