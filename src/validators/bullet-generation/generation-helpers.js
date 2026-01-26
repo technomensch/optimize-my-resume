@@ -38,7 +38,8 @@ export async function generateWithValidationLoop(
     keywordsToUse,
     honestLimitations,
     ollamaOptions = { temperature: 0.3, max_tokens: 4000 },
-    resumeSource = null // Added for history parsing
+    resumeSource = null, // Added for history parsing
+    onProgress = null // Callback for UI progress updates: (attempt) => void
 ) {
     const MAX_ATTEMPTS = 3;
     let attempt = 0;
@@ -54,6 +55,8 @@ export async function generateWithValidationLoop(
 
     while (attempt < MAX_ATTEMPTS) {
         attempt++;
+        // Notify UI of progress
+        if (onProgress) onProgress(attempt);
         let prompt = baseGenerationPrompt;
 
         if (attempt > 1 && validationResult?.errors?.length > 0) {

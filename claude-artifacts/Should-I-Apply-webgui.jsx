@@ -70,6 +70,7 @@ export default function ShouldIApply() {
   // Model regeneration (ENH-001)
   const [generationModel, setGenerationModel] = useState('');
   const [lastGenerationResult, setLastGenerationResult] = useState(null);
+  const [generationStatus, setGenerationStatus] = useState(null); // { attempt: 1, maxAttempts: 3, model: 'name' }
 
   // Model configuration (same as ResumeAnalyzer)
   const models = [
@@ -548,6 +549,7 @@ export default function ShouldIApply() {
     setPendingGeneration(false);
     setGenerationModel('');
     setLastGenerationResult(null);
+    setGenerationStatus(null);
   };
 
   // Generate customized bullets and professional summary for this JD
@@ -645,6 +647,7 @@ export default function ShouldIApply() {
 
     setGeneratingSummary(true);
     setSummaryError(null);
+    setGenerationStatus({ attempt: 1, maxAttempts: 3, model: modelToUse });
 
     try {
       // Preserve analysis data
@@ -667,7 +670,12 @@ export default function ShouldIApply() {
         keywordsToIgnore
       );
 
-      // Call regeneration with specified model
+      // Progress callback to update UI
+      const onProgress = (attempt) => {
+        setGenerationStatus({ attempt, maxAttempts: 3, model: modelToUse });
+      };
+
+      // Call regeneration with specified model and progress callback
       const loopResult = await generateWithValidationLoop(
         modelToUse,
         generationPrompt,
@@ -679,7 +687,8 @@ export default function ShouldIApply() {
           temperature: 0.3,
           max_tokens: 4000
         },
-        resumeSource
+        resumeSource,
+        onProgress
       );
 
       setGeneratedContent(loopResult.content);
@@ -689,6 +698,10 @@ export default function ShouldIApply() {
         success: loopResult.success,
         errorCount: loopResult.validationResult.errors.length
       });
+
+      if (!loopResult.success) {
+        setSummaryError(`Generation completed with ${loopResult.validationResult.errors.length} validation errors after ${loopResult.attempts} attempts. Try a different model.`);
+      }
 
       console.log('Regeneration Report:', {
         model: modelToUse,
@@ -708,6 +721,7 @@ export default function ShouldIApply() {
       setSummaryError(`Regeneration failed with ${modelToUse}: ${err.message}`);
     } finally {
       setGeneratingSummary(false);
+      setGenerationStatus(null);
     }
   };
 
@@ -1997,9 +2011,20 @@ export default function ShouldIApply() {
                   )}
 
                   {generatingSummary && (
-                    <div className="mt-4 flex items-center gap-3">
-                      <Loader className="w-5 h-5 text-purple-400 animate-spin" />
-                      <span className="text-slate-300">Generating customized content...</span>
+                    <div className="mt-4 p-4 bg-slate-800 rounded-lg border border-slate-700">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Loader className="w-5 h-5 text-purple-400 animate-spin" />
+                        <span className="text-slate-200 font-medium">
+                          {generationStatus
+                            ? `Attempt ${generationStatus.attempt}/${generationStatus.maxAttempts}`
+                            : 'Generating customized content...'}
+                        </span>
+                      </div>
+                      {generationStatus && (
+                        <p className="text-slate-400 text-sm ml-8">
+                          Using model: {generationStatus.model}
+                        </p>
+                      )}
                     </div>
                   )}
 
@@ -2045,6 +2070,24 @@ export default function ShouldIApply() {
                           </div>
                         )}
                       </div>
+
+                      {/* Error Message - Shown when regeneration fails */}
+                      {summaryError && (
+                        <div className="p-4 bg-red-900/30 border border-red-700 rounded-lg">
+                          <div className="flex items-start gap-3">
+                            <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <p className="text-red-300 font-medium">Generation Failed</p>
+                              <p className="text-red-400/80 text-sm mt-1">{summaryError}</p>
+                              {lastGenerationResult?.model && (
+                                <p className="text-slate-400 text-xs mt-2">
+                                  Model used: {lastGenerationResult.model} | Attempts: {lastGenerationResult.attempts}/3
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       {/* Generated Professional Summary */}
                       {generatedContent.professionalSummary && (
