@@ -34,11 +34,11 @@ Allow users to select a different LLM model and regenerate bullets without re-ru
 
 ### Issue #79: GUI Customized Bullets Using Wrong Context
 
-**Status:** 🔴 ACTIVE (v9.2.7 - Planning)
+**Status:** 🔴 ACTIVE (v9.2.7 - Implementation)
 **Type:** Bug
 **Priority:** High
 **Created:** 2026-01-22
-**Branch:** `v9.2.5-issue-79-attempt-3`
+**Branch:** `v9.2.7-issue-79-error-handling`
 
 **Quick Summary:**
 Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error handling + Model switching (v9.2.7).
@@ -57,7 +57,8 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 **Progress:**
 - [x] v9.2.5: Null-coalescing (not the root cause)
 - [x] v9.2.6: Fuzzy matching (implemented)
-- [ ] v9.2.7: Error handling + ENH-001 (planned)
+- [x] v9.2.7: Error handling + ENH-001 (implemented)
+- [x] v9.2.8: User-visible progress & error feedback (implemented)
 - [ ] Testing complete
 - [ ] Merged to main
 
