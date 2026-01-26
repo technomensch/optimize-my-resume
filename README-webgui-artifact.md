@@ -38,7 +38,7 @@ However, to get **full system behavior** (guardrails, rules, thresholds), you sh
 
 ---
 
-## Should-I-Apply-webgui.jsx (v1.2.0)
+## Should-I-Apply-webgui.jsx (v1.3.0) <!-- v1.3.0 Change: Added model regeneration and error feedback -->
 
 ### Job Fit Assessment & Application Customization
 
@@ -95,7 +95,7 @@ The JSX artifacts will auto-resolve paths based on context (see `<path_resolutio
 | Artifact | Version | Last Updated | Compatible With |
 |----------|---------|--------------|-----------------|
 | ResumeAnalyzer-webgui.jsx | v8.5.3 | Jan 16, 2026 | v9.2.0 instructions |
-| Should-I-Apply-webgui.jsx | v1.2.0 | Jan 18, 2026 | v9.2.0 instructions |
+| Should-I-Apply-webgui.jsx | v1.3.0 | Jan 26, 2026 | v9.2.1 instructions |
 
 ---
 

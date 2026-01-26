@@ -1,13 +1,14 @@
-# Optimize-My-Resume System v9.2.0 (GUI Instructions) <!-- v9.2.0 Change: Token Optimization -->
+# Optimize-My-Resume System v9.2.2 (GUI Instructions) <!-- v9.2.2 Change: Updated artifact versions for Issue #79 fixes -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 9.2.0 (January 19, 2026)                                          -->
-<!-- v9.2.0 Release: Token Optimization - Modularized Large Sections            -->
-<!-- Last Updated: January 19, 2026                                             -->
+<!-- Version: 9.2.2 (January 26, 2026)                                          -->
+<!-- v9.2.2 Release: Updated Should-I-Apply artifact (v1.3.0) with Issue #79 fixes -->
+<!-- Last Updated: January 26, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
+<!-- v9.2.2 (2026-01-26) - Updated artifact versions for Issue #79 (error handling + ENH-001) -->
 <!-- v9.2.1 (2026-01-21) - Added README-webgui-artifact.md for artifact upload guide -->
 <!-- v9.2.0 (2026-01-19) - Token Optimization (Issue #TBD)                     -->
 <!--   - Moved keyword_context_validation to optimization-tools/shared/keyword-validation.md -->

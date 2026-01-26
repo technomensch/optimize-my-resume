@@ -44,9 +44,9 @@ Allow users to select a different LLM model and regenerate bullets without re-ru
 Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error handling + Model switching (v9.2.7).
 
 **Current Status:**
-- v9.2.6: Fuzzy matching fix applied, tested
-- New error: "No JSON found in response" during analysis
-- Need: Better error messages + model regeneration (ENH-001)
+- v9.2.7: Error handling + ENH-001 implemented
+- v9.2.8: Progress display + error feedback implemented
+- Status: Ready for testing on Claude (local Ollama models had issues)
 
 **Plans:**
 - [v9.2.6: Fuzzy matching](plans/v9.2.6-issue-79-fuzzy-matching.md) ✅

@@ -31,6 +31,13 @@ The v7.0.1 release includes important fixes and improvements:
 - **What Changed**: `ResumeAnalyzer.jsx` → `ResumeAnalyzer-local.jsx`
 - **Why**: Distinguishes local Ollama implementation from production Claude artifact version
 
+### Should-I-Apply Local Enhancement (v9.2.7-v9.2.8)
+- **What Changed**: Added model regeneration, progress display, and error feedback to `Should-I-Apply-local.jsx`
+- **Impact**: Users can now switch models and regenerate bullets without re-running analysis
+- **Components**: Model selector dropdown, regenerate button, attempt counter, error messages
+- **Why It Matters**: Enables recovery from generation failures on underpowered local models
+- **Related**: Issue #79 debugging improvements + ENH-001 implementation
+
 ## Prerequisites
 
 1. **Node.js** (v16 or higher)
