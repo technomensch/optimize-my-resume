@@ -2,6 +2,9 @@
 description: whenever an implementation plan is created, it has the name of the branch and is automatically put in /docs/plans
 ---
 
+0. **Pre-flight Check & Execution Mode:**
+   - Before generating the plan, explicitly state: **"MODE: READ-ONLY ANALYSIS. Establishing behavior locks..."**
+   - Verify that you understand the "Stop-on-Error" policy.
 1. Identify the target branch name for the current task.
    - For features: `v[Major.Minor.0]-[feature-name]`
    - For patches: `v[Major.Minor.Patch]-[patch-name]`

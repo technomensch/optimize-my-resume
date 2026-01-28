@@ -2,7 +2,7 @@
 
 **Purpose:** Create a comprehensive Lessons Learned document after solving a problem or implementing a new pattern.
 
-**Version:** 1.2 (Updated: 2026-01-02) <!-- v1.2 Change: Added category auto-detection and master index updates -->
+**Version:** 1.3 (Updated: 2026-01-28) <!-- v1.3 Change: Added mandatory Knowledge Graph updates -->
 
 ---
 
@@ -523,20 +523,37 @@ Auto-generate tags from:
 **Total Lessons:** 4 → 5
 **Last Updated:** 2026-01-02
 ```
+### Step 4.6: Update Knowledge Graph (v1.3 Feature) <!-- v1.3 Change -->
+
+**After updating the Master Index, verify if this lesson impacts the broader Knowledge Graph:**
+
+1. **Architecture Decisions (ADRs):**
+   - Does this lesson warrant a new ADR?
+   - If yes, create it in `docs/knowledge/adr/` following the established numbering.
+   - Link the ADR in the lesson's "Related Docs" section.
+
+2. **Core Patterns/Concepts:**
+   - Update `docs/knowledge/patterns.md` or `docs/knowledge/concepts.md` if a new project-wide pattern was established.
+
+3. **Gotchas/Anti-Patterns:**
+   - Update `docs/knowledge/gotchas.md` if the lesson helps avoid a recurring pitfall.
+
+**Ask user for confirmation:**
+"I've identified that this lesson impacts [ADR-XXX/patterns.md/etc.]. Should I update the Knowledge Graph now? (y/n)"
 
 ### Step 5: Commit
 
-After document is created and user approves:
+After documents are created and user approves:
 
 ```bash
-git add docs/lessons-learned/Lessons_Learned_[Topic].md
+git add docs/lessons-learned/ docs/knowledge/
 git commit -m "docs(lessons): create [topic] lessons learned
 
 [Brief description of what the document covers]
 
 ### Key Contents
-
-[3-5 bullet points of main sections]
+- Lesson: docs/lessons-learned/[Topic].md
+- KG Updates: [ADR/Patterns/etc if applicable]
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 

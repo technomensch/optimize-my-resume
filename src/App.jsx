@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import ResumeAnalyzer from './components/ResumeAnalyzer-local'
+//import ResumeAnalyzer from './components/ResumeAnalyzer-local'
+import ResumeAnalyzer from './components/Should-I-Apply-local.jsx'
 import { AlertCircle } from 'lucide-react'
 
 function App() {

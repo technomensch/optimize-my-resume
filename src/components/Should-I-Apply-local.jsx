@@ -14,8 +14,16 @@ import {
   Loader, BarChart3, Info, AlertTriangle, XCircle, Briefcase,
   Target, FileCheck, ClipboardPaste, RefreshCw, Download, Sparkles, Copy
 } from 'lucide-react';
+import OllamaService from '../services/ollamaService';
+import modelsConfig from '../config/models.json';
 import {
+  coreValidators,
+  guardrailValidators,
+  contentValidators,
+  sharedValidators,
+  secondaryValidators,
   parseOriginalHistory,
+  findBestMatch,
   determineExperienceLevel,
   extractJobHistoryFromLLMOutput,
   validateAndCorrectLLMResponse,
@@ -24,18 +32,70 @@ import {
   generateWithValidationLoop,
   buildAnalysisPrompt,
   buildGenerationPrompt
-} from '../src/validators/bullet-generation';
+} from '../validators/bullet-generation';
 
 export default function ShouldIApply() {
   // State management
   const [step, setStep] = useState('input'); // 'input', 'analyzing', 'results'
   const [selectedModel, setSelectedModel] = useState('');
-  const [modelError, setModelError] = useState('');
-  const [showTokenInfo, setShowTokenInfo] = useState(false);
+  const [generationModel, setGenerationModel] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [failureCount, setFailureCount] = useState(0);
   const [debugMode, setDebugMode] = useState(false);
+  const [availableModels, setAvailableModels] = useState([]);
+  const [ollamaStatus, setOllamaStatus] = useState('checking');
+  const [lastGenerationResult, setLastGenerationResult] = useState(null);
+  const [generationStatus, setGenerationStatus] = useState(null); // { attempt: 1, maxAttempts: 3, model: 'name' }
+
+  // Load models from config on mount
+  const models = modelsConfig.ollama;
+
+  // Check Ollama status and available models on mount
+  React.useEffect(() => {
+    checkOllamaStatus();
+  }, []);
+
+  const checkOllamaStatus = async () => {
+    setOllamaStatus('checking');
+    const isHealthy = await OllamaService.checkHealth();
+    if (isHealthy) {
+      const models = await OllamaService.listModels();
+      setAvailableModels(models.map(m => m.name));
+      setOllamaStatus('connected');
+
+      // Auto-select recommended model if available
+      // Handle :latest tag matching
+      const recommended = modelsConfig.ollama.find(m => m.recommended);
+      if (recommended) {
+        const isAvailable = models.some(m =>
+          m.name === recommended.id ||
+          (m.name === `${recommended.id}:latest` && !recommended.id.includes(':'))
+        );
+        if (isAvailable && !selectedModel) {
+          setSelectedModel(recommended.id);
+        }
+      }
+    } else {
+      setOllamaStatus('disconnected');
+    }
+  };
+
+  // Filter models to only show ones that are actually installed
+  // Handle Ollama's :latest tag - treat "model" and "model:latest" as the same
+  const displayModels = models.filter(model => {
+    if (availableModels.length === 0) return true;
+
+    // Check exact match first
+    if (availableModels.includes(model.id)) return true;
+
+    // If model.id doesn't have a tag, check if model:latest exists
+    if (!model.id.includes(':')) {
+      return availableModels.includes(`${model.id}:latest`);
+    }
+
+    return false;
+  });
 
   // Input sources
   const [resumeSource, setResumeSource] = useState(null); // { type: 'file'|'paste'|'existing', content, filename }
@@ -67,35 +127,7 @@ export default function ShouldIApply() {
   const [showUnverifiedWarning, setShowUnverifiedWarning] = useState(false);
   const [pendingGeneration, setPendingGeneration] = useState(false);
 
-  // Model regeneration (ENH-001)
-  const [generationModel, setGenerationModel] = useState('');
-  const [lastGenerationResult, setLastGenerationResult] = useState(null);
-  const [generationStatus, setGenerationStatus] = useState(null); // { attempt: 1, maxAttempts: 3, model: 'name' }
 
-  // Model configuration (same as ResumeAnalyzer)
-  const models = [
-    {
-      id: 'claude-haiku-4-20250514',
-      name: '⚡ Haiku',
-      desc: 'Fast, fewest tokens (quick assessment)',
-      tier: 'free',
-      tokenUsage: 'low'
-    },
-    {
-      id: 'claude-sonnet-4-20250514',
-      name: '🎯 Sonnet',
-      desc: 'Balanced, moderate tokens (recommended)',
-      tier: 'free',
-      tokenUsage: 'moderate'
-    },
-    {
-      id: 'claude-opus-4-20250514',
-      name: '⭐ Opus',
-      desc: 'Most capable, most tokens (deep analysis, Pro only)',
-      tier: 'pro',
-      tokenUsage: 'high'
-    }
-  ];
 
   // Auto-detect content type from pasted text
   const detectContentType = useCallback((text) => {
@@ -395,86 +427,48 @@ export default function ShouldIApply() {
       return;
     }
 
+    if (ollamaStatus !== 'connected') {
+      setError('Ollama is not connected. Please make sure Ollama is running with: ollama serve');
+      return;
+    }
+
     setLoading(true);
     setError(null);
-    setModelError('');
     setStep('analyzing');
 
     try {
-      const experienceContent = jobHistorySource?.content || (resumeSource?.isBinary ? `[Binary file: ${resumeSource.filename}]` : resumeSource?.content) || '';
+      // Prepare the content for analysis
+      let experienceContent = '';
+      if (jobHistorySource) {
+        experienceContent = `JOB HISTORY NARRATIVE:\n${jobHistorySource.content}`;
+      } else if (resumeSource) {
+        if (resumeSource.isBinary) {
+          experienceContent = `[Binary file: ${resumeSource.filename}]\nNote: This is a ${resumeSource.mimeType} file. Please extract and analyze the resume content.`;
+        } else {
+          experienceContent = `RESUME:\n${resumeSource.content}`;
+        }
+      }
+
       const analysisPrompt = buildAnalysisPrompt(experienceContent, jobDescription);
 
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: selectedModel,
-          max_tokens: 6000,
-          messages: [
-            {
-              role: 'user',
-              content: analysisPrompt
-            }
-          ]
-        })
+      const result = await OllamaService.generate(selectedModel, analysisPrompt, {
+        temperature: 0.3,
+        max_tokens: 6000
       });
 
-      const data = await response.json();
-
-      // Check for rate limit
-      if (data.type === 'exceeded_limit' && data.windows) {
-        const window = Object.values(data.windows)[0];
-        const resetTime = new Date(window.resets_at * 1000);
-        const now = new Date();
-        const minutesUntilReset = Math.ceil((resetTime - now) / 60000);
-        const hoursUntilReset = Math.floor(minutesUntilReset / 60);
-        const remainingMinutes = minutesUntilReset % 60;
-
-        let timeMessage = '';
-        if (hoursUntilReset > 0) {
-          timeMessage = `${hoursUntilReset} hour${hoursUntilReset > 1 ? 's' : ''}${remainingMinutes > 0 ? ` and ${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}` : ''}`;
-        } else {
-          timeMessage = `${minutesUntilReset} minute${minutesUntilReset !== 1 ? 's' : ''}`;
-        }
-
-        const resetTimeFormatted = resetTime.toLocaleTimeString('en-US', {
-          hour: 'numeric',
-          minute: '2-digit',
-          hour12: true
-        });
-
-        setError(
-          `🚦 **Rate Limit Reached**\n\n` +
-          `You've used your token allocation for this 5-hour window.\n\n` +
-          `**Token Limits:** Free: 500K / Pro: 2.5M per 5-hour window\n\n` +
-          `**Reset:** ${timeMessage} (at ${resetTimeFormatted})\n\n` +
-          `**Options:** Wait for reset, upgrade to Pro, or use Haiku for lower token usage.`
-        );
-        setLoading(false);
-        setStep('input');
-        return;
+      if (!result.success) {
+        throw new Error(`Ollama error: ${result.error || 'Unknown error'}`);
       }
 
-      if (data.error) {
-        if (data.error.message && (data.error.message.includes('permission') || data.error.message.includes('access'))) {
-          setModelError('Opus requires a Pro plan. Please select Sonnet or Haiku.');
-          setSelectedModel('claude-sonnet-4-20250514');
-        } else {
-          setError(`API Error: ${data.error.message}`);
-        }
-        setLoading(false);
-        setStep('input');
-        return;
-      }
+      // Log full response for debugging
+      console.log('LLM Response (first 300 chars):', result.text.substring(0, 300));
 
       // Parse the response
-      let analysisText = data.content[0].text.trim();
-      console.log('[runAnalysis] LLM response (first 300 chars):', analysisText.substring(0, 300));
+      let analysisText = result.text.trim();
 
+      // Check for empty response
       if (!analysisText || analysisText.length < 10) {
-        throw new Error('empty response: API returned empty or too-short response');
+        throw new Error(`Model "${selectedModel}" returned empty response. Ensure Ollama is running and model is available.`);
       }
 
       analysisText = analysisText.replace(/```json\s*/g, '').replace(/```\s*/g, '');
@@ -483,7 +477,7 @@ export default function ShouldIApply() {
       const jsonEnd = analysisText.lastIndexOf('}');
 
       if (jsonStart === -1 || jsonEnd === -1) {
-        throw new Error('No JSON found in response');
+        throw new Error(`Model "${selectedModel}" returned non-JSON text. First 150 chars: ${analysisText.substring(0, 150)}`);
       }
 
       const jsonString = analysisText.substring(jsonStart, jsonEnd + 1);
@@ -500,35 +494,38 @@ export default function ShouldIApply() {
 
     } catch (err) {
       console.error('Analysis error:', err);
+      console.error('Error details:', err.message);
 
       const newFailureCount = failureCount + 1;
       setFailureCount(newFailureCount);
 
-      const errorMsg = err.message || 'Unknown error';
-      let suggestion = 'Click "Analyze Fit" again to retry.';
+      // Determine error type for better messaging
+      let errorMsg = err.message;
+      let suggestion = 'Click "Analyze Fit" to retry.';
 
       if (errorMsg.includes('empty response')) {
-        suggestion = 'The API did not return a response. Try again, or check your API connection.';
-      } else if (errorMsg.includes('JSON')) {
-        suggestion = 'Simplify the job description and try again, or use a different model.';
-      } else if (errorMsg.includes('permission') || errorMsg.includes('access')) {
-        suggestion = 'Switch to Haiku or Sonnet model if using Opus.';
+        suggestion = 'Ensure Ollama is running: `ollama serve` in terminal, then retry.';
+      } else if (errorMsg.includes('not available') || errorMsg.includes('model')) {
+        suggestion = `Model "${selectedModel}" may not be installed. Try: \`ollama pull ${selectedModel}\``;
+      } else if (errorMsg.includes('non-JSON')) {
+        suggestion = 'Switch to a different model - this one may not follow JSON format.';
+      } else if (errorMsg.includes('timeout')) {
+        suggestion = 'Model timeout. Try a faster model like mistral:7b.';
       }
 
       if (newFailureCount < 3) {
         setError(
           `**Analysis Failed (Attempt ${newFailureCount}/3)**\n\n` +
-          `Error: ${errorMsg}\n\n` +
-          `**Try:** ${suggestion}`
+          `${errorMsg}\n\n` +
+          `**Suggestion:** ${suggestion}`
         );
       } else {
         setError(
           `**Persistent Error After 3 Attempts**\n\n` +
-          `Last error: ${errorMsg}\n\n` +
-          `**Suggestions:**\n` +
-          `• Simplify the job description (remove excessive formatting)\n` +
-          `• Use Haiku model for more reliable parsing\n` +
-          `• Try a shorter resume/job history`
+          `Suggestions:\n` +
+          `• Simplify the job description\n` +
+          `• Use Llama 3.1 or Mistral for better reliability\n` +
+          `• Try a shorter resume`
         );
       }
       setStep('input');
@@ -547,9 +544,6 @@ export default function ShouldIApply() {
     setKeywordValidationResults({});
     setShowUnverifiedWarning(false);
     setPendingGeneration(false);
-    setGenerationModel('');
-    setLastGenerationResult(null);
-    setGenerationStatus(null);
   };
 
   // Generate customized bullets and professional summary for this JD
@@ -643,14 +637,14 @@ export default function ShouldIApply() {
 
   // Regenerate bullets with different model (ENH-001)
   const regenerateBullets = async (modelToUse) => {
-    if (!analysisResult || !modelToUse) return;
+    if (!analysisResult || !generatedContent) return;
 
     setGeneratingSummary(true);
     setSummaryError(null);
     setGenerationStatus({ attempt: 1, maxAttempts: 3, model: modelToUse });
 
     try {
-      // Preserve analysis data
+      // Build experienceContent from available sources
       let experienceContent = '';
       if (jobHistorySource) {
         experienceContent = `JOB HISTORY NARRATIVE:\n${jobHistorySource.content}`;
@@ -675,7 +669,7 @@ export default function ShouldIApply() {
         setGenerationStatus({ attempt, maxAttempts: 3, model: modelToUse });
       };
 
-      // Call regeneration with specified model and progress callback
+      // Call regeneration loop with specified model and progress callback
       const loopResult = await generateWithValidationLoop(
         modelToUse,
         generationPrompt,
@@ -693,9 +687,9 @@ export default function ShouldIApply() {
 
       setGeneratedContent(loopResult.content);
       setLastGenerationResult({
-        model: modelToUse,
-        attempts: loopResult.attempts,
         success: loopResult.success,
+        attempts: loopResult.attempts,
+        model: modelToUse,
         errorCount: loopResult.validationResult.errors.length
       });
 
@@ -712,13 +706,13 @@ export default function ShouldIApply() {
 
     } catch (err) {
       console.error('Regeneration error:', err);
+      setSummaryError(`Failed to regenerate with ${modelToUse}: ${err.message}`);
       setLastGenerationResult({
-        model: modelToUse,
-        attempts: 3,
         success: false,
+        attempts: 3,
+        model: modelToUse,
         error: err.message
       });
-      setSummaryError(`Regeneration failed with ${modelToUse}: ${err.message}`);
     } finally {
       setGeneratingSummary(false);
       setGenerationStatus(null);
@@ -1175,30 +1169,52 @@ export default function ShouldIApply() {
           </p>
         </div>
 
-        {/* Token Usage Display */}
+        {/* Ollama Status Display */}
         <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 mb-8">
-          <div className="flex items-center gap-2 text-white font-medium mb-2">
-            <BarChart3 className="w-5 h-5 text-blue-400" />
-            Token Usage
-          </div>
-          <div className="flex items-baseline gap-2 mb-2">
-            <span className="text-slate-300">Estimated Available:</span>
-            <span className="text-green-400 font-semibold text-lg">~500,000 tokens</span>
-          </div>
-          <div className="grid grid-cols-2 gap-4 text-sm mb-2">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-slate-400"></span>
-              <span className="text-slate-400">Free: 500K / 5-hour window</span>
+          <div className={`flex items-center justify-between ${ollamaStatus === 'connected'
+            ? 'text-green-400'
+            : ollamaStatus === 'disconnected'
+              ? 'text-red-400'
+              : 'text-blue-400'
+            }`}>
+            <div className="flex items-center gap-3">
+              {ollamaStatus === 'connected' && (
+                <>
+                  <CheckCircle className="w-5 h-5" />
+                  <div>
+                    <div className="text-white font-medium mb-1">Local Development Mode - Ollama</div>
+                    <div className="text-slate-400 text-sm">
+                      {availableModels.length} model{availableModels.length !== 1 ? 's' : ''} available • Unlimited usage
+                    </div>
+                  </div>
+                </>
+              )}
+              {ollamaStatus === 'disconnected' && (
+                <>
+                  <AlertCircle className="w-5 h-5" />
+                  <div>
+                    <div className="text-white font-medium mb-1">Ollama Not Running</div>
+                    <div className="text-slate-400 text-sm">
+                      Start Ollama with: <code className="bg-slate-900/50 px-2 py-1 rounded">ollama serve</code>
+                    </div>
+                  </div>
+                </>
+              )}
+              {ollamaStatus === 'checking' && (
+                <>
+                  <Loader className="w-5 h-5 animate-spin" />
+                  <div className="text-white font-medium">Checking Ollama status...</div>
+                </>
+              )}
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-400"></span>
-              <span className="text-slate-400">Pro: 2.5M / 5-hour window</span>
-            </div>
+            <button
+              onClick={checkOllamaStatus}
+              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm transition flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Check Status
+            </button>
           </div>
-          <p className="text-slate-500 text-xs flex items-center gap-1">
-            <Info className="w-3 h-3" />
-            Token balance is approximate. Actual usage tracked by Claude across all features.
-          </p>
         </div>
 
         {/* Header */}
@@ -1224,72 +1240,55 @@ export default function ShouldIApply() {
                   <label className="text-white font-medium">
                     Select Model <span className="text-red-400">*</span>
                   </label>
-                  <button
-                    onClick={() => setShowTokenInfo(!showTokenInfo)}
-                    type="button"
-                    className="text-slate-400 hover:text-slate-300 text-sm flex items-center gap-1 transition"
-                  >
-                    <Info className="w-4 h-4" />
-                    Token usage info
-                  </button>
+                  {availableModels.length > 0 && (
+                    <span className="text-slate-400 text-sm">
+                      {displayModels.length} of {models.length} configured models available
+                    </span>
+                  )}
                 </div>
-
-                {showTokenInfo && (
-                  <div className="mb-3 p-4 bg-blue-900/20 border border-blue-700 rounded-lg text-sm">
-                    <p className="font-semibold text-blue-300 mb-3 flex items-center gap-2">
-                      <Info className="w-4 h-4" />
-                      Token Usage Guide
-                    </p>
-                    <div className="space-y-2 text-slate-300">
-                      <div className="flex items-start gap-2">
-                        <span className="text-blue-400">⚡</span>
-                        <div>
-                          <strong className="text-white">Haiku:</strong> ~2K tokens per assessment
-                          <br />
-                          <span className="text-xs text-slate-400">Best for: Quick checks, simple JDs</span>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <span className="text-blue-400">🎯</span>
-                        <div>
-                          <strong className="text-white">Sonnet:</strong> ~4K tokens per assessment
-                          <br />
-                          <span className="text-xs text-slate-400">Best for: Detailed analysis (recommended)</span>
-                        </div>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <span className="text-blue-400">⭐</span>
-                        <div>
-                          <strong className="text-white">Opus:</strong> ~6K tokens per assessment
-                          <br />
-                          <span className="text-xs text-slate-400">Best for: Complex roles, deep analysis (Pro only)</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 <select
                   value={selectedModel}
                   onChange={(e) => {
                     setSelectedModel(e.target.value);
-                    setModelError('');
                     setError('');
                   }}
+                  disabled={ollamaStatus !== 'connected'}
                   className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white focus:border-purple-500 focus:outline-none"
                 >
                   <option value="">Choose a model...</option>
-                  {models.map(model => (
+                  {displayModels.map(model => (
                     <option key={model.id} value={model.id}>
                       {model.name} - {model.desc}
                     </option>
                   ))}
                 </select>
 
-                {modelError && (
-                  <div className="mt-2 p-3 bg-yellow-900/30 border border-yellow-700 rounded-lg">
-                    <p className="text-yellow-300 text-sm">{modelError}</p>
-                  </div>
+                <p className="text-slate-400 text-sm mt-2">
+                  💡 {displayModels.find(m => m.recommended)?.name || 'Llama 3.1'} is recommended for best results.
+                </p>
+
+                {availableModels.length > 0 && displayModels.length < models.length && (
+                  <details className="mt-3">
+                    <summary className="cursor-pointer p-3 bg-slate-700/50 border border-slate-600 rounded-lg text-sm text-slate-400 hover:bg-slate-700 transition">
+                      <span className="font-medium">ℹ️ {models.length - displayModels.length} additional model{models.length - displayModels.length !== 1 ? 's' : ''} available (click to install)</span>
+                    </summary>
+                    <div className="mt-2 p-3 bg-slate-700/50 border border-slate-600 rounded-lg text-sm">
+                      <p className="text-slate-300 text-xs mb-2">
+                        Install these models to expand your options:
+                      </p>
+                      <div className="space-y-1">
+                        {models
+                          .filter(m => !availableModels.includes(m.id))
+                          .map(m => (
+                            <code key={m.id} className="block bg-slate-900/50 px-2 py-1 rounded text-purple-400 text-xs">
+                              ollama pull {m.id}
+                            </code>
+                          ))
+                        }
+                      </div>
+                    </div>
+                  </details>
                 )}
               </div>
             </div>
@@ -2043,8 +2042,8 @@ export default function ShouldIApply() {
                           disabled={generatingSummary}
                         >
                           <option value="">Select a model...</option>
-                          {models.map(m => (
-                            <option key={m.id} value={m.id}>{m.name}</option>
+                          {availableModels.map(m => (
+                            <option key={m} value={m}>{m}</option>
                           ))}
                         </select>
 

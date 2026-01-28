@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-19
-**Entries:** 15
+**Last Updated:** 2026-01-28
+**Entries:** 16
 
 ---
 
@@ -22,6 +22,8 @@
 - [Interactive Tag Toggling](#interactive-tag-toggling) - Manual metadata curation UI
 - [Two-Step Verification](#two-step-verification) - Safety pattern for unverified claims
 - [Lightweight Integration](#lightweight-integration) - Authenticity preservation for low-evidence claims
+- [Effective LLM Constraints](#effective-llm-constraints) - Positive constraints and pre-flight checks
+- [Hub-and-Spoke Delegation](#hub-and-spoke-delegation) - Centralized logic for multi-interface synchronization
 
 ---
 
@@ -135,6 +137,40 @@
 **See:** [ADR-004](../decisions/ADR-004-shadow-modularization.md)
 
 **Related:** [Shadow Sync Protocol](#shadow-sync-protocol) - The verification framework for Silent Sync implementation
+
+---
+
+---
+
+## Prompt Engineering Patterns
+
+### Effective LLM Constraints
+
+**Problem:** Models ignore negative constraints ("Do not do X") and fail to stop on errors.
+**Solution:** Use positive constraints, end-of-prompt placement (Recency Effect), and pre-flight checks (Chain-of-Thought).
+**When to use:** Defining agent behaviors, critical safety rules, or troubleshooting non-compliance.
+
+**Quick Reference:**
+- **Pink Elephant Rule:** Don't say "No code" (negative); say "Analysis only" (positive).
+- **Recency Rule:** Place critical "STOP" instructions at the very end of the prompt.
+- **Pre-flight Rule:** Force "CHECK: [Status]" output before the model begins work.
+
+**See:** [Effective LLM Constraints Lesson](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+
+---
+
+### Hub-and-Spoke Delegation
+
+**Problem:** Logic drift between multiple user interfaces (Local React vs. Web Artifacts) implementing the same complex prompt logic.
+**Solution:** Centralize logic into a single modular Hub and update all Spokes (UI components) to delegate to it via reference.
+**When to use:** Multi-platform applications with shared core agentic logic.
+
+**Quick Reference:**
+- **The Hub:** Authoritative logic module (e.g., `bo_bullet-generation-instructions.md`)
+- **The Spokes:** GUI orchestrators that pass context to the Hub.
+- **Benefit:** Atomic updates and zero logic duplication.
+
+**See:** [ADR-009](../decisions/ADR-009-hub-and-spoke-bullet-generation.md)
 
 ---
 

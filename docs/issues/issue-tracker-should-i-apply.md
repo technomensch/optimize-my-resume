@@ -70,6 +70,77 @@
 
 ## Open Issues
 
+### Issue #79: GUI Customized Bullets Using Wrong Context
+
+**Status:** 🔴 ACTIVE (v9.2.4 - Bug Fixes Pending)
+**Type:** 🐛 Bug
+**Priority:** High
+**Created:** 2026-01-22
+**GitHub Issue:** #79
+**Branch:** `v9.2.3-modularization`
+
+---
+
+#### Version Progress
+
+| Version | Status | Scope | Session |
+|---------|--------|-------|---------|
+| v9.2.1 | ✅ Complete | Prompt rewrite (2407 lines) | 01-opus |
+| v9.2.2 | ✅ Complete | 25 validators (4076 lines) | 03-gemini |
+| v9.2.3 | ⚠️ Needs Commit | Modularization (8 modules, 1752 lines) | 05-gemini |
+| **v9.2.4** | 🎯 **NEXT** | Bug fixes + more modules | TBD |
+
+---
+
+#### v9.2.3 Completed Work (Uncommitted)
+
+**Modules Created in `src/validators/bullet-generation/`:**
+- `core-validators.js` (305 lines) - ChronologyDepth, PositionMetadata, etc.
+- `guardrail-validators.js` (371 lines) - Metric*, Summary*, Phrase*
+- `content-validators.js` (340 lines) - Limitation, Skill, Budget, KeywordDensity
+- `shared-validators.js` (209 lines) - VerbDistribution, MetricsDensity
+- `secondary-validators.js` (92 lines) - RecencyWeighting, AcronymExpansion
+- `history-parser.js` (102 lines) - parseOriginalHistory + regex fallback
+- `matching-helper.js` (71 lines) - findBestMatch + Levenshtein
+- `validator-pipeline.js` (229 lines) - Master validation orchestrator
+
+**JSX Reduction:** 4076 → ~2500 lines (-38%)
+
+---
+
+#### Remaining Bugs (v9.2.4 Scope)
+
+1. 🔴 **Company from JD** - First job shows JD company instead of history company
+   - Location: `core-validators.js:validatePositionMetadata()` line 153
+   - Fix: Add explicit null/empty check
+
+2. 🔴 **Missing Company** - Second job has no company name
+   - Location: Same as Bug 1
+   - Fix: Same - handle undefined/empty string
+
+3. 🔴 **Missing Positions** - Other job history positions not displayed
+   - Location: `core-validators.js:validateChronologyDepth()` line 96
+   - Fix: Add `addMissingPositionSkeletons()` function
+
+---
+
+#### v9.2.4 Plan
+
+**Bug Fixes:**
+- Fix company validation in `validatePositionMetadata()`
+- Add skeleton creation for missing positions
+
+**Further Modularization:**
+- Extract `generation-helpers.js` (~90 lines)
+- Extract `prompt-templates.js` (~200 lines)
+- Target: JSX < 2300 lines
+
+---
+
+**Documentation:** [docs/issues/issue-79/](docs/issues/issue-79/)
+
+---
+
 ### Issue #57: Binary File Content Extraction
 
 **Status:** 🟡 PENDING
