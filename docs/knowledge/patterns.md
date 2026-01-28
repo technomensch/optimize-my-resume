@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-19
-**Entries:** 15
+**Last Updated:** 2026-01-28
+**Entries:** 16
 
 ---
 
@@ -23,6 +23,7 @@
 - [Two-Step Verification](#two-step-verification) - Safety pattern for unverified claims
 - [Lightweight Integration](#lightweight-integration) - Authenticity preservation for low-evidence claims
 - [Effective LLM Constraints](#effective-llm-constraints) - Positive constraints and pre-flight checks
+- [Hub-and-Spoke Delegation](#hub-and-spoke-delegation) - Centralized logic for multi-interface synchronization
 
 ---
 
@@ -155,6 +156,21 @@
 - **Pre-flight Rule:** Force "CHECK: [Status]" output before the model begins work.
 
 **See:** [Effective LLM Constraints Lesson](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+
+---
+
+### Hub-and-Spoke Delegation
+
+**Problem:** Logic drift between multiple user interfaces (Local React vs. Web Artifacts) implementing the same complex prompt logic.
+**Solution:** Centralize logic into a single modular Hub and update all Spokes (UI components) to delegate to it via reference.
+**When to use:** Multi-platform applications with shared core agentic logic.
+
+**Quick Reference:**
+- **The Hub:** Authoritative logic module (e.g., `bo_bullet-generation-instructions.md`)
+- **The Spokes:** GUI orchestrators that pass context to the Hub.
+- **Benefit:** Atomic updates and zero logic duplication.
+
+**See:** [ADR-009](../decisions/ADR-009-hub-and-spoke-bullet-generation.md)
 
 ---
 
