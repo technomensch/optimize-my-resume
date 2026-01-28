@@ -188,7 +188,7 @@
   <workflow_skills>
     <skill_1_md_job_history>
       <name>/md-job-history</name>
-      <location>.claude/skills/md-job-history.md</location>
+      <location>.agent/workflows/md-job-history.md</location>
       <purpose>Convert job history .txt to .md format</purpose>
 
       <usage>
@@ -213,7 +213,7 @@
 
     <skill_2_update_history>
       <name>/update-history</name>
-      <location>.claude/skills/update-history.md</location>
+      <location>.agent/workflows/update-history.md</location>
       <purpose>Intelligent version management with surgical updates</purpose>
 
       <usage>
