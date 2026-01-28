@@ -1,5 +1,5 @@
 ---
-description: Enforce Shadow Sync Protocol: Verification for modular rule consistency
+description: Execute Shadow Sync Protocol verification for modular rule consistency
 ---
 # enforce-shadow-sync
 

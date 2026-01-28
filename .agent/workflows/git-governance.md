@@ -1,7 +1,5 @@
 ---
-description: Enforce Git governance: branch hierarchy, commits, issue linkage, and approval gates
-version: 1.0
-created: 2026-01-28
+description: Enforce Git governance policy for branch hierarchy and issue linkage
 ---
 
 # Git Governance Workflow
