@@ -90,6 +90,21 @@ Hook up local and web GUI components to the new robust logic hub.
 
 ---
 
+### ENH-006: Establish Unified Multi-Agent Workflow System
+
+**Status:** 🔴 ACTIVE  
+**Type:** Enhancement  
+**Priority:** High  
+**Created:** 2026-01-28  
+**Branch:** `v9.3.4-ENH-006-unified-workflow-consolidation`  
+
+**Quick Summary:**
+Establish `.agent/workflows` as SSoT, symlink to Claude, and enforce governance naming policy.
+
+**Documentation:** [docs/plans/v9.3.4-ENH-006-unified-workflow-consolidation.md](plans/v9.3.4-ENH-006-unified-workflow-consolidation.md)
+
+---
+
 ## Active Issues
 
 ### Issue #79: GUI Customized Bullets Using Wrong Context
