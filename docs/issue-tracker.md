@@ -103,6 +103,9 @@ Establish `.agent/workflows` as SSoT, symlink to Claude, and enforce governance 
 
 **Documentation:** [docs/plans/v9.3.4-ENH-006-unified-workflow-consolidation.md](plans/v9.3.4-ENH-006-unified-workflow-consolidation.md)
 
+**GitHub Issue:** [#95](https://github.com/technomensch/optimize-my-resume/issues/95)
+
+
 ---
 
 ## Active Issues

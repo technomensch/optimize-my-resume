@@ -1,3 +1,6 @@
+---
+description: Enforce Shadow Sync Protocol: Verification for modular rule consistency
+---
 # enforce-shadow-sync
 
 Execute Shadow Sync Protocol verification checks. Detects which files changed and verifies all three tiers (MODULAR, GOLD MASTER, OPTIMIZED ENTRYPOINT) are synchronized. Works regardless of which tier was modified first.
