@@ -25,6 +25,13 @@ This session established the foundation for the "Hub-and-Spoke" Bullet Generatio
 - **Execution Protocol:** Added `/execute-plan` references to all plans to enforce zero-deviation execution.
 - **Review & Corrections:** Fixed ADR numbering inconsistency (ADR-005 → ADR-009), completed Hub-and-Spoke pattern entry, updated task.md completion status, and created ENH-003 directory structure.
 
+### Phase 3: Implementation Review & Plan Refinement
+- **Gemini Implementation Review:** Analyzed Gemini's execution of v9.3.0, v9.3.1, and v9.3.2 against plan specifications.
+- **v9.3.2 Corrections:** Added 4 missing guardrails (G5, G11, G12, G21) to `bo_bullet-generation-instructions.md`, fixed typo, corrected relative links, added version history.
+- **Workflow Router Creation:** Created `.agent/workflows/generate-bullets.md` to resolve orphaned reference from v9.3.1 verification plan.
+- **v9.3.3 Plan Enhancement:** Added prerequisites section, explicit prompt injection snippet, workflow reference, and file-based verification command.
+- **Plan Quality Analysis:** Identified plan authoring issues (typos, vague specs, orphaned references) vs execution errors.
+
 ## Decisions Made
 
 1.  **Hub-and-Spoke Architecture:** Centralize bullet generation logic in a single modular hub (`bo_bullet-generation-instructions.md`) and have both Local and Web GUI components delegate to it. (See ADR-009)
@@ -66,6 +73,9 @@ This session established the foundation for the "Hub-and-Spoke" Bullet Generatio
 - `docs/enhancements/ENH-002/solution-approach.md`
 - `docs/enhancements/ENH-002/test-cases.md`
 - `docs/enhancements/ENH-003/` (directory structure)
+- `docs/enhancements/ENH-003/logic-map.md`
+- `optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md`
+- `.agent/workflows/generate-bullets.md`
 - `docs/sessions/2026-01/2026-01-28_bullet-generation-workflow-initialization.md`
 
 ## Commits Created
@@ -85,9 +95,16 @@ b025961 - docs(plans): enforce guardrail 31 governance in v9.3.x plans
 
 ## Next Steps
 
-- **Execute v9.3.1 (ENH-003):** Verify logic separation between Summary generation and Bullet generation.
-- **Execute v9.3.2 (ENH-004):** Create the central `bo_bullet-generation-instructions.md` Hub.
-- **Execute v9.3.3 (ENH-005):** Integrate GUI components with the new logic hub.
+### Completed Since Initial Summary
+- ✅ **Executed v9.3.1 (ENH-003):** Verified logic separation and created `logic-map.md`.
+- ✅ **Executed v9.3.2 (ENH-004):** Created `bo_bullet-generation-instructions.md` Hub (with corrections).
+- ✅ **Reviewed Gemini's Implementation:** Identified missing guardrails (G5, G11, G12, G21) and plan authoring issues.
+- ✅ **Corrected v9.3.2 Logic Hub:** Added 4 missing guardrails, fixed typo, corrected relative links, added version history.
+- ✅ **Created Workflow Router:** Added `.agent/workflows/generate-bullets.md` to formalize routing logic and "Bullet-First" execution order.
+- ✅ **Enhanced v9.3.3 Plan:** Added prerequisites, explicit prompt snippet, workflow reference, and file-based verification.
+
+### Remaining Work
+- **Execute v9.3.3 (ENH-005):** Integrate GUI components with the new logic hub (ready for Gemini execution).
 
 ## Related Resources
 
@@ -99,7 +116,7 @@ b025961 - docs(plans): enforce guardrail 31 governance in v9.3.x plans
 ---
 
 **Session Stats:**
-- Files modified: 11
-- Files created: 10
+- Files modified: 14
+- Files created: 13
 - Commits: 3
-- Token usage: ~84K / 200K
+- Token usage: ~88K / 200K

@@ -24,6 +24,24 @@ Forbidden: Improvements, assumptions, gap-filling, unauthorized fixes
 
 ---
 
+═══════════════════════════════════════════════════════════════
+```
+
+---
+
+## 1.5. Branch Validation (DELEGATES to /git-governance)
+
+Before proceeding, invoke: **`@git-governance branch-check`**
+
+This will:
+- Verify branch links to an open issue
+- Check for uncommitted changes on parent branch
+- Validate chained branch hierarchy (if applicable)
+
+HALT if validation fails.
+
+---
+
 ## 2. Allowed Tools (Positive Constraints)
 
 You may ONLY use these tools during plan execution:
@@ -154,6 +172,19 @@ Criteria verified: [X/N]
 Awaiting user decision: retry, adjust plan, or accept partial.
 ═══════════════════════════════════════════════════════════════
 ```
+
+---
+
+## 8. Commit Gate (DELEGATES to /git-governance)
+
+After all tasks complete, invoke: **`@git-governance commit-and-link`**
+
+This will:
+- Enforce conventional commit format
+- Require issue reference (Closes #N)
+- Verify commit succeeded
+
+HALT if commit fails.
 
 ---
 
