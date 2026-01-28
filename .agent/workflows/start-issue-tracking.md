@@ -202,58 +202,33 @@ Read and use the template from: `docs/workflow-templates/test-cases.md`
 
 ---
 
-## Step 5: Git Integration
+## Step 5: Git Integration (DELEGATES to /git-governance)
 
 ### 5.1: Create Feature Branch
-```bash
-# For issues (new minor version)
-git checkout -b v[Major.Minor.0]-[issue N]-brief-description
 
-# For patches (patch version)
-git checkout -b v[Major.Minor.Patch]-[issue N]-brief-description
+Invoke: **`@git-governance create-branch --from [parent] --name [branch-name] --issue [N]`**
 
-# Examples
-git checkout -b v9.2.0-issue-7-json-truncation
-git checkout -b v9.1.1-issue-7-json-truncation
+This handles:
+- Parent branch commit validation
+- Branch creation with proper hierarchy
+- Issue linkage verification
+- Draft PR creation
+
+**Example:**
+```
+@git-governance create-branch --from main --name v9.2.0-issue-7-json-truncation --issue 7
 ```
 
-### 5.2: Initial Commit
-```bash
-# Stage issue documentation
-git add docs/issues/issue-N/
-# OR
-git add docs/enhancements/ENH-NNN/
+### 5.2: Verify Branch Creation
 
-# Commit with conventional format
-git commit -m "docs(issue-N): create issue tracking for [title]
-
-Issue #N: [Title]
-Type: [Bug/Enhancement]
-Priority: [Critical/High/Medium/Low]
-
-Problem:
-[Brief problem description]
-
-Files Created:
-- docs/issues/issue-N/issue-N-description.md
-- docs/issues/issue-N/solution-approach.md
-- docs/issues/issue-N/test-cases.md
-
-Next Steps:
-[What to do next]
-
-Status: Active
-"
+The git-governance workflow will output:
+```
+✅ Branch Created: v9.2.0-issue-7-json-truncation
+✅ Linked to Issue #7
+✅ Draft PR #XX created
 ```
 
-### 5.3: Push to Remote & Link Issue
-```bash
-# Push branch
-git push -u origin v[Major.Minor.0]-[issue N]-brief-description
-
-# IMMEDIATELY create Draft PR to link branch to Issue (Prevent Governance Drift)
-gh pr create --draft --title "WIP: Issue #N - [Brief Title]" --body "Closes #N"
-```
+---
 
 ---
 

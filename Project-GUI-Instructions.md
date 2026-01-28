@@ -104,8 +104,7 @@
 
     <for_bullet_optimization>
       - optimization-tools/bullet-optimizer/bo_evidence-matching.md
-      - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md
-      - optimization-tools/bullet-optimizer/bo-keyword-handling.md
+      - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
     </for_bullet_optimization>
 
     <for_job_fit_analysis>
@@ -149,7 +148,7 @@
 
     <!-- Bullet Optimizer: Core Integration -->
     - optimization-tools/bullet-optimizer/bo_evidence-matching.md (requirement-by-requirement gap analysis)
-    - optimization-tools/bullet-optimizer/bo-keyword-handling.md (v9.2.0: Extracted from main prompt)
+    - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md (consolidated logic hub)
 
     <!-- Job Fit Analyzer: Router & Workflows -->
     - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (v9.1.0: Added post-analysis customization offer)
@@ -368,7 +367,7 @@
   </after_resume_analysis>
 </completion_next_steps>
 
-<modular_reference file="optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md" />
+<modular_reference file="optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md" />
 
 <!-- ========================================================================== -->
 <!-- PHASE 3: KEYWORD INPUT HANDLING                                            -->

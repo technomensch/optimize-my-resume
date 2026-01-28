@@ -118,6 +118,7 @@
 
     <!-- Bullet Optimizer: Core Integration -->
     - optimization-tools/bullet-optimizer/bo_evidence-matching.md (requirement-by-requirement gap analysis)
+    - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md (consolidated logic hub)
 
     <!-- Job Fit Analyzer: Router & Workflows -->
     - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (complete 8-scenario routing system)

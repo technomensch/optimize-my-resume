@@ -1,7 +1,7 @@
 # Core Concepts
 
-**Last Updated:** 2026-01-19
-**Entries:** 14
+**Last Updated:** 2026-01-28
+**Entries:** 15
 
 ---
 
@@ -22,6 +22,7 @@
 - [Chronology Depth Control](#chronology-depth-control) - Balancing recency and significance
 - [Fit-Score Gating](#fit-score-gating) - Conditional feature presentation pattern
 - [Custom Keyword Hub](#custom-keyword-hub) - Centralized skill management logic
+- [Synthetic Metric Attribution](#synthetic-metric-attribution) - Value-driven metrics for solo portfolio projects
 
 ---
 

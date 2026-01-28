@@ -586,13 +586,21 @@ export default function ShouldIApply() {
         }
       }
 
+      const bulletInstructions = `
+Follow the bullet generation protocol defined in:
+- Logic Hub: optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
+- Workflow: .agent/workflows/generate-bullets.md
+
+Execute in "Bullet-First" order: generate bullets BEFORE professional summary.
+`;
+
       const generationPrompt = buildGenerationPrompt(
         experienceContent,
         jobDescription,
         analysisResult,
         keywordsToUse,
         keywordsToIgnore
-      );
+      ) + "\n\n" + bulletInstructions;
 
       // Call regeneration loop with all parameters needed for validation
       const loopResult = await generateWithValidationLoop(
@@ -656,13 +664,21 @@ export default function ShouldIApply() {
         }
       }
 
+      const bulletInstructions = `
+Follow the bullet generation protocol defined in:
+- Logic Hub: optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
+- Workflow: .agent/workflows/generate-bullets.md
+
+Execute in "Bullet-First" order: generate bullets BEFORE professional summary.
+`;
+
       const generationPrompt = buildGenerationPrompt(
         experienceContent,
         jobDescription,
         analysisResult,
         keywordsToUse,
         keywordsToIgnore
-      );
+      ) + "\n\n" + bulletInstructions;
 
       // Progress callback to update UI
       const onProgress = (attempt) => {
@@ -2024,6 +2040,12 @@ export default function ShouldIApply() {
                           Using model: {generationStatus.model}
                         </p>
                       )}
+                      <div className="flex items-center gap-2 mt-2 ml-8 text-blue-400">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                        <p className="text-xs font-semibold uppercase tracking-wider">
+                          Robust Bullet Protocol Active
+                        </p>
+                      </div>
                     </div>
                   )}
 

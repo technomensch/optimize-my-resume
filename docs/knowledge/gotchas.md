@@ -1,7 +1,7 @@
 # Common Gotchas & Solutions
 
-**Last Updated:** 2026-01-19
-**Entries:** 10
+**Last Updated:** 2026-01-28
+**Entries:** 11
 
 ---
 
@@ -19,6 +19,7 @@
 - [Unverified Skill Hallucination](#unverified-skill-hallucination) - AI fabrication of custom skills
 - [Token Impact of Customization](#token-impact-of-customization) - High cost of multi-tier generation
 - [Binary Extraction Limits](#binary-extraction-limits) - Base64 parsing reliability
+- [Solo Management Hallucination](#solo-management-hallucination) - Using management verbs for solo projects
 
 ---
 
