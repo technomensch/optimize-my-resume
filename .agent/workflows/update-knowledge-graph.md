@@ -1,3 +1,6 @@
+---
+description: Extract structured insights from lessons-learned and sync to knowledge graph
+---
 # update-knowledge-graph
 
 Extract structured insights from lessons-learned documents and sync them to the knowledge graph, creating a quick-reference index while preserving full narrative context.

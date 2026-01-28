@@ -1,14 +1,19 @@
-# Optimize-My-Resume System v9.1.0 <!-- v9.1.0 Change: Documentation Sync -->
+# Optimize-My-Resume System v9.3.4 <!-- v9.3.4 Change: Unified Workflow System -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 9.0.0 (January 19, 2026)                                          -->
-<!-- v9.0.0 Release: Hub - Keyword Management & Validation (Issue #67, #69)      -->
-<!-- Last Updated: January 19, 2026                                             -->
+<!-- Version: 9.3.4 (January 28, 2026)                                          -->
+<!-- v9.3.4 Release: Unified Workflow System & Governance (ENH-006)             -->
+<!-- Last Updated: January 28, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
-<!-- v9.1.0 (2026-01-19) - Documentation Sync (Issue #65, #66, #68)        -->
+<!-- v9.3.4 (2026-01-28) - Unified Workflow System (ENH-006)                    -->
+<!--   - Established .agent/workflows as SSoT symlinked to .claude/skills       -->
+<!--   - Enforced [BUG]/[ENHANCEMENT] titling policy for GitHub issues          -->
+<!--   - Mandated local tracking ID persistence in issue bodies                -->
+<!--   - Synchronized Gemini and Claude skills into unified system              -->
+<!-- v9.1.0 (2026-01-19) - Documentation Sync (Issue #65, #66, #68)              -->
 <!--   - Standardized keyword visibility (top 5 matched/missing) in analysis summaries -->
 <!--   - Formalized post-analysis customization offer trigger -->
 <!--   - Synchronized narrative generator instructions with WebGUI implementation -->
@@ -64,6 +69,29 @@
   </claude_web_interface>
 </issue_tracking_workflow>
 
+<unified_workflow_system>
+  <governance>
+    All AI agent workflows (Claude Code, Antigravity, Gemini) are consolidated into `.agent/workflows/` as the Single Source of Truth (SSoT).
+    - Claude Code skills are synchronized via symbolic link: `.claude/skills` → `.agent/workflows`
+    - Logic updates MUST be applied to `.agent/workflows/` FIRST.
+    - Never modify agent-specific hidden directories directly if a unified workflow equivalent exists.
+  </governance>
+
+  <symbolic_synchronization_symsync>
+    To ensure "Environment Parallax" (logic drift between agents) is avoided:
+    1. Verify link integrity at session start: `ls -ld .claude/skills`
+    2. Any new reusable logic must be added as a `.md` workflow in `.agent/workflows/`.
+    3. Use the `SSoT_MARKER` within work plans to indicate cross-agent dependency.
+  </symbolic_synchronization_symsync>
+
+  <git_governance_enforcement>
+    1. **Release Hierarchy:** All branches MUST be prefixed with the semantic version (e.g., `v9.3.4-`).
+    2. **Issue Linkage:** All commits and PRs MUST reference the GitHub Issue ID (e.g., `Closes #95`).
+    3. **Titling Policy:** GitHub issues MUST use `[BUG]` or `[ENHANCEMENT]` prefixes.
+    4. **Persistence:** Local Tracking IDs (ENH-XXX or issue-XXX) MUST be present in issue bodies.
+  </git_governance_enforcement>
+</unified_workflow_system>
+
 <upload_guide>
   <minimum_setup>
     For full functionality, upload ONE of:
@@ -97,6 +125,21 @@
     </for_narrative_generator>
   </modular_setup>
 </upload_guide>
+
+<unified_workflow_system version="1.0">
+  <overview>
+    All agent intelligence (Gemini/Claude) is consolidated into `.agent/workflows/`.
+    Claude's `.claude/skills/` directory is a symbolic link to this directory.
+  </overview>
+  <workflows>
+    - /start-issue-tracking (Governance & Setup)
+    - /git-governance (Branching & PR lifecycle)
+    - /lesson-learned (Learning & KG Sync)
+    - /session-summary (Context Capture)
+    - /enforce-shadow-sync (Three-tier validation)
+    - /update-knowledge-graph (KG Maintenance)
+  </workflows>
+</unified_workflow_system>
 
 <!-- ========================================================================== -->
 
@@ -3829,15 +3872,28 @@
     <guardrail id="31">
       <name>workflow_lifecycle_compliance</name>
       <priority>CRITICAL</priority>
-      <instruction>You MUST NOT proceed to planning or execution without first establishing the necessary project management infrastructure.</instruction>
+      <instruction>Establish project infrastructure before planning or execution. Strictly follow naming and tagging policies.</instruction>
+      <naming_policy>
+        - **GitHub Issues:** Must prefix title with `[BUG]` or `[ENHANCEMENT]`.
+        - **GitHub Labels:** Apply `bug` or `enhancement` labels.
+        - **Local ID:** Include `Local Tracking ID: issue-N` or `ENH-NNN` in the issue body.
+        - **Plans & Branches:** Must include version prefix (e.g., `v9.3.4-issue-N-slug`).
+        - **PR Titles:** Should be descriptive and mirror the clean GitHub Issue title (including prefix).
+      </naming_policy>
       <steps>
-        1. Identify or create a GitHub Issue (gh issue create).
-        2. Establish a dedicated feature/patch branch.
+        1. Identify or create a GitHub Issue (gh issue create) matching naming policy.
+        2. Establish a dedicated feature/patch branch with version prefix.
         3. [MANDATORY] Create Draft PR immediately to link branch to issue (gh pr create --draft).
         4. Update ROADMAP.md and CHANGELOG.md status.
         5. Save implementation plan to docs/plans/[branch-name].md.
       </steps>
     </guardrail>
+
+    <local_tracking_persistence_guardrail id="36">
+      <priority>HIGH</priority>
+      <instruction>Always maintain the link between local documentation and GitHub issues.</instruction>
+      <rule>The Local ID (issue-N / ENH-NNN) MUST be present in the GitHub issue body and all local documentation files for that issue.</rule>
+    </local_tracking_persistence_guardrail>
 
     <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md#custom_keyword_evidence_guardrail -->
     <custom_keyword_evidence_guardrail id="32">

@@ -1,6 +1,6 @@
 # Session Summaries Index
 
-**Total Sessions:** 11
+**Total Sessions:** 12
 **Last Session:** 2026-01-28
 **Last Updated:** 2026-01-28
 
@@ -41,6 +41,7 @@ docs/sessions/
 ## 2026-01 (11 sessions)
 
 ### 2026-01-28
+- [Unified Workflow System & SymSync Bridge](2026-01/2026-01-28_unified-workflow-system.md) - Consolidated agent logic into .agent/workflows and established cross-platform symlink bridge (ENH-006).
 - [Bullet Generation Workflow Initialization (v9.3.0)](2026-01/2026-01-28_bullet-generation-workflow-initialization.md) - Initialized Hub-and-Spoke architecture (ADR-009), tracking (ENH-002+), and knowledge foundation.
 
 ### 2026-01-24
