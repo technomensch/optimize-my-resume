@@ -1,10 +1,10 @@
 # Job Fit Assessment Module (v8.2.0)
 
 <!-- ========================================================================== -->
-<!-- PHASE 3: PRE-GENERATION FIT ASSESSMENT                                      -->
+<!-- JOB FIT ANALYZER: PRE-GENERATION FIT ASSESSMENT                             -->
 <!-- ========================================================================== -->
 
-<phase_3_pre_generation_assessment>
+<job_fit_analyzer_pre_generation_assessment>
   <!-- part of v7.1 issue #33 -->
   <real_world_hiring_context>
     <priority>MODERATE</priority>
@@ -174,7 +174,7 @@
     </examples>
   </portfolio_project_weighting>
 
-  <phase_1_initial_fit_assessment>
+  <initial_fit_assessment>
     
     <step number="1" name="extract_critical_requirements">
       <purpose>Identify non-negotiable or heavily emphasized requirements from JD</purpose>
@@ -750,16 +750,16 @@
         </if_fit_90_or_above>
         
         <if_fit_80_to_89>
-          <action>FLAG gaps and ASK user (proceed to Phase 2 - Full Gap Investigation)</action>
+          <action>FLAG gaps and ASK user (proceed to Bullet Optimizer - Full Gap Investigation)</action>
         </if_fit_80_to_89>
         
         <if_fit_75_to_79>
-          <action>STOP with BRIEF SUMMARY (skip to Phase 3A)</action>
+          <action>STOP with BRIEF SUMMARY (skip to Job Fit AnalyzerA)</action>
           <no_user_override>Do not offer to generate bullets anyway</no_user_override>
         </if_fit_75_to_79>
         
         <if_fit_74_or_below>
-          <action>STOP with ULTRA-BRIEF SUMMARY (skip to Phase 3B)</action>
+          <action>STOP with ULTRA-BRIEF SUMMARY (skip to Job Fit AnalyzerB)</action>
           <no_user_override>Do not offer to generate bullets anyway</no_user_override>
         </if_fit_74_or_below>
       </decision_tree>
@@ -771,12 +771,12 @@
       <blocking_conditions>
         <condition priority="critical">
           IF JD requires "On-site" AND user profile indicates "Remote only"
-          THEN STOP with Phase 3B output (fundamental mismatch)
+          THEN STOP with Job Fit AnalyzerB output (fundamental mismatch)
         </condition>
 
         <condition priority="critical">
           IF JD has state residency requirement AND user is in different state AND no relocation planned
-          THEN STOP with Phase 3B output (fundamental mismatch)
+          THEN STOP with Job Fit AnalyzerB output (fundamental mismatch)
         </condition>
 
         <condition priority="high">
@@ -1043,4 +1043,4 @@
     </formatting_requirements>
   </phase_3b_ultra_brief_exit_output>
 
-</phase_3_pre_generation_assessment>
+</job_fit_analyzer_pre_generation_assessment>

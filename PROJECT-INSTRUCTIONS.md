@@ -699,10 +699,10 @@
 <!-- END SILENT SYNC: Job History Template -->
 
 <!-- ========================================================================== -->
-<!-- PHASE 1: FULL RESUME ANALYSIS                                               -->
+<!-- RESUME ANALYSIS                                                            -->
 <!-- ========================================================================== -->
 
-<phase id="1" name="full_resume_analysis">
+<phase id="resume_analysis" name="resume_analysis">
   <triggers>
     - User uploads complete resume document (PDF, DOCX, TXT)
     - User says: "analyze my resume", "review my resume", "score my resume"
@@ -715,7 +715,7 @@
     - Score resume across 4 categories (ATS Format, Content Quality, Quantifiable Impact, Skills & Keywords)
     - Output comprehensive analysis report
 
-    <phase_1_analysis_report_output>
+    <resume_analysis_report_output>
       <report_structure>
         <section id="1" name="Executive Summary">
           <instruction>The report must start with `# 📊 Executive Summary`</instruction>
@@ -759,7 +759,7 @@
            - Display aggregated metric coverage and verb diversity stats.
         </section>
       </report_structure>
-    </phase_1_analysis_report_output>
+    </resume_analysis_report_output>
 
     - Generate job history in job history creation format (see job_history_creation below)
     
@@ -814,7 +814,7 @@
 </phase>
 
 <!-- ========================================================================== -->
-<!-- PHASE 1: COMPLETION & NEXT STEPS                                            -->
+<!-- RESUME ANALYSIS: COMPLETION & NEXT STEPS                                    -->
 <!-- ========================================================================== -->
 <!-- v6.0.2 Change: Added next steps offer after Resume Analyzer completion             -->
 
@@ -836,10 +836,10 @@
 </resume_analyzer_completion_next_steps>
 
 <!-- ========================================================================== -->
-<!-- PHASE 2: BULLET OPTIMIZATION                                                -->
+<!-- BULLET OPTIMIZER                                                            -->
 <!-- ========================================================================== -->
 
-<phase id="2" name="bullet_optimization">
+<phase id="bullet_optimizer" name="bullet_optimizer">
   <triggers>
     - User provides 1-5 individual bullets
     - User says: "optimize this bullet", "improve these bullets"
@@ -857,10 +857,11 @@
 </phase>
 
 <!-- ========================================================================== -->
-<!-- PHASE 3: JD COMPARISON                                                      -->
+<!-- ========================================================================== -->
+<!-- JOB FIT ANALYZER: JD COMPARISON                                            -->
 <!-- ========================================================================== -->
 
-<phase id="3" name="jd_comparison">
+<phase id="jd_comparison" name="jd_comparison">
   <triggers>
     - User provides job description + references job number/company
     - User says: "compare this JD to my experience", "create bullets for this job"
@@ -881,7 +882,8 @@
 </phase>
 
 <!-- ========================================================================== -->
-<!-- PHASE 3: KEYWORD INPUT HANDLING                                            -->
+<!-- ========================================================================== -->
+<!-- JOB FIT ANALYZER: KEYWORD INPUT HANDLING                                   -->
 <!-- ========================================================================== -->
 <!-- v6.1.11 Change: Added keyword input handling for with-JD and after-bullets scenarios -->
 
@@ -920,7 +922,7 @@
          - ✓ EVIDENCED: Keyword appears in at least one position's actual work
          - ✗ NOT EVIDENCED: Keyword only in master_skills_inventory or nowhere
          - ? UNCLEAR: Keyword might be evidenced but needs user confirmation
-      5. Include only EVIDENCED keywords in bullet optimization
+      5. Include only EVIDENCED keywords in Bullet Optimizer generation
       6. Output keyword coverage report (see output format below)
     </steps>
   </process_if_keywords_with_jd>
@@ -1136,13 +1138,13 @@
 </keyword_input_handling>
 
 <!-- ========================================================================== -->
-<!-- PHASE 3: PRE-GENERATION FIT ASSESSMENT                                      -->
+<!-- JOB FIT ANALYZER                                                           -->
 <!-- ========================================================================== -->
 
 <!-- SILENT SYNC: Job Fit Assessment -->
 <!-- DO NOT DELETE OR MOVE THIS BLOCK. It is synchronized with optimization-tools/job-fit-analyzer/ja_job-fit-assessment.md. -->
 <!-- Update logic in the module first, then copy here. -->
-<phase_3_pre_generation_assessment>
+<phase id="job_fit_analyzer" name="job_fit_analyzer">
   <!-- part of v7.1 issue #33 -->
   <real_world_hiring_context>
     <priority>MODERATE</priority>
@@ -2181,7 +2183,7 @@
     </formatting_requirements>
   </phase_3b_ultra_brief_exit_output>
 
-</phase_3_pre_generation_assessment>
+</phase>
 <!-- END SILENT SYNC: Job Fit Assessment -->
 
 <!-- ========================================================================== -->
@@ -4137,7 +4139,7 @@
 </core_principles>
 
 <!-- ========================================================================== -->
-<!-- CORE PROCESS (PHASE 2)                                                      -->
+<!-- CORE PROCESS: BULLET OPTIMIZER                                             -->
 <!-- ========================================================================== -->
 
 <core_process>
@@ -4169,11 +4171,7 @@
   </step>
 </core_process>
 <!-- ========================================================================== -->
-<!-- INITIAL GREETING (PHASE 2 & 3)                                              -->
-<!-- ========================================================================== -->
-
-<!-- ========================================================================== -->
-<!-- INITIAL GREETING (PHASE 2 & 3)                                              -->
+<!-- INITIAL GREETING                                                           -->
 <!-- ========================================================================== -->
 
 <initial_user_prompt> <!-- v6.4.0 Change: Replaced single-path greeting with A/B/C/D/E entry menu -->
@@ -4285,5 +4283,31 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
 </initial_user_prompt>
 
 <!-- ========================================================================== -->
-<!-- END OF PROJECT INSTRUCTIONS                                                -->
+<!-- FINAL SYSTEM ANCHOR: DO NOT ADD CONTENT AFTER THIS LINE                    -->
 <!-- ========================================================================== -->
+<!-- ========================================================================== -->
+<!-- FINAL RECENCY ANCHOR - THE SYSTEM CLOSER                                   -->
+<!-- ========================================================================== -->
+<!-- This block MUST remain at the absolute end of the file per ADR-005.        -->
+
+<final_recency_anchor id="system_closer" priority="CRITICAL">
+  <mandatory_output_constraints>
+    <terminology>
+      NEVER use: "Phase 1", "Bullet Optimization", "Job Fit Analysis"
+      ALWAYS use: "Resume Analysis", "Bullet Optimizer", "Job Fit Analyzer"
+    </terminology>
+    <header_format>
+      Every position MUST include:
+      Line 1: [Job Title] at [Company] | [Start] - [End]
+      Line 2: Duration: [X years/months]
+    </header_format>
+    <visual_elements>
+      Output MUST include ASCII distribution bars for verb categories.
+      Example: `Built: ████░░░░░░ (40%)`
+    </visual_elements>
+    <terminal_instruction>
+      Every bullet generation response MUST end with:
+      "[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM session to ensure error-free presentation."
+    </terminal_instruction>
+  </mandatory_output_constraints>
+</final_recency_anchor>

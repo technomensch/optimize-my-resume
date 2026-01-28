@@ -50,7 +50,7 @@ This protocol guides the creation of a comprehensive job history file that serve
 - Key achievements or differentiators]
 ```
 
-**Purpose:** Master summary that can be customized per-JD in Phase 3.
+**Purpose:** Master summary that can be customized per-JD in Job Fit Analyzer.
 
 **Guidelines:**
 - Keep factual and evidence-based
@@ -473,9 +473,9 @@ When unclear, default to HARD because:
 
 ---
 
-## Creation Workflow (Phase 1)
+## Creation Workflow (Resume Analysis)
 
-When creating a job history file in Phase 1, follow this sequence:
+When creating a job history file in Resume Analysis, follow this sequence:
 
 ### Step 1: Personal Information
 - Collect name, location, contact info
@@ -681,7 +681,7 @@ Before marking job history as complete:
 
 ---
 
-## Usage in Gap Analysis (Phase 3)
+## Usage in Gap Analysis (Job Fit Analyzer)
 
 When comparing job history to JD:
 

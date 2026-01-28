@@ -102,7 +102,7 @@ This module contains high-precision rules for impact quantification, portfolio s
 <!-- SILENT SYNC: Automatic Clean Output for Copy-Paste -->
 <rule id="automatic_final_output">
   <priority>CRITICAL</priority>
-  <trigger>At the end of Bullet Optimization (Phase 2) or Job Fit Analysis (Phase 3)</trigger>
+  <trigger>At the end of Bullet Optimizer or Job Fit Analyzer</trigger>
   <trigger_keyword>automatic_plain_text_export</trigger_keyword>
   
   <instruction>

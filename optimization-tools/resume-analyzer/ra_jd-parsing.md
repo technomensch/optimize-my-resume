@@ -863,7 +863,7 @@ Before finalizing JD parse:
 
 ---
 
-## Usage in Gap Analysis (Phase 3)
+## Usage in Gap Analysis (Job Fit Analyzer)
 
 After parsing JD, the parsing output feeds into evidence matching:
 

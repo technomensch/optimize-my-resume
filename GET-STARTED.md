@@ -272,7 +272,7 @@ You're ready to develop!
 
 ## What's Next?
 
-Future enhancements (Phase 2+):
+Future enhancements:
 - Bullet optimization
 - Job description matching
 - Resume history

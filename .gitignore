@@ -15,7 +15,7 @@ job-history/
 !chat-history/.gitkeep
 !job-history/.gitkeep
 
-# JD Cache (Phase 3) - Cache parsed JDs locally, don't commit
+# JD Cache (Job Fit Analyzer) - Cache parsed JDs locally, don't commit
 jd_parsed/*.json
 docs/plans/archive/
 jd_parsed/*_parsed.json

@@ -20,6 +20,8 @@
 - [Token Impact of Customization](#token-impact-of-customization) - High cost of multi-tier generation
 - [Binary Extraction Limits](#binary-extraction-limits) - Base64 parsing reliability
 - [Solo Management Hallucination](#solo-management-hallucination) - Using management verbs for solo projects
+- [The Vibe-Coding Drift](#the-vibe-coding-drift) - LLM reverting to training bias in saturated context
+- [Logic Conflation Trap](#logic-conflation-trap) - Mixing Master Summary logic with Per-JD optimization
 
 ---
 
@@ -231,9 +233,30 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 
 ---
 
-**Maintenance:**
-- Add gotchas immediately when encountered
-- Include clear solutions and prevention strategies
-- Link to related lessons learned for details
+### The Vibe-Coding Drift
 
-**Created:** 2026-01-02
+**Symptom:** Agent ignores project-specific XML structure or terminology (e.g., using "Phase 1" instead of "Resume Analysis") and generates a generic "polished" resume.
+
+**Gotcha:** In context-heavy sessions (>4,000 lines), the model's training bias on what a "resume" looks like overrides specific instructions. The agent "drifts" toward its "vibe" of resume writing rather than your "architecture."
+
+**Fix:**
+1.  **Mandatory Pre-flight Thinking:** Force the model to output a rule-mapping table *before* generation.
+2.  **External Validator:** Use an external logic file (e.g., `bo_output-validator.md`) to audit the output.
+3.  **Recency Anchors:** Place critical formatting rules at the absolute end of the prompt.
+
+**See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+
+---
+
+### Logic Conflation Trap
+
+**Symptom:** User asks to "optimize resume" and the agent generates a Master Professional Summary (global) instead of Per-JD optimized bullets (specific), or vice versa.
+
+**Gotcha:** Multiple files (e.g., `ng_summary-generation.md` and `bo_bullet-generation-instructions.md`) mention "summary." Without explicit disambiguation, agents conflate the one-time Master Summary logic with the ephemeral Per-JD customization logic.
+
+**Fix:**
+1. **Aggressive Disambiguation:** Use high-contrast choice gates in the workflow router (`jfa_workflow-router.md`) forcing the user to pick between "Option A: Master" or "Option B: Per-JD."
+2. **Exclusion Headers:** Add "THIS IS NOT" headers to logic modules to stop the agent if it routes incorrectly.
+3. **Workflow Naming:** Distinguish between "Summary Generation" (Master) and "Application Optimization" (Per-JD).
+
+**See:** [Workflow Router](../job-fit-analyzer/jfa_workflow-router.md)

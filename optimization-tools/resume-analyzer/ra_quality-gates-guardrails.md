@@ -233,11 +233,11 @@
   <automatic_plain_text_export> <!-- v6.1.10 Change: Added automatic plain text file generation -->
     <priority>high</priority>
     <priority>high</priority>
-    <trigger>After automatic_quality_gate passes and all bullets finalized (Phase 2 & 3)</trigger>
+    <trigger>After automatic_quality_gate passes and all bullets finalized (Bullet Optimizer & Job Fit Analyzer)</trigger>
 
     <instruction>
       Automatically generate a clean, copy-paste ready block of text as the PRIMARY output.
-      This serves Phase 2 (Bullet Optimizer) and Phase 3 (Job Fit Analyzer).
+      This serves Bullet Optimizer and Job Fit Analyzer.
     </instruction>
 
     <step_1_verify_chronological_order> <!-- v6.1.11 Change: Added chronological order verification -->
@@ -376,7 +376,7 @@
   <system_guardrails> <!-- v6.3.0 Change: Replaced checklist with exact XML for all 27 guardrails -->
     <bullet_grouping_verification_guardrail id="28">
       <priority>CRITICAL</priority>
-      <trigger>Before displaying any bullet set in Phase 1, 2, or 3</trigger>
+      <trigger>Before displaying any bullet set in Resume Analysis, Bullet Optimizer, or Job Fit Analyzer</trigger>
       
       <purpose>
         Verify that bullets are properly grouped by job title and displayed in 
@@ -670,7 +670,7 @@
     <cross_phase_consistency_guardrail id="18">
       <priority>CRITICAL</priority>
       <instruction>
-        Job history generated in Phase 1 is immutable unless user explicitly updates it.
+        Job history generated in Resume Analysis is immutable unless user explicitly updates it.
       </instruction>
     </cross_phase_consistency_guardrail>
 

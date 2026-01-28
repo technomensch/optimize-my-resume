@@ -159,6 +159,33 @@
 
 ---
 
+### Recency Anchor
+
+**Problem:** In long context windows (4,000+ lines), instructions placed at the start or middle lose attention weight/priority (The "Lost in the Middle" problem).
+**Solution:** Place critical terminal instructions or "System Closers" at the absolute end of the prompt, immediately before execution begins.
+**When to use:** Mandating specific output formats, terminal grammar checks, or high-priority terminology constraints.
+
+**Quick Reference:**
+- Every prompt should have a "Hardened Exit Clause" at the bottom.
+- Prevents the agent from "forgetting" the format while processing the bulk content.
+
+---
+
+### Pre-flight Rule Mapping
+
+**Problem:** LLMs often jump into generation without internalizing specific task-related guardrails.
+**Solution:** Require a mandatory "Step 0" where the agent outputs a visible or hidden table mapping project rules to the specific current task.
+**When to use:** High-stakes generation (e.g., bullet generation) with 5+ competing constraints.
+
+**Quick Reference:**
+- Model must "show its work" on rule adherence *before* generating content.
+- Restores "Recency" of rules just moments before the primary token stream starts.
+- **Critical for:** Enforcement of G14 (Density), G24 (Char Limits), and G29 (Metric Preservation/Data Integrity).
+
+**See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+
+---
+
 ### Hub-and-Spoke Delegation
 
 **Problem:** Logic drift between multiple user interfaces (Local React vs. Web Artifacts) implementing the same complex prompt logic.
@@ -251,10 +278,12 @@ Keywords → Category:
 **When to use:** Rewriting bullets, summarizing text, any optimization task
 
 **Quick Reference:**
-1. Extract all numbers from original text
-2. Extract all numbers from new draft
-3. If any missing → STOP and restore
-4. Zero tolerance for data loss
+1. Extract all numbers from original text (integers, %, $, durations).
+2. **Audit Logic (Step 0):** List original metrics vs. planned draft metrics in thinking.
+3. Extract all numbers from new draft.
+4. **Visual Pattern Audit:** Scan output for forbidden symbols (`—`) or improper spacing (` - ` inside compound adjectives).
+5. If any missing or invalid → STOP and restore/fix.
+6. Zero tolerance for data loss or formatting drift.
 
 **See:** `metric_preservation_guardrail` in [PROJECT-INSTRUCTIONS.md](../../PROJECT-INSTRUCTIONS.md)
 

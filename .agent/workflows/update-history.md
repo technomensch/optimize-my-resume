@@ -91,7 +91,7 @@ Options:
 5. Other (explain)
 
 Please describe what needs updating, or provide bullet points
-for optimization following the bullet optimization workflow."
+for optimization following the bullet optimizer workflow."
 ```
 
 ### Step 3: Determine Version Increment
@@ -262,7 +262,7 @@ Validation: ✅ Passed
          ↓
    ┌─────────────────┐
    │ Bullet          │
-   │ optimization?   │
+   │ optimizer?      │
    └────────┬────────┘
             ↓
       ┌─────┴──────┐
@@ -333,10 +333,10 @@ Claude: [Identifies corrections to apply]
 
 ## Integration with Other Workflows
 
-### With Bullet Optimization
+### With Bullet Optimizer
 ```
 If user provides bullets but no structured history:
-1. Run bullet optimization workflow
+1. Run bullet optimizer workflow
 2. Generate job_history_vX.txt
 3. Validate and convert
 4. Deliver both formats
@@ -442,7 +442,7 @@ I'll create v8.0 with:
 - Updated Total Jobs count
 - Generated from provided bullets
 
-This will follow the bullet optimization workflow.
+This will follow the bullet optimizer workflow.
 Proceed? (y/n)
 ```
 
@@ -516,4 +516,4 @@ vX.Y: Brief description (Month Day, Year)
 
 **Version:** 1.0
 **Created:** January 2, 2026
-**Integration:** Works with /doc-update, /patch, bullet optimization workflow
+**Integration:** Works with /doc-update, /patch, bullet optimizer workflow

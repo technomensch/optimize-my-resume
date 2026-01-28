@@ -213,10 +213,10 @@
 - **Local Dev (This Branch)**: Machine-based, unlimited, offline-capable for developers <!-- v7.0.0 Addition -->
 
 ### Future Enhancements <!-- v7.0.0 Addition -->
-- **Phase 2**: Bullet optimization, JD matching, streaming responses <!-- v7.0.0 Addition -->
-- **Phase 3**: Resume history, multi-model comparison, performance benchmarks <!-- v7.0.0 Addition -->
-- **Phase 4**: Custom prompts, export formats (PDF/DOCX), batch processing <!-- v7.0.0 Addition -->
-- **Phase 5**: Automated testing, error recovery, performance optimization <!-- v7.0.0 Addition -->
+- **Bullet Optimizer**: Bullet optimization, JD matching, streaming responses <!-- v7.0.0 Addition -->
+- **Job Fit Analyzer**: Resume history, multi-model comparison, performance benchmarks <!-- v7.0.0 Addition -->
+- **Narrative Generator**: Custom prompts, export formats (PDF/DOCX), batch processing <!-- v7.0.0 Addition -->
+- **System Hardening**: Automated testing, error recovery, performance optimization <!-- v7.0.0 Addition -->
 
 **Documentation:** See `docs/plans/7.0.0-create-local-dev-test-environment.md` for complete implementation plan <!-- v7.0.0 Addition -->
 
@@ -233,8 +233,8 @@
 - [x] **Position Header Overhaul:** Expanded 4-field metadata format for inferred roles (#15).
 - [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array with actionable fixes (#16).
 - [x] **Resilience Improvements:** Increased token limits and enhanced JSON error handling for large resumes (#17).
-- [x] **Phase 2 Standardization**: Official categories: `Built, Lead, Managed, Improved, Collaborate`.
-- [x] **Phase 1 Display Fix**: Explicit Markdown rendering for Job History Summaries.
+- [x] **Bullet Optimizer Standardization**: Official categories: `Built, Lead, Managed, Improved, Collaborate`.
+- [x] **Resume Analysis Display Fix**: Explicit Markdown rendering for Job History Summaries.
 - [x] **Acronym & Display Guardrails**: Mandatory expansion rules and clean verb formatting.
 
 ---
@@ -273,7 +273,7 @@
 
 **Branch:** `v6.5.0-add-missing-analyzer-audit-elements` | **Status:** Complete | **Date:** 2026-01-07
 
-**Implementation Approach:** Surgical update to Phase 1 output and core principles.
+**Implementation Approach:** Surgical update to Resume Analysis output and core principles.
 
 ### Key Features
 - [x] **Hiring Manager Perspective:** New analysis section inferring roles from impact.
@@ -318,7 +318,7 @@
 - [x] `optimization-tools/bullet-optimizer/` - parsing parser integration, evidence matching, blocking gates
 - [x] `optimization-tools/job-fit-analyzer/` - job history creation backward compatibility with upgrade recommendations
 
-**Notes:** Core integration complete. Phases 1 and 3 now use job history creation schema. Phase 2 supports both v1.0 and job history creation formats.
+**Notes:** Core integration complete. Resume Analysis and Job Fit Analyzer now use job history creation schema. Bullet Optimizer supports both v1.0 and job history creation formats.
 
 ---
 
@@ -363,7 +363,7 @@
 - [x] Keyword optimization based on JD requirements <!-- v6.0.0 Change -->
 - [x] Complete v6.0.0 release documentation <!-- v6.0.0 Change -->
 
-**Notes:** Phase 4 complete. All v6.0 features implemented and documented. System now includes complete workflow from entry routing through summary generation. <!-- v6.0.0 Change -->
+**Notes:** Summary & Polish complete. All v6.0 features implemented and documented. System now includes complete workflow from entry routing through summary generation. <!-- v6.0.0 Change -->
 
 ---
 
@@ -381,7 +381,7 @@
 **Branch:** `v6.1.0` | **Status:** Complete | **Date:** 2025-12-29
 
 ### Sub-Versions
-- [x] **v6.5.2**: Phase 2 Verb Standardization & Phase 1 Display Fix (Issues #10, #11)
+- [x] **v6.5.2**: Bullet Optimizer Verb Standardization & Resume Analysis Display Fix (Issues #10, #11)
 - [x] **v6.5.1**: Analyzer Report Bugfixes (Issues #5-9) & Metric Refinement
 - [x] **v6.5.0**: Cumulative Guardrails & Architecture Refinement
 - ✅ v6.1.3 - Wireframe creation (10 files)

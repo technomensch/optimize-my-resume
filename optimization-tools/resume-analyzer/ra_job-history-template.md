@@ -343,31 +343,31 @@
     </solution>
   </troubleshooting>
 
-  <integration_with_phases>
-    <phase_1_integration>
-      When generating job history in Phase 1:
+  <integration_with_analytical_tools>
+    <resume_analysis_integration>
+      When generating job history in Resume Analysis:
       1. Reference templates/job_history_template.xml for structure
       2. Follow templates/LLM_GENERATION_INSTRUCTIONS.md for consistency
       3. Generate .txt file following exact schema
       4. Validate using scripts/validate_job_history.py
       5. Convert to .md using scripts/convert_job_history_to_md.py
       6. Deliver both formats to user
-    </phase_1_integration>
+    </resume_analysis_integration>
 
-    <phase_2_integration>
-      When optimizing bullets in Phase 2:
+    <bullet_optimizer_integration>
+      When optimizing bullets in Bullet Optimizer:
       - Reference job history .txt for context
       - Maintain consistency with template structure
       - Update job history using /update-history workflow
-    </phase_2_integration>
+    </bullet_optimizer_integration>
 
-    <phase_3_integration>
-      When comparing to JD in Phase 3:
+    <job_fit_analyzer_integration>
+      When comparing to JD in Job Fit Analyzer:
       - Reference job history .txt for evidence matching
       - Use structured achievement format (CONTEXT/ACTION/RESULT/IMPACT)
       - Update job history if new accomplishments discovered
-    </phase_3_integration>
-  </integration_with_phases>
+    </job_fit_analyzer_integration>
+  </integration_with_analytical_tools>
 
   <version_history_template_system>
     v1.0 (January 2, 2026):

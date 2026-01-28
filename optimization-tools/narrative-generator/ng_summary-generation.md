@@ -1,8 +1,22 @@
-# Professional Summary Generation Protocol - Phase 4
+# Professional Summary Generation Protocol - Narrative Generation
 
-**Version:** 9.1.0 <!-- v9.1.0 Change: Documentation Sync -->
+**Version:** 9.3.5 <!-- v9.3.5 Change: Terminology Normalization & Disambiguation -->
 **Created:** 2025-12-28
 **Purpose:** Generate professional summaries (master + per-JD customization)
+
+---
+
+<workflow_disambiguation>
+  <this_workflow>
+    Job History Summary (Master Summary) - Created during Resume Analysis.
+    Stored in job history file. Aggregates entire career.
+  </this_workflow>
+  <not_this_workflow>
+    If user is asking for BULLET OPTIMIZER or "Optimize My Application":
+    STOP. Route to: optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
+    That workflow generates per-JD bullets AND a customized professional summary.
+  </not_this_workflow>
+</workflow_disambiguation>
 
 ---
 
@@ -11,12 +25,12 @@
 This protocol generates two types of professional summaries:
 
 1. **Master Summary** - Comprehensive, stored in job history creation
-   - Created during Phase 1 (job history creation)
+   - Created during Resume Analysis (job history creation)
    - Aggregates entire career
    - Used as baseline for customization
 
 2. **Per-JD Summary** - Customized, ephemeral (not stored)
-   - Generated during Phase 3 (JD comparison)
+   - Generated during Job Fit Analyzer (JD comparison)
    - Optimized with JD-specific keywords
    - User copies to their resume for that application
 
@@ -28,11 +42,11 @@ This protocol generates two types of professional summaries:
 
 ---
 
-## Master Summary Generation (Phase 1)
+## Master Summary Generation (Resume Analysis)
 
 ### Trigger
 
-After Phase 1 extracts all positions, before saving job history creation:
+After Resume Analysis extracts all positions, before saving job history creation:
 
 ```
 Position extraction complete → Aggregate career data → Generate master summary → Save to job history
@@ -226,11 +240,11 @@ Display during generation (no time estimates):
 
 ---
 
-## Per-JD Summary Customization (Phase 3)
+## Per-JD Summary Customization (Job Fit Analyzer)
 
 ### Trigger
 
-After Phase 3 analysis completes:
+After Job Fit Analyzer analysis completes:
 
 ```
 IF match_score >= 50:
@@ -702,10 +716,10 @@ Before finalizing summary:
 
 ## Integration with Other Workflows
 
-### After Phase 1 → Master Summary → Next Steps
+### After Resume Analysis → Master Summary → Next Steps
 
 ```
-Phase 1 completes → Master summary generated → Save job history
+Resume Analysis completes → Master summary generated → Save job history
 
 DISPLAY:
   "✅ Analysis complete! Your job history has been saved.
@@ -716,14 +730,14 @@ DISPLAY:
   - Professional summary generated
 
   Next steps - What would you like to do?
-  1. Optimize specific resume bullets (Phase 2)
-  2. Check fit for a job description (Phase 3)
+  1. Optimize specific resume bullets (Bullet Optimizer)
+  2. Check fit for a job description (Job Fit Analyzer)
   3. Export job history for review"
 ```
 
 ---
 
-### After Phase 3 Gap Analysis → Offer Per-JD Summary
+### After Job Fit Analyzer Gap Analysis → Offer Per-JD Summary
 
 ```
 Gap analysis completes → match_score >= 50
@@ -773,7 +787,7 @@ RATIONALE: Per-JD summaries are application-specific. Storing would clutter
 - **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
 - **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
 - **Evidence Matching:** `optimization-tools/bullet-optimizer/bo_evidence-matching.md`
-- **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
+- **Job Fit Analyzer Integration:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
 
 ---
 

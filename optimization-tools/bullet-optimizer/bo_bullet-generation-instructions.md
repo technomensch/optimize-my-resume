@@ -7,6 +7,21 @@
 
 ---
 
+<workflow_disambiguation>
+  <this_workflow>
+    Bullet Generation + Professional Summary (Per-JD Customization).
+    Triggered by "Optimize My Application" after JD comparison.
+    Generates optimized bullets AND customized professional summary.
+  </this_workflow>
+  <not_this_workflow>
+    If user just completed Resume Analysis and has NO target JD:
+    STOP. Route to: optimization-tools/narrative-generator/ng_summary-generation.md (for Master Summary only).
+    This workflow requires a JD for keyword optimization.
+  </not_this_workflow>
+</workflow_disambiguation>
+
+---
+
 ## 1. Core Achievement Guardrails
 
 ### [G1] Metric Traceability
@@ -32,11 +47,13 @@ Apply common-sense validation to numeric claims before output:
 ### [G21] Limitation Bullet Cross-Check (Pre-flight)
 Check `honest_limitations` **BEFORE** recommending bullets for each position. This prevents wasted generation cycles.
 
-### [G29] Metric Preservation
+### [G29] Metric Preservation / Data Integrity Audit
 When rewriting or optimizing existing bullets for keywords:
-1. **Audit Logic:** Extract all numeric values (integers, percentages, currency) from the ORIGINAL bullet.
+1. **Audit Logic (Step 0):** BEFORE drafting the final bullet, the agent MUST perform a visible "Data Integrity Audit" in its internal thinking or as a prefatory note:
+   - `Original Metrics: [List every integer, %, $, duration from source]`
+   - `Target Metrics: [Verify ALL are present in the planned draft]`
 2. **Comparison:** Ensure ALL original metrics are retained in the NEW bullet unless explicitly replaced by a superior validated metric.
-3. **Restoration:** If a metric is lost during rewriting, restore it immediately.
+3. **Restoration:** If a metric is lost during rewriting, restore it immediately. **Zero-tolerance for metric loss.**
 
 ---
 
@@ -89,16 +106,39 @@ After generating bullets, perform a self-audit:
 
 ---
 
-## 5. Final Output Formatting
+## 5. Final Output Formatting (Execution Gates)
 
-- **Verb Category:** Every bullet must start with a category-aligned action verb.
-- **Metric Indicator:** Use `✓` for quantified bullets and `-` for qualitative ones (where applicable by UI).
-- **Date Format:** "Month Year" or "Present".
-- **ATS Optimization:** Include 8-12 unique JD keywords across all bullets, with no more than 3 per bullet.
+**PREREQUISITE:** Before delivering content, the agent MUST pass the validation checklist in `optimization-tools/bullet-optimizer/bo_output-validator.md`.
+
+### [FMT] Position Header Schema
+Every position MUST transition with the following two-line header:
+```
+[Job Title] at [Company] | [Start Date] - [End Date]
+Duration: [X years/months]
+```
+
+### [FMT] Action Verb Visuals
+Include an ASCII distribution summary at the end of the bullet set for each position or as a summary table:
+`Built: ████░░░░░░ (40%)`
+
+### [FMT] Bullet Display Indicator
+Ensure the explicit display tags are used:
+- `✓ [Has Metrics] [[Category]] [Verb] [remainder]`
+- `- [No Metrics] [[Category]] [Verb] [remainder]`
+
+### [FMT] Symbol & Spacing Guardrail (G22)
+- **Zero Em-dash Policy:** NEVER use em-dashes (`—`) in resume bullets. Use hyphens (`-`) or rephrase.
+- **Hyphenation Rule:** Use hyphens without spaces for compound adjectives (e.g., `multi-agent`, `cross-functional`).
+- **No Spaced Hyphens:** Avoid the "spaced hyphen" pattern (` - `) inside sentences; it often indicates improper em-dash replacement.
+
+### [FMT] Terminal Recency Anchor (THE SYSTEM CLOSER)
+The output MUST conclude with exactly this hard-coded recommendation:
+"[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM session to ensure error-free presentation."
 
 ---
 
 ## Version History
+- **9.3.5 (2026-01-28):** Hardened formatting gates and added bo_output-validator reference. <!-- issue-85 fix -->
 - **9.3.2.1 (2026-01-28):** Added G5, G11, G12, G21 to complete guardrail consolidation.
 - **9.3.2 (2026-01-28):** Initial creation with G1, G8, G9, G29, G30, G33.
 
