@@ -679,6 +679,41 @@ Before marking job history as complete:
 </honest_limitations_enforcement>
 ```
 
+### Guardrail #43: Positional Anchoring (Format Agnostic)
+
+**Instruction Text:**
+```xml
+<positional_anchoring_logic id="G43">
+  <context>Handling raw/non-standard resume inputs or legacy job history files.</context>
+  <priority>CRITICAL</priority>
+  <instruction>
+    IF the input data does not follow the v12.1+ Job History XML/Markdown schema:
+    1. **Scan:** Identify distinct employment blocks (Company + Title + Dates).
+    2. **Tag:** Assign a sequential anchor ID starting from [P1] (most recent) to [Pn] (oldest).
+    3. **Citation Mandate:** Every skill extracted into Section 12 MUST be accompanied by at least one [Pn] tag in internal thinking and output validation.
+    4. **Persistence:** These [Pn] tags serve as the Source of Truth for all downstream Evidence Gating (ENH-007).
+  </instruction>
+</positional_anchoring_logic>
+```
+
+### Guardrail #44: Skills Evidence Gate (Section 12 Hardening)
+
+**Instruction Text:**
+```xml
+<skills_evidence_gate_rule id="G44">
+  <intent>Prevent unverified skill claims in the Master Skills Inventory (Section 12).</intent>
+  <priority>CRITICAL</priority>
+  <rule>
+    For every skill proposed for Section 12:
+    1. **Verification:** The agent MUST search ALL achievements and responsibilities in Section 7 (Job History) for the specific skill or its immediate synonyms.
+    2. **Gating:** IF no evidence is found in any position [P1-Pn]:
+       - BLOCK the skill from being added to the Master Inventory.
+       - ALERT the user: "I cannot find evidence of [Skill] in your work history. You must first add a bullet or achievement that demonstrates this skill before I can include it in Section 12."
+    3. **Citation:** Every approved skill MUST be listed with its supporting P-IDs (e.g., "Python [P1, P3]").
+  </rule>
+</skills_evidence_gate_rule>
+```
+
 ---
 
 ## Usage in Gap Analysis (Job Fit Analyzer)
