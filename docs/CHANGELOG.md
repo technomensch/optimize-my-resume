@@ -1,6 +1,6 @@
 # Changelog
 
-## Current Version: v9.1.0 <!-- v9.1.0 Release -->
+## Current Version: v9.3.5.3 <!-- v9.3.5.3 Release -->
 
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
@@ -11,6 +11,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
 
+
+### v9.3.5.3 - Metric-Only Validation & Deadlock Logic (Hotfix)
+- **Metric-Only Reporting (G40 Stage 3):** Strictly prohibited subjective ✅/❌ icons for primary validation. All health checks MUST now report raw metrics (Actual counts vs Limits).
+- **Insolvency Deadlock (G41):** Implemented a "Deterministic Stop" protocol for mathematically insolvent constraints (e.g., word count vs. mandatory bullet counts).
+- **Identifier Decoupling (Dual-ID Policy):** Codified the separation of **Local IDs** (Logical persistence) from **GitHub IDs** (Platform serials) to prevent identifier drift.
+- **Agentic Momentum Remediation:** Hardened logic to prevent pro-active task completion that bypasses governance gates.
 
 ### v9.3.5 - Guardrail Hardening & Recursive Validation (Issue #85, #97)
 - **3-Stage Validation (G40):** Replaced the monolithic validation table with an adaptive 3-stage checkpoint system (Budget Planning → Incremental Gating → Final Reconciliation). This solves the recursive constraint problem (character limits vs. total word budget).
