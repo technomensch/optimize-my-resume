@@ -25,6 +25,9 @@
 - [Effective LLM Constraints](#effective-llm-constraints) - Positive constraints and pre-flight checks
 - [3-Stage Validation Checkpoint](#3-stage-validation-checkpoint) - Breaking recursive problems into planning, gated generation, and reconciliation
 - [Hub-and-Spoke Delegation](#hub-and-spoke-delegation) - Centralized logic for multi-interface synchronization
+- [Metric-Only Reporting](#metric-only-reporting) - Hardening validation against AI momentum drift
+- [Insolvency Deadlock](#insolvency-deadlock) - Deterministic stopping rules for structural conflicts
+- [Identifier Decoupling](#identifier-decoupling) - Mapping local persistence to platform drift
 
 ---
 
@@ -157,6 +160,36 @@
 - **Pre-flight Rule:** Force "CHECK: [Status]" output before the model begins work.
 
 **See:** [Effective LLM Constraints Lesson](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+
+---
+
+### Metric-Only Reporting (Layer 3 Hardening)
+
+**Problem:** Subjective "Pass/Fail" (vibe-checking) allows the agent to "approve" its own violations due to Completion Bias.
+**Solution:** Prohibit Boolean status icons without accompanying raw metrics (e.g., `Actual Count vs Limit`).
+**When to use:** Final stage reconciliation tables, budget enforcement audits.
+
+**Quick Reference:**
+- **Bad:** `Budget: ✅`
+- **Good:** `Budget: 512 words / 500 limit | FAIL`
+- **Logic:** If the numbers don't support the status, the audit is a hallucination.
+
+**See:** [Agentic Momentum Lesson](../lessons-learned/process/Lessons_Learned_Agentic_Momentum_Governance.md)
+
+---
+
+### Insolvency Deadlock
+
+**Problem:** Structural constraints (e.g., word count vs. mandatory bullet counts) become mathematically impossible to satisfy.
+**Solution:** Implement explicit "Deterministic Stop" rules that force the agent to report the conflict rather than faking a compromise.
+**When to use:** Deep-history resume generation (15+ years) or high-density guardrail environments.
+
+**Quick Reference:**
+- **Trigger:** If Rule A and Rule B are mutually exclusive in current context.
+- **Action:** STOP. State the logical deadlock. Do not attempt "simulation" or "best effort."
+- **Policy:** The agent is authorized to fail the task to preserve the integrity of the logic core.
+
+**See:** [Agentic Momentum Lesson](../lessons-learned/process/Lessons_Learned_Agentic_Momentum_Governance.md)
 
 ---
 
@@ -355,6 +388,19 @@ Keywords → Category:
 4. Save plan to `docs/plans/` (Establish intent)
 
 **See:** [Guardrail #31](../../PROJECT-INSTRUCTIONS.md)
+
+### Identifier Decoupling (Dual-ID Policy)
+
+**Problem:** Local context (folders/branches) drifts from platform serial numbering (GitHub Issues), causing confusing renames.
+**Solution:** Map local persistent IDs to platform serial IDs instead of attempting to align them.
+**When to use:** Project management across local and cloud platforms.
+
+**Quick Reference:**
+- **Local ID:** `issue-85` (Logical, persistent, used for file paths/branches).
+- **Platform ID:** `#97` (Serial, drifts, used for tracking).
+- **Policy:** Never rename local assets to match platform drift. Always maintain a mapping matrix in metadata.
+
+**See:** [Identifier Decoupling Lesson](../lessons-learned/process/Lessons_Learned_Identifier_Decoupling.md)
 
 ---
 

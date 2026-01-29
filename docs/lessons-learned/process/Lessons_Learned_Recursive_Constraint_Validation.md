@@ -427,6 +427,8 @@ A: Provide explicit fallback logic (e.g., "Remove from P8 → P7 → P6").
 **Created:** 2026-01-29  
 **Version:** 1.0  
 **Related Docs:**
+- **Knowledge Graph:** [patterns.md - 3-Stage Validation Checkpoint](../../knowledge/patterns.md#3-stage-validation-checkpoint)
+- **Knowledge Graph:** [architecture.md - 3-Layer Unified Redundancy Framework](../../knowledge/architecture.md#3-layer-unified-redundancy-framework-g40)
 - `.agent/workflows/generate-bullets.md` - Bullet generation workflow
 - `optimization-tools/bullet-optimizer/bo_output-validator.md` - Output validation rules
 - `docs/lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md` - LLM constraint engineering

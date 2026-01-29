@@ -31,5 +31,6 @@ Shifted from **Identity** (IDs must be the same) to **Mapping** (IDs must be lin
 3.  **Stop the Drift:** If an agent attempts to rename versioned assets to match an external ID, it is experiencing "Simulation Hallucination."
 
 ## Related Resources
+- **Knowledge Graph:** [architecture.md - Identifier Decoupling](../../knowledge/architecture.md#identifier-decoupling-dual-id-policy)
 - **Workflow:** `.agent/workflows/start-issue-tracking.md` (Updated with Dual-ID Policy)
 - **ADR:** [ADR-004: Shadow Modularization (Context of SSoT)](../../decisions/ADR-004-shadow-modularization.md)

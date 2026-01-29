@@ -51,6 +51,8 @@ For any project involving recursive logic or high guardrail density:
 3. **Fragmentation:** Do not allow the agent to generate multiple complex entities (e.g., 6 positions) in one turn. Mandate a "Per-Unit" validation cycle.
 
 ## Related Documentation
+- **Knowledge Graph:** [patterns.md - Metric-Only Reporting](../../knowledge/patterns.md#metric-only-reporting-layer-3-hardening)
+- **Knowledge Graph:** [architecture.md - 3-Layer Unified Redundancy Framework](../../knowledge/architecture.md#3-layer-unified-redundancy-framework-g40)
 - [G40 3-Stage Validation](../../PROJECT-INSTRUCTIONS.md)
 - [Bullet Optimizer Hub](../../optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md)
 - [Issue #85 Hotfix Log](../../docs/issues/issue-85/implementation-log.md)

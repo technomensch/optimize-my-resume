@@ -38,6 +38,6 @@ To reliably constrain an LLM:
 4.  **Use External Validation Modules:** Don't ask the model to "remember" its failures; provide a "Negative Checklist" file it must read before outputting. **Harden these modules by defining explicit FAIL conditions for critical guardrails (e.g., character counts, metric preservation) to prevent vague "vibe-check" failures.** <!-- v1.1 Change -->
 
 ## Related Resources
+- **Knowledge Graph:** [patterns.md - Effective LLM Constraints](../../knowledge/patterns.md#effective-llm-constraints)
 - **ADR:** [ADR-005 - LLM Constraint Engineering](../../decisions/ADR-005-llm-constraint-engineering.md)
-- **Knowledge Graph:** [patterns.md - LLM Constraint Engineering](../../knowledge/patterns.md#llm-constraint-engineering)
 - **Session:** 2026-01-28 - Issue #85 Harden Guardrail Enforcement <!-- v1.1 Change -->
