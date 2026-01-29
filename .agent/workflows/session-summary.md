@@ -217,33 +217,35 @@ I've analyzed this session and generated the following summary:
 **Edit before saving?** [y/n]
 ```
 
-### Step 5: Determine Filename
+### Step 5: Determine Filename & Conflict Resolution
 
 **Auto-generated naming:**
 
 ```
-Format: YYYY-MM-DD_short-description.md
+Format: YYYY-MM-DD_[short-description].md
 Example: 2026-01-02_memory-system-design.md
 ```
 
-**Short description generation:**
+**Conflict Check Logic:**
+1.  **Scan:** Check `docs/sessions/[YYYY-MM]/` for any files starting with the current date `YYYY-MM-DD`.
+2.  **Conflict Detected:** IF one or more files exist for today:
+    -   Display the list of matching files.
+    -   **Ask User:** "I found an existing session summary for today: [filename]. Would you like to:"
+        -   `[u]` **Update/Append** to the existing summary? (Surgical insert of new work/decisions)
+        -   `[n]` Create a **New** summary with a different topic/suffix?
+3.  **Topic/Suffix Generation (if New):**
+    -   Append a sequence number or unique slug (e.g., `2026-01-02_02_new-topic.md`).
+
+**Short description generation (for New files):**
 1. Extract key nouns from session (max 4 words)
 2. Convert to kebab-case
 3. Truncate to <50 chars total
 4. Remove common words (the, a, an, etc.)
 
-**Examples:**
-- "Memory System Design and Planning" → "memory-system-design"
-- "Fix Authentication Bug in Login" → "fix-authentication-login"
-- "Refactor Database Schema" → "refactor-database-schema"
-
 **User confirmation:**
 ```
-Generated filename: 2026-01-02_memory-system-design.md
-Save to: docs/sessions/2026-01/
-
-Proceed? [y/n]
-Custom filename? [press enter to accept]
+[No Conflict] Generated filename: 2026-01-02_memory-system-design.md
+[Conflict] I found [existing-file]. Append [u] or New [n]?
 ```
 
 ### Step 6: Create Directory Structure
@@ -266,16 +268,24 @@ ls -d "$MONTH_DIR"
 - Examples: `2026-01/`, `2025-12/`
 - Automatic archiving by year/month
 
-### Step 7: Save Summary
+### Step 7: Save or Update Summary
+
+**IF New File:**
+- Write content using the template structure from Step 3.
+
+**IF Update/Append:**
+1.  **Read** the existing file.
+2.  **Surgically Insert** the new content:
+    -   Append new artifacts to "What We Built".
+    -   Append new choices to "Decisions Made".
+    -   Update "Status" and "Next Steps".
+    -   Append new commits to "Commits Created".
+3.  **Maintain History:** Do not delete previous session content in the same file; separate by horizontal rules (`---`) or timestamped sub-headers if necessary.
 
 **Write to file:**
-
 ```bash
 # Target file
 FILE="docs/sessions/2026-01/2026-01-02_memory-system-design.md"
-
-# Write content (use template structure from Step 3)
-# Include all extracted information
 ```
 
 ### Step 8: Update Sessions Index
