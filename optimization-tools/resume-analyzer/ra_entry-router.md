@@ -1,6 +1,6 @@
 # Entry Point Router - User Intent Detection & Phase Routing
 
-**Version:** 6.5.1 <!-- v6.5.1 Change: Added Phase 1 Overhaul support (Repairs, Position Headers) -->
+**Version:** 6.5.1 <!-- v6.5.1 Change: Added Resume Analysis Overhaul support (Repairs, Position Headers) -->
 **Created:** 2025-12-28
 **Purpose:** Detect user state and intent, then route to appropriate workflow with confirmation
 
@@ -38,7 +38,7 @@ ELSE:
   state.hasJobHistory = false
 ```
 
-**Purpose:** Determines if user has completed Phase 1 (resume analysis)
+**Purpose:** Determines if user has completed Resume Analysis (Resume Analysis)
 
 ---
 
@@ -74,7 +74,7 @@ ELSE:
   state.hasJD = false
 ```
 
-**Purpose:** Detects if user pasted a job description for Phase 3 comparison
+**Purpose:** Detects if user pasted a job description for Job Fit Analyzer comparison
 
 **Anti-false-positive measures:**
 - Length check: Prevents short snippets from being detected as JDs
@@ -103,7 +103,7 @@ OR IF user pastes text:
     state.hasResume = false
 ```
 
-**Purpose:** Detects if user provided resume for Phase 1 analysis
+**Purpose:** Detects if user provided resume for Resume Analysis analysis
 
 ---
 
@@ -111,15 +111,15 @@ OR IF user pastes text:
 
 ```
 OVERRIDE_KEYWORDS = {
-  "re-analyze": {action: "force_phase_1", deleteHistory: false},
-  "start over": {action: "force_phase_1", deleteHistory: true},
-  "start fresh": {action: "force_phase_1", deleteHistory: true},
-  "analyze my resume": {action: "force_phase_1", deleteHistory: false},
-  "optimize bullet": {action: "force_phase_2"},
-  "optimize bullets": {action: "force_phase_2"},
-  "improve wording": {action: "force_phase_2"},
-  "check fit": {action: "force_phase_3"},
-  "compare to jd": {action: "force_phase_3"}
+  "re-analyze": {action: "force_resume_analysis", deleteHistory: false},
+  "start over": {action: "force_resume_analysis", deleteHistory: true},
+  "start fresh": {action: "force_resume_analysis", deleteHistory: true},
+  "analyze my resume": {action: "force_resume_analysis", deleteHistory: false},
+  "optimize bullet": {action: "force_bullet_optimizer"},
+  "optimize bullets": {action: "force_bullet_optimizer"},
+  "improve wording": {action: "force_bullet_optimizer"},
+  "check fit": {action: "force_job_fit_analyzer"},
+  "compare to jd": {action: "force_job_fit_analyzer"}
 }
 
 IF user message matches OVERRIDE_KEYWORDS:
@@ -142,7 +142,7 @@ After context detection, match against these scenarios in priority order:
 state.hasResume = true AND state.hasJobHistory = false
 ```
 
-**Route:** Phase 1 (Full Resume Analysis)
+**Route:** Resume Analysis (Full Resume Analysis)
 
 **Confirmation Message:**
 ```
@@ -156,14 +156,14 @@ This analysis will:
 - Prepare your profile for job description comparisons
 
 After analysis, you can:
-- Optimize specific bullets (Phase 2)
-- Check fit for a job description (Phase 3)
+- Optimize specific bullets (Bullet Optimizer)
+- Check fit for a job description (Job Fit Analyzer)
 
 Proceed with full analysis?
 ```
 
 **User Response:**
-- **yes** → Execute Phase 1
+- **yes** → Execute Resume Analysis
 - **no** → Ask "What would you like me to do instead?"
 
 ---
@@ -175,7 +175,7 @@ Proceed with full analysis?
 state.hasJobHistory = true AND state.hasJD = true
 ```
 
-**Route:** Phase 3 (JD Gap Analysis)
+**Route:** Job Fit Analyzer (JD Gap Analysis)
 
 **Confirmation Message:**
 ```
@@ -198,19 +198,19 @@ Proceed with JD fit analysis?
 ```
 
 **User Response:**
-- **yes** → Execute Phase 3
+- **yes** → Execute Job Fit Analyzer
 - **no** → Ask "Would you like to do something else instead?"
 
 ---
 
-### Scenario 3: Bullet Optimization (Priority 3)
+### Scenario 3: Bullet Optimizer (Priority 3)
 
 **Condition:**
 ```
 state.hasJobHistory = true AND user mentions ("bullet", "optimize", "improve wording", "rewrite")
 ```
 
-**Route:** Phase 2 (Bullet Optimization)
+**Route:** Bullet Optimizer (Bullet Optimizer)
 
 **Confirmation Message:**
 ```
@@ -231,7 +231,7 @@ Please provide the bullets or resume.
 ```
 
 **User Response:**
-- **Provides bullets/resume** → Execute Phase 2
+- **Provides bullets/resume** → Execute Bullet Optimizer
 - **Unclear** → Ask for clarification
 
 ---
@@ -249,13 +249,13 @@ state.hasJobHistory = true AND state.hasJD = false AND state.hasResume = false A
 ```
 I see you have a job history on file. What would you like to do?
 
-1. **Check fit for a job description** (Phase 3)
+1. **Check fit for a job description** (Job Fit Analyzer)
    → Paste a job description and I'll analyze your match
 
-2. **Optimize resume bullets** (Phase 2)
+2. **Optimize resume bullets** (Bullet Optimizer)
    → Paste bullets or upload your resume for improvement
 
-3. **Re-analyze my resume** (Phase 1)
+3. **Re-analyze my resume** (Resume Analysis)
    → Provide updated resume for fresh analysis
 
 4. **Update my job history**
@@ -265,9 +265,9 @@ Please select 1-4 or describe what you need.
 ```
 
 **User Response:**
-- **1** → Wait for JD, then execute Phase 3
-- **2** → Wait for bullets, then execute Phase 2
-- **3** → Wait for resume, then execute Phase 1
+- **1** → Wait for JD, then execute Job Fit Analyzer
+- **2** → Wait for bullets, then execute Bullet Optimizer
+- **3** → Wait for resume, then execute Resume Analysis
 - **4** → Ask which position to modify (not in v6.0.1, placeholder for v6.0.3)
 
 ---
@@ -287,17 +287,17 @@ Welcome to the Resume Analyzer & Optimizer!
 
 I can help you:
 
-1. **Analyze your resume** (Phase 1)
+1. **Analyze your resume** (Resume Analysis)
    - Comprehensive feedback on achievements, skills, and wording
    - Creates a structured job history for future comparisons
    - Generates professional summary
 
-2. **Optimize bullets** (Phase 2)
+2. **Optimize bullets** (Bullet Optimizer)
    - Improve specific resume lines with stronger verbs and metrics
    - Ensure CAR format (Context-Action-Result)
    - Insert relevant keywords
 
-3. **Check job fit** (Phase 3)
+3. **Check job fit** (Job Fit Analyzer)
    - Compare your resume to a job description
    - Identify gaps and provide strategic recommendations
    - Get customized professional summary for specific JDs
@@ -306,7 +306,7 @@ I can help you:
 
 **To get started:**
 
-- Upload your resume (PDF, DOCX, or paste text) for Phase 1
+- Upload your resume (PDF, DOCX, or paste text) for Resume Analysis
 - If you have a specific job description, include that too!
 
 ---
@@ -364,8 +364,8 @@ Ask user to verify your interpretation:
 ```
 
 **User Response:**
-- **1** → Route to Phase 1 or Phase 2 (depending on whether full resume or bullets)
-- **2** → Route to Phase 3 (JD comparison)
+- **1** → Route to Resume Analysis or Bullet Optimizer (depending on whether full resume or bullets)
+- **2** → Route to Job Fit Analyzer (JD comparison)
 - **3** → Ask user to describe their need
 
 ---
@@ -417,7 +417,7 @@ hasJD = false
 - Displays confirmation message
 - Waits for user "yes/no"
 
-**User confirms:** → Execute Phase 1
+**User confirms:** → Execute Resume Analysis
 
 ---
 
@@ -450,7 +450,7 @@ jdConfidence = "high"
 - Displays confirmation message
 - Waits for user "yes/no"
 
-**User confirms:** → Execute Phase 3
+**User confirms:** → Execute Job Fit Analyzer
 
 ---
 
@@ -474,11 +474,11 @@ override = "optimize bullets" detected
 ```
 
 **Routing:**
-- Matches **Scenario 3** (Bullet Optimization)
+- Matches **Scenario 3** (Bullet Optimizer)
 - Displays confirmation message
 - User already provided bullets, so no need to wait
 
-**User confirms:** → Execute Phase 2 with provided bullets
+**User confirms:** → Execute Bullet Optimizer with provided bullets
 
 ---
 
@@ -502,7 +502,7 @@ no override detected
 - Displays clarification message with 4 options
 - Waits for user to select 1-4
 
-**User responds "1":** → Wait for JD, then execute Phase 3
+**User responds "1":** → Wait for JD, then execute Job Fit Analyzer
 
 ---
 
@@ -527,14 +527,14 @@ jdConfidence = "low"
 
 **User says "yes":**
 - Step 2a: "Would you like me to optimize it?"
-  - **User says "yes"** → Execute Phase 2 (treat as bullet to optimize)
+  - **User says "yes"** → Execute Bullet Optimizer (treat as bullet to optimize)
 
 **User says "no":**
 - Step 2b: "Got it. Is this:
    1. Part of a resume (I'll analyze it)
    2. Part of a JD (I'll compare against your job history)
    3. Something else"
-  - **User says "2"** → Execute Phase 3 (JD comparison)
+  - **User says "2"** → Execute Job Fit Analyzer (JD comparison)
 
 ---
 
@@ -542,14 +542,14 @@ jdConfidence = "low"
 
 ### Error 1: User Confirms Phase but Lacks Required Input
 
-**Problem:** User confirms Phase 3 (JD comparison) but didn't provide JD
+**Problem:** User confirms Job Fit Analyzer (JD comparison) but didn't provide JD
 
 **Solution:**
 ```
 "I'll need the job description to analyze your fit. Please paste the JD text or upload the JD file."
 ```
 
-Wait for JD, then proceed with Phase 3.
+Wait for JD, then proceed with Job Fit Analyzer.
 
 ---
 
@@ -578,7 +578,7 @@ Or just paste your resume or JD, and I'll detect what you need."
 "I'll check your fit for a job description. Please paste the JD text below."
 ```
 
-Wait for JD, then proceed with Phase 3.
+Wait for JD, then proceed with Job Fit Analyzer.
 
 ---
 
@@ -629,10 +629,10 @@ IF user doesn't respond to confirmation within timeout:
 
 After routing and confirmation, execute the appropriate phase:
 
-### Execute Phase 1
+### Execute Resume Analysis
 
 ```
-LOAD: PROJECT-INSTRUCTIONS.md → Phase 1 section
+LOAD: PROJECT-INSTRUCTIONS.md → Resume Analysis section
 EXECUTE: Full resume analysis workflow
   - Extract positions, achievements, skills
   - Identify blocking gates and prioritized repairs (Blockers, Risks, Tweaks)
@@ -643,13 +643,13 @@ EXECUTE: Full resume analysis workflow
 OUTPUT: Completion message + next steps
 ```
 
-### Execute Phase 2
+### Execute Bullet Optimizer
 
 ```
-### Execute Phase 2
+### Execute Bullet Optimizer
 
 ```
-LOAD: PROJECT-INSTRUCTIONS.md → Phase 2 section
+LOAD: PROJECT-INSTRUCTIONS.md → Bullet Optimizer section
 LOAD: job history creation (for context)
 EXECUTE: Bullet optimization workflow
   - Strengthen verbs
@@ -659,10 +659,10 @@ EXECUTE: Bullet optimization workflow
 OUTPUT: Optimized bullets
 ```
 
-### Execute Phase 3
+### Execute Job Fit Analyzer
 
 ```
-LOAD: PROJECT-INSTRUCTIONS.md → Phase 3 section
+LOAD: PROJECT-INSTRUCTIONS.md → Job Fit Analyzer section
 LOAD: job history creation
 LOAD: JD parsing protocol (parsing)
 EXECUTE: JD comparison workflow
@@ -684,7 +684,7 @@ OUTPUT: Gap analysis + recommendations
 2. Router detects: hasResume=true, hasJobHistory=false
 3. Matches Scenario 1, shows confirmation
 4. User says "yes"
-5. ✅ Phase 1 executes
+5. ✅ Resume Analysis executes
 
 ---
 
@@ -694,7 +694,7 @@ OUTPUT: Gap analysis + recommendations
 2. Router detects: hasJobHistory=true, hasJD=true (high confidence)
 3. Matches Scenario 2, shows confirmation
 4. User says "yes"
-5. ✅ Phase 3 executes
+5. ✅ Job Fit Analyzer executes
 
 ---
 
@@ -707,7 +707,7 @@ OUTPUT: Gap analysis + recommendations
 5. User says "yes"
 6. Step 2a: "Would you like me to optimize it?"
 7. User says "yes"
-8. ✅ Phase 2 executes
+8. ✅ Bullet Optimizer executes
 
 ---
 
@@ -717,7 +717,7 @@ OUTPUT: Gap analysis + recommendations
 2. Router detects override keyword
 3. Matches Scenario 3, shows confirmation
 4. User confirms (or auto-confirms since bullets already provided)
-5. ✅ Phase 2 executes
+5. ✅ Bullet Optimizer executes
 
 ---
 
@@ -728,15 +728,15 @@ OUTPUT: Gap analysis + recommendations
 3. User says "no"
 4. Router asks "What would you like me to do instead?"
 5. User says "Just check this one bullet"
-6. ✅ Router re-routes to Phase 2
+6. ✅ Router re-routes to Bullet Optimizer
 
 ---
 
 ## Related Protocols
 
-- **Phase 1:** `PROJECT-INSTRUCTIONS.md` → Phase 1 section
-- **Phase 2:** See `PROJECT-INSTRUCTIONS.md` → Core Process (Phase 2)
-- **Phase 3:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
+- **Resume Analysis:** `PROJECT-INSTRUCTIONS.md` → Resume Analysis section
+- **Bullet Optimizer:** See `PROJECT-INSTRUCTIONS.md` → Core Process (Bullet Optimizer)
+- **Job Fit Analyzer:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
 - **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
 - **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
 

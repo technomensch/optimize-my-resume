@@ -1,7 +1,7 @@
 # Fit Thresholds Configuration
 
-**Version:** 7.1.1 <!-- v7.1.1 Change: Metric Preservation & Technical Exception Patch -->
-**Applies to:** All Phases
+**Version:** 9.3.5  
+**Applies to:** Resume Analysis & Job Fit Analyzer
 
 ---
 
@@ -274,7 +274,7 @@ Fit scores must be calculated in this specific order to ensure validation rules 
 
 ## Usage Notes
 
-- These thresholds are used in Mode 3 (JD Comparison) Phase 1
+- These thresholds are used in Job Fit Analyzer (Initial Assessment)
 - Thresholds prevent token waste on poor-fit applications
 - User cannot override stop decisions for ≤79% fits
 

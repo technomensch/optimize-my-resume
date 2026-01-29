@@ -1,6 +1,6 @@
 # Session Summaries Index
 
-**Total Sessions:** 12
+**Total Sessions:** 13
 **Last Session:** 2026-01-28
 **Last Updated:** 2026-01-28
 
@@ -38,9 +38,10 @@ docs/sessions/
 
 ---
 
-## 2026-01 (11 sessions)
+## 2026-01 (12 sessions)
 
 ### 2026-01-28
+- [Hardened Guardrail Enforcement & Terminology Normalization](2026-01/2026-01-28_harden-guardrail-enforcement.md) - Remediated "Vibe-Coding Drift" with pre-flight gates, recency anchors, and G22/G29 hardening (Issue #85).
 - [Unified Workflow System & SymSync Bridge](2026-01/2026-01-28_unified-workflow-system.md) - Consolidated agent logic into .agent/workflows and established cross-platform symlink bridge (ENH-006).
 - [Bullet Generation Workflow Initialization (v9.3.0)](2026-01/2026-01-28_bullet-generation-workflow-initialization.md) - Initialized Hub-and-Spoke architecture (ADR-009), tracking (ENH-002+), and knowledge foundation.
 

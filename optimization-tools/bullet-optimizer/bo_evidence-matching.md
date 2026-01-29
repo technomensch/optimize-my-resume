@@ -1,4 +1,4 @@
-# Evidence-Based Matching Protocol - Phase 2
+# Evidence-Based Matching Protocol - Bullet Optimizer
 
 **Version:** 7.1.0 <!-- v7.1.0 Change: Strategic Assessment Methodology (Issue #33) -->
 **Created:** 2025-12-28
@@ -822,8 +822,8 @@ IF quality < 0.5:
 
 - **JD Parsing:** `optimization-tools/resume-analyzer/ra_jd-parsing.md`
 - **Job History Creation:** `optimization-tools/resume-analyzer/ra_job-history-creation.md`
-- **Phase 3 Integration:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
-- **Blocking Gates:** Defined in Phase 3 (workflow-router.md)
+- **Job Fit Analyzer Integration:** `optimization-tools/job-fit-analyzer/jfa_workflow-router.md`
+- **Blocking Gates:** Defined in Job Fit Analyzer (workflow-router.md)
 
 ---
 

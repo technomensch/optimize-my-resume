@@ -137,7 +137,7 @@
 
 <v6_foundation_modules status="integrated">
   <note>
-    v6.0 foundation modules integrated across Resume Analyzer, Bullet Optimizer, and Job Fit Analyzer.
+    v6.0 foundation modules integrated across Resume Analysis, Bullet Optimizer, and Job Fit Analyzer.
   </note>
 
   <available_modules>
@@ -165,7 +165,7 @@
 </v6_foundation_modules>
 
 <!-- ========================================================================== -->
-<!-- ENTRY POINT ROUTING (PHASE 3)                                              -->
+<!-- ENTRY POINT ROUTING                                                        -->
 <!-- ========================================================================== -->
 
 <entry_point_routing>
@@ -183,7 +183,7 @@
     <!-- Core Scenarios (Resume Analyzer) -->
     <scenario id="1" name="new_user">
       Condition: hasResume = true AND hasJobHistory = false
-      Route: Resume Analyzer
+      Route: Resume Analysis
       Action: Generate job history creation
     </scenario>
 
@@ -234,9 +234,9 @@
   </routing_scenarios>
 
   <override_commands>
-    <command keyword="re-analyze">Force Resume Analyzer (append to existing history)</command>
-    <command keyword="start fresh">Delete job history creation file + Force Resume Analyzer</command>
-    <command keyword="start over">Delete job history creation file + Force Resume Analyzer</command>
+    <command keyword="re-analyze">Force Resume Analysis (append to existing history)</command>
+    <command keyword="start fresh">Delete job history creation file + Force Resume Analysis</command>
+    <command keyword="start over">Delete job history creation file + Force Resume Analysis</command>
     <command keyword="update job history">Route to Scenario 6</command>
   </override_commands>
 
@@ -290,7 +290,7 @@
   </output_file>
 
   <usage>
-    When generating job history (Resume Analyzer), use the job history creation schema format.
+    When generating job history (Resume Analysis), use the job history creation schema format.
     When reading job history (Bullet Optimizer, Job Fit Analyzer), check for job history creation first, fallback to v1.0 if not found.
   </usage>
 </job_history_schema_version>
@@ -302,10 +302,10 @@
 <modular_reference file="optimization-tools/resume-analyzer/ra_job-history-template.md" />
 
 <!-- ========================================================================== -->
-<!-- PHASE 1: FULL RESUME ANALYSIS                                               -->
+<!-- RESUME ANALYSIS                                                            -->
 <!-- ========================================================================== -->
 
-<phase id="1" name="full_resume_analysis">
+<phase id="resume_analysis" name="resume_analysis">
   <triggers>
     - User uploads complete resume document (PDF, DOCX, TXT)
     - User says: "analyze my resume", "review my resume", "score my resume"
@@ -338,7 +338,7 @@
 </phase>
 
 <!-- ========================================================================== -->
-<!-- PHASE 1: ARTIFACT CONFIGURATION & UI RULES                                  -->
+<!-- ARTIFACT CONFIGURATION & UI RULES                                          -->
 <!-- ========================================================================== -->
 <!-- v9.2.0 Change: Modularized artifact configuration -->
 
@@ -349,7 +349,7 @@
 </modular_reference>
 
 <!-- ========================================================================== -->
-<!-- PHASE 1: COMPLETION & NEXT STEPS                                            -->
+<!-- RESUME ANALYSIS: COMPLETION & NEXT STEPS                                    -->
 <!-- ========================================================================== -->
 
 <completion_next_steps>
@@ -370,7 +370,7 @@
 <modular_reference file="optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md" />
 
 <!-- ========================================================================== -->
-<!-- PHASE 3: KEYWORD INPUT HANDLING                                            -->
+<!-- JOB FIT ANALYZER: KEYWORD INPUT HANDLING                                   -->
 <!-- ========================================================================== -->
 <!-- v9.2.0 Change: Modularized keyword input handling -->
 

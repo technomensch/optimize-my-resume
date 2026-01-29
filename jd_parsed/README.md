@@ -2,14 +2,14 @@
 
 **Purpose:** Stores parsed job descriptions for re-comparison workflow
 
-**Created:** Phase 3 (v6.0.3)
+**Created:** Job Fit Analyzer (v6.0.3)
 **Used by:** optimization-tools/job-fit-analyzer/re-comparison.md
 
 ---
 
 ## How It Works
 
-When you run Phase 3 (JD Comparison), the system:
+When you run Job Fit Analyzer, the system:
 1. Parses the job description using the parsing schema
 2. Saves the parsed JD to this directory for future reference
 3. Stores versioned comparisons (v1, v2, v3) as you update your job history

@@ -3,9 +3,21 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v9.3.4 (Complete) <!-- v9.3.4 Release -->
+## Current Version: v9.3.5 (Complete) <!-- v9.3.5 Release -->
 
 ---
+
+## v9.3.5 - Guardrail Hardening & Action Logic (COMPLETE)
+**Branch:** `v9.3.5-issue-85-harden-guardrail-enforcement` | **Status:** Complete | **Date:** 2026-01-28
+**Plan:** [v9.3.5 Implementation Plan](docs/plans/v9.3.5-issue-85-harden-guardrail-enforcement.md)
+
+**Implementation Approach:** Implemented a "Three-Layer Defense" strategy (Pre-flight, Logic Hub, Validator) to combat LLM "Instructional Saturation" and prevent guardrail drift.
+
+### Key Features
+- [x] **Guardrail Hardening Pattern (ADR-010):** Visible Pre-Flight Gates + Stop-on-Confusion Logic.
+- [x] **Action Verb Hardening (Phase 5):** G35 (Gerund Ban), G36 (Visual Math), G37 (5% Floor).
+- [x] **Terminology Normalization:** Removed 18+ legacy "Phase X" references, standardizing lexicon.
+- [x] **Synthetic Metrics:** Codified "True Path" metrics for solo projects in Knowledge Graph.
 
 ## v9.3.4 - Unified Multi-Agent Workflow System (COMPLETE) <!-- v9.3.4 Release -->
 
@@ -213,10 +225,10 @@
 - **Local Dev (This Branch)**: Machine-based, unlimited, offline-capable for developers <!-- v7.0.0 Addition -->
 
 ### Future Enhancements <!-- v7.0.0 Addition -->
-- **Phase 2**: Bullet optimization, JD matching, streaming responses <!-- v7.0.0 Addition -->
-- **Phase 3**: Resume history, multi-model comparison, performance benchmarks <!-- v7.0.0 Addition -->
-- **Phase 4**: Custom prompts, export formats (PDF/DOCX), batch processing <!-- v7.0.0 Addition -->
-- **Phase 5**: Automated testing, error recovery, performance optimization <!-- v7.0.0 Addition -->
+- **Bullet Optimizer**: Bullet optimization, JD matching, streaming responses <!-- v7.0.0 Addition -->
+- **Job Fit Analyzer**: Resume history, multi-model comparison, performance benchmarks <!-- v7.0.0 Addition -->
+- **Narrative Generator**: Custom prompts, export formats (PDF/DOCX), batch processing <!-- v7.0.0 Addition -->
+- **System Hardening**: Automated testing, error recovery, performance optimization <!-- v7.0.0 Addition -->
 
 **Documentation:** See `docs/plans/7.0.0-create-local-dev-test-environment.md` for complete implementation plan <!-- v7.0.0 Addition -->
 
@@ -226,15 +238,15 @@
 
 **Branch:** `v6.5.1` | `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-08
 
-**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic to address display instability and improve repair generation.
+**Implementation Approach:** Comprehensive overhaul of Resume Analysis output logic to address display instability and improve repair generation.
 
 ### Key Features
 - [x] **Verb Distribution Flagging:** Flag categories with < 5% representation as TWEAK (#14).
 - [x] **Position Header Overhaul:** Expanded 4-field metadata format for inferred roles (#15).
 - [x] **Detailed Repairs Generation:** Automated generation of `repairsNeeded` array with actionable fixes (#16).
 - [x] **Resilience Improvements:** Increased token limits and enhanced JSON error handling for large resumes (#17).
-- [x] **Phase 2 Standardization**: Official categories: `Built, Lead, Managed, Improved, Collaborate`.
-- [x] **Phase 1 Display Fix**: Explicit Markdown rendering for Job History Summaries.
+- [x] **Bullet Optimizer Standardization**: Official categories: `Built, Lead, Managed, Improved, Collaborate`.
+- [x] **Resume Analysis Display Fix**: Explicit Markdown rendering for Job History Summaries.
 - [x] **Acronym & Display Guardrails**: Mandatory expansion rules and clean verb formatting.
 
 ---
@@ -273,7 +285,7 @@
 
 **Branch:** `v6.5.0-add-missing-analyzer-audit-elements` | **Status:** Complete | **Date:** 2026-01-07
 
-**Implementation Approach:** Surgical update to Phase 1 output and core principles.
+**Implementation Approach:** Surgical update to Resume Analysis output and core principles.
 
 ### Key Features
 - [x] **Hiring Manager Perspective:** New analysis section inferring roles from impact.
@@ -314,11 +326,11 @@
 - [x] `optimization-tools/bullet-optimizer/bo_evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
-- [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (job history creation schema generation, next steps guidance)
+- [x] `PROJECT-INSTRUCTIONS.md` - Resume Analysis enhancement (job history creation schema generation, next steps guidance)
 - [x] `optimization-tools/bullet-optimizer/` - parsing parser integration, evidence matching, blocking gates
 - [x] `optimization-tools/job-fit-analyzer/` - job history creation backward compatibility with upgrade recommendations
 
-**Notes:** Core integration complete. Phases 1 and 3 now use job history creation schema. Phase 2 supports both v1.0 and job history creation formats.
+**Notes:** Core integration complete. Resume Analysis and Job Fit Analyzer now use job history creation schema. Bullet Optimizer supports both v1.0 and job history creation formats.
 
 ---
 
@@ -363,7 +375,7 @@
 - [x] Keyword optimization based on JD requirements <!-- v6.0.0 Change -->
 - [x] Complete v6.0.0 release documentation <!-- v6.0.0 Change -->
 
-**Notes:** Phase 4 complete. All v6.0 features implemented and documented. System now includes complete workflow from entry routing through summary generation. <!-- v6.0.0 Change -->
+**Notes:** Summary & Polish complete. All v6.0 features implemented and documented. System now includes complete workflow from entry routing through summary generation. <!-- v6.0.0 Change -->
 
 ---
 
@@ -381,7 +393,7 @@
 **Branch:** `v6.1.0` | **Status:** Complete | **Date:** 2025-12-29
 
 ### Sub-Versions
-- [x] **v6.5.2**: Phase 2 Verb Standardization & Phase 1 Display Fix (Issues #10, #11)
+- [x] **v6.5.2**: Bullet Optimizer Verb Standardization & Resume Analysis Display Fix (Issues #10, #11)
 - [x] **v6.5.1**: Analyzer Report Bugfixes (Issues #5-9) & Metric Refinement
 - [x] **v6.5.0**: Cumulative Guardrails & Architecture Refinement
 - ✅ v6.1.3 - Wireframe creation (10 files)
@@ -396,7 +408,7 @@
 - [x] Job Summary usage guide in README
 - [x] Terminology consistency (Mode → Phase)
 - [x] 10 comprehensive wireframes (ASCII + Mermaid)
-- [x] 30+ new test cases for Phases 2-4
+- [x] 30+ new test cases for downstream tools (Bullet Optimizer, Job Fit Analyzer)
 - [x] Legacy file archival to /docs/legacy/
 - [x] Comprehensive Quality Assurance Rules (phrase variation, symbol consistency, verb tense, keyword diversity)
 - [x] Automated implementation plan workflow
@@ -502,7 +514,7 @@ This release addresses instruction gaps in fit assessment (v6.3.1) and synchroni
 ### Features
 - [x] **Calibrated Fit Scoring:** Automated penalties for inflated experience or industry gaps.
 - [x] **Authenticity Filters:** Mandatory check on verb context (Built vs Documented) for technical claims.
-- [x] **Visual Architecture:** End-to-end mapping of guardrails across all 4 phases.
+- [x] **Visual Architecture:** End-to-end mapping of guardrails across all functional tools (Resume Analyzer, Bullet Optimizer, etc.).
 
 ---
 ### v6.5.4 - Planned Improvements
@@ -584,8 +596,8 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 - `quick-start-phase.md` (v6.1.7 → v6.1.9)
 
 **Test Files:**
-- `docs/plans/testing/phase-1-test-cases.md` (95+ Phase 1 tests)
-- `docs/plans/testing/phase-2-4-test-cases.md` (79 Phase 2-4 tests)
+- `docs/plans/testing/phase-1-test-cases.md` (95+ Resume Analysis tests)
+- `docs/plans/testing/phase-2-4-test-cases.md` (79 Bullet Optimizer/Job Fit Analyzer tests)
 - `docs/plans/testing/test-results.md` (execution results)
 
 **Impact:**

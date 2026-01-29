@@ -14,7 +14,7 @@
 MODERATE
 
 ### Applies To
-Resume Analyzer artifact (Phase 1)
+Resume Analyzer artifact (Resume Analysis)
 
 ### Purpose
 Allow users to choose between Haiku, Sonnet, and Opus models based on their subscription tier and speed/quality preferences.
@@ -79,10 +79,10 @@ Educate users about token costs and strategic model selection to optimize their 
 
 ### Strategic Guidance
 
-For users planning to use Bullet Optimizer or Job Fit Analyzer, recommend starting with Haiku or Sonnet to conserve tokens for later phases.
+For users planning to use Bullet Optimizer or Job Fit Analyzer, recommend starting with Haiku or Sonnet to conserve tokens for later.
 
 **Example:**
-"If you're analyzing a 4-position resume and plan to do job fit analysis later, use Sonnet for the resume analysis (~5K tokens) so you have budget remaining for the JD comparison phase (~3-5K tokens)."
+"If you're analyzing a 4-position resume and plan to use the Job Fit Analyzer later, use Sonnet for the Resume Analysis (~5K tokens) so you have budget remaining for the JD Comparison (~3-5K tokens)."
 
 ### UI Implementation
 
@@ -230,7 +230,7 @@ if (error.message.includes('exceeded_limit')) {
 ## Integration Points
 
 This module is referenced by:
-- Resume Analyzer artifact (Phase 1)
+- Resume Analyzer artifact (Resume Analysis)
 - Future artifacts requiring model selection
 
 ## Related Documentation

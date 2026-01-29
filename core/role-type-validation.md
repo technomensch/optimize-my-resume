@@ -1,8 +1,8 @@
 # Role-Type Experience Validation
 
-**Version:** 1.0  
-**Date:** January 4, 2026  
-**Applies to:** Phase 3 Pre-Generation Fit Assessment  
+**Version:** 9.3.5  
+**Date:** January 28, 2026  
+**Applies to:** Job Fit Analyzer  
 **Priority:** CRITICAL
 
 ---
@@ -268,7 +268,7 @@ Prevent conflating different role types (e.g., treating BA experience as PM expe
 
 ## Usage Notes
 
-- This rule is applied during Phase 3 Pre-Generation Fit Assessment
+- This rule is applied during Job Fit Analyzer
 - Embedded inline in PROJECT-INSTRUCTIONS.md and quick-start-phase.md
 - Works in conjunction with portfolio-weighting.md to prevent experience inflation
 

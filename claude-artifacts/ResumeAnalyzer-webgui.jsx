@@ -690,7 +690,7 @@ ${p.bullets.map(b => `- ${b.text}`).join('\n')}
                       </div>
                     </div>
                     <p className="text-slate-400 text-xs mt-2">
-                      💡 <strong>Multi-phase tip:</strong> Using Phase 2/3 later? Start with Haiku or Sonnet to conserve tokens.
+                      💡 <strong>Multi-tool tip:</strong> Using Bullet Optimizer or Job Fit Analyzer later? Start with Haiku or Sonnet to conserve tokens.
                     </p>
                   </div>
                 </div>

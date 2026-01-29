@@ -23,6 +23,7 @@
 - [Fit-Score Gating](#fit-score-gating) - Conditional feature presentation pattern
 - [Custom Keyword Hub](#custom-keyword-hub) - Centralized skill management logic
 - [Synthetic Metric Attribution](#synthetic-metric-attribution) - Value-driven metrics for solo portfolio projects
+- [Guardrail Hardening Pattern](#guardrail-hardening-pattern) - Active enforcement strategies for LLM compliance
 
 ---
 
@@ -129,7 +130,7 @@ Don't compromise on either audience - optimize each format for its consumer. Acc
 #### Cross-References
 
 - **ADR:** [ADR-001: Dual-Format Strategy](../decisions/ADR-001-dual-format-documentation.md)
-- **Lesson:** [Memory System Phase 1](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- **Lesson:** [Resume Analysis Foundation](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
 
@@ -387,7 +388,7 @@ Templates don't constrain creativity - they ensure minimum quality bar while all
 #### Cross-References
 
 - **Templates:** [../decisions/template.md](../decisions/template.md), [../sessions/template.md](../sessions/template.md)
-- **Lesson:** [Memory System Phase 1](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- **Lesson:** [Resume Analysis Foundation](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
 
@@ -452,7 +453,7 @@ Cross-references transform isolated documents into an interconnected knowledge s
 #### Cross-References
 
 - **Example:** See any ADR's "Related" section
-- **Lesson:** [Memory System Phase 1](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- **Lesson:** [Resume Analysis Foundation](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
 
@@ -569,6 +570,40 @@ The system is **semi-automatic**: it removes the *tedium* of documentation (form
 - **Lesson:** [Complete Memory System](../lessons-learned/patterns/Lessons_Learned_Complete_Memory_System_v6.3.0_Implementation.md)
 - **Skills:** `/lesson-learned`, `/session-summary`, `/recall`
 - **Workflow:** [Memory System Workflow](workflows.md#memory-system-workflow)
+
+---
+
+---
+
+## Process Concepts
+
+### Guardrail Hardening Pattern
+
+**Category:** Concept
+**Tags:** #process #llm-engineering #quality-assurance #compliance
+
+#### Quick Summary
+
+A shift from "Passive Instruction" (expecting the LLM to remember 50 rules) to "Active Validation" (forcing the LLM to check its own work against specific negative checklists).
+
+#### Details
+
+**The 3-Layer Defense:**
+1.  **Visible Pre-Flight:** The agent must explicitly state "I am checking Rule X, Y, Z" *before* generating content.
+2.  **Logic Hubs:** Centralized "Single Source of Truth" files (e.g., `bo_bullet-generation-instructions.md`) that override general system prompts.
+3.  **Output Validator:** A mandatory "Negative Checklist" (e.g., `bo_output-validator.md`) run *after* generation to catch drift.
+
+**Why it's needed:**
+In long context windows (4,000+ lines), LLMs suffer from "Instructional Saturation" and drift back to their training data ("Vibe-Coding"). Hardening forces them back to the project spec.
+
+#### Key Insight
+
+Do not trust the LLM's memory. Trust its ability to audit itself when forced to read a checklist.
+
+#### Cross-References
+
+- **Lesson:** `Lessons_Learned_Effective_LLM_Constraints.md`
+- **Issue:** `issue-85-harden-guardrail-enforcement`
 
 ---
 

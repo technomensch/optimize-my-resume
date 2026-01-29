@@ -5,12 +5,12 @@
 <!-- ========================================================================== -->
 <!-- Version: 1.1 (Extracted from Project-GUI-Instructions.md v9.1.0)          -->
 <!-- Location: optimization-tools/bullet-optimizer/bo-keyword-handling.md      -->
-<!-- Purpose: Handle user-provided keyword lists for bullet optimization       -->
+<!-- Purpose: Handle user-provided keyword lists for Bullet Optimizer        -->
 <!-- ========================================================================== -->
 
 ## Overview
 
-This module handles keyword optimization requests that come either with the JD or after bullet generation. Always cross-reference keywords against job history to maintain authenticity.
+This module handles keyword optimization requests that come either with the JD or after Bullet Optimizer execution. Always cross-reference keywords against job history to maintain authenticity.
 
 ## User Keyword Preferences
 
@@ -53,7 +53,7 @@ User provides keywords alongside JD (e.g., "Here's the JD and these keywords: X,
    - ❌ **NOT EVIDENCED:** Keyword only in master_skills_inventory or nowhere (Tier 3 or absent)
    - ❓ **UNCLEAR:** Keyword might be evidenced but needs user confirmation
 
-5. **Include only EVIDENCED keywords** in bullet optimization
+5. **Include only EVIDENCED keywords** in Bullet Optimizer generation
 
 6. **Output keyword coverage report** (see format below)
 

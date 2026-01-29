@@ -5,7 +5,7 @@
 <!-- ========================================================================== -->
 <!-- Version: 1.0 (Extracted from Project-GUI-Instructions.md v9.1.0)          -->
 <!-- Location: optimization-tools/shared/keyword-validation.md                 -->
-<!-- Purpose: Prevent false-positive keyword matching in job fit analysis      -->
+<!-- Purpose: Prevent false-positive keyword matching in Job Fit Analyzer      -->
 <!-- ========================================================================== -->
 
 ## Overview

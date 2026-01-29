@@ -1,4 +1,4 @@
-# Incremental Job History Updates Protocol - Phase 3
+# Incremental Job History Updates Protocol - Job Fit Analyzer
 
 **Version:** 6.5.1 <!-- v6.5.1 Change: Release synchronization -->
 **Created:** 2025-12-28
@@ -8,7 +8,7 @@
 
 ## Overview
 
-This protocol enables users to incrementally update their job history creation without re-running the full Phase 1 analysis. Users can add new positions, edit existing positions, or remove outdated positions while maintaining data integrity.
+This protocol enables users to incrementally update their job history creation without re-running the full Resume Analysis analysis. Users can add new positions, edit existing positions, or remove outdated positions while maintaining data integrity.
 
 **Key Features:**
 - Add single position with full job history creation schema
@@ -213,7 +213,7 @@ CONFIRM to user:
   - New soft skills added: [list if any]
 
   Would you like to:
-  1. Compare to a job description (Phase 3)
+  1. Compare to a job description (Job Fit Analyzer)
   2. Add another position
   3. Export updated job history"
 ```
@@ -388,7 +388,7 @@ CONFIRM:
 
   Would you like to:
   1. Edit another position
-  2. Compare to a job description (Phase 3)
+  2. Compare to a job description (Job Fit Analyzer)
   3. Export updated job history"
 ```
 
@@ -507,7 +507,7 @@ CONFIRM:
 
   Would you like to:
   1. Remove another position
-  2. Compare to a job description (Phase 3)
+  2. Compare to a job description (Job Fit Analyzer)
   3. Export updated job history"
 ```
 
@@ -591,7 +591,7 @@ WARN:
   "⚠️  This is your only position in job history. Removing it will leave your
       job history empty.
 
-  Are you sure? You'll need to add a new position or re-run Phase 1 to rebuild
+  Are you sure? You'll need to add a new position or re-run Resume Analysis to rebuild
   your job history.
 
   Type 'yes' to confirm or 'no' to cancel."
@@ -706,11 +706,11 @@ For optional fields (achievements, education):
 <limitation_bullet_cross_check_guardrail>
   <priority>CRITICAL</priority>
   <instruction>
-    During Phase 3 bullet generation, check honest_limitations BEFORE recommending bullets for each position.
+    During Job Fit Analyzer bullet generation, check honest_limitations BEFORE recommending bullets for each position.
   </instruction>
   
   <validation_logic>
-    WHEN generating bullets for Position N in Phase 3:
+    WHEN generating bullets for Position N in Job Fit Analyzer:
       1. Load position[N].honest_limitations
       2. Extract JD requirements
       3. FOR EACH JD requirement:
