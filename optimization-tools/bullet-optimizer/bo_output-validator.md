@@ -23,9 +23,10 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [ ] **FAIL:** Position has < 5 bullets, but includes two verbs from the same category (e.g., "Architected" and "Implemented" are both [Built]).
 - [ ] **PASS:** Every verb in a < 5-bullet position represents a unique category.
 
-### 4. Visual Elements (Rule: Action Verb Visuals)
-- [ ] **FAIL:** ASCII distribution bars (e.g., ████░░░░░░) are missing from the summary section.
-- [ ] **PASS:** Visual distribution is present and matches the calculation.
+### 4. Visual/Actual Verification (Rule: G36)
+- [ ] **FAIL:** ASCII distribution bars are missing.
+- [ ] **FAIL:** Visual bar percentage (e.g., "40%") does not mathematically match the actual count of verbs in the text.
+- [ ] **PASS:** Visual distribution is present AND mathematically accurate based on the text.
 
 ### 5. Chronology Depth (Rule: G12)
 - [ ] **FAIL:** Any position with an end date of 2020 or later is missing.
@@ -70,6 +71,15 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 ### 13. Phrase Uniqueness (Rule: G15)
 - [ ] **FAIL:** A multi-word phrase (3+ words) is repeated more than twice across the entire output (e.g., repeating "ensuring 100% version control" in 3 bullets).
 - [ ] **PASS:** Each bullet uses unique phrasing to describe similar metrics or outcomes.
+
+### 14. Action Verb Tense Enforcement (Rule: G35)
+- [ ] **FAIL:** Bullet starts with a word ending in "ing" (e.g., "Managing", "Leading", "Developing").
+- [ ] **FAIL:** Bullet starts with "Responsible for" or "Worked on".
+- [ ] **PASS:** Every bullet starts with a strong Past Tense action verb (e.g., "Managed", "Led", "Developed").
+
+### 15. 5% Threshold Enforcement (Rule: G37)
+- [ ] **FAIL:** (If Total Bullets >= 20) A verb category represents < 5% of the total count (e.g., 0 "Collaborate" bullets in a set of 20).
+- [ ] **PASS:** All 5 categories are represented above the 5% minimum floor.
 
 ---
 

@@ -83,6 +83,10 @@ This results in "Vibe-Coding Drift" where the model defaults to its training bia
 | **Tight Spacing Enforcement** | Explicitly banned spaced hyphens in Date Ranges and Compound Adjectives across the logic hub and validator. |
 | **Terminology Normalization** | Swept the codebase to replace legacy 'Phase 1/2' references with tool names (Resume Analysis, Bullet Optimizer). |
 | **Markdown Bullet Enforcement** | Mandated `- ` prefix for all bullets to prevent UI "text block" rendering bugs. |
+| **Gerund Ban Enforcement** | Added dedicated FAIL condition to the validator for "-ing" verbs at the start of bullets. |
+| **Visual/Actual Math Integrity** | Enforced strict check where ASCII bars MUST match actual verb counts (preventing visual hallucinations). |
+| **5% Distribution Threshold** | Mandated that every verb category must represent at least 5% of the total, preventing "skewed" narratives. |
+| **Comprehensive Re-Validation** | Executed full 5-position run verifying simultaneous enforcement of Gerund Ban, Math Integrity, and 5% Floor. |
 
 ## Additional Info
 - Chat history from Gemini session (Jan 28) was lost, but captured symptoms are documented above

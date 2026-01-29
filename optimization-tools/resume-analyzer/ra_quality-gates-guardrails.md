@@ -815,7 +815,14 @@
         4. **Integration:** If confirmed but unverified, incorporate it LIGHTLY (do not make it the central theme).
       </logic>
     </custom_keyword_evidence_guardrail>
-    <markdown_bullet_enforcement id="33">
+    <narrative_fit_verification id="33">
+       <priority>HIGH</priority>
+       <instruction>
+         Ensure generated bullets align with the target role seniority and address key JD requirements.
+       </instruction>
+    </narrative_fit_verification>
+
+    <markdown_bullet_enforcement id="34">
       <priority>HIGH</priority>
       <instruction>
         Ensure every optimized bullet in chat output is prefixed with a Markdown bullet character (- ) to force list rendering.
@@ -826,5 +833,41 @@
         3. **PASS Condition:** Every bullet is on its own line, prefixed with "- ".
       </logic>
     </markdown_bullet_enforcement>
+
+    <visual_math_integrity_guardrail id="36">
+      <priority>CRITICAL</priority>
+      <instruction>
+        The visible ASCII distribution bars MUST mathematically match the actual verb count in the text.
+      </instruction>
+      <logic>
+        1. **Count:** Tally the actual verbs used in the generated bullets (e.g., 3 "Built").
+        2. **Verify:** Check the ASCII bar percentage (e.g., "Built: 30%").
+        3. **FAIL Condition:** If the bar shows a different percentage than the actual text count.
+      </logic>
+    </visual_math_integrity_guardrail>
+
+    <verb_distribution_threshold_guardrail id="37">
+      <priority>HIGH</priority>
+      <instruction>
+        Ensure no verb category is left behind. Every category must represent at least 5% of the total bullets.
+      </instruction>
+      <logic>
+        1. **Calculation:** (Category Count / Total Bullets) * 100
+        2. **Threshold:** If result < 5% (and Total Bullets >= 20), FLAG as a distribution imbalance.
+        3. **Correction:** Reselect 1-2 bullets to use the under-represented category.
+      </logic>
+    </verb_distribution_threshold_guardrail>
+
+    <action_verb_tense_enforcement id="35">
+      <priority>CRITICAL</priority>
+      <instruction>
+        Strictly ban Gerunds (-ing) at the start of bullets. Bullets must start with Past Tense action verbs.
+      </instruction>
+      <logic>
+        1. **Negative Pattern:** Bullet starts with "Managing", "Leading", "Developing", "Creating".
+        2. **FAIL Condition:** Any bullet starting with a word ending in "ing".
+        3. **Correction:** Convert to past tense (Managed, Led, Developed, Created).
+      </logic>
+    </action_verb_tense_enforcement>
   </system_guardrails>
 </quality_assurance_rules>
