@@ -1,10 +1,10 @@
-# Optimize-My-Resume System v9.3.5 <!-- v9.3.5 Change: Guardrail Hardening & Recursive Validation -->
+# Optimize-My-Resume System v9.3.5.3 <!-- v9.3.5.3 Change: Metric-Only Validation & Deadlock Logic -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 9.3.5 (January 29, 2026)                                          -->
-<!-- v9.3.5 Release: Guardrail Hardening & 3-Stage Validation (G40)              -->
+<!-- Version: 9.3.5.3 (January 29, 2026)                                        -->
+<!-- v9.3.5.3 Release: Metric-Only Validation & G41 Deadlock Logic                -->
 <!-- Last Updated: January 29, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
@@ -4355,12 +4355,13 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
   
   <checkpoint_3_full_system_reconciliation>
     Post-generation, output a Guardrail Health Check Table (Layer 3).
-    - Status: Word Budget (350-500) | Pass/Fail.
-    - Status: Category Distribution (G37) | Pass/Fail.
-    - Status: Math Integrity (G36) | Pass/Fail.
-    - Status: Symbol Consistency (G22) | Pass/Fail.
-    - Status: Terminology (Normalization) | Pass/Fail.
-    - **BLOCKING GATE:** If any checklist item in `bo_output-validator.md` remains [FAIL], you MUST auto-repair before final delivery.
+    - Status: Word Budget (350-500) | Metric-Only: [Actual Count].
+    - Status: Category Distribution (G37) | Metric-Only: [Actual % Distribution].
+    - Status: Math Integrity (G36) | Metric-Only: [Raw Citation Count].
+    - Status: Symbol Consistency (G22) | Metric-Only: [Actual Violation Count].
+    - Status: Terminology (Normalization) | Metric-Only: [Raw Count].
+    - **Insolvency Deadlock (G41):** If a structural conflict occurs (e.g., 500-word limit vs. Mandatory 2-bullet minimum), you MUST STOP and report the deadlock. Do not simulate a compromise.
+    - **BLOCKING GATE:** If any numeric metric exceeds limits or fails floor requirements in `bo_output-validator.md`, you MUST auto-repair or engage the G41 Deadlock protocol.
   </checkpoint_3_full_system_reconciliation>
   
   <fallback_sequence>

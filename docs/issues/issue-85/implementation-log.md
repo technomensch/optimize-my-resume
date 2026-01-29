@@ -6,3 +6,6 @@
 - **2026-01-29 13:38:** Documented logic failure (Momentum Drift) and apologized for bypassing Atomic Approval.
 - **2026-01-29 13:42:** Backfilled documentation using `/start-issue-tracking`.
 - **2026-01-29 14:00:** Initialized `v9.3.5.3-issue-85-metric-validation` to enforce Metric-Only Reporting and solve Agentic Momentum.
+- **2026-01-29 14:20:** Step 1.1: Logic Hub updated with G41 Deadlock and Metric-Only rules.
+- **2026-01-29 14:22:** Step 1.2: Workflow updated with Dual-ID Policy.
+- **2026-01-29 14:25:** Step 2.1: Executed Pressure Test. Successfully triggered G41 Deadlock on a 512-word insolvency. Verified Metric-Only reporting.

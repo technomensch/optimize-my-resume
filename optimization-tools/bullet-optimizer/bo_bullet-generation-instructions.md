@@ -79,8 +79,10 @@ To satisfy multiple interdependent constraints and enforce absolute guardrail co
    - `[Length: 100-210 chars] | [Tense: No Gerunds/G35] | [Trace: Source-Check/G31] | [Repetition: Unique/G15]`
 
 3. **Stage 3 (Final Reconciliation):** After generation, output a **Guardrail Health Check Table**.
-   - Summarize Pass/Fail status for: Budget (G8), Math Integrity (G36), Category Floor (G37), Symbol Consistency (G22), and Terminology (Normalization).
-   - **BLOCKING GATE:** If any checklist item in `bo_output-validator.md` is [FAIL], you MUST auto-repair and regenerate before delivering.
+   - **Metric-Only Reporting:** All validation MUST use raw numbers (e.g., "Actual: 492 / Limit: 500"). Subjective ✅/❌ icons are strictly prohibited for primary validation.
+   - **Verification Requirement:** Summarize raw metrics for: Budget (G8 word count), Math Integrity (G36 citation count), Category Floor (G37 distribution), Symbol Consistency (G22 count), and Terminology Normalization.
+   - **Insolvency Deadlock (G41):** If a structural conflict occurs (e.g., 500-word limit vs. Mandatory 2-bullet minimum for 15+ years of history), you MUST STOP and report the "Logic Deadlock." Do not attempt a "simulation" fix or hallucinate a compromise.
+   - **BLOCKING GATE:** If any numeric metric exceeds limits or fails floor requirements in `bo_output-validator.md`, you MUST auto-repair or engage the Deadlock logic.
 
 ### [G8] Budget Enforcement (REVISED)
 - **Total Word Count:** 350-500 words across all work experience sections.
@@ -164,6 +166,7 @@ The output MUST conclude with exactly this hard-coded recommendation:
 ---
 
 ## Version History
+- **9.3.5.3 (2026-01-29):** Implemented Metric-Only Reporting and G41 Insolvency Deadlock rules. <!-- issue-85 hotfix -->
 - **9.3.5 (2026-01-28):** Hardened formatting gates and added bo_output-validator reference. <!-- issue-85 fix -->
 - **9.3.2.1 (2026-01-28):** Added G5, G11, G12, G21 to complete guardrail consolidation.
 - **9.3.2 (2026-01-28):** Initial creation with G1, G8, G9, G29, G30, G33.
