@@ -3,7 +3,7 @@
 - **Status:** Proposed
 - **Date:** 2026-01-19
 - **Deciders:** mkaplan, Claude
-- **Consulted:** ADR-007 (Keyword Hub), Guardrail #29 (Metric Preservation)
+- **Consulted:** ADR-007 (Keyword Hub), G29 (Metric Preservation)
 - **Informed:** Core Optimization Engine
 
 ---
@@ -50,7 +50,7 @@ If the user confirms they want to use an unverified skill, the generation prompt
 
 ## Relationship to Guardrails
 
-This policy is codified as **Guardrail #32: Custom Keyword Evidence**.
+This policy is codified as **G32: Custom Keyword Evidence**.
 
 ## Alternatives Considered
 

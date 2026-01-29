@@ -618,7 +618,7 @@ For optional fields (achievements, education):
 
 ## Incremental Update Quality Gates (Guardrails)
 
-### Guardrail #6: Data Loss Prevention during Updates
+### G6: Data Loss Prevention during Updates
 
 > **Implementation Target:** [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md).
 
@@ -661,7 +661,7 @@ For optional fields (achievements, education):
 ```
 
 
-### Guardrail #16: Master Skills Inventory Protection
+### G16: Master Skills Inventory Protection
 
 > **Implementation Target:** [PROJECT-INSTRUCTIONS.md](PROJECT-INSTRUCTIONS.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (secondary).
 
@@ -683,7 +683,7 @@ For optional fields (achievements, education):
 </inventory_protection_guardrail>
 ```
 
-### Guardrail #21a: Skill Inventory Context Verification (Original) <!-- v6.3.0 Change: Restored original guardrail -->
+### G21a: Skill Inventory Context Verification (Original) <!-- v6.3.0 Change: Restored original guardrail -->
 
 > **Implementation Target:** [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (secondary).
 
@@ -697,7 +697,7 @@ For optional fields (achievements, education):
 </incremental_skill_context_check>
 ```
 
-### Guardrail #21b: Limitation-to-Bullet Cross-Check (Secondary) <!-- v6.3.0 Change: Renamed from #21 to #21b to distinguish from original -->
+### G21: Limitation-to-Bullet Cross-Check (Secondary) <!-- v6.3.0 Change: Renamed from #21 to #21b to distinguish from original -->
 
 > **Implementation Target:** [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (secondary).
 

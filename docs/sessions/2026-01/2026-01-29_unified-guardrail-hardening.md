@@ -16,6 +16,7 @@ This session focused on hardening the resume generation guardrails and correctin
 - **Dual-ID Policy Implementation:** Decoupled Local IDs from Platform (GitHub) IDs to prevent identifier drift.
 - **ENH-007 Infrastructure (Skills Prep):** Created specification, test cases, and G43/G44 rules for evidence-based skill gating.
 - **ENH-008: Agent Governance Module:** Successfully extracted ~150 lines of dev-only governance into a modular "Shadow Module" (`docs/governance/agent-governance.md`).
+- **ENH-009: Guardrail Registry (Planning):** Initialized the specifications and approach for a centralized `guardrail-registry.md` to solve ID drift/fragmentation.
 - **G42 Justified Access:** Established a CRITICAL guardrail requiring technical justification before accessing job history files.
 - **Knowledge Graph Synchronization:** Updated `patterns.md` and created `architecture.md` with bidirectional lesson links.
 
@@ -25,6 +26,7 @@ This session focused on hardening the resume generation guardrails and correctin
 3. **Metric-Only Validation:** Established the principle that reconciliation tables must report raw metrics (e.g., "Actual: 1.2%") rather than just subjective PASS/FAIL icons.
 4. **Logic Extraction (ENH-008):** Decided to move all rules that only apply to the AI Agent (and not the end-user) into a modular governance file to optimize tokens in human-facing docs.
 5. **Format Agnosticism:** Chose to use index-based anchors (P1, P2) for raw resumes instead of forcing a full XML conversion before evidence matching.
+6. **Guardrail Phonebook:** Decided to implement a centralized "Registry Pattern" (ENH-009) to act as a lookup table for all system G-IDs.
 
 ## Problems Solved
 - **Insolvency Conflict:** Identified that a 500-word limit can conflict with a 2-bullet-per-job limit, mandating a "Deterministic Stopping" rule (G41).
@@ -52,6 +54,7 @@ e3d42c9 - 🛡️ [HARDENING] Implement Metric-Only Validation & G41 Deadlock Lo
 dfd43dc - ⚙️ [GOVERNANCE] Extract agent-specific rules to modular governance file (ENH-008)
 e680376 - ⚙️ [GOVERNANCE] Archive v9.2.x plans and sync ENH-008
 f12dfda - ⚙️ [GOVERNANCE] Finalize v9.3.5.5 implementation plan
+054bc00 - ⚙️ [PLANNING] Initialize ENH-009 Guardrail Registry specs
 ```
 
 ## Lessons Learned

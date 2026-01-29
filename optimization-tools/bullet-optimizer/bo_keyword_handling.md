@@ -20,7 +20,7 @@ IF the user provides a list of specific keywords to USE or IGNORE:
 
 1. **Strictly Enforce:** Do not use any keyword from the "IGNORE" list.
 2. **Prioritize:** Ensure valid keywords from the "USE" list are integrated (if evidence exists).
-3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per Guardrail #32).
+3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per G32).
 
 ## Timing Scenarios
 

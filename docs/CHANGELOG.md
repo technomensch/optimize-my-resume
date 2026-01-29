@@ -1,6 +1,6 @@
 # Changelog
 
-## Current Version: v9.3.5.3 <!-- v9.3.5.3 Release -->
+## Current Version: v9.3.5.6 <!-- v9.3.5.6 Release -->
 
 ## Version History <!-- v1.0 Addition -->
 - v1.0: Added v7.0.0 Local Development Environment with Ollama Integration entry <!-- v1.0 Addition -->
@@ -10,7 +10,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
-
+### v9.3.5.6 - Guardrail Registry & ID Standardization (ENH-009, Hardening)
+- **Centralized Guardrail Registry:** Created unified registry (`docs/governance/guardrail-registry.md`) as single "Phonebook" for all 37 guardrails with dual-ID mapping (legacy 1-37 ↔ modern G1-G37).
+- **ID Standardization Policy:** Established G-prefix naming convention (G#) for all guardrails. All legacy numeric IDs (1-37) in primary SSoT (`ra_quality-gates-guardrails.md`) migrated to G-prefix format.
+- **Production File Cleanup (v9.3.5.5 Fixes):**
+  - Fixed 3 pre-checked validation checkboxes in bo_output-validator.md (G11/G29 rule)
+  - Added missing Section 12 header (G22 - Symbol & Spacing rule)
+  - Updated version history with v9.3.5.4 and v9.3.5.5 entries
+  - Cleaned git diff artifacts from patterns.md
+- **Guardrail Creation Standards:** Documented future guardrail schema with ID assignment rules, required metadata, and deprecation process.
 
 ### v9.3.5.3 - Metric-Only Validation & Deadlock Logic (Hotfix)
 - **Metric-Only Reporting (G40 Stage 3):** Strictly prohibited subjective ✅/❌ icons for primary validation. All health checks MUST now report raw metrics (Actual counts vs Limits).

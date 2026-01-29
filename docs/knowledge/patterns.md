@@ -217,25 +217,25 @@
 - **Critical for:** Enforcement of G14 (Density), G24 (Char Limits), and G29 (Metric Preservation/Data Integrity).
 
 **See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
-+
-+---
-+
-+### 3-Stage Validation Checkpoint
-+
-+**Problem:** LLMs fail to satisfy multiple interdependent/recursive constraints (e.g., Char limits vs. Word budget) in a single-pass monolithic validation.
-+**Solution:** Decouple validation into three sequential, visible stages: Planning → Gating → Reconciliation.
-+**When to use:** Multi-position resume generation, complex summarization with hard length and uniqueness constraints.
-+
-+**Quick Reference:**
-+1. **Stage 1 (Budget Planning):** Force LLM to allocate resources (bullets/words) across all units BEFORE generation starts.
-+2. **Stage 2 (Incremental Gates):** Require visible "Pass/Fail" indicators for each unit during the token stream.
-+3. **Stage 3 (Final Reconciliation):** Verify total output against global budgets and provide explicit fallback logic (e.g., "If over budget, delete from oldest first").
-+
-+**Benefit:** Prevents "Generate Then Panic" drift where the LLM realizes it failed a constraint and makes destructive retroactive edits.
-+
-+**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
-+
-+---
+
+---
+
+### 3-Stage Validation Checkpoint
+
+**Problem:** LLMs fail to satisfy multiple interdependent/recursive constraints (e.g., Char limits vs. Word budget) in a single-pass monolithic validation.
+**Solution:** Decouple validation into three sequential, visible stages: Planning → Gating → Reconciliation.
+**When to use:** Multi-position resume generation, complex summarization with hard length and uniqueness constraints.
+
+**Quick Reference:**
+1. **Stage 1 (Budget Planning):** Force LLM to allocate resources (bullets/words) across all units BEFORE generation starts.
+2. **Stage 2 (Incremental Gates):** Require visible "Pass/Fail" indicators for each unit during the token stream.
+3. **Stage 3 (Final Reconciliation):** Verify total output against global budgets and provide explicit fallback logic (e.g., "If over budget, delete from oldest first").
+
+**Benefit:** Prevents "Generate Then Panic" drift where the LLM realizes it failed a constraint and makes destructive retroactive edits.
+
+**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
+
+---
 +
 
 ---

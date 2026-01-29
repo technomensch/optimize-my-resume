@@ -4,6 +4,8 @@
 **Status:** ACTIVE (Source of Truth)
 **Last Updated:** January 29, 2026
 
+> **📋 Registry Reference:** All guardrails defined in this file are indexed in [Guardrail Registry](guardrail-registry.md). Use the registry for unified lookups (G31, G36, G42, modularity_compliance).
+
 ---
 
 ## 🏗️ System Maintenance & Modularity

@@ -53,9 +53,9 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [ ] **PASS:** All bullets are between 100-210 characters.
 
 ### 10. Metric Preservation & Plausibility (Rule: G11/G29)
-- [x] **FAIL:** A metric (number, %, $) found in the source (`v12.txt`) is missing in the optimized bullet.
-- [x] **FAIL:** Currency value is missing the `$` symbol (e.g., `1M` instead of `$1M`).
-- [x] **FAIL:** Percentage exceeds 100% or time saving lacks "before/after" context.
+- [ ] **FAIL:** A metric (number, %, $) found in the source (`v12.txt`) is missing in the optimized bullet.
+- [ ] **FAIL:** Currency value is missing the `$` symbol (e.g., `1M` instead of `$1M`).
+- [ ] **FAIL:** Percentage exceeds 100% or time saving lacks "before/after" context.
 - [ ] **PASS:** Every metric is preserved, plausible, and correctly formatted.
 
 ### 11. Density and sequence (Rule: G14 / Chronology) (REVISED)
@@ -64,6 +64,7 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [ ] **FAIL:** Strategic distribution violated (e.g., more than 2 positions with 5 bullets, or more than 2 positions with 4 bullets).
 - [ ] **PASS:** Distinct positions accurately separated, most recent first, with adaptive bullet distribution following checkpoint 1 planning.
 
+### 12. Symbol & Spacing (Rule: G22)
 - [ ] **FAIL:** Output contains em-dashes (`—`) or spaced hyphens (` - `).
 - [ ] **FAIL:** Date ranges use spaces (e.g., `Jan - Feb`) instead of tight hyphens (`Jan-Feb`).
 - [ ] **FAIL:** Compound adjectives use spaces (e.g., `multi — agent`) instead of tight hyphens (`multi-agent`).

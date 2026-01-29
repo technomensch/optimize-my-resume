@@ -608,7 +608,7 @@ Before marking job history as complete:
 
 ## Job History Quality Gates (Guardrails)
 
-### Guardrail #1: Metric Isolation & Traceability
+### G1: Metric Isolation & Traceability
 
 > **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (secondary).
 
@@ -636,7 +636,7 @@ Before marking job history as complete:
 </metric_isolation_guardrail>
 ```
 
-### Guardrail #17: Scope Attribution Validation
+### G17: Scope Attribution Validation
 
 > **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md).
 
@@ -660,7 +660,7 @@ Before marking job history as complete:
 </scope_attribution_guardrail>
 ```
 
-### Guardrail #5: honest_limitations Enforcement (Secondary)
+### G5: honest_limitations Enforcement (Secondary)
 
 > **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (secondary).
 
@@ -679,7 +679,7 @@ Before marking job history as complete:
 </honest_limitations_enforcement>
 ```
 
-### Guardrail #43: Positional Anchoring (Format Agnostic)
+### G43: Positional Anchoring (Format Agnostic)
 
 **Instruction Text:**
 ```xml
@@ -696,7 +696,7 @@ Before marking job history as complete:
 </positional_anchoring_logic>
 ```
 
-### Guardrail #44: Skills Evidence Gate (Section 12 Hardening)
+### G44: Skills Evidence Gate (Section 12 Hardening)
 
 **Instruction Text:**
 ```xml

@@ -166,6 +166,8 @@ The output MUST conclude with exactly this hard-coded recommendation:
 ---
 
 ## Version History
+- **9.3.5.5 (2026-01-29):** Agent Governance module extraction (ENH-008). Modularized dev-only rules to docs/governance/agent-governance.md. <!-- ENH-008 -->
+- **9.3.5.4 (2026-01-29):** Format-agnostic Skills Inventory prep (ENH-007). Baseline for on-the-fly positional tagging and evidence gating. <!-- ENH-007 prep -->
 - **9.3.5.3 (2026-01-29):** Implemented Metric-Only Reporting and G41 Insolvency Deadlock rules. <!-- issue-85 hotfix -->
 - **9.3.5 (2026-01-28):** Hardened formatting gates and added bo_output-validator reference. <!-- issue-85 fix -->
 - **9.3.2.1 (2026-01-28):** Added G5, G11, G12, G21 to complete guardrail consolidation.

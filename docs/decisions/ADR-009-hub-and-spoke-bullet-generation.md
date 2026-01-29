@@ -3,7 +3,7 @@
 - **Status:** Proposed
 - **Date:** 2026-01-28
 - **Deciders:** mkaplan, Claude
-- **Consulted:** ADR-004 (Shadow Modularization), Guardrail #29, ENH-002
+- **Consulted:** ADR-004 (Shadow Modularization), G29, ENH-002
 - **Informed:** Core GUI Developers, Bullet Optimizer Module
 
 ---

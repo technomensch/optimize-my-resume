@@ -24,14 +24,14 @@
 <!--   - Synchronized narrative generator instructions with WebGUI implementation -->
 <!-- v9.0.1 (2026-01-19) - Narrative Fit Verification (Issue #64)               -->
 <!--   - Added post-analysis logic to verify qualitative match alongside score      -->
-<!--   - Implemented "Narrative Fit Verification" guardrail #33                    -->
+<!--   - Implemented "Narrative Fit Verification" G33                    -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)         -->
 <!--   - Implemented Hub-and-Spoke logic for keyword management                    -->
-<!--   - Added Guardrail #32 (Custom Keyword Evidence) and Validation Engine        -->
-<!--   - Added Logic and UI for Guardrail #33: Narrative Fit Verification         -->
+<!--   - Added G32 (Custom Keyword Evidence) and Validation Engine        -->
+<!--   - Added Logic and UI for G33: Narrative Fit Verification         -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)        -->
 <!--   - Added Keyword Management UI and logic to WebGUI                        -->
-<!--   - Added Guardrail #32: Custom Keyword Evidence validation checks         -->
+<!--   - Added G32: Custom Keyword Evidence validation checks         -->
 <!--   - Updated Summary Generation Protocol with Keyword Preferences            -->
 <!-- ========================================================================== -->
 
@@ -841,7 +841,7 @@
     IF the user provides a list of specific keywords to USE or IGNORE:
     1. **Strictly Enforce:** Do not use any keyword from the "IGNORE" list.
     2. **Prioritize:** Ensure valid keywords from the "USE" list are integrated (if evidence exists).
-    3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per Guardrail #32).
+    3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per G32).
   </user_keyword_preferences>
 
   <timing>
@@ -3039,6 +3039,14 @@
 <!-- ========================================================================== -->
 
 <!-- SILENT SYNC: Quality Gates & Guardrails -->
+<!--
+  📚 GUARDRAIL REGISTRY (Centralized)
+  All guardrails are catalogued in: docs/governance/guardrail-registry.md
+  This is the "Phonebook" for guardrail lookups. Use it when:
+  - You need to understand a specific rule (e.g., "What is G24?")
+  - You're unsure about a guardrail ID format
+  - You need the SSoT (Source of Truth) for implementation details
+-->
 <quality_assurance_rules>
   <phrase_variation_rule>
     <priority>high</priority>
@@ -3226,7 +3234,7 @@
         9. Repeat until ALL checks pass
       </regeneration_process>
 
-      <quality_gate_failure_protocol> <!-- v6.3.0 Change: Added Guardrail #14 -->
+      <quality_gate_failure_protocol> <!-- v6.3.0 Change: Added G14 -->
         <priority>CRITICAL</priority>
         <instruction>
           If quality gate fails after 3 iterations, provide diagnostic output to user.
@@ -3905,7 +3913,7 @@
 <position_ordering>
   <critical_rule>Positions MUST be displayed in REVERSE CHRONOLOGICAL ORDER</critical_rule>
   <definition>Reverse chronological = Most recent job FIRST (Position 1), oldest job LAST</definition>
-  <guardrail_reference>Guardrail #2 (Chronological Integrity): Verify date sanity and sequence before final output.</guardrail_reference> <!-- v6.3.0 Change -->
+  <guardrail_reference>G2 (Chronological Integrity): Verify date sanity and sequence before final output.</guardrail_reference> <!-- v6.3.0 Change -->
 </position_ordering>
 
 <!-- ========================================================================== -->
