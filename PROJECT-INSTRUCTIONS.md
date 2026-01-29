@@ -23,13 +23,16 @@
 <!--   - Formalized post-analysis customization offer trigger -->
 <!--   - Synchronized narrative generator instructions with WebGUI implementation -->
 <!-- v9.0.1 (2026-01-19) - Narrative Fit Verification (Issue #64)               -->
+<!--   - Added post-analysis logic to verify qualitative match alongside score      -->
+<!--   - Implemented "Narrative Fit Verification" guardrail #33                    -->
+<!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)         -->
+<!--   - Implemented Hub-and-Spoke logic for keyword management                    -->
+<!--   - Added Guardrail #32 (Custom Keyword Evidence) and Validation Engine        -->
 <!--   - Added Logic and UI for Guardrail #33: Narrative Fit Verification         -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)        -->
 <!--   - Added Keyword Management UI and logic to WebGUI                        -->
 <!--   - Added Guardrail #32: Custom Keyword Evidence validation checks         -->
 <!--   - Updated Summary Generation Protocol with Keyword Preferences            -->
-<!-- v8.5.3 (2026-01-16) - Fixed remaining "Hiring Manager Perspective"         -->
-<!-- v8.5.1 (2026-01-16) - Issue #56 - Resume Analyzer Report UX Enhancement   -->
 <!-- ========================================================================== -->
 
 <system_maintenance_rule>
