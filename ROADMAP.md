@@ -3,9 +3,21 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v9.3.4 (Complete) <!-- v9.3.4 Release -->
+## Current Version: v9.3.5 (Complete) <!-- v9.3.5 Release -->
 
 ---
+
+## v9.3.5 - Guardrail Hardening & Action Logic (COMPLETE)
+**Branch:** `v9.3.5-issue-85-harden-guardrail-enforcement` | **Status:** Complete | **Date:** 2026-01-28
+**Plan:** [v9.3.5 Implementation Plan](docs/plans/v9.3.5-issue-85-harden-guardrail-enforcement.md)
+
+**Implementation Approach:** Implemented a "Three-Layer Defense" strategy (Pre-flight, Logic Hub, Validator) to combat LLM "Instructional Saturation" and prevent guardrail drift.
+
+### Key Features
+- [x] **Guardrail Hardening Pattern (ADR-010):** Visible Pre-Flight Gates + Stop-on-Confusion Logic.
+- [x] **Action Verb Hardening (Phase 5):** G35 (Gerund Ban), G36 (Visual Math), G37 (5% Floor).
+- [x] **Terminology Normalization:** Removed 18+ legacy "Phase X" references, standardizing lexicon.
+- [x] **Synthetic Metrics:** Codified "True Path" metrics for solo projects in Knowledge Graph.
 
 ## v9.3.4 - Unified Multi-Agent Workflow System (COMPLETE) <!-- v9.3.4 Release -->
 

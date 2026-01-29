@@ -11,6 +11,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/job history creation.0.html).
 
 
+
+### v9.3.5 - Guardrail Hardening & Action Logic (Issue #85, #97)
+- **Guardrail Hardening Pattern (ADR-010):** Implemented a "Three-Layer Defense" strategy (Visible Pre-Flight → Logic Hub → Negative Validator) to combat LLM "Instructional Saturation" in long context windows.
+- **Action Verb Logic (Phase 5):**
+  - **G35 (Gerund Ban):** Hardened validator to explicitly reject bullets starting with "-ing" verbs (e.g., "Managing").
+  - **G36 (Math Integrity):** Enforced mathematical accuracy for visual distribution bars (e.g., bar % must match actual verb count).
+  - **G37 (5% Floor):** Mandated that every verb category (Built, Lead, Managed, Improved, Collaborate) must represent >= 5% of the total bullets to ensure narrative diversity.
+- **Terminology Normalization:** Surgically removed legacy "Phase 1/2/3" terminology from 18+ core files, standardizing on "Resume Analysis", "Bullet Optimizer", and "Job Fit Analyzer".
+- **Recency Anchor:** Added a `<final_recency_anchor>` to `PROJECT-INSTRUCTIONS.md` to lock in critical constraints at the very end of the prompt context.
+
 ### v9.1.0 - Documentation Sync (Issue #65, #66, #68)
 - **Keyword Visibility (Issue #66):** Updated `ra_jd-parsing.md` (Guardrail #34) to require explicit listing of the top 5 matched and missing keywords in analysis summaries.
 - **Customization Offer (Issue #68):** Updated `jfa_workflow-router.md` (Guardrail #35) to formalize the post-analysis offer for narrative and bullet customization when Fit Score >= 50.

@@ -1,13 +1,18 @@
-# Optimize-My-Resume System v9.3.4 <!-- v9.3.4 Change: Unified Workflow System -->
+# Optimize-My-Resume System v9.3.5 <!-- v9.3.5 Change: Guardrail Hardening Pattern -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 9.3.4 (January 28, 2026)                                          -->
-<!-- v9.3.4 Release: Unified Workflow System & Governance (ENH-006)             -->
+<!-- Version: 9.3.5 (January 28, 2026)                                          -->
+<!-- v9.3.5 Release: Guardrail Hardening & Action Logic (Issue #85, #97)        -->
 <!-- Last Updated: January 28, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
+<!-- v9.3.5 (2026-01-28) - Guardrail Hardening Pattern (ADR-010)                -->
+<!--   - Implemented "Three-Layer Defense" (Pre-flight -> Hub -> Validator)     -->
+<!--   - Action Verb Hardening: G35 (Gerund Ban), G36 (Visual Integrity)        -->
+<!--   - Terminology Normalization: Removed 18+ legacy "Phase X" references     -->
+<!--   - Added <final_recency_anchor> to combat long-context instruction drift  -->
 <!-- v9.3.4 (2026-01-28) - Unified Workflow System (ENH-006)                    -->
 <!--   - Established .agent/workflows as SSoT symlinked to .claude/skills       -->
 <!--   - Enforced [BUG]/[ENHANCEMENT] titling policy for GitHub issues          -->
