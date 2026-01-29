@@ -66,11 +66,12 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 
 ## Completed
 
-### [v9.3.5] Issue #85 & #97: Guardrail Hardening & 3-Stage Validation
-**Status:** ✅ COMPLETE
+### [v9.3.5 / v9.3.5.2] Issue #85 & #97: Guardrail Hardening & Unified Validation
+**Status:** 🟠 REOPENED (v9.3.5.2 Hotfix)
 **Type:** 🛡️ Hardening
-**Resolved:** 2026-01-29
-**Resolution:** Implemented 3-Stage Checkpoint Pattern (Planning/Gating/Reconciliation) to solve recursive constraint satisfaction drift. Added Hotfix/Hardening types and doc-update hook to workflow engine.
+**Initial Resolution:** 2026-01-28
+**Hotfix Required:** 2026-01-29 - Initial implementation lacked logic redundancy and multi-check coupling.
+**Resolution:** [WIP] Integrating bo_output-validator into G40 3-Stage Pattern.
 
 ### [v9.3.4] ENH-006: Unified Multi-Agent Workflow System
 **Status:** ✅ COMPLETE
