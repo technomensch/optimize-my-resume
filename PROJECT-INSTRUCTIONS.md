@@ -3946,6 +3946,16 @@
       <offer>Would you like to customize your resume bullets and professional summary for this JD?</offer>
       <action>Clicking "Optimize My Application" triggers the Narrative/Bullet generation workflow.</action>
     </post_analysis_customization_offer>
+    <!-- MODULAR_SYNC: documentation-governance/governance-locks.md#justified_data_access_guardrail -->
+    <justified_data_access_guardrail id="G42" priority="CRITICAL">
+      <intent>Prevent unauthorized or unexplained browsing of sensitive job history or user resume data.</intent>
+      <rule>
+        Whenever you are about to read, edit, or search files within the `/job-history/` or `/user-data/` directories, or analyze a raw user-provided resume:
+        1. You MUST first state your specific technical or logical justification for the access.
+        2. The justification MUST be visible to the user and tied to an active Step in an Implementation Plan.
+        3. FORMAT AGNOSTICISM: Do not assume the data is in the v12.1+ standard format. Logic must be robust enough to handle raw text and perform "on-the-fly" tagging.
+      </rule>
+    </justified_data_access_guardrail>
     <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>

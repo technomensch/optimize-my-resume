@@ -66,6 +66,11 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 
 ## Completed
 
+### [v9.3.5.4] ENH-007: Skills Inventory Prep
+**Local ID:** `ENH-007-prep` | **Status:** 🔴 ACTIVE
+**Type:** Hardening / Infrastructure
+**Description:** Preparing logic baseline for Evidence-Only Skills Inventory (Section 12 citations). Local-only.
+
 ### [v9.3.5 / v9.3.5.3] Metric-Only Validation & Deadlock Logic
 **Local ID:** `issue-85` | **GitHub Issue:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97)  
 **Status:** 🔴 ACTIVE (v9.3.5.3 Hotfix)
@@ -85,6 +90,11 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 **Type:** Enhancement
 **Resolved:** 2026-01-28
 **Resolution:** Established logic hub (ENH-004), strategic planning (ENH-003), and component integration (ENH-005) for the generation core.
+
+### [v9.3.5.4] ENH-007-prep: Format-Agnostic Skills Inventory baseline
+**Status:** 🔴 ACTIVE
+**Type:** Enhancement (Prep)
+**Resolution:** [WIP] Defining on-the-fly positional tagging and evidence gating for raw resume inputs. Local only.
 
 ---
 
