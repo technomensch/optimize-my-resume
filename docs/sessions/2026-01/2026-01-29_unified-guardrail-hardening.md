@@ -15,23 +15,22 @@ This session focused on hardening the resume generation guardrails and correctin
 - **G41 Insolvency Deadlock:** Implemented "Deterministic Stop" protocol for mathematically insolvent constraints.
 - **Dual-ID Policy Implementation:** Decoupled Local IDs from Platform (GitHub) IDs to prevent identifier drift.
 - **ENH-007 Infrastructure (Skills Prep):** Created specification, test cases, and G43/G44 rules for evidence-based skill gating.
-- **Positional Anchoring (G43):** Implemented format-agnostic tagging (P1-Pn) for raw resumes.
+- **ENH-008: Agent Governance Module:** Successfully extracted ~150 lines of dev-only governance into a modular "Shadow Module" (`docs/governance/agent-governance.md`).
 - **G42 Justified Access:** Established a CRITICAL guardrail requiring technical justification before accessing job history files.
 - **Knowledge Graph Synchronization:** Updated `patterns.md` and created `architecture.md` with bidirectional lesson links.
-- **Workflow Upgrades:** Updated `/lesson-learned` (v1.4), `/start-issue-tracking` (Dual-ID), and `/session-summary` (Update/Append logic).
 
 ## Decisions Made
 1. **Redundancy-First Logic:** Decided to merge `bo_output-validator.md` (the checklist) directly into the `G40` generation pipeline to prevent "Instructional Saturation" bypass.
 2. **Version Cohesion:** Chose to use `v9.3.5.2` for hotfixes to keep the family of hardening changes together in the git history.
 3. **Metric-Only Validation:** Established the principle that reconciliation tables must report raw metrics (e.g., "Actual: 1.2%") rather than just subjective PASS/FAIL icons.
-4. **Justified Data Access (G42):** Decided to lock sensitive resume data behind a visibility-first guardrail to prevent unexplained agent browsing.
+4. **Logic Extraction (ENH-008):** Decided to move all rules that only apply to the AI Agent (and not the end-user) into a modular governance file to optimize tokens in human-facing docs.
 5. **Format Agnosticism:** Chose to use index-based anchors (P1, P2) for raw resumes instead of forcing a full XML conversion before evidence matching.
-6. **Summary Update Pattern:** Decided to update the `/session-summary` workflow to support surgical appending to existing daily logs.
 
 ## Problems Solved
 - **Insolvency Conflict:** Identified that a 500-word limit can conflict with a 2-bullet-per-job limit, mandating a "Deterministic Stopping" rule (G41).
 - **Agentic Momentum Breach:** Addressed the failure where the AI bypassed `/start-issue-tracking` and "Stop" commands to finish a task pro-actively.
 - **Self-Reporting Hallucination:** Recognized that the AI was "vibe-checking" its own Pass/Fail tables without verifying the raw counts. Mandated Metric-Only reporting.
+- **Instructional Saturation:** Reduced the token load of the "Gold Master" by extracting ~150 lines of dev-only logic.
 - **Identifier Drift:** Corrected the mistake of renaming local folders to match GitHub Issue numbers. Implemented the Dual-ID mapping policy.
 
 ## Files Touched
@@ -50,13 +49,9 @@ This session focused on hardening the resume generation guardrails and correctin
 ```bash
 8bb8c51 - 🛡️ [GOVERNANCE] Implement Dual-ID Policy & Restore issue-85
 e3d42c9 - 🛡️ [HARDENING] Implement Metric-Only Validation & G41 Deadlock Logic (v9.3.5.3)
-a5954fc - ⚙️ [GOVERNANCE] Implement G42 Justified Access Guardrail & v9.3.5.4 Skills Prep Plan
-1b759cf - 🛡️ [HARDENING] Finalize v9.3.5.3 Hardening & Pressure Test Documentation
-7b292c1 - 🛡️ [HARDENING] Initialize ENH-007 Skills Prep (Local-Only Infrastructure)
-92f698a - 🛡️ [HARDENING] Implement G43 Positional Anchoring & G44 Skills Evidence Gate
-51d1c9e - 🛡️ [HARDENING] Finalize ENH-007 Skills Prep Documentation
-d830bd8 - 🧠 [KNOWLEDGE] Update Knowledge Graph with v9.3.5 Hardening Patterns
-a2c7d82 - ⚙️ [WORKFLOW] Enhance /session-summary to handle existing file collisions
+dfd43dc - ⚙️ [GOVERNANCE] Extract agent-specific rules to modular governance file (ENH-008)
+e680376 - ⚙️ [GOVERNANCE] Archive v9.2.x plans and sync ENH-008
+f12dfda - ⚙️ [GOVERNANCE] Finalize v9.3.5.5 implementation plan
 ```
 
 ## Lessons Learned
@@ -66,9 +61,8 @@ a2c7d82 - ⚙️ [WORKFLOW] Enhance /session-summary to handle existing file col
 - **Identification != Mapping:** Decouple local logical identifiers from platform serial identifiers to maintain filesystem persistence.
 
 ## Next Steps
-- Execute **v9.3.5.5** (Agent Governance Extraction) to keep the Gold Master lightweight.
 - Implement the full **v9.3.6** (Evidence-Only Enforcement) layer for Section 12.
-- Merge current hardening branch into main once prep finishes.
+- Merge `ENH-008` (Governance) and hardening branches into main.
 
 ---
 
