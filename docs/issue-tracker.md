@@ -66,12 +66,13 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 
 ## Completed
 
-### [v9.3.5 / v9.3.5.2] Issue #85 & #97: Guardrail Hardening & Unified Validation
-**Status:** 🟠 REOPENED (v9.3.5.2 Hotfix)
+### [v9.3.5 / v9.3.5.3] Metric-Only Validation & Deadlock Logic
+**Local ID:** `issue-97` | **GitHub Issue:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97)  
+**Status:** 🔴 ACTIVE (v9.3.5.3 Hotfix)
 **Type:** 🛡️ Hardening
 **Initial Resolution:** 2026-01-28
-**Hotfix Required:** 2026-01-29 - Initial implementation lacked logic redundancy (v9.3.5.2) and was susceptible to agentic momentum/simulation drift (v9.3.5.3).
-**Resolution:** [WIP] Implementing Metric-Only Reporting and Deterministic Deadlocks.
+**Hotfix Required:** 2026-01-29 - Logic redundancy (v9.3.5.2) and agentic momentum (v9.3.5.3).  
+**Resolution:** [WIP] Implementing Metric-Only Reporting and Deterministic Deadlocks. Continuation of GitHub #96 (ENH-003).
 
 ### [v9.3.4] ENH-006: Unified Multi-Agent Workflow System
 **Status:** ✅ COMPLETE
