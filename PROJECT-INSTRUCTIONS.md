@@ -35,70 +35,17 @@
 <!--   - Updated Summary Generation Protocol with Keyword Preferences            -->
 <!-- ========================================================================== -->
 
-<system_maintenance_rule>
-  CRITICAL: This is the "Gold Master" logic baseline. 
-  When updating logic, check for <modular_reference> tags within the file. 
-  1. If a reference exists, apply the update to the external module file FIRST.
-  2. Sync this file's text to match the module exactly to maintain the immutable baseline.
-  3. Ensure Project-GUI-Instructions.md reflects these changes (usually automatic via reference).
-</system_maintenance_rule>
+<!-- SILENT SYNC: system_maintenance_rule -->
+<modular_reference file="docs/governance/agent-governance.md#system_maintenance_rule" />
 
-<!-- SILENT SYNC: Path Resolution & Upload Guide -->
-<path_resolution>
-  <claude_web_artifact>
-    When using this system as a Claude Project with uploaded files:
-    - Files uploaded to Project Knowledge are accessible via /files/[filename.md]
-    - Example: optimization-tools/resume-analyzer/ra_job-history-creation.md → /files/job-history-creation.md
-    - The system will auto-resolve paths based on context
-  </claude_web_artifact>
-  
-  <local_repository>
-    When using the full repository locally or with Claude Desktop:
-    - Use paths relative to project root
-    - Example: optimization-tools/resume-analyzer/ra_job-history-creation.md
-  </local_repository>
+<!-- SILENT SYNC: path_resolution -->
+<modular_reference file="docs/governance/agent-governance.md#path_resolution" />
 
-  <modular_reference_behavior>
-    All `<modular_reference file="...">` tags resolve automatically based on context.
-    If file is not found at the specified path, check /files/ prefix.
-  </modular_reference_behavior>
-</path_resolution>
+<!-- SILENT SYNC: issue_tracking_workflow -->
+<modular_reference file="docs/governance/agent-governance.md#issue_tracking_workflow" />
 
-<issue_tracking_workflow>
-  <local_environment>
-     - Use GitHub CLI: `gh issue create`
-     - Or use GitHub Web UI to log issues
-  </local_environment>
-
-  <claude_web_interface>
-     - Create or update `docs/discovered_issues.md` in the chat context
-     - OR ask Claude to generate an "Issue Report" block using `docs/templates/issue_template.md`
-     - Copy-paste the report to your external tracking system
-  </claude_web_interface>
-</issue_tracking_workflow>
-
-<unified_workflow_system>
-  <governance>
-    All AI agent workflows (Claude Code, Antigravity, Gemini) are consolidated into `.agent/workflows/` as the Single Source of Truth (SSoT).
-    - Claude Code skills are synchronized via symbolic link: `.claude/skills` → `.agent/workflows`
-    - Logic updates MUST be applied to `.agent/workflows/` FIRST.
-    - Never modify agent-specific hidden directories directly if a unified workflow equivalent exists.
-  </governance>
-
-  <symbolic_synchronization_symsync>
-    To ensure "Environment Parallax" (logic drift between agents) is avoided:
-    1. Verify link integrity at session start: `ls -ld .claude/skills`
-    2. Any new reusable logic must be added as a `.md` workflow in `.agent/workflows/`.
-    3. Use the `SSoT_MARKER` within work plans to indicate cross-agent dependency.
-  </symbolic_synchronization_symsync>
-
-  <git_governance_enforcement>
-    1. **Release Hierarchy:** All branches MUST be prefixed with the semantic version (e.g., `v9.3.4-`).
-    2. **Issue Linkage:** All commits and PRs MUST reference the GitHub Issue ID (e.g., `Closes #95`).
-    3. **Titling Policy:** GitHub issues MUST use `[BUG]` or `[ENHANCEMENT]` prefixes.
-    4. **Persistence:** Local Tracking IDs (ENH-XXX or issue-XXX) MUST be present in issue bodies.
-  </git_governance_enforcement>
-</unified_workflow_system>
+<!-- SILENT SYNC: unified_workflow_system -->
+<modular_reference file="docs/governance/agent-governance.md#unified_workflow_system" />
 
 <upload_guide>
   <minimum_setup>
@@ -134,20 +81,8 @@
   </modular_setup>
 </upload_guide>
 
-<unified_workflow_system version="1.0">
-  <overview>
-    All agent intelligence (Gemini/Claude) is consolidated into `.agent/workflows/`.
-    Claude's `.claude/skills/` directory is a symbolic link to this directory.
-  </overview>
-  <workflows>
-    - /start-issue-tracking (Governance & Setup)
-    - /git-governance (Branching & PR lifecycle)
-    - /lesson-learned (Learning & KG Sync)
-    - /session-summary (Context Capture)
-    - /enforce-shadow-sync (Three-tier validation)
-    - /update-knowledge-graph (KG Maintenance)
-  </workflows>
-</unified_workflow_system>
+<!-- SILENT SYNC: unified_workflow_system (Overview) -->
+<modular_reference file="docs/governance/agent-governance.md#unified_workflow_system" />
 
 <!-- ========================================================================== -->
 
@@ -3876,42 +3811,14 @@
 
     <!-- v8.3.1 Issue #42 -->
     <!-- SILENT SYNC: Governance Guardrails -->
-    <guardrail id="30">
-      <name>modularity_compliance</name>
-      <priority>CRITICAL</priority>
-      <instruction>You MUST NOT modify logic directly in the GUI context. Ensure all system logic follows the v8 hub-and-spoke modular architecture.</instruction>
-      <process>
-        1. [NEW] Create standalone module in /optimization-tools/.
-        2. [SHADOW] Add "Silent Sync" HTML markers in Gold Master (PROJECT-INSTRUCTIONS.md).
-        3. [MODULAR] Replace GUI logic with &lt;modular_reference file="..." /&gt;.
-      </process>
-    </guardrail>
+<!-- SILENT SYNC: modularity_compliance -->
+<modular_reference file="docs/governance/agent-governance.md#modularity_compliance" />
 
-    <guardrail id="31">
-      <name>workflow_lifecycle_compliance</name>
-      <priority>CRITICAL</priority>
-      <instruction>Establish project infrastructure before planning or execution. Strictly follow naming and tagging policies.</instruction>
-      <naming_policy>
-        - **GitHub Issues:** Must prefix title with `[BUG]` or `[ENHANCEMENT]`.
-        - **GitHub Labels:** Apply `bug` or `enhancement` labels.
-        - **Local ID:** Include `Local Tracking ID: issue-N` or `ENH-NNN` in the issue body.
-        - **Plans & Branches:** Must include version prefix (e.g., `v9.3.4-issue-N-slug`).
-        - **PR Titles:** Should be descriptive and mirror the clean GitHub Issue title (including prefix).
-      </naming_policy>
-      <steps>
-        1. Identify or create a GitHub Issue (gh issue create) matching naming policy.
-        2. Establish a dedicated feature/patch branch with version prefix.
-        3. [MANDATORY] Create Draft PR immediately to link branch to issue (gh pr create --draft).
-        4. Update ROADMAP.md and CHANGELOG.md status.
-        5. Save implementation plan to docs/plans/[branch-name].md.
-      </steps>
-    </guardrail>
+<!-- SILENT SYNC: workflow_lifecycle_compliance -->
+<modular_reference file="docs/governance/agent-governance.md#31" />
 
-    <local_tracking_persistence_guardrail id="36">
-      <priority>HIGH</priority>
-      <instruction>Always maintain the link between local documentation and GitHub issues.</instruction>
-      <rule>The Local ID (issue-N / ENH-NNN) MUST be present in the GitHub issue body and all local documentation files for that issue.</rule>
-    </local_tracking_persistence_guardrail>
+<!-- SILENT SYNC: local_tracking_persistence_guardrail -->
+<modular_reference file="docs/governance/agent-governance.md#36" />
 
     <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md#custom_keyword_evidence_guardrail -->
     <custom_keyword_evidence_guardrail id="32">
@@ -3947,15 +3854,8 @@
       <action>Clicking "Optimize My Application" triggers the Narrative/Bullet generation workflow.</action>
     </post_analysis_customization_offer>
     <!-- MODULAR_SYNC: documentation-governance/governance-locks.md#justified_data_access_guardrail -->
-    <justified_data_access_guardrail id="G42" priority="CRITICAL">
-      <intent>Prevent unauthorized or unexplained browsing of sensitive job history or user resume data.</intent>
-      <rule>
-        Whenever you are about to read, edit, or search files within the `/job-history/` or `/user-data/` directories, or analyze a raw user-provided resume:
-        1. You MUST first state your specific technical or logical justification for the access.
-        2. The justification MUST be visible to the user and tied to an active Step in an Implementation Plan.
-        3. FORMAT AGNOSTICISM: Do not assume the data is in the v12.1+ standard format. Logic must be robust enough to handle raw text and perform "on-the-fly" tagging.
-      </rule>
-    </justified_data_access_guardrail>
+    <!-- SILENT SYNC: justified_data_access_guardrail -->
+    <modular_reference file="docs/governance/agent-governance.md#G42" />
     <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>

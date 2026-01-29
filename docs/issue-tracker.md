@@ -30,6 +30,29 @@ Allow users to select a different LLM model and regenerate bullets without re-ru
 
 ---
 
+### ENH-008: Agent Governance Module (Logic Extraction)
+
+**Status:** 🔴 ACTIVE
+**Type:** Governance / Infrastructure
+**Priority:** High
+**Created:** 2026-01-29
+**Assigned:** Unassigned
+**Branch:** `v9.3.5.5-enh-008-gov-sync`
+
+**Quick Summary:**
+Extract dev-only and agent-governance rules (G42, Git Policy, Modularity) from the human-facing Gold Master to a dedicated modular reference.
+
+**Documentation:** [docs/governance/agent-governance.md](governance/agent-governance.md)
+
+**Progress:**
+- [x] Audit & Rule Identification
+- [x] Creation of modular governance file
+- [x] Shadow Sync implementation in PROJECT-INSTRUCTIONS.md
+- [ ] Final Validation
+- [ ] Merged to main
+
+---
+
 ## Active Issues
 
 ### Issue #79: GUI Customized Bullets Using Wrong Context
