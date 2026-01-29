@@ -30,84 +30,6 @@ Allow users to select a different LLM model and regenerate bullets without re-ru
 
 ---
 
-### ENH-002: Bullet Generation: Process & Knowledge Foundation
-
-**Status:** 🔴 ACTIVE  
-**Type:** Enhancement  
-**Priority:** High  
-**Created:** 2026-01-28  
-**Branch:** `v9.3.0-ENH-002-knowledge-foundation`  
-
-**Quick Summary:**
-Establish rules and document lessons (Efficiency/Guardrail focus) for personal project metrics.
-
-**Documentation:** [docs/plans/v9.3.0-ENH-002-knowledge-foundation.md](plans/v9.3.0-ENH-002-knowledge-foundation.md)
-
----
-
-### ENH-003: Bullet Generation: Strategic Planning
-
-**Status:** 🔴 ACTIVE  
-**Type:** Enhancement  
-**Priority:** Medium  
-**Created:** 2026-01-28  
-**Branch:** `v9.3.1-ENH-003-strategic-planning`  
-
-**Quick Summary:**
-Audit and formalize logic separation between Professional Summary hub and Bullet Hub.
-
-**Documentation:** [docs/plans/v9.3.1-ENH-003-strategic-planning.md](plans/v9.3.1-ENH-003-strategic-planning.md)
-
----
-
-### ENH-004: Bullet Generation: Logic Hub Implementation
-
-**Status:** 🔴 ACTIVE  
-**Type:** Enhancement  
-**Priority:** High  
-**Created:** 2026-01-28  
-**Branch:** `v9.3.2-ENH-004-logic-core`  
-
-**Quick Summary:**
-Create a central logic source of truth and enforce Shadow Sync across instruction files.
-
-**Documentation:** [docs/plans/v9.3.2-ENH-004-logic-core.md](plans/v9.3.2-ENH-004-logic-core.md)
-
----
-
-### ENH-005: Bullet Generation: Component Integration
-
-**Status:** 🔴 ACTIVE  
-**Type:** Enhancement  
-**Priority:** High  
-**Created:** 2026-01-28  
-**Branch:** `v9.3.3-ENH-005-component-integration`  
-
-**Quick Summary:**
-Hook up local and web GUI components to the new robust logic hub.
-
-**Documentation:** [docs/plans/v9.3.3-ENH-005-component-integration.md](plans/v9.3.3-ENH-005-component-integration.md)
-
----
-
-### ENH-006: Establish Unified Multi-Agent Workflow System
-
-**Status:** 🔴 ACTIVE  
-**Type:** Enhancement  
-**Priority:** High  
-**Created:** 2026-01-28  
-**Branch:** `v9.3.4-ENH-006-unified-workflow-consolidation`  
-
-**Quick Summary:**
-Establish `.agent/workflows` as SSoT, symlink to Claude, and enforce governance naming policy.
-
-**Documentation:** [docs/plans/v9.3.4-ENH-006-unified-workflow-consolidation.md](plans/v9.3.4-ENH-006-unified-workflow-consolidation.md)
-
-**GitHub Issue:** [#95](https://github.com/technomensch/optimize-my-resume/issues/95)
-
-
----
-
 ## Active Issues
 
 ### Issue #79: GUI Customized Bullets Using Wrong Context
@@ -144,7 +66,23 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 
 ## Completed
 
-_None yet_
+### [v9.3.5] Issue #85 & #97: Guardrail Hardening & 3-Stage Validation
+**Status:** ✅ COMPLETE
+**Type:** 🛡️ Hardening
+**Resolved:** 2026-01-29
+**Resolution:** Implemented 3-Stage Checkpoint Pattern (Planning/Gating/Reconciliation) to solve recursive constraint satisfaction drift. Added Hotfix/Hardening types and doc-update hook to workflow engine.
+
+### [v9.3.4] ENH-006: Unified Multi-Agent Workflow System
+**Status:** ✅ COMPLETE
+**Type:** Enhancement
+**Resolved:** 2026-01-28
+**Resolution:** Consolidated skills into `.agent/workflows`, established SymSync, and enforced naming policy. GitHub Issue #95.
+
+### [v9.3.0-v9.3.3] ENH-002 to ENH-005: Bullet Generation Overhaul
+**Status:** ✅ COMPLETE
+**Type:** Enhancement
+**Resolved:** 2026-01-28
+**Resolution:** Established logic hub (ENH-004), strategic planning (ENH-003), and component integration (ENH-005) for the generation core.
 
 ---
 

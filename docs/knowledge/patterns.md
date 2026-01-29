@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-28
-**Entries:** 16
+**Last Updated:** 2026-01-29
+**Entries:** 23
 
 ---
 
@@ -23,6 +23,7 @@
 - [Two-Step Verification](#two-step-verification) - Safety pattern for unverified claims
 - [Lightweight Integration](#lightweight-integration) - Authenticity preservation for low-evidence claims
 - [Effective LLM Constraints](#effective-llm-constraints) - Positive constraints and pre-flight checks
+- [3-Stage Validation Checkpoint](#3-stage-validation-checkpoint) - Breaking recursive problems into planning, gated generation, and reconciliation
 - [Hub-and-Spoke Delegation](#hub-and-spoke-delegation) - Centralized logic for multi-interface synchronization
 
 ---
@@ -183,6 +184,26 @@
 - **Critical for:** Enforcement of G14 (Density), G24 (Char Limits), and G29 (Metric Preservation/Data Integrity).
 
 **See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
++
++---
++
++### 3-Stage Validation Checkpoint
++
++**Problem:** LLMs fail to satisfy multiple interdependent/recursive constraints (e.g., Char limits vs. Word budget) in a single-pass monolithic validation.
++**Solution:** Decouple validation into three sequential, visible stages: Planning → Gating → Reconciliation.
++**When to use:** Multi-position resume generation, complex summarization with hard length and uniqueness constraints.
++
++**Quick Reference:**
++1. **Stage 1 (Budget Planning):** Force LLM to allocate resources (bullets/words) across all units BEFORE generation starts.
++2. **Stage 2 (Incremental Gates):** Require visible "Pass/Fail" indicators for each unit during the token stream.
++3. **Stage 3 (Final Reconciliation):** Verify total output against global budgets and provide explicit fallback logic (e.g., "If over budget, delete from oldest first").
++
++**Benefit:** Prevents "Generate Then Panic" drift where the LLM realizes it failed a constraint and makes destructive retroactive edits.
++
++**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
++
++---
++
 
 ---
 

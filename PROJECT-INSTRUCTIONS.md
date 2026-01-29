@@ -1,11 +1,11 @@
-# Optimize-My-Resume System v9.3.5 <!-- v9.3.5 Change: Guardrail Hardening Pattern -->
+# Optimize-My-Resume System v9.3.5 <!-- v9.3.5 Change: Guardrail Hardening & Recursive Validation -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 9.3.5 (January 28, 2026)                                          -->
-<!-- v9.3.5 Release: Guardrail Hardening & Action Logic (Issue #85, #97)        -->
-<!-- Last Updated: January 28, 2026                                             -->
+<!-- Version: 9.3.5 (January 29, 2026)                                          -->
+<!-- v9.3.5 Release: Guardrail Hardening & 3-Stage Validation (G40)              -->
+<!-- Last Updated: January 29, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 <!-- v9.3.5 (2026-01-28) - Guardrail Hardening Pattern (ADR-010)                -->
@@ -2261,7 +2261,8 @@
     <step id="2_apply_inclusion_rules">
       <condition type="mandatory_inclusion">
         IF `Years_Since_End` <= 6 OR Job is "Present":
-        THEN Generate full bullets (3-5).
+        THEN Generate full bullets following Stage 1 Budget Planning.
+        Adaptive Target: 2-5 bullets based on JD relevance and total word budget (350-500).
       </condition>
       
       <condition type="tenure_exception">
@@ -2271,8 +2272,15 @@
       
       <condition type="space_permitting">
         IF `Years_Since_End` > 6 AND `Job_Duration_Years` < 5:
-        THEN Include ONLY IF total resume length < 2 pages. Otherwise, summarize or list as "Previous Experience."
+        THEN Include ONLY IF total resume length < 2 pages and word budget allows.
       </condition>
+    </step>
+    
+    <step id="3_execute_validation">
+      Apply the **3-Stage Checkpoint Pattern**:
+      1. **Stage 1 (Budget Planning):** Allocate bullets per position BEFORE generation.
+      2. **Stage 2 (Incremental Gating):** Validate character limits (100-210) and uniqueness per bullet.
+      3. **Stage 3 (Final Reconciliation):** Verify total word count (350-500) and distribution.
     </step>
   </logic_steps>
 </rule>
@@ -4323,3 +4331,36 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
     </terminal_instruction>
   </mandatory_output_constraints>
 </final_recency_anchor>
+
+<recursive_constraint_validation id="G40" priority="CRITICAL">
+  <intent>
+    Prevent LLM drift by decoupling interdependent constraints (Char Limits vs. Word Budget vs. Uniqueness).
+  </intent>
+  
+  <checkpoint_1_budget_planning>
+    Before starting generation, output a Budget Allocation Table.
+    Constraint: Total estimated word count MUST be between 350-500 words.
+    Constraint: Max 2 positions with 5 bullets, Max 2 with 4 bullets. Min 2 per position.
+  </checkpoint_1_budget_planning>
+  
+  <checkpoint_2_per_bullet_gates>
+    For every bullet, verify in thinking:
+    - Character Count: 100-210 (G24)
+    - Unique Phrasing: No 3+ word phrase used 3x (G15)
+    - Metrics Traceability: Zero data loss from source (G29)
+  </checkpoint_2_per_bullet_gates>
+  
+  <checkpoint_3_final_reconciliation>
+    Post-generation, verify total actual word count and distribution.
+    Output a visible reconciliation table.
+  </checkpoint_3_final_reconciliation>
+  
+  <fallback_sequence>
+    IF Actual Word Count > 500:
+    1. Identify oldest positions (e.g., P8, P7).
+    2. Remove bullets from oldest positions first until total is < 500.
+    3. If still over, compress bullets in recent positions while preserving metrics.
+    4. RE-RUN Checkpoint 3 Validation.
+  </fallback_sequence>
+</recursive_constraint_validation>
+

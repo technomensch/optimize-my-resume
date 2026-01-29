@@ -1,7 +1,7 @@
 # Common Gotchas & Solutions
 
-**Last Updated:** 2026-01-28
-**Entries:** 13
+**Last Updated:** 2026-01-29
+**Entries:** 14
 
 ---
 
@@ -24,6 +24,7 @@
 - [Logic Conflation Trap](#logic-conflation-trap) - Mixing Master Summary logic with Per-JD optimization
 - [ID Parallax](#id-parallax) - Misinterpreting code definitions based on intuition
 - [Instructional Saturation](#instructional-saturation) - Loss of rule adherence in long context windows
+- [Recursive Constraint Drift](#recursive-constraint-drift) - LLM failure to balance interdependent word/char/uniqueness limits
 
 ---
 
@@ -57,6 +58,22 @@ cp .claude/skills/your-skill.md ~/.claude/commands/
 1. Save changes to `~/.claude/commands/your-skill.md`
 2. Quit Claude Code completely
 3. Relaunch Claude Code
+
+---
+
+### Recursive Constraint Drift
+
+**Symptom:** LLM successfully follows one rule (e.g., word count) but breaks another (e.g., character limits per bullet), or refuses to adhere to both simultaneously.
+
+**Gotcha:** Interdependent constraints (Char limits + Word budget + Uniqueness) form a recursive loop. Compressing text to fit characters might drop word count; adding bullets to hit word count breaks character gates. LLMs enter "panic mode" and default to training bias.
+
+**Fix:** Break monolithic validation tables into a **3-Stage Checkpoint Pattern**.
+1. **Budget Planning:** Allocate before generation.
+2. **Incremental Gates:** Validate per bullet during generation.
+3. **Final Reconciliation:** Verify total output with explicit fallback logic (e.g., "Remove from oldest first").
+
+**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
+
 4. Test skill
 
 **Why:** No hot-reload mechanism - skills load once at startup for performance

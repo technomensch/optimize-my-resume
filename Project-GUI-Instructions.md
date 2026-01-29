@@ -1,11 +1,11 @@
-# Optimize-My-Resume System v9.2.2 (GUI Instructions) <!-- v9.2.2 Change: Updated artifact versions for Issue #79 fixes -->
+# Optimize-My-Resume System v9.3.5 (GUI Instructions) <!-- v9.3.5 Change: Guardrail Hardening & Recursive Validation -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 9.2.2 (January 26, 2026)                                          -->
-<!-- v9.2.2 Release: Updated Should-I-Apply artifact (v1.3.0) with Issue #79 fixes -->
-<!-- Last Updated: January 26, 2026                                             -->
+<!-- Version: 9.3.5 (January 29, 2026)                                          -->
+<!-- v9.3.5 Release: Guardrail Hardening & 3-Stage Validation (G40)              -->
+<!-- Last Updated: January 29, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 <!-- v9.2.2 (2026-01-26) - Updated artifact versions for Issue #79 (error handling + ENH-001) -->
@@ -488,7 +488,8 @@
 
 <word_count_constraints>
   <total_word_count_constraint>
-    Total word count across ALL bullets must not exceed 350-500 words for work experience section
+    Total word count across ALL bullets MUST be between 350-500 words.
+    Enforce via **3-Stage Checkpoint Pattern** (Planning → Gating → Reconciliation).
   </total_word_count_constraint>
 </word_count_constraints>
 
@@ -497,19 +498,21 @@
 <!-- ========================================================================== -->
 
 <bullet_count_per_position>
-  <baseline_rule>Default to 3 bullets per position</baseline_rule>
+  <baseline_rule>Adaptive distribution (2-5 bullets) based on JD relevance and recency.</baseline_rule>
 
   <minimum_bullets_per_position>
-    <rule priority="high">Each position should have at least 2 bullets minimum</rule>
-    <exception>Only use 1 bullet if word count is at maximum AND position is older (4+ back) AND bullet is highly relevant</exception>
+    <rule priority="high">Each position MUST have at least 2 bullets minimum.</rule>
   </minimum_bullets_per_position>
 
-  <strategic_expansion>
-    <constraint>No more than 2 jobs should have 5 bullets</constraint>
-    <constraint>No more than 2 jobs should have 4 bullets</constraint>
-  </strategic_expansion>
+  <strategic_distribution>
+    <constraint>No more than 2 jobs should have 5 bullets.</constraint>
+    <constraint>No more than 2 jobs should have 4 bullets.</constraint>
+    <verification>Calculate total budget in Stage 1 BEFORE generation.</verification>
+  </strategic_distribution>
 
-  <ordering>Within each position, order bullets from strongest match to weakest match for the specific JD</ordering>
+  <fallback_sequence>
+    IF word count > 500: Remove from oldest positions (P8, P7, etc.) until under 500.
+  </fallback_sequence>
 </bullet_count_per_position>
 
 <position_ordering>

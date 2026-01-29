@@ -12,14 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/job hi
 
 
 
-### v9.3.5 - Guardrail Hardening & Action Logic (Issue #85, #97)
-- **Guardrail Hardening Pattern (ADR-010):** Implemented a "Three-Layer Defense" strategy (Visible Pre-Flight → Logic Hub → Negative Validator) to combat LLM "Instructional Saturation" in long context windows.
-- **Action Verb Logic (Phase 5):**
-  - **G35 (Gerund Ban):** Hardened validator to explicitly reject bullets starting with "-ing" verbs (e.g., "Managing").
-  - **G36 (Math Integrity):** Enforced mathematical accuracy for visual distribution bars (e.g., bar % must match actual verb count).
-  - **G37 (5% Floor):** Mandated that every verb category (Built, Lead, Managed, Improved, Collaborate) must represent >= 5% of the total bullets to ensure narrative diversity.
-- **Terminology Normalization:** Surgically removed legacy "Phase 1/2/3" terminology from 18+ core files, standardizing on "Resume Analysis", "Bullet Optimizer", and "Job Fit Analyzer".
-- **Recency Anchor:** Added a `<final_recency_anchor>` to `PROJECT-INSTRUCTIONS.md` to lock in critical constraints at the very end of the prompt context.
+### v9.3.5 - Guardrail Hardening & Recursive Validation (Issue #85, #97)
+- **3-Stage Validation (G40):** Replaced the monolithic validation table with an adaptive 3-stage checkpoint system (Budget Planning → Incremental Gating → Final Reconciliation). This solves the recursive constraint problem (character limits vs. total word budget).
+- **Adaptive Density Rules:** Implemented dynamic bullet allocation (Max 2x5, Max 2x4, Min 2/pos) to ensure a 350-500 word total across all work history.
+- **Workflow Engine Hardening:**
+  - Integrated **Hotfix (x.x.x.x)** and **🛡️ Hardening** types into the issue tracking system.
+  - Added the **doc-update safety hook** to the release workflow to prevent documentation drift.
+- **Guardrail Hardening Pattern (ADR-010):** Implemented a "Three-Layer Defense" strategy (Visible Pre-Flight → Logic Hub → Negative Validator) to combat LLM "Instructional Saturation".
+- **Action Verb Logic:**
+  - **G35 (Gerund Ban):** Explicitly reject bullets starting with "-ing" verbs.
+  - **G36 (Math Integrity):** Enforced accuracy for visual distribution bars.
+  - **G37 (5% Floor):** Mandated every verb category represent >= 5% of total bullets.
+- **Terminology Normalization:** Surgically removed legacy "Phase X" references, standardizing on "Resume Analysis", "Bullet Optimizer", and "Job Fit Analyzer".
 
 ### v9.1.0 - Documentation Sync (Issue #65, #66, #68)
 - **Keyword Visibility (Issue #66):** Updated `ra_jd-parsing.md` (Guardrail #34) to require explicit listing of the top 5 matched and missing keywords in analysis summaries.

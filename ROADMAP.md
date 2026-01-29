@@ -7,15 +7,17 @@
 
 ---
 
-## v9.3.5 - Guardrail Hardening & Action Logic (COMPLETE)
-**Branch:** `v9.3.5-issue-85-harden-guardrail-enforcement` | **Status:** Complete | **Date:** 2026-01-28
+## v9.3.5 - Guardrail Hardening & Recursive Validation (COMPLETE)
+**Branch:** `v9.3.5-issue-85-harden-guardrail-enforcement` | **Status:** Complete | **Date:** 2026-01-29
 **Plan:** [v9.3.5 Implementation Plan](docs/plans/v9.3.5-issue-85-harden-guardrail-enforcement.md)
 
-**Implementation Approach:** Implemented a "Three-Layer Defense" strategy (Pre-flight, Logic Hub, Validator) to combat LLM "Instructional Saturation" and prevent guardrail drift.
+**Implementation Approach:** Implemented a "Three-Layer Defense" strategy and solved the **Recursive Constraint Satisfaction** problem (Char Limits vs. Word Budget) using an adaptive 3-Stage Checkpoint Pattern (Budget Planning → Gating → Reconciliation).
 
 ### Key Features
 - [x] **Guardrail Hardening Pattern (ADR-010):** Visible Pre-Flight Gates + Stop-on-Confusion Logic.
-- [x] **Action Verb Hardening (Phase 5):** G35 (Gerund Ban), G36 (Visual Math), G37 (5% Floor).
+- [x] **3-Stage Validation (G40):** Solved logic drift with Budget Pre-planning and adaptive density rules.
+- [x] **Action Verb Hardening:** G35 (Gerund Ban), G36 (Visual Math), G37 (5% Floor).
+- [x] **Workflow Governance Upgrades:** Integrated **Hotfix** versioning, **Hardening** types, and the **doc-update** safety hook into the Issue Tracking system.
 - [x] **Terminology Normalization:** Removed 18+ legacy "Phase X" references, standardizing lexicon.
 - [x] **Synthetic Metrics:** Codified "True Path" metrics for solo projects in Knowledge Graph.
 

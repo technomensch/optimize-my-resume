@@ -8,6 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+### v9.3.5 - Recursive Validation & Workflow Hardening (2026-01-29)
+
+#### Meta-Work - Recursive Constraint Satisfaction (Issue #85, #97)
+- **Problem:** Monolithic validation tables fail when constraints are interdependent (e.g., character limits per bullet vs. total word budget for the entire section). This leads to "LLM Panic" where fixes for one constraint break another.
+- **Solution:** Implemented the **3-Stage Checkpoint Pattern (G40)**.
+  - **Stage 1 (Budget Planning):** Force the LLM to output a budget allocation table BEFORE generating any bullets.
+  - **Stage 2 (Incremental Gating):** Force per-bullet verification in thinking (Length, Phrasing, Metrics).
+  - **Stage 3 (Final Reconciliation):** Force a reconciliation table AFTER generation with a deterministic fallback sequence (remove from oldest positions).
+- **Hardening:** Added **G40** to `PROJECT-INSTRUCTIONS.md` and `bo_bullet-generation-instructions.md`.
+
+#### Added - Workflow Engine Upgrades (v9.4.1)
+- **Issue Tracking Evolution:**
+  - Added support for **Hotfix** (x.x.x.1) versioning to resolve logic-only drift without full patches.
+  - Added **🛡️ Hardening** type to distinguish between feature work and safety/infrastructure work.
+  - **doc-update Safety Hook:** Integrated a mandatory prompt to run the documentation update protocol before staging initialization files, preventing the "v9.3.5" vs "v9.3.4" metadata drift encountered previously.
+- **Shadow Sync Integration:** Added automated `optimization-tools` detection to the issue tracking workflow, mandating `/enforce-shadow-sync` tasks for sensitive files.
+
+---
+
 ### v9.1.0 - Documentation Sync (2026-01-19) <!-- v9.1.0 Change -->
 
 #### Meta-Work - Guardrail Synchronization (Issue #65, #66, #68)

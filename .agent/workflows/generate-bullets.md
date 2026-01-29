@@ -31,22 +31,21 @@ Use this workflow when:
 
 ## Execution Steps
 
-### Step 0: Mandatory Pre-flight Verification (CRITICAL)
+### Step 0: Stage 1 - Budget Planning (Checkpoint 1)
 
-**VISIBLE OUTPUT REQUIRED:** Before initializing ANY generation, the agent MUST output a "Pre-flight Guardrail Check" table **AS THE FIRST THING IN ITS RESPONSE** (visible to the user, NOT hidden in thinking).
+**VISIBLE OUTPUT REQUIRED:** Before initializing ANY generation, the agent MUST output a **Budget Allocation Table** to plan for recursive constraints (Char limits vs. Word budget).
 
-| ID | Guardrail | Integration Status |
-| :--- | :--- | :--- |
-| **G1** | Metric Traceability | [ ] Referenced from history |
-| **G5/G21**| Limitation Check | [ ] Verified against `<honest_limitations>` for every position |
-| **G9** | Verb Diversity | [ ] 1 category per position (5 categories: Built, Lead, Managed, Improved, Collaborate) |
-| **G12** | Recency Rule | [ ] All 2020-2026 roles included |
-| **G14** | Bullet Density | [ ] 3-5 bullets per pos (Rev Chrono Order) |
-| **G24** | Char Limits | [ ] Max 210 readable chars per bullet |
-| **G29** | Metric Presence | [ ] Data Integrity Audit (No loss from source) |
-| **FMT** | Header Format | [ ] 2-line schema: `Title at Company | Dates` + `Duration: X years/months` |
-| **ANC** | Recency Anchor | [ ] Grammar recommendation included at EOF |
-| **EXT** | Export Protocol | [ ] Plain text export file generated |
+| Position ID | Recency Weight | JD Relevance | Allocated Bullets | Est. Words |
+| :--- | :--- | :--- | :--- | :--- |
+| P1 (Current) | High | % | [Count] | [Est] |
+| P2 | High | % | [Count] | [Est] |
+| P3 | Medium | % | [Count] | [Est] |
+| P4+ | Low | % | [Count] | [Est] |
+
+**Budget Verification:**
+- [ ] Estimated word count: 350-500 ✅
+- [ ] Distribution check: Max 2 positions with 5 bullets, max 2 with 4.
+- [ ] Strategy: Prioritize JD keywords and metrics in P1-P3.
 
 ### Step 1: Verify Prerequisites
 Ensure the following context is available:
@@ -71,17 +70,38 @@ optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
 
 If you cannot confirm all three, **STOP and re-read the file**.
 
-### Step 3: Execute Bullet Generation
-Follow the logic hub instructions in order:
+### Step 3: Execute Bullet Generation (Stage 2 - Per-Bullet Gates)
+
+Follow the logic hub instructions in order. **MANDATORY:** For EVERY bullet generated, you must verify the following in thinking and fix before outputting:
+- [x] **Character Count:** 100-210 readable chars (G24)
+- [x] **Unique Phrasing:** No 3+ word phrase used 3x across resume (G15)
+- [x] **Verb Category:** Correct mapping (G9), no repeats within same position
+- [x] **Metric Traceability:** Metrics preserved from source (G29)
+
 1. **Core Achievement Guardrails** (G1, G5, G11, G21, G29) - Metric traceability, plausibility, evidence
 2. **Structural Integrity** (G8, G9, G12) - Headers, verb diversity, chronology
 3. **Personal Project Optimization** (if Position 0) - Solo portfolio rules
 4. **Specialized Logic** (G30, G33) - Personal project metrics, narrative fit
 5. **Final Output Formatting** - FMT gates for headers, visuals, indicators
 
-### Step 4: Validate Output
 
-**⚠️ ACTION REQUIRED:** Before delivering the final result, the agent MUST:
+### Step 4: Validate Output (Stage 3 - Final Reconciliation)
+
+**⚠️ ACTION REQUIRED:** Before delivering the final result, the agent MUST output a **Final Reconciliation Table**:
+
+| Requirement | Actual Value | Status |
+| :--- | :--- | :--- |
+| Word Count | [Count] | [Pass/Fail] (350-500) |
+| Min Bullets | [Count] | [Pass/Fail] (Min 2/pos) |
+| Distribution | [P1-P8] | [Pass/Fail] (Max 2x5, Max 2x4) |
+| Formatting | FMT/ANC/EXT| [Pass/Fail] |
+
+**Explicit Fallback Sequence (If Word Count > 500):**
+1. Identify the oldest positions (e.g., P8, P7).
+2. Remove bullets from the oldest positions until word count is < 500.
+3. If still over, compress bullets in recent positions without losing metrics.
+4. **Re-run Stage 3 Verification.**
+
 1. **OPEN AND READ `optimization-tools/bullet-optimizer/bo_output-validator.md`** and perform all 8 checks.
 2. **Verify Terminal Recency Anchor:** Confirm the response ends with the mandatory grammar recommendation.
 3. **Run ASCII Visuals:** Confirm category distribution bars are present (e.g., `Built: ████░░░░░░ (40%)`).

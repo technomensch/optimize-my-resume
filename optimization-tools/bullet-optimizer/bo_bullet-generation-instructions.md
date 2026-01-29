@@ -66,21 +66,28 @@ When rewriting or optimizing existing bullets for keywords:
 
 ---
 
-## 2. Structural Integrity
+## 2. Structural & Recursive Constraints
 
-### [G8] Budget Enforcement
-- **Per-Bullet Length:** 100-210 characters. No exceptions.
-- **Total Word Count (500-Word Hard Cap):** The total output (all bullets) MUST be 350-500 words.
-- **Enforcement Logic:** Count words before delivering. If `total_words > 500`, you MUST remove the last bullet point from each position, starting with the oldest (Position 8) and moving forward (Position 7, 6, etc.), until the total is under 500.
+### [G40] 3-Stage Validation Checkpoint (The Anti-Drift Pattern)
+To satisfy multiple interdependent constraints (Char Limits vs. Word Budget), follow this mandatory sequence:
 
-### [G9] Verb Diversity
-- No verb category (Built, Lead, Managed, Improved, Collaborate) may be used more than once within a single position.
-- **Exception:** If a position has 5+ bullets, allow ONE category to repeat.
+1. **Stage 1 (Budget Planning):** Before generation, output a **Budget Allocation Table**. Estimate word counts per position. Total MUST be 350-500 words.
+2. **Stage 2 (Incremental Gating):** For EVERY bullet, verify in thinking: 100-210 chars, No 3+ word phrase repeats (G15), and Metric Preservation (G29).
+3. **Stage 3 (Final Reconciliation):** Output a visible reconciliation table after all bullets. Verify word count and density distribution.
 
-### [G12] Recency Weighting
-Allocate bullets based on position recency and JD relevance:
-- **Position 1 (most recent):** Minimum 3 bullets, at least 2 quantified.
-- **Positions 4+:** Maximum 2 bullets.
+### [G8] Budget Enforcement (REVISED)
+- **Total Word Count:** 350-500 words across all work experience sections.
+- **Per-Bullet Length:** 100-210 readable characters (G24).
+- **Fallback Logic (If word count > 500):** 
+  1. Identify oldest positions (e.g., P8, P7).
+  2. Remove ALL bullets from the oldest position first until total is < 500.
+  3. If still over, move to the next oldest.
+
+### [G12] Recency & Distribution Rules (REVISED)
+Allocate bullets based on recency and JD relevance:
+- **Maximum Density:** No more than 2 jobs with 5 bullets; no more than 2 jobs with 4 bullets.
+- **Minimum Density:** Minimum 2 bullets per position (unless absolute lack of evidence).
+- **Strategy:** Prioritize bullets with JD keyword hits in P1-P3.
 
 ---
 

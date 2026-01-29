@@ -58,10 +58,11 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [x] **FAIL:** Percentage exceeds 100% or time saving lacks "before/after" context.
 - [ ] **PASS:** Every metric is preserved, plausible, and correctly formatted.
 
-### 11. Density and sequence (Rule: G14 / Chronology)
+### 11. Density and sequence (Rule: G14 / Chronology) (REVISED)
 - [ ] **FAIL:** Positions are merged or displayed in non-reverse-chronological order.
-- [ ] **FAIL:** Any position has < 3 or > 5 bullets.
-- [ ] **PASS:** Distinct positions accurately separated, most recent first, with correct bullet density.
+- [ ] **FAIL:** Any position has < 2 bullets (unless absolute lack of evidence).
+- [ ] **FAIL:** Strategic distribution violated (e.g., more than 2 positions with 5 bullets, or more than 2 positions with 4 bullets).
+- [ ] **PASS:** Distinct positions accurately separated, most recent first, with adaptive bullet distribution following checkpoint 1 planning.
 
 - [ ] **FAIL:** Output contains em-dashes (`—`) or spaced hyphens (` - `).
 - [ ] **FAIL:** Date ranges use spaces (e.g., `Jan - Feb`) instead of tight hyphens (`Jan-Feb`).

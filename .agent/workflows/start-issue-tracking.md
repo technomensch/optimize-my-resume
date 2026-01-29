@@ -1,14 +1,14 @@
 ---
 description: Initialize issue tracking for a specific problem or enhancement with Git governance enforcement
-version: v9.3.4
-created: 2026-01-28
+version: v9.4.1
+created: 2026-01-29
 ---
 
 # Start Issue Tracking
 
 **Purpose:** Initialize issue tracking for a specific problem or enhancement, creating structured documentation that can be managed with Git using Claude Code locally.
 
-**Version:** v9.3.4 (Updated: 2026-01-28)
+**Version:** v9.4.1 (Updated: 2026-01-29)
 
 ---
 
@@ -45,70 +45,51 @@ Use `/start-issue-tracking` when:
 
 ---
 
-## Step 0: Verification & Stop-on-Error (PRE-FLIGHT)
+## Step 0: Discourse Capture & Behavior Lock (PRE-FLIGHT)
 
-Before initializing the issue tracker, explicitly state: **"MODE: READ-ONLY ANALYSIS. Establishing behavior locks..."** 
-Confirm that you will stop and ask the user directly if you encounter any issues, confusion, or ambiguous code paths.
+**Mode: READ-ONLY ANALYSIS.** 
+
+1. **proposal_capture:** Scan the preceding chat history for the "Would you like me to..." proposal. Extract the Logic, Affected Files, and Target Outcome automatically.
+2. **behavior_lock:** Explicitly state: *"Establishing safety locks. I will capture your recent proposal into documentation and stop cold before implementation."*
+3. **stop_on_error:** Confirm that you will stop after every documentation step to show its work and will NOT proceed to implementation without explicit approval.
 
 ---
 
-## Step 1: Verification (INTERACTIVE)
+## Step 1: Verification & Versioning Gate (INTERACTIVE)
 
-**Ask the user these questions:**
-
-### 1.1: Issue Type
+### 1.0: Git Authority Check
+Run these commands BEFORE asking the user questions:
+```bash
+git branch -a
+git log -n 5
 ```
-What type of issue is this?
+**RULE:** The Git branch history is the source of truth for versioning. Ignore stale versioning strings in file headers if they conflict with the branch naming schema.
 
-1. [ ] 🐛 Bug - Something is broken or not working correctly
-2. [ ] ✨ Enhancement - New feature or improvement
-3. [ ] 🎨 UI/UX - Visual or user experience improvement
-4. [ ] 📝 Documentation - Documentation update or addition
-5. [ ] ⚡ Performance - Speed or efficiency improvement
+### 1.1: Versioning Decision
+Based on the Git check, ask the user:
+```markdown
+I detect existing work on [Branch Name]. Is this:
+
+1. [ ] A **New Feature**? (vX.[Minor].0 - New Issue)
+2. [ ] A **Patch** to Merged Work? (vX.X.[Patch] - Bug/Correction to Main)
+3. [ ] A **WIP Update**? (Continue on existing branch, update existing plan)
+4. [ ] A **Hotfix**? (vX.X.X.[Hotfix] - Critical fix to a patch)
+
+Please select the version increment path (1-4):
+```
+
+### 1.2: Issue Type
+```
 6. [ ] 🔧 Refactor - Code restructuring without behavior change
+7. [ ] 🛡️ Hardening - Strengthening existing guardrails or validation logic
 
-Please select the type (1-6):
+What type of issue is this?
 ```
 
-### 1.2: Issue Details
+### 1.3: Issue Details
+*(Pre-filled from Discourse Capture)*
 ```
-Please provide the following information:
-
-**Issue Title:** [Brief, descriptive title]
-**Example:** "JSON response truncation for resumes with 3+ positions"
-
-**Problem Description:** [What's wrong or what needs to be added?]
-**Example:** "API truncates JSON response at ~17.6K characters, causing parse errors"
-
-**Current Behavior:** [What happens now?]
-**Example:** "Multi-position analysis fails with SyntaxError"
-
-**Expected Behavior:** [What should happen?]
-**Example:** "All positions should be analyzed successfully regardless of count"
-
-**Impact/Priority:**
-1. [ ] Critical - Blocks major functionality
-2. [ ] High - Significant problem, workaround exists
-3. [ ] Medium - Important but not urgent
-4. [ ] Low - Nice to have
-
-**Affected Files/Components:** [Which files are involved?]
-**Example:** "Phase1ResumeAnalyzer.jsx, lines 145-290 (API call + parsing)"
-```
-
-### 1.3: Context Gathering
-```
-**Has this issue been discussed before?**
-- [ ] Yes - Provide chat links or document references
-- [ ] No - This is newly discovered
-
-**Do you have error logs or screenshots?**
-- [ ] Yes - I'll paste them below
-- [ ] No
-
-**Is there an existing workaround?**
-- [ ] Yes - Describe: ___________
-- [ ] No
+... [same as before] ...
 ```
 
 **WAIT FOR USER INPUT** before proceeding to Step 2.
@@ -131,32 +112,28 @@ ls -1 docs/enhancements/ 2>/dev/null | grep -E '^ENH-[0-9]+' | sort -V
 **POLICY: Versioned Assets vs. Descriptive Issues**
 - **Plans & Branches:** MUST include the version string (e.g., `v9.3.4`) for chronological tracking.
 - **GitHub Issues:** MUST include a type prefix in the title and be tagged accordingly.
-  - **Title Prefix:** `[BUG]` or `[ENHANCEMENT]`
-  - **Issue Body:** MUST include the local tracking ID (e.g., "Local Tracking ID: issue-8")
-  - **GitHub Tags:** Apply `bug` or `enhancement` tags.
+  - **Title Prefix:** `[BUG]`, `[ENHANCEMENT]`, or `[HARDENING]`
+  - **Issue Body:** MUST include the local tracking ID (e.g., "Local Tracking ID: issue-8") and a link to the GitHub issue if it already exists.
+  - **GitHub Tags:** Apply `bug`, `enhancement`, or `hardening` tags.
 
 **For Bugs/Issues:**
-- **Local ID:** `issue-N` (next sequential number)
-- **Local Directory:** `docs/issues/issue-8/`
-- **Implementation Plan:** `docs/plans/v9.3.4-issue-8-binary-extraction.md`
-- **Branch Name:** `v9.3.4-issue-8-binary-extraction`
-- **GitHub Issue Title:** "[BUG] Binary File Content Extraction"
-- **GitHub Tags:** `bug`
+- **Local ID:** `issue-N` (next sequential number or existing number if re-opening)
+- **Local Directory:** `docs/issues/issue-N/`
+- **Implementation Plan:** `docs/plans/v[Major.Minor.Patch.Hotfix]-issue-N-slug.md`
+- **Branch Name:** `v[Major.Minor.Patch.Hotfix]-issue-N-slug` (MUST include version prefix)
 
 **For Enhancements:**
-- **Local ID:** `ENH-NNN` (zero-padded)
-- **Local Directory:** `docs/enhancements/ENH-002/`
-- **Implementation Plan:** `docs/plans/v9.3.4-ENH-002-token-display.md`
-- **Branch Name:** `v9.3.4-ENH-002-token-display`
-- **GitHub Issue Title:** "[ENHANCEMENT] Add Token Usage Display to Main Interface"
-- **GitHub Tags:** `enhancement`
+- **Local ID:** `ENH-NNN`
+- **Local Directory:** `docs/enhancements/ENH-NNN/`
+- **Implementation Plan:** `docs/plans/v[Major.Minor.0]-ENH-NNN-slug.md`
+- **Branch Name:** `v[Major.Minor.0]-ENH-NNN-slug`
 
 **Confirm with user:**
 ```
-I'll create this as local Issue #8 (GitHub will auto-assign its own number).
-Plan/Branch will follow v9.3.4 hierarchy.
+I'll create this as local ID [Local-ID] (linked to GitHub Issue #[N]).
+Plan/Branch will follow v[Version] hierarchy.
 GitHub Issue Title: [Type] Descriptive Title
-GitHub Labels: [bug / enhancement]
+GitHub Labels: [Labels]
 
 Is this correct? (y/n)
 ```
@@ -196,31 +173,34 @@ mkdir -p docs/enhancements/ENH-NNN/
 
 ## Step 4: Generate Issue Documentation
 
-### 4.1: Main Issue Document
-**File:** `docs/plans/v[Major.Minor.0]-[issue N]-{slug}.md` (for issues)
-**File:** `docs/plans/v[Major.Minor.Patch]-[issue N]-{slug}.md` (for patches)
+### 4.1: Implementation Plan Template (v9.4.0)
 
-> **Note:** The `gh issue create` command below MUST use the `--body-file` flag pointing to this implementation plan to ensure all technical details are visible in the GitHub UI. Do not use manual summaries.
+Every generated plan MUST include this **Safety Header** and **Atomic Approval Protocol**:
 
-This is the final implementation plan and should include at least references to:
-- docs/issues/issue-N/issue-N-description.md
-- docs/issues/issue-N/solution-approach.md
-- docs/issues/issue-N/test-cases.md
+```markdown
+# Implementation Plan: [Version]-[ID]-[Slug]
+
+**STATUS:** 🔴 STOPPED (Waiting for Manual Approval of Step 1)
+**GOVERNANCE:** Atomic Approval Required (Step-by-Step)
+**BEHAVIOR LOCKS:** 
+- [x] Zero-Deviation Execution
+- [x] Stop-on-Confusion (Interactive Gate)
+- [x] Visible Result Validation (Post-Step Tables)
+
+## Execution Protocol
+1. **Present Logic:** Before every tool call, state the intended change and logic.
+2. **Wait:** Request explicit "YES" to proceed.
+3. **Execute:** Run the tool.
+4. **Validate:** Display the Validation Check table (see below).
+
+## Recursive Logic Reconciliation (If Applicable)
+| Step | Action | Character Budget | Word Budget | Conceptual Redundancy | Status |
+|------|--------|------------------|-------------|-----------------------|--------|
+| X.Y  | [Task] | 100-210? [ ]     | 350-500? [ ]| No 3+ word repeats? [ ]| [ ]    |
+```
 
 **Action:**
-Read and use the template from: `docs/workflow-templates/issue_template.md`
-
-### 4.2: Solution Approach Document
-**File:** `docs/issues/issue-N/solution-approach.md`
-
-**Action:**
-Read and use the template from: `docs/workflow-templates/solution-approach.md`
-
-### 4.3: Test Cases Document
-**File:** `docs/issues/issue-N/test-cases.md`
-
-**Action:**
-Read and use the template from: `docs/workflow-templates/test-cases.md`
+Read and use the template from: `docs/workflow-templates/implementation_plan_template.md`
 
 ---
 
@@ -254,90 +234,56 @@ The git-governance workflow will output:
 
 ---
 
-## Step 6: Update Issue Tracker
+## Step 6: Update Issue Tracker & Knowledge Capture
 
 ### 6.1: Master Issue Tracker
+Add entry to `docs/issue-tracker.md`. 
 
-**File:** `docs/issue-tracker.md` (create if doesn't exist)
+### 6.2: Knowledge Capture Integration (Delegation)
+**Mandatory Question:** *"We just identified [recursive loop drift/logic failure]. Should I run **`/lesson-learned`** now to sync this pattern to the Knowledge Graph before we start the fix?"*
 
-**Add entry:**
-```markdown
-## Issue #N: [Title]
+If yes, run it. If no, ensure a task is added to the plan to update the KG after implementation.
 
-**Status:** 🔴 ACTIVE  
-**Type:** Bug / Enhancement  
-**Priority:** Critical / High / Medium / Low  
-**Created:** YYYY-MM-DD  
-**Assigned:** [Name/Unassigned]  
-**Branch:** fix/issue-N-brief-description
+### 6.3: Link Solution Approach
+The `solution-approach.md` MUST link to the resulting lesson or updated gotcha in the Knowledge Graph.
 
-**Quick Summary:**
-[One-line description]
+### 6.4: Shadow Sync Check
+**Action:** Detect if affected files include `optimization-tools/`, `PROJECT-INSTRUCTIONS.md`, or `Project-GUI-Instructions.md`.
+**Logic:** If yes, add a mandatory task to the implementation plan: 
+*"Run `/enforce-shadow-sync --auto` after each file modification to verify tier synchronization."*
+Include Shadow Sync verification in the Final Reconciliation table of the plan.
 
-**Documentation:** [docs/issues/issue-N/](docs/issues/issue-N/)
-
-**GitHub Issue:** #[auto-assigned-number] (once created)
-
-**Progress:**
-- [ ] Investigation complete
-- [ ] Solution proposed
-- [ ] Implementation started
-- [ ] Testing complete
-- [ ] Documentation updated
-- [ ] Merged to main
-
----
-```
-
-### 6.2: Update README (if applicable)
-
-Add to "Known Issues" section:
-```markdown
-## Known Issues
-
-- **Issue #N (GitHub #XX):** [Title] - [Brief description] ([Status])
-  - Documentation: [Link to issue directory]
-  - Workaround: [If available]
-```
+### 6.5: Release Documentation Hook
+**Mandatory Question:** *"Would you like me to run **`/doc-update`** now to synchronize the ROADMAP and CHANGELOG before I stage and push these initialization files?"*
 
 ---
 
-## Step 7: Confirm Completion
+## Step 7: The "Freeze & Document" Termination
 
 **Present summary to user:**
 
 ```markdown
 ✅ **Issue Tracking Initialized**
+✅ **Implementation Freeze Engaged**
 
 **Local Issue #N: [Type] Descriptive Title**
-- Status: 🔴 ACTIVE
-- Type: [Bug/Enhancement]
-- GitHub Issue: Will be auto-assigned when created
+- Status: 🔴 ACTIVE (LOCKED)
+- Branch: v[Major.Minor.Patch]-[issue N]-brief-slug
+- GitHub Issue: #[N] (Reopened/Created)
 
 **Files Created:**
 - docs/issues/issue-N/issue-N-description.md
-- docs/issues/issue-N/solution-approach.md
-- docs/issues/issue-N/test-cases.md
+- docs/plans/vX.X.X-issue-N-slug.md
 
-**Git Status:**
-- Branch: v[Major.Minor.0]-[issue N]-brief-description
-- Committed: ✅
-- Pushed: ✅
-
-**Next Steps:**
-1. Create GitHub issue: 
-   `gh issue create --title "[Type] Descriptive Title" --label "[bug/enhancement]" --body-file solution-approach.md`
-   *(Ensure local tracking ID is included in body-file or --body override)*
-2. Begin investigation (solution-approach.md)
-3. Implement chosen solution
-4. Run test cases (test-cases.md)
+**Logic Sync:**
+- [x] Git Authority Validated
+- [x] Knowledge Graph Lesson Initialized
 ```
 
-**Quick Links:**
-- Issue Doc: docs/issues/issue-N/issue-N-description.md
-- Master Tracker: docs/issue-tracker.md
+**CRITICAL TERMINATION:**
+*"DOCUMENTATION COMPLETE. I have ENGAGED the implementation freeze. Read the plan at [path] and say 'Execute Step 1' when you have reviewed and approved the logic. I will not proceed until then."*
 
-Ready to start work on Issue #N!
+**STOP.**
 
 ---
 
@@ -417,6 +363,7 @@ Updates progress in issue docs
 
 **After completion:**
 - `/lessons-learned` ← Document what was learned
+- `/doc-update` ← Synchronize documentation and Roadmap
 - Update issue status to ✅ RESOLVED
 
 ---
@@ -495,6 +442,6 @@ git checkout -b fix/issue-N-description
 ---
 
 **Created:** January 8, 2026  
-**Version:** v9.3.4  
+**Version:** v9.4.1  
 **Usage:** Type `/start-issue-tracking` when you identify a bug or want to plan an enhancement  
 **Integration:** Works with Git, Claude Code, and `/lessons-learned` skill
