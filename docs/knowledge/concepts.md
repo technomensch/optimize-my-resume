@@ -129,7 +129,7 @@ Don't compromise on either audience - optimize each format for its consumer. Acc
 #### Cross-References
 
 - **ADR:** [ADR-001: Dual-Format Strategy](../decisions/ADR-001-dual-format-documentation.md)
-- **Lesson:** [Memory System Phase 1](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- **Lesson:** [Resume Analysis Foundation](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
 
@@ -387,7 +387,7 @@ Templates don't constrain creativity - they ensure minimum quality bar while all
 #### Cross-References
 
 - **Templates:** [../decisions/template.md](../decisions/template.md), [../sessions/template.md](../sessions/template.md)
-- **Lesson:** [Memory System Phase 1](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- **Lesson:** [Resume Analysis Foundation](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
 
@@ -452,7 +452,7 @@ Cross-references transform isolated documents into an interconnected knowledge s
 #### Cross-References
 
 - **Example:** See any ADR's "Related" section
-- **Lesson:** [Memory System Phase 1](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
+- **Lesson:** [Resume Analysis Foundation](../lessons-learned/patterns/Lessons_Learned_Memory_System_Phase_1_Foundation.md)
 
 ---
 

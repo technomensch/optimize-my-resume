@@ -21,7 +21,7 @@
 </phase_detection>
 
 <!-- ========================================================================== -->
-<!-- PHASE 1: FULL RESUME ANALYSIS                                               -->
+<!-- RESUME ANALYSIS                                                            -->
 <!-- ========================================================================== -->
 
 <phase id="1" name="full_resume_analysis">
@@ -185,7 +185,7 @@
 </job_history_template_system>
 
 <!-- ========================================================================== -->
-<!-- PHASE 2: BULLET OPTIMIZATION                                                -->
+<!-- BULLET OPTIMIZER                                                           -->
 <!-- ========================================================================== -->
 
 <phase id="2" name="bullet_optimization">
@@ -206,7 +206,7 @@
 </phase>
 
 <!-- ========================================================================== -->
-<!-- PHASE 3: JD COMPARISON                                                      -->
+<!-- JOB FIT ANALYZER                                                           -->
 <!-- ========================================================================== -->
 
 <phase id="3" name="jd_comparison">
@@ -675,21 +675,20 @@
   
   <bullet_display_within_position>
     <instruction>
-    <instruction>
       Display each bullet cleanly.
-      - prefix with Metric Indicator: ✓ [Has Metrics] (if metrics present) or - [No Metrics] (if no metrics)
-      - prefix with Verb Category in brackets: [Category] (e.g., [Built])
+      - **ALWAYS start the line with a Markdown bullet (`- `).**
+      - Prefix with Metric Indicator: `✓ [Has Metrics]` (if metrics present) or `- [No Metrics]` (if no metrics)
+      - Prefix with Verb Category in double brackets: `[[Category]]` (e.g., `[[Built]]`)
       - Do NOT put the color name (Green) in text.
     </instruction>
 
     <format>
-      [METRIC_INDICATOR] [[Category]] [Verb] [remainder of bullet text]
+      - [METRIC_INDICATOR] [[Category]] [Verb] [remainder of bullet text]
     </format>
 
     <example>
-      ✓ [Has Metrics] [Built] Built a real-time analytics dashboard using React
-      - [No Metrics] [Managed] Managed daily standups for the engineering team
-    </example>
+      - ✓ [Has Metrics] [[Built]] Built a real-time analytics dashboard using React
+      - - [No Metrics] [[Managed]] Managed daily standups for the engineering team
     </example>
   </bullet_display_within_position>
   

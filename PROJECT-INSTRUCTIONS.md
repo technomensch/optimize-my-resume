@@ -3994,7 +3994,7 @@
     <verbs>built, developed, designed, launched, established, implemented, created, engineered, architected, pioneered</verbs>
   </category>
 
-  <category id="lead" color="yellow">
+  <category id="lead" color="orange">
     <description>Drives initiatives, guides teams</description>
     <verbs>led, directed, spearheaded, drove, championed, headed, piloted, steered, mentored, coached</verbs>
   </category>
@@ -4298,13 +4298,17 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
     </terminology>
     <header_format>
       Every position MUST include:
-      Line 1: [Job Title] at [Company] | [Start] - [End]
+      Line 1: [Job Title] at [Company] | [Start]-[End]
       Line 2: Duration: [X years/months]
     </header_format>
     <visual_elements>
-      Output MUST include ASCII distribution bars for verb categories.
+      Output MUST include ASCII distribution bars for verb categories (10-character scale).
       Example: `Built: ████░░░░░░ (40%)`
     </visual_elements>
+    <bullet_formatting>
+      Every bullet line MUST start with a Markdown bullet `- ` followed by the indicator tags.
+      Example: `- ✓ [Has Metrics] [[Built]] Designed a system...`
+    </bullet_formatting>
     <terminal_instruction>
       Every bullet generation response MUST end with:
       "[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM session to ensure error-free presentation."

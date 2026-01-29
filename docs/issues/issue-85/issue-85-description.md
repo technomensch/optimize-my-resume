@@ -75,6 +75,14 @@ This results in "Vibe-Coding Drift" where the model defaults to its training bia
 | **Mandatory Disambiguation** | Updated `jfa_workflow-router.md` with aggressive warnings for "Optimize my resume," forcing a choice between Master Summary and Per-JD optimization. |
 | **Symbol & Spacing Gate** | Hardened G22 in the logic hub and pattern catalog, explicitly banning em-dashes (`—`) and enforcing tight hyphenation for compound adjectives. |
 | **G22 Validator Hardening** | Added explicit FAIL conditions to `bo_output-validator.md` for em-dashes and spaced hyphens in compound adjectives. |
+| **G8 Word-Count Cap** | Added explicit "500-Word Hard Cap" and reduction protocol to the logic hub to prevent budget overruns. |
+| **G20 Acronym Inventory** | Mandated an internal "Acronym Inventory" at Step 1.1 to ensure 100% compliance with first-use expansion rules. |
+| **G5/G21 Limitation Visibility** | Added mandatory visible pre-flight column and consolidated logic in the hub to prevent "hidden" over-claiming. |
+| **G15 Phrase Uniqueness** | Added explicit FAIL condition to the output validator to prevent repetitive multi-word phrasing across positions. |
+| **G11 Metric Plausibility** | Hardened currency/percentage logic and added explicit FAIL conditions for missing symbols or illogical claims. |
+| **Tight Spacing Enforcement** | Explicitly banned spaced hyphens in Date Ranges and Compound Adjectives across the logic hub and validator. |
+| **Terminology Normalization** | Swept the codebase to replace legacy 'Phase 1/2' references with tool names (Resume Analysis, Bullet Optimizer). |
+| **Markdown Bullet Enforcement** | Mandated `- ` prefix for all bullets to prevent UI "text block" rendering bugs. |
 
 ## Additional Info
 - Chat history from Gemini session (Jan 28) was lost, but captured symptoms are documented above

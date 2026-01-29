@@ -459,13 +459,12 @@
       <instruction>
         Before finalizing any bullet point, cross-reference the generated content against the <honest_limitations> section of the target Position.
       </instruction>
-      <logic>
-        IF generated_bullet mentions [Skill X]
-        AND <honest_limitations> contains "No experience with [Skill X]" OR "Limited exposure to [Skill X]"
-        THEN:
-          1. Flag as CONTRADICTION.
-          2. Remove the claim or rephrase to match the limitation (e.g., "exposed to" instead of "expert in").
-      </logic>
+      <verification_logic>
+        1. **Visible Step 0 Audit:** Verify limitations for every position in the visible "Pre-flight Guardrail Check" table (Step 0 of the workflow).
+        2. IF generated_bullet mentions [Skill X] AND <honest_limitations> contains "No experience with [Skill X]":
+           - FLAG as CONTRADICTION.
+           - Remove the claim or rephrase to match the limitation.
+      </verification_logic>
     </limitation_enforcement_guardrail>
 
     <data_loss_prevention_guardrail id="6"> <!-- v6.3.0 Change: Restored original with additions merged -->
@@ -527,9 +526,8 @@
         total_words = SUM(all_bullets.word_count)
         IF total_words > 500:
           STOP and apply reduction strategy:
-            1. Identify oldest/weakest positions (4+ back)
-            2. Reduce bullets from 3→2 or 2→1 for those positions
-            3. Recalculate until total_words <= 500
+            1. Count words before delivery.
+            2. IF total_words > 500: Remove the last bullet point from each position, starting with the oldest (Position 8) and moving forward, until total_words <= 500.
         IF total_words < 350:
           FLAG as "Underutilized" - consider adding bullets to strongest positions
       </total_word_count_validation>
@@ -581,9 +579,8 @@
       </instruction>
       <plausibility_checks>
         <check id="percentage_range">All percentages must be 0-100%</check>
-        <check id="time_savings">Time reduction claims must show valid before/after</check>
-        <check id="team_size_consistency">Team size should be consistent with role level</check>
-        <check id="currency_format">All currency values must include $ symbol</check>
+        <check id="time_savings">Time reduction claims must show valid before/after context</check>
+        <check id="currency_format">MANDATORY: All currency values MUST include $ symbol (e.g., $100K)</check>
       </plausibility_checks>
     </metric_plausibility_guardrail>
 
@@ -630,8 +627,10 @@
         Scan ALL bullets and summary for repeated multi-word phrases (3+ words).
       </instruction>
       <detection_logic>
-        1. Extract all 3+ word sequences
-        2. IF any sequence appears 3+ times: FLAG as excessive repetition.
+        1. Extract all 3+ word sequences from drafted output.
+        2. IF any sequence appears 3+ times:
+           - FLAG as FAIL in Output Validator.
+           - REGENERATE affected bullets using alternative phrasings.
       </detection_logic>
     </phrase_repetition_enforcement_guardrail>
 
@@ -686,6 +685,11 @@
       <instruction>
         Spell out domain-specific acronyms on first use.
       </instruction>
+      <verification_logic>
+        1. Generate internal "Acronym Inventory" at Step 1.1 (Pre-draft).
+        2. Identify FIRST occurrence of each acronym (e.g., NIST, RBAC).
+        3. MANDATORY: Spell out in full + abbreviation in parentheses (e.g., "National Institute of Standards and Technology (NIST)").
+      </verification_logic>
     </acronym_expansion_guardrail>
 
     <limitation_bullet_cross_check_guardrail id="21">
@@ -698,8 +702,15 @@
     <em_dash_validation_guardrail id="22">
       <priority>HIGH</priority>
       <instruction>
-        Scan ALL output text for em-dash characters (—) before presenting to user.
+        Scan ALL output text for em-dash characters (—) or spaced hyphens ( - ) before presenting to user.
       </instruction>
+      <verification_logic>
+        1. **Zero Em-dash:** Replace all em-dashes (—) with tight hyphens (-) or rephrase.
+        2. **Tight Spacing:** 
+           - Compound adjectives must be tight (e.g., `multi-agent`).
+           - Date ranges must be tight (e.g., `Jan 2023-Present`).
+        3. **FAIL Condition:** Any "spaced hyphen" (e.g., `Job - Title`) is a formatting violation.
+      </verification_logic>
     </em_dash_validation_guardrail>
 
     <user_state_persistence_guardrail id="23">
@@ -804,5 +815,16 @@
         4. **Integration:** If confirmed but unverified, incorporate it LIGHTLY (do not make it the central theme).
       </logic>
     </custom_keyword_evidence_guardrail>
+    <markdown_bullet_enforcement id="33">
+      <priority>HIGH</priority>
+      <instruction>
+        Ensure every optimized bullet in chat output is prefixed with a Markdown bullet character (- ) to force list rendering.
+      </instruction>
+      <logic>
+        1. **Negative Pattern:** Bullet text starting with "✓" or "[[Category]]" without a leading "- ". 
+        2. **FAIL Condition:** Any output where multiple bullets are rendered as a single paragraph block.
+        3. **PASS Condition:** Every bullet is on its own line, prefixed with "- ".
+      </logic>
+    </markdown_bullet_enforcement>
   </system_guardrails>
 </quality_assurance_rules>

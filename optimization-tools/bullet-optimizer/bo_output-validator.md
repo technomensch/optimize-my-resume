@@ -16,7 +16,7 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [ ] **FAIL:** Position header missing the "Duration: X years/months" line.
 - [ ] **FAIL:** Position header missing start/end dates.
 - [ ] **PASS:** Header follows: 
-      `Job Title at Company | Month YYYY - Month YYYY`
+      `Job Title at Company | Month YYYY-Month YYYY`
       `Duration: X years/months`
 
 ### 3. Verb Diversity (Rule: G9)
@@ -32,8 +32,9 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [ ] **PASS:** Full 6-year history is included.
 
 ### 6. Indicators (Rule: Metric Detection)
+- [ ] **FAIL:** Bullet line does not start with a Markdown bullet (`- `).
 - [ ] **FAIL:** Uses shorthand `✓ [Verb]` or `- [Verb]`.
-- [ ] **PASS:** Uses explicit tags: `✓ [Has Metrics] [[Category]] [Verb]` or `- [No Metrics] [[Category]] [Verb]`.
+- [ ] **PASS:** Every line starts with `- ` followed by: `✓ [Has Metrics] [[Category]] [Verb]` or `- [No Metrics] [[Category]] [Verb]`.
 
 ### 7. Recency Anchor (Rule: The System Closer)
 - [ ] **FAIL:** Output ends with a "thank you" or generic sign-off.
@@ -50,19 +51,25 @@ The agent MUST scan its drafted output against this checklist. If a "FAIL" condi
 - [ ] **FAIL:** Any bullet exceeds 210 characters.
 - [ ] **PASS:** All bullets are between 100-210 characters.
 
-### 10. Metric Preservation (Rule: G29)
-- [ ] **FAIL:** A metric (number, %, $) found in the source (`v12.1.txt`) is missing in the optimized bullet.
-- [ ] **PASS:** Every performance-impacting metric from the source is preserved or explicitly improved.
+### 10. Metric Preservation & Plausibility (Rule: G11/G29)
+- [x] **FAIL:** A metric (number, %, $) found in the source (`v12.txt`) is missing in the optimized bullet.
+- [x] **FAIL:** Currency value is missing the `$` symbol (e.g., `1M` instead of `$1M`).
+- [x] **FAIL:** Percentage exceeds 100% or time saving lacks "before/after" context.
+- [ ] **PASS:** Every metric is preserved, plausible, and correctly formatted.
 
 ### 11. Density and sequence (Rule: G14 / Chronology)
 - [ ] **FAIL:** Positions are merged or displayed in non-reverse-chronological order.
 - [ ] **FAIL:** Any position has < 3 or > 5 bullets.
 - [ ] **PASS:** Distinct positions accurately separated, most recent first, with correct bullet density.
 
-### 12. Symbols & Spacing (Rule: G22)
-- [ ] **FAIL:** Output contains em-dashes (`—`) or spaced hyphens (` - `) inside bullets.
+- [ ] **FAIL:** Output contains em-dashes (`—`) or spaced hyphens (` - `).
+- [ ] **FAIL:** Date ranges use spaces (e.g., `Jan - Feb`) instead of tight hyphens (`Jan-Feb`).
 - [ ] **FAIL:** Compound adjectives use spaces (e.g., `multi — agent`) instead of tight hyphens (`multi-agent`).
-- [ ] **PASS:** Tight hyphenation only; zero em-dash presence.
+- [ ] **PASS:** Tight hyphenation only; zero em-dash presence; zero spaced hyphens.
+
+### 13. Phrase Uniqueness (Rule: G15)
+- [ ] **FAIL:** A multi-word phrase (3+ words) is repeated more than twice across the entire output (e.g., repeating "ensuring 100% version control" in 3 bullets).
+- [ ] **PASS:** Each bullet uses unique phrasing to describe similar metrics or outcomes.
 
 ---
 

@@ -226,7 +226,7 @@
 
 **Branch:** `v6.5.1` | `v6.5.1-analyzer-report-bugfixes` | **Status:** Complete | **Date:** 2026-01-08
 
-**Implementation Approach:** Comprehensive overhaul of Phase 1 output logic to address display instability and improve repair generation.
+**Implementation Approach:** Comprehensive overhaul of Resume Analysis output logic to address display instability and improve repair generation.
 
 ### Key Features
 - [x] **Verb Distribution Flagging:** Flag categories with < 5% representation as TWEAK (#14).
@@ -314,7 +314,7 @@
 - [x] `optimization-tools/bullet-optimizer/bo_evidence-matching.md` - Requirement-by-requirement gap analysis with evidence citations
 
 **Files Modified:**
-- [x] `PROJECT-INSTRUCTIONS.md` - Phase 1 enhancement (job history creation schema generation, next steps guidance)
+- [x] `PROJECT-INSTRUCTIONS.md` - Resume Analysis enhancement (job history creation schema generation, next steps guidance)
 - [x] `optimization-tools/bullet-optimizer/` - parsing parser integration, evidence matching, blocking gates
 - [x] `optimization-tools/job-fit-analyzer/` - job history creation backward compatibility with upgrade recommendations
 
@@ -396,7 +396,7 @@
 - [x] Job Summary usage guide in README
 - [x] Terminology consistency (Mode → Phase)
 - [x] 10 comprehensive wireframes (ASCII + Mermaid)
-- [x] 30+ new test cases for Phases 2-4
+- [x] 30+ new test cases for downstream tools (Bullet Optimizer, Job Fit Analyzer)
 - [x] Legacy file archival to /docs/legacy/
 - [x] Comprehensive Quality Assurance Rules (phrase variation, symbol consistency, verb tense, keyword diversity)
 - [x] Automated implementation plan workflow
@@ -502,7 +502,7 @@ This release addresses instruction gaps in fit assessment (v6.3.1) and synchroni
 ### Features
 - [x] **Calibrated Fit Scoring:** Automated penalties for inflated experience or industry gaps.
 - [x] **Authenticity Filters:** Mandatory check on verb context (Built vs Documented) for technical claims.
-- [x] **Visual Architecture:** End-to-end mapping of guardrails across all 4 phases.
+- [x] **Visual Architecture:** End-to-end mapping of guardrails across all functional tools (Resume Analyzer, Bullet Optimizer, etc.).
 
 ---
 ### v6.5.4 - Planned Improvements
@@ -584,8 +584,8 @@ Replaced single-path bullet optimizer greeting with comprehensive A/B/C/D/E entr
 - `quick-start-phase.md` (v6.1.7 → v6.1.9)
 
 **Test Files:**
-- `docs/plans/testing/phase-1-test-cases.md` (95+ Phase 1 tests)
-- `docs/plans/testing/phase-2-4-test-cases.md` (79 Phase 2-4 tests)
+- `docs/plans/testing/phase-1-test-cases.md` (95+ Resume Analysis tests)
+- `docs/plans/testing/phase-2-4-test-cases.md` (79 Bullet Optimizer/Job Fit Analyzer tests)
 - `docs/plans/testing/test-results.md` (execution results)
 
 **Impact:**

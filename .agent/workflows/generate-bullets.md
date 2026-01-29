@@ -38,13 +38,15 @@ Use this workflow when:
 | ID | Guardrail | Integration Status |
 | :--- | :--- | :--- |
 | **G1** | Metric Traceability | [ ] Referenced from history |
+| **G5/G21**| Limitation Check | [ ] Verified against `<honest_limitations>` for every position |
 | **G9** | Verb Diversity | [ ] 1 category per position (5 categories: Built, Lead, Managed, Improved, Collaborate) |
 | **G12** | Recency Rule | [ ] All 2020-2026 roles included |
 | **G14** | Bullet Density | [ ] 3-5 bullets per pos (Rev Chrono Order) |
 | **G24** | Char Limits | [ ] Max 210 readable chars per bullet |
 | **G29** | Metric Presence | [ ] Data Integrity Audit (No loss from source) |
 | **FMT** | Header Format | [ ] 2-line schema: `Title at Company | Dates` + `Duration: X years/months` |
-| **EXT** | Plain Text Export | [ ] Target: environment-appropriate |
+| **ANC** | Recency Anchor | [ ] Grammar recommendation included at EOF |
+| **EXT** | Export Protocol | [ ] Plain text export file generated |
 
 ### Step 1: Verify Prerequisites
 Ensure the following context is available:

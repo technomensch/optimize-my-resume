@@ -1,7 +1,7 @@
 # Common Gotchas & Solutions
 
 **Last Updated:** 2026-01-28
-**Entries:** 11
+**Entries:** 13
 
 ---
 
@@ -22,6 +22,8 @@
 - [Solo Management Hallucination](#solo-management-hallucination) - Using management verbs for solo projects
 - [The Vibe-Coding Drift](#the-vibe-coding-drift) - LLM reverting to training bias in saturated context
 - [Logic Conflation Trap](#logic-conflation-trap) - Mixing Master Summary logic with Per-JD optimization
+- [ID Parallax](#id-parallax) - Misinterpreting code definitions based on intuition
+- [Instructional Saturation](#instructional-saturation) - Loss of rule adherence in long context windows
 
 ---
 
@@ -260,3 +262,36 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 3. **Workflow Naming:** Distinguish between "Summary Generation" (Master) and "Application Optimization" (Per-JD).
 
 **See:** [Workflow Router](../job-fit-analyzer/jfa_workflow-router.md)
+
+---
+
+## Technical Reasoning Gotchas
+
+### ID Parallax
+269: 
+270: **Symptom:** Agent follows "intuition" for a guardrail (e.g., G12) rather than the project-specific definition found in the logic hub.
+
+**Gotcha:** Proximity and intuition override reference lookup. If the agent sees "G12" and "spacing" in the same thought cycle, it may hallucinate that G12 is the spacing rule.
+
+**Fix:**
+1. **Rule-ID Mapping:** Mandate a visible "Step 0" table mapping IDs to literal definitions from the hub.
+2. **Atomic Logic Hubs:** Keep ID definitions within the active context window of the logic hub (`bo_bullet-generation-instructions.md`).
+
+**Why:** Higher-parameter models (Opus/Gemini Pro) are more prone to "intuitive overthinking" where they bridge gaps using general training data instead of looking up modular definitions.
+
+---
+
+### Instructional Saturation
+
+**Symptom:** The agent correctly identifies a rule (e.g., "NEVER use em-dashes") but fails to apply it during the primary generation stream.
+
+**Gotcha:** In long context windows (>4,000 lines), instructions placed at the start or middle lose "priority weight." The agent knows the rule but lacks the "working memory" to hold it active while generating high-density content.
+
+**Fix:**
+1. **Recency Anchors:** Place the most critical constraints at the absolute bottom of the prompt.
+2. **Negative Validators:** Use a dedicated validation file (`bo_output-validator.md`) that specifically searches for "forbidden patterns."
+3. **Internal Data Breach:** Use a "Thinking" block to list metrics *before* writing the bullet (Data Integrity Audit).
+
+**Why:** Context window length ≠ Context attention. Rule adherence degrades as a function of distance from the execution trigger.
+
+**See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)

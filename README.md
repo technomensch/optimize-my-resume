@@ -317,7 +317,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ---
 
-## 📊 What Each Phase Does (Detailed)
+## 📊 What Each Tool Does (Detailed)
 
 ### Resume Analyzer: Full Resume Analysis
 **When to use:** You want comprehensive feedback on your entire resume
@@ -391,7 +391,7 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ---
 
-## 🔄 Workflow: How to Use All Three Phases Together
+## 🔄 Workflow: How to Use All Tools Together
 
 **Recommended process for job seekers:**
 

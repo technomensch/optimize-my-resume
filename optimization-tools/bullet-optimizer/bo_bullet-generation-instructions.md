@@ -31,21 +31,30 @@ For every numeric metric or specific achievement, perform an internal "source-ch
 3. **Hallucination Prevention:** If the metric appears in any other position but NOT in Position N, it is a HALLUCINATION. Do not use it.
 4. Citation: Internally note [Metric X traced to Position N].
 
-### [G5] Limitation Enforcement
-Before finalizing any bullet, cross-reference the `<honest_limitations>` section of the target Position.
-- IF generated_bullet mentions [Skill X] AND `<honest_limitations>` contains "No experience with [Skill X]":
-  - FLAG as CONTRADICTION.
-  - Remove the claim or rephrase to match the limitation (e.g., "exposed to" instead of "expert in").
+### [G20] Acronym Expansion (Step 1.1 - Pre-draft)
+Before drafting, generate an internal "Acronym Inventory":
+1. List all domain-specific acronyms used (e.g., NIST, RBAC, RACI).
+2. Identify the FIRST position/occurrence where the acronym appears.
+3. **MANDATORY:** Spell out the acronym in full followed by the abbreviation in parentheses at that first occurrence (e.g., `Role-Based Access Control (RBAC)`).
+4. Subsequent occurrences may use the abbreviation only.
 
-### [G11] Metric Plausibility
-Apply common-sense validation to numeric claims before output:
-- **Percentage Range:** All percentages must be 0-100%.
-- **Time Savings:** Time reduction claims must show valid before/after.
-- **Team Size Consistency:** Team size should be consistent with role level.
-- **Currency Format:** All currency values must include `$` symbol.
+### [G5/G21] Limitation Visibility (Pre-flight Audit)
+Check `honest_limitations` and `honest_limitations_evidence` **BEFORE** recommending bullets for each position.
+1. **Mandatory Step 0 Audit:** The agent MUST verify limitations for every position in the visible "Pre-flight Guardrail Check" table (Step 0 of the workflow).
+2. **Logic:** 
+   - IF generated_bullet mentions [Skill X] AND `<honest_limitations>` contains "No experience with [Skill X]":
+     - FLAG as CONTRADICTION.
+     - Remove the claim or rephrase to match the limitation (e.g., "exposed to" instead of "expert in").
+3. **Purpose:** This prevents "Hidden Over-claiming" and ensures the narrative is defensible.
 
-### [G21] Limitation Bullet Cross-Check (Pre-flight)
-Check `honest_limitations` **BEFORE** recommending bullets for each position. This prevents wasted generation cycles.
+### [G11] Metric Plausibility (Logic Filter)
+Apply common-sense validation to numeric claims BEFORE delivering.
+1. **Currency Symbols:** EVERY dollar amount MUST include the `$` symbol (e.g., `$10M` not `10M`).
+2. **Logic Verification:** 
+   - All percentages must be 0-100%.
+   - Time reduction claims (e.g., "saved 4 hours") must be backed by a "Before/After" context in the source.
+3. **MANDATORY:** Include this logic check in the Step 0 "Data Integrity Audit" to prevent illogical or malformatted metric claims.
+
 
 ### [G29] Metric Preservation / Data Integrity Audit
 When rewriting or optimizing existing bullets for keywords:
@@ -61,7 +70,8 @@ When rewriting or optimizing existing bullets for keywords:
 
 ### [G8] Budget Enforcement
 - **Per-Bullet Length:** 100-210 characters. No exceptions.
-- **Total Word Count:** 350-500 words across all bullets. If exceeded, reduce bullets from oldest positions first.
+- **Total Word Count (500-Word Hard Cap):** The total output (all bullets) MUST be 350-500 words.
+- **Enforcement Logic:** Count words before delivering. If `total_words > 500`, you MUST remove the last bullet point from each position, starting with the oldest (Position 8) and moving forward (Position 7, 6, etc.), until the total is under 500.
 
 ### [G9] Verb Diversity
 - No verb category (Built, Lead, Managed, Improved, Collaborate) may be used more than once within a single position.
@@ -113,7 +123,7 @@ After generating bullets, perform a self-audit:
 ### [FMT] Position Header Schema
 Every position MUST transition with the following two-line header:
 ```
-[Job Title] at [Company] | [Start Date] - [End Date]
+[Job Title] at [Company] | [Start Date]-[End Date]
 Duration: [X years/months]
 ```
 
@@ -122,14 +132,16 @@ Include an ASCII distribution summary at the end of the bullet set for each posi
 `Built: ████░░░░░░ (40%)`
 
 ### [FMT] Bullet Display Indicator
-Ensure the explicit display tags are used:
-- `✓ [Has Metrics] [[Category]] [Verb] [remainder]`
-- `- [No Metrics] [[Category]] [Verb] [remainder]`
+Ensure the explicit display tags are used, always prefixed with a Markdown bullet (`- `) for list rendering:
+- `- ✓ [Has Metrics] [[Category]] [Verb] [remainder]`
+- `- - [No Metrics] [[Category]] [Verb] [remainder]`
 
 ### [FMT] Symbol & Spacing Guardrail (G22)
 - **Zero Em-dash Policy:** NEVER use em-dashes (`—`) in resume bullets. Use hyphens (`-`) or rephrase.
 - **Hyphenation Rule:** Use hyphens without spaces for compound adjectives (e.g., `multi-agent`, `cross-functional`).
-- **No Spaced Hyphens:** Avoid the "spaced hyphen" pattern (` - `) inside sentences; it often indicates improper em-dash replacement.
+- **No Spaced Hyphens:** 
+  - **Inside Sentences:** Avoid ` - ` pattern; use tight hyphens for adjectives.
+  - **Date Ranges:** Use tight hyphens `[Start]-[End]` (e.g., `Jan 2023-Present`). Spaced hyphens in ranges are a FAIL.
 
 ### [FMT] Terminal Recency Anchor (THE SYSTEM CLOSER)
 The output MUST conclude with exactly this hard-coded recommendation:

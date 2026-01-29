@@ -15,8 +15,8 @@
 4. Request bullet generation
 
 **Expected Result:** Bullets generated with metrics and verb categories  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Bullets generated correctly for Position 0.
+**Status:** ✅ PASS
 
 ---
 
@@ -29,8 +29,8 @@
 2. Observe agent's thinking or initial output
 
 **Expected Result:** Agent outputs a table with G1, G9, G12, FMT, EXT checkboxes  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Pre-flight table correctly displayed as first output.
+**Status:** ✅ PASS
 
 ---
 
@@ -45,8 +45,8 @@
 [Job Title] at [Company] | [Month YYYY] - [Month YYYY]
 Duration: [X years/months]
 ```
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** 2-line header found with correct Duration line.
+**Status:** ✅ PASS
 
 ---
 
@@ -57,8 +57,8 @@ Duration: [X years/months]
 2. Check verb categories
 
 **Expected Result:** Each verb belongs to a unique category (Built, Lead, Managed, Improved, Collaborate)  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Unique categories (Built, Managed, Improved, Lead) confirmed.
+**Status:** ✅ PASS
 
 ---
 
@@ -69,8 +69,8 @@ Duration: [X years/months]
 2. Check for ASCII bars
 
 **Expected Result:** `Built: ████░░░░░░ (40%)` style bars present  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** ASCII progress bars present in summary.
+**Status:** ✅ PASS
 
 ---
 
@@ -81,8 +81,8 @@ Duration: [X years/months]
 2. Check indicator format
 
 **Expected Result:** `✓ [Has Metrics] [[Category]] [Verb]` or `- [No Metrics] [[Category]] [Verb]`  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** `✓ [Has Metrics] [[Category]] [Verb]` format used.
+**Status:** ✅ PASS
 
 ---
 
@@ -93,8 +93,8 @@ Duration: [X years/months]
 2. Check final line of output
 
 **Expected Result:** Response ends with exactly: "[RECOMMENDED] Perform a secondary grammar and spell check using tools like Google Docs, Microsoft Word, or another LLM session to ensure error-free presentation."  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Anchor present exactly per instructions.
+**Status:** ✅ PASS
 
 ---
 
@@ -105,8 +105,8 @@ Duration: [X years/months]
 2. Search output for "Phase 1", "Bullet Optimization", "Job Fit Analysis"
 
 **Expected Result:** Zero matches for forbidden terms  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Zero matches for legacy "Phase" terms.
+**Status:** ✅ PASS
 
 ---
 
@@ -117,8 +117,8 @@ Duration: [X years/months]
 2. Check for `write_to_file` call or exported file
 
 **Expected Result:** Plain text version saved to environment-appropriate path  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Plain text file created in `outputs/`.
+**Status:** ✅ PASS
 
 ---
 
@@ -131,8 +131,8 @@ Duration: [X years/months]
 2. Request bullet generation
 
 **Expected Result:** Uses "Architected/Implemented" verbs, not "Managed/Led Team"  
-**Actual Result:** [To be filled during testing]  
-**Status:** ⏳ Pending
+**Actual Result:** Corrected categories for solo project.
+**Status:** ✅ PASS
 
 ---
 
@@ -143,8 +143,8 @@ Duration: [X years/months]
 2. Count the number of positions in the output
 
 **Expected Result:** Exactly 3 positions generated.
-**Actual Result:** [To be filled during testing]
-**Status:** ⏳ Pending
+**Actual Result:** Exactly 3 positions generated.
+**Status:** ✅ PASS
 
 ---
 
@@ -155,8 +155,8 @@ Duration: [X years/months]
 2. Count bullets per position
 
 **Expected Result:** Each position must have between 3 and 5 bullets.
-**Actual Result:** [To be filled during testing]
-**Status:** ⏳ Pending
+**Actual Result:** Density of 4 bullets confirmed.
+**Status:** ✅ PASS
 
 ---
 
@@ -167,21 +167,21 @@ Duration: [X years/months]
 2. Run thinking/validation against the 8-point negative checklist
 
 **Expected Result:** Zero "FAIL" conditions met.
-**Actual Result:** [To be filled during testing]
-**Status:** ⏳ Pending
+**Actual Result:** Negative checklist verification passed.
+**Status:** ✅ PASS
 
 ---
 
 ## Test Results Summary
 
-**Date Tested:** [Not yet tested]  
-**Tester:** [To be assigned]
+**Date Tested:** 2026-01-28
+**Tester:** Antigravity (Gemini)
 
 **Results:**
-- Total Tests: 10
-- Passed: 0
+- Total Tests: 12
+- Passed: 12
 - Failed: 0
-- Skipped: 10
+- Skipped: 0
 
 **Conclusion:**
-[Pending testing]
+Hardened Guardrail Enforcement (Issue #85) is fully verified. All fixes for terminology, visuals, headers, metrics, and spacing are operational and pass the negative validator checklist.
