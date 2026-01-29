@@ -16,13 +16,16 @@ This session successfully addressed **Issue #85 (GitHub #97)**, remediating "Vib
 - **Hardened Workflow Gate:** Updated `.agent/workflows/generate-bullets.md` with a mandatory visible "Pre-flight Guardrail Check" and a "Stop-on-Confusion" safety gate.
 - **Terminal Recency Anchor:** Added a `<final_recency_anchor>` to `PROJECT-INSTRUCTIONS.md` to lock in terminology and formatting constraints at the end of the context window.
 - **Negative Validator:** Created `optimization-tools/bullet-optimizer/bo_output-validator.md` (The Negative Checklist) to force agents to audit their own work for failures before delivery.
-- **Logic Hub Hardening:** Updated `bo_bullet-generation-instructions.md` with explicit formatting rules (G22) and centralized metric preservation audits (G29).
-- **Terminology Normalization:** Surgically removed "Phase 1" and other legacy terms from 10+ core files, including `jfa_workflow-router.md`, `webgui_artifact_config.md`, and `shared_keyword_validation.md`.
+- **Action Verb Hardening (Phase 5):**
+  - **G35 (Gerund Ban):** Hardened validator to reject "-ing" verbs.
+  - **G36 (Math Integrity):** Enforced mathematical accuracy for visual bars.
+  - **G37 (5% Floor):** Mandated minimum diversity threshold for verb categories.
 
 ## Decisions Made
 
-1. **Visible Pre-flight:** Moved the guardrail check from "internal thinking" to a mandatory visible markdown table to improve agent accountability.
-2. **Recency Anchor Pattern:** Adopted the strategy of placing critical terminal instructions at the absolute end of the prompt to mitigate "Lost in the Middle" bias.
+1. **Visible Pre-flight:** Moved the guardrail check from "internal thinking" to a mandatory visible markdown table.
+2. **"Three-Layer" Defense:** Formalized the Pre-flight -> Logic Hub -> Validator pattern in [ADR-010](../decisions/ADR-010-guardrail-hardening-pattern.md).
+3. **Synthetic Metrics:** Codified "True Path" metrics for solo projects in the Knowledge Graph.
 3. **Aggressive Disambiguation:** Updated the Workflow Router to force a binary choice between "Master Summary" and "Per-JD Optimization," preventing logic conflation.
 4. **Tight Hyphenation Policy:** Explicitly banned em-dashes (`—`) in favor of tight hyphens (`-`) to eliminate agent-induced spacing errors in compound adjectives.
 
