@@ -4334,26 +4334,34 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
 
 <recursive_constraint_validation id="G40" priority="CRITICAL">
   <intent>
-    Prevent LLM drift by decoupling interdependent constraints (Char Limits vs. Word Budget vs. Uniqueness).
+    Enforce absolute guardrail compliance through a 3-Layer Redundancy System (Plan/Audit/Reconcile).
   </intent>
   
-  <checkpoint_1_budget_planning>
-    Before starting generation, output a Budget Allocation Table.
-    Constraint: Total estimated word count MUST be between 350-500 words.
-    Constraint: Max 2 positions with 5 bullets, Max 2 with 4 bullets. Min 2 per position.
-  </checkpoint_1_budget_planning>
+  <checkpoint_1_system_planning>
+    Before starting generation, output a Unified Planning Table.
+    - Constraint: Total estimated word count MUST be 350-500 words.
+    - Constraint: Max density rules (Max 2x5, Max 2x4). Min 2 per position.
+    - Constraint: Category Allocation (Plan G37 5% floor across 5 categories).
+    - Constraint: Acronym Inventory (Plan G20 expansion).
+  </checkpoint_1_system_planning>
   
-  <checkpoint_2_per_bullet_gates>
-    For every bullet, verify in thinking:
-    - Character Count: 100-210 (G24)
-    - Unique Phrasing: No 3+ word phrase used 3x (G15)
-    - Metrics Traceability: Zero data loss from source (G29)
-  </checkpoint_2_per_bullet_gates>
+  <checkpoint_2_realtime_audit>
+    For every bullet, verify in thinking (Layer 2):
+    - Character Count: 100-210 (G24).
+    - Tense Gating: No Gerunds at start of bullet (G35).
+    - Unique Phrasing: No 3+ word phrase used 3x (G15).
+    - Metrics Traceability: Zero data loss from source (G29/G11).
+  </checkpoint_2_realtime_audit>
   
-  <checkpoint_3_final_reconciliation>
-    Post-generation, verify total actual word count and distribution.
-    Output a visible reconciliation table.
-  </checkpoint_3_final_reconciliation>
+  <checkpoint_3_full_system_reconciliation>
+    Post-generation, output a Guardrail Health Check Table (Layer 3).
+    - Status: Word Budget (350-500) | Pass/Fail.
+    - Status: Category Distribution (G37) | Pass/Fail.
+    - Status: Math Integrity (G36) | Pass/Fail.
+    - Status: Symbol Consistency (G22) | Pass/Fail.
+    - Status: Terminology (Normalization) | Pass/Fail.
+    - **BLOCKING GATE:** If any checklist item in `bo_output-validator.md` remains [FAIL], you MUST auto-repair before final delivery.
+  </checkpoint_3_full_system_reconciliation>
   
   <fallback_sequence>
     IF Actual Word Count > 500:

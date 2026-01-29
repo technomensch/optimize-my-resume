@@ -68,12 +68,19 @@ When rewriting or optimizing existing bullets for keywords:
 
 ## 2. Structural & Recursive Constraints
 
-### [G40] 3-Stage Validation Checkpoint (The Anti-Drift Pattern)
-To satisfy multiple interdependent constraints (Char Limits vs. Word Budget), follow this mandatory sequence:
+### [G40] 3-Stage Validation Checkpoint (Unified System Hardening)
+To satisfy multiple interdependent constraints and enforce absolute guardrail compliance, the agent MUST follow this mandatory sequence for every generation set. This provides **multi-check redundancy** (Layer 1: Plan, Layer 2: Think, Layer 3: Reconcile).
 
-1. **Stage 1 (Budget Planning):** Before generation, output a **Budget Allocation Table**. Estimate word counts per position. Total MUST be 350-500 words.
-2. **Stage 2 (Incremental Gating):** For EVERY bullet, verify in thinking: 100-210 chars, No 3+ word phrase repeats (G15), and Metric Preservation (G29).
-3. **Stage 3 (Final Reconciliation):** Output a visible reconciliation table after all bullets. Verify word count and density distribution.
+1. **Stage 1 (System Planning):** Before generation, output a **Unified Planning Table**.
+   - **Metrics:** Est. Word Count (Total 350-500) | Density per Pos (G14).
+   - **Rules:** Category Allocation (Plan G37 floor) | Acronym Inventory (G20).
+
+2. **Stage 2 (Incremental Gating):** For EVERY bullet line, perform a **Real-time Thinking Audit**:
+   - `[Length: 100-210 chars] | [Tense: No Gerunds/G35] | [Trace: Source-Check/G31] | [Repetition: Unique/G15]`
+
+3. **Stage 3 (Final Reconciliation):** After generation, output a **Guardrail Health Check Table**.
+   - Summarize Pass/Fail status for: Budget (G8), Math Integrity (G36), Category Floor (G37), Symbol Consistency (G22), and Terminology (Normalization).
+   - **BLOCKING GATE:** If any checklist item in `bo_output-validator.md` is [FAIL], you MUST auto-repair and regenerate before delivering.
 
 ### [G8] Budget Enforcement (REVISED)
 - **Total Word Count:** 350-500 words across all work experience sections.
