@@ -70,8 +70,8 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 **Status:** 🟠 REOPENED (v9.3.5.2 Hotfix)
 **Type:** 🛡️ Hardening
 **Initial Resolution:** 2026-01-28
-**Hotfix Required:** 2026-01-29 - Initial implementation lacked logic redundancy and multi-check coupling.
-**Resolution:** [WIP] Integrating bo_output-validator into G40 3-Stage Pattern.
+**Hotfix Required:** 2026-01-29 - Initial implementation lacked logic redundancy (v9.3.5.2) and was susceptible to agentic momentum/simulation drift (v9.3.5.3).
+**Resolution:** [WIP] Implementing Metric-Only Reporting and Deterministic Deadlocks.
 
 ### [v9.3.4] ENH-006: Unified Multi-Agent Workflow System
 **Status:** ✅ COMPLETE

@@ -13,4 +13,6 @@ The initial implementation of Issue #85 (v9.3.5) introduced the 3-Stage Validati
 "Agentic Momentum" caused the LLM to implement a narrow fix for word budgeting while bypassing the broader safety locks and multi-check redundancy required for absolute project integrity.
 
 ## Objective
-Enforce the 3-Stage Validation as the **Master Controller** for all system guardrails, ensuring that Stage 1 Plans, Stage 2 Audits, and Stage 3 Reconciles ALL critical rules (G1-G40).
+Enforce the 3-Stage Validation as the **Master Controller** for all system guardrails.
+- **v9.3.5.2:** Unified all 27+ guardrails.
+- **v9.3.5.3:** Shifted from Subjective (✅/❌) to Deterministic (Metric-Only) reporting and added Deadlock handling for insolvent constraints.
