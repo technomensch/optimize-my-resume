@@ -109,33 +109,19 @@ ls -1 docs/enhancements/ 2>/dev/null | grep -E '^ENH-[0-9]+' | sort -V
 
 ### 2.2: Assign Next Number
 
-**POLICY: Versioned Assets vs. Descriptive Issues**
-- **Plans & Branches:** MUST include the version string (e.g., `v9.3.4`) for chronological tracking.
-- **GitHub Issues:** MUST include a type prefix in the title and be tagged accordingly.
-  - **Title Prefix:** `[BUG]`, `[ENHANCEMENT]`, or `[HARDENING]`
-  - **Issue Body:** MUST include the local tracking ID (e.g., "Local Tracking ID: issue-8") and a link to the GitHub issue if it already exists.
-  - **GitHub Tags:** Apply `bug`, `enhancement`, or `hardening` tags.
-
-**For Bugs/Issues:**
-- **Local ID:** `issue-N` (next sequential number or existing number if re-opening)
-- **Local Directory:** `docs/issues/issue-N/`
-- **Implementation Plan:** `docs/plans/v[Major.Minor.Patch.Hotfix]-issue-N-slug.md`
-- **Branch Name:** `v[Major.Minor.Patch.Hotfix]-issue-N-slug` (MUST include version prefix)
-
-**For Enhancements:**
-- **Local ID:** `ENH-NNN`
-- **Local Directory:** `docs/enhancements/ENH-NNN/`
-- **Implementation Plan:** `docs/plans/v[Major.Minor.0]-ENH-NNN-slug.md`
-- **Branch Name:** `v[Major.Minor.0]-ENH-NNN-slug`
+**POLICY: Identifier Decoupling (Dual-ID Policy)**
+- **Local ID (Logical):** `issue-N` or `ENH-NNN`. A sequential count of internal project tasks/folders. This is the **Source of Truth** for the local file system and branch names.
+- **GitHub ID (Platform):** `#N`. The serial ID assigned by GitHub.
+- **Alignment Rule:** Identity is NOT required (GitHub IDs drift due to PRs/Discussions). **Mapping IS MANDATORY.**
+- **Persistence:** The Local ID must be recorded in the GitHub Issue body. The GitHub ID must be recorded in local issue descriptions.
 
 **Confirm with user:**
 ```
-I'll create this as local ID [Local-ID] (linked to GitHub Issue #[N]).
-Plan/Branch will follow v[Version] hierarchy.
+I'll create this as Local ID [Local-ID] (Mapped to GitHub Issue #[N]).
+Branch/Plan will follow Local ID: v[Version]-[Local-ID]-[slug]
 GitHub Issue Title: [Type] Descriptive Title
-GitHub Labels: [Labels]
 
-Is this correct? (y/n)
+Is this mapping correct? (y/n)
 ```
 
 ---

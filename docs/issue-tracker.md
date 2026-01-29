@@ -67,7 +67,7 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 ## Completed
 
 ### [v9.3.5 / v9.3.5.3] Metric-Only Validation & Deadlock Logic
-**Local ID:** `issue-97` | **GitHub Issue:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97)  
+**Local ID:** `issue-85` | **GitHub Issue:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97)  
 **Status:** 🔴 ACTIVE (v9.3.5.3 Hotfix)
 **Type:** 🛡️ Hardening
 **Initial Resolution:** 2026-01-28
