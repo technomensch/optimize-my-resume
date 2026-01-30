@@ -94,13 +94,27 @@ Multi-attempt issue: Null-coalescing (v9.2.5), Exact matching (v9.2.6), Error ha
 **Type:** Hardening / Infrastructure
 **Description:** Preparing logic baseline for Evidence-Only Skills Inventory (Section 12 citations). Local-only.
 
-### [v9.3.5 / v9.3.5.3] Metric-Only Validation & Deadlock Logic
-**Local ID:** `issue-85` | **GitHub Issue:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97)  
-**Status:** 🔴 ACTIVE (v9.3.5.3 Hotfix)
+### [v9.3.6] Guardrail Hardening & Layered Defense
+**Local ID:** `issue-85` | **GitHub Issue:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97)
+**Status:** 🔴 ACTIVE (STRATEGY PIVOT)
 **Type:** 🛡️ Hardening
 **Initial Resolution:** 2026-01-28
-**Hotfix Required:** 2026-01-29 - Logic redundancy (v9.3.5.2) and agentic momentum (v9.3.5.3).  
-**Resolution:** [WIP] Implementing Metric-Only Reporting and Deterministic Deadlocks. Continuation of GitHub #96 (ENH-003).
+**Production Failure:** 2026-01-29 21:00 UTC - ALL documentation-based enforcement bypassed
+**Strategy Pivot:** 2026-01-30 - Layered Defense Strategy replacing documentation-only approach
+
+**Quick Summary:**
+After production failure proved documentation cannot force compliance, pivoting to Layered Defense Strategy with multiple redundant enforcement mechanisms per platform.
+
+**Documentation:** [docs/issues/issue-85/](issues/issue-85/)
+
+**Progress:**
+- [x] v9.3.5.x: Documentation-based enforcement (FAILED in production)
+- [x] Root cause analysis complete
+- [x] Layered Defense Strategy pattern documented
+- [x] Implementation plan created for Gemini
+- [ ] Phase 1: Chat Interface Layers
+- [ ] Phase 2: Claude Project Layers
+- [ ] Testing and validation
 
 ### [v9.3.4] ENH-006: Unified Multi-Agent Workflow System
 **Status:** ✅ COMPLETE

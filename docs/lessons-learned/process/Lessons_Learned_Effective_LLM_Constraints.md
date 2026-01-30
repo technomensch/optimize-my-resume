@@ -1,5 +1,6 @@
 # Lesson: Effective LLM Constraints (The "Pink Elephant" Problem)
 **Version:** 1.1 (Updated: 2026-01-28) <!-- v1.1 Change: Added Instructional Saturation findings -->
+**VALIDATION NOTE (2026-01-30):** This lesson was proven correct by real-world production failure on Jan 29. All four constraint engineering principles below failed when not actively enforced. **See [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](../../knowledge/ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) for incident analysis showing why passive documentation cannot force compliance.**
 
 ## Problem Discovered
 LLMs frequently ignore negative constraints such as "Do not change any code" or "Do not assume anything," even when explicitly instructed. This leads to unwanted code generation, hallucinations, and failure to stop when issues are encountered.
@@ -38,6 +39,10 @@ To reliably constrain an LLM:
 4.  **Use External Validation Modules:** Don't ask the model to "remember" its failures; provide a "Negative Checklist" file it must read before outputting. **Harden these modules by defining explicit FAIL conditions for critical guardrails (e.g., character counts, metric preservation) to prevent vague "vibe-check" failures.** <!-- v1.1 Change -->
 
 ## Related Resources
+- **Consolidation Reference:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](../../knowledge/ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - Why passive documentation fails (Jan 29 incident)
 - **Knowledge Graph:** [patterns.md - Effective LLM Constraints](../../knowledge/patterns.md#effective-llm-constraints)
 - **ADR:** [ADR-005 - LLM Constraint Engineering](../../decisions/ADR-005-llm-constraint-engineering.md)
+- **ADR:** [ADR-010 - Guardrail Hardening Pattern](../../decisions/ADR-010-guardrail-hardening-pattern.md)
+- **Case Study:** [ENFORCEMENT_SYSTEM_FAILURE_CASE_STUDY.md](../../issues/ENFORCEMENT_SYSTEM_FAILURE_CASE_STUDY.md)
 - **Session:** 2026-01-28 - Issue #85 Harden Guardrail Enforcement <!-- v1.1 Change -->
+- **Session:** 2026-01-29 - Production test failure proving enforcement lesson

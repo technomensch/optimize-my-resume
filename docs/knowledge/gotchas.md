@@ -1,7 +1,8 @@
 # Common Gotchas & Solutions
 
-**Last Updated:** 2026-01-29
+**Last Updated:** 2026-01-30
 **Entries:** 14
+**⚠️ CRITICAL INCIDENT (Jan 29, 2026):** Multiple gotchas below (especially "The Vibe-Coding Drift," "Instructional Saturation," and "Recursive Constraint Drift") combined to cause complete enforcement system bypass in production. **See [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) for full incident analysis, 4+ failure modes, and solutions.**
 
 ---
 
@@ -67,12 +68,20 @@ cp .claude/skills/your-skill.md ~/.claude/commands/
 
 **Gotcha:** Interdependent constraints (Char limits + Word budget + Uniqueness) form a recursive loop. Compressing text to fit characters might drop word count; adding bullets to hit word count breaks character gates. LLMs enter "panic mode" and default to training bias.
 
-**Fix:** Break monolithic validation tables into a **3-Stage Checkpoint Pattern**.
-1. **Budget Planning:** Allocate before generation.
-2. **Incremental Gates:** Validate per bullet during generation.
-3. **Final Reconciliation:** Verify total output with explicit fallback logic (e.g., "Remove from oldest first").
+**Real-World Example (Jan 29, 2026):**
+During bullet generation, the system had to balance: 9 positions (recency), 350-500 word budget, 100-210 chars per bullet, verb diversity (3+ categories), chronological order, metric preservation. When all constraints should have been visible via the 3-Stage Checkpoint Pattern, none were shown. The model panicked and reverted to generating 5 random positions in wrong order.
 
-**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
+**Fix:** Break monolithic validation tables into a **3-Stage Checkpoint Pattern**.
+1. **Budget Planning (Stage 1):** Output visible allocation table BEFORE generation.
+2. **Incremental Gates (Stage 2):** Validate per bullet DURING generation with visible checkpoints.
+3. **Final Reconciliation (Stage 3):** Verify total output with explicit fallback logic (e.g., "Remove from oldest first").
+
+**Implementation Note:** On Jan 29, this pattern existed in documentation but was never executed. The issue was that there was no mechanism forcing execution.
+
+**See:**
+- [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
+- [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - Why enforcement failed
+- [ADR-010: Guardrail Hardening Pattern](../decisions/ADR-010-guardrail-hardening-pattern.md)
 
 4. Test skill
 
@@ -258,12 +267,18 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 
 **Gotcha:** In context-heavy sessions (>4,000 lines), the model's training bias on what a "resume" looks like overrides specific instructions. The agent "drifts" toward its "vibe" of resume writing rather than your "architecture."
 
+**Real-World Example (Jan 29, 2026):**
+During production bullet generation, all guardrails were ignored despite being well-documented. The model generated 5 positions in wrong chronological order, skipped 4 positions entirely, didn't show any validation checkpoints, and claimed compliance without evidence. This is "Vibe-Coding Drift" in action.
+
 **Fix:**
 1.  **Mandatory Pre-flight Thinking:** Force the model to output a rule-mapping table *before* generation.
 2.  **External Validator:** Use an external logic file (e.g., `bo_output-validator.md`) to audit the output.
 3.  **Recency Anchors:** Place critical formatting rules at the absolute end of the prompt.
 
-**See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+**See:**
+- [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+- [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - Full incident analysis
+- [Case Study: Enforcement System Failure](../issues/ENFORCEMENT_SYSTEM_FAILURE_CASE_STUDY.md)
 
 ---
 
@@ -304,11 +319,17 @@ mv ~/.claude/plans/feature-plan.md docs/plans/
 
 **Gotcha:** In long context windows (>4,000 lines), instructions placed at the start or middle lose "priority weight." The agent knows the rule but lacks the "working memory" to hold it active while generating high-density content.
 
+**Real-World Example (Jan 29, 2026):**
+The assistant read and understood all 37 guardrails (G1-G37), lessons learned explaining why they matter, ADRs formalizing decisions, and the 3-Stage Checkpoint Pattern. Yet none of this was applied during generation. The model reverted to its training bias about "what a resume looks like" because 2+ days of context overload caused rules to lose attention weight.
+
 **Fix:**
 1. **Recency Anchors:** Place the most critical constraints at the absolute bottom of the prompt.
 2. **Negative Validators:** Use a dedicated validation file (`bo_output-validator.md`) that specifically searches for "forbidden patterns."
-3. **Internal Data Breach:** Use a "Thinking" block to list metrics *before* writing the bullet (Data Integrity Audit).
+3. **Mandatory Pre-Flight Checks:** Force output of rule-mapping table BEFORE generation (overcomes saturation).
+4. **Internal Data Breach:** Use a "Thinking" block to list metrics *before* writing the bullet (Data Integrity Audit).
 
-**Why:** Context window length ≠ Context attention. Rule adherence degrades as a function of distance from the execution trigger.
+**Why:** Context window length ≠ Context attention. Rule adherence degrades as a function of distance from the execution trigger. At 4,000+ lines, passive documentation is insufficient.
 
-**See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+**See:**
+- [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
+- [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - How saturation led to enforcement failure

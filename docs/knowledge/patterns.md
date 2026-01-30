@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-29
-**Entries:** 23
+**Last Updated:** 2026-01-30
+**Entries:** 24
 
 ---
 
@@ -28,6 +28,7 @@
 - [Metric-Only Reporting](#metric-only-reporting) - Hardening validation against AI momentum drift
 - [Insolvency Deadlock](#insolvency-deadlock) - Deterministic stopping rules for structural conflicts
 - [Identifier Decoupling](#identifier-decoupling) - Mapping local persistence to platform drift
+- [Layered Defense Strategy](#layered-defense-strategy) - Multiple redundant enforcement mechanisms per platform
 
 ---
 
@@ -202,6 +203,76 @@
 **Quick Reference:**
 - Every prompt should have a "Hardened Exit Clause" at the bottom.
 - Prevents the agent from "forgetting" the format while processing the bulk content.
+
+**Limitation (Jan 29, 2026):** Recency anchors alone are insufficient. During production testing, all recency anchors were in place but still bypassed. Must combine with human-in-the-loop gates or external validation.
+
+**See:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
+
+---
+
+### Platform-Specific Enforcement
+
+**Problem:** Documentation-based enforcement fails across all platforms because LLMs can read, understand, and still ignore instructions. Different platforms have different enforcement capabilities.
+**Solution:** Match enforcement strategy to platform capabilities, from weakest (chat interfaces) to strongest (programmatic GUIs).
+**When to use:** Selecting enforcement approach for any guardrail-dependent workflow.
+
+**Quick Reference:**
+
+| Platform | Enforcement Method | Expected Compliance |
+|----------|-------------------|---------------------|
+| Chat Interface | Forced multi-turn prompts | ~30-40% |
+| Claude Project | Minimized context + artifacts | ~50-60% |
+| Google AI Studio | Structured prompts + low temp | ~50-70% |
+| JSX GUI | External validation + UI gates | ~95%+ |
+
+**Key Insight:**
+- Platforms 1-3 are ALL probabilistic - model CAN still ignore instructions
+- Platform 4 (JSX GUI) is the ONLY option with true enforcement
+- For production use, invest in programmatic validation
+
+**Evidence (Jan 30, 2026):** All previous documentation-based attempts (template-forcing, recency anchors, 3-stage checkpoints, Claude Projects with full guardrails) were tried and ALL failed.
+
+**See:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md#platform-specific-solution-options)
+
+---
+
+### Layered Defense Strategy
+
+**Problem:** Single enforcement mechanisms fail unpredictably. Platform-Specific Enforcement shows compliance ranges (30-95%), but within each platform, single solutions have high variance.
+**Solution:** Implement MULTIPLE redundant enforcement mechanisms per platform that build on each other, so failure of one layer doesn't cause complete bypass.
+**When to use:** Any guardrail-dependent workflow where compliance must be maximized within platform constraints.
+
+**Quick Reference:**
+
+**The Principle:** Each enforcement layer adds to previous layers, not replaces them:
+- Layer 1 fails → Layer 2 catches
+- Layers 1+2 fail → Layer 3 catches
+- Combined compliance > any single layer
+
+**Platform Layering Examples:**
+
+| Platform | Layer 1 | Layer 2 | Layer 3 | Layer 4 |
+|----------|---------|---------|---------|---------|
+| Chat Interface | Multi-turn prompts | User verification checklist | Copy-paste validation | Human approval gates |
+| Claude Project | Minimized context | Artifact output templates | Pre-generation checklist | Recency anchors |
+| Google AI Studio | Low temperature | Structured output | System instruction hardening | Multi-turn structure |
+| JSX GUI | UI-level gates | External validation script | State machine workflow | Human approval UI |
+
+**Why Layers > Single Solutions:**
+- Single solution at 60% compliance: 40% failure rate
+- 3 independent layers at 60% each: ~6.4% failure rate (0.4³)
+- Layers aren't fully independent, but combined effect is still significantly better
+
+**Implementation Approach:**
+1. Start with highest-impact layer for platform
+2. Add next layer only after first is working
+3. Test combined compliance before adding more
+4. Document which layer catches which failure modes
+
+**Evidence (Jan 30, 2026):** Previous single-solution attempts all failed. Multi-layered approach proposed after production failure analysis.
+
+**See:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)
+**Related:** [Platform-Specific Enforcement](#platform-specific-enforcement), [Passive vs Active Enforcement](concepts.md#passive-vs-active-enforcement)
 
 ---
 
