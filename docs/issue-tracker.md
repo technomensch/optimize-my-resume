@@ -116,6 +116,41 @@ After production failure proved documentation cannot force compliance, pivoting 
 - [ ] Phase 2: Claude Project Layers
 - [ ] Testing and validation
 
+---
+
+### [v9.3.7] Issue #98: Guardrail Enforcement Fix (Four-Layer Strategy)
+
+**Local ID:** `issue-98` | **GitHub Continuations:** [#97](https://github.com/technomensch/optimize-my-resume/issues/97), [#99](https://github.com/technomensch/optimize-my-resume/issues/99), [#101](https://github.com/technomensch/optimize-my-resume/issues/101)
+**Status:** 🔴 ACTIVE (Planning Phase)
+**Type:** 🛡️ Hardening (Critical Bug Fix)
+**Priority:** CRITICAL
+**Created:** 2026-01-30
+**Branch:** `v9.3.7-guardrail-enforcement-fix`
+**Plan:** [v9.3.7-guardrail-enforcement-fix.md](plans/v9.3.7-guardrail-enforcement-fix.md)
+
+**Quick Summary:**
+Fix critical enforcement bypass from v9.3.6 by implementing Four-Layer Enforcement Strategy: Structural Prompt Logic (hard limits), "Proof of Work" Schema (validation gates), Workflow Multi-Turn (constraint validation pause), and Modular Injection (literal guardrail code in prompts).
+
+**Documentation:** [docs/issues/issue-98/](issues/issue-98/)
+
+**Key Facts:**
+- v9.3.6 enforcement system completely bypassed in production (2026-01-29)
+- User spent 2 days hardening guardrails that were ignored
+- Root cause: Passive instructions cannot prevent LLM drift
+- Solution: Move from documentation to structural constraints
+
+**Progress:**
+- [x] Planning and issue documentation complete
+- [x] Four-Layer strategy designed
+- [ ] Sonnet analysis: Compare with Gemini insights
+- [ ] Opus implementation: All 4 layers
+- [ ] Production testing: Verify enforcement works
+- [ ] Merged to main
+
+**Task Allocation:**
+- **Sonnet:** Analysis & design (compare Gemini strategy, validate completeness)
+- **Opus:** Implementation & testing (build 4 layers, production test)
+
 ### [v9.3.4] ENH-006: Unified Multi-Agent Workflow System
 **Status:** ✅ COMPLETE
 **Type:** Enhancement
