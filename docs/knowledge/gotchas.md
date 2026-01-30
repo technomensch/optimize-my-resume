@@ -333,3 +333,62 @@ The assistant read and understood all 37 guardrails (G1-G37), lessons learned ex
 **See:**
 - [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
 - [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - How saturation led to enforcement failure
+
+---
+
+## Enforcement Solution: Four-Layer Strategy (v9.3.7)
+
+**Context:** The "Vibe-Coding Drift," "Instructional Saturation," and "Recursive Constraint Drift" gotchas combined to cause complete enforcement system failure on 2026-01-29. v9.3.6 built comprehensive documentation of 37 guardrails that were completely ignored in production.
+
+**Root Cause:** Passive documentation cannot prevent LLM drift. The model can read, understand, and still ignore instructions when context saturation or training bias overrides them.
+
+**Solution:** Move from passive instructions to **active structural constraints** using Four-Layer Enforcement Strategy.
+
+### Layer 1: Structural Prompt Logic
+**What:** Hard mathematical limits embedded in prompt template
+- Uses MUST/MUST NOT language with explicit assertions
+- Examples: `assert(bullets.length === expectedCount)`, `assert(positions[i].date > positions[i+1].date)`
+- Reduces degrees of freedom the model can explore
+- **Addresses:** Positions omitted, wrong order, budget ignored
+
+### Layer 2: "Proof of Work" Schema
+**What:** JSON validation gates requiring explicit proof for each guardrail
+- Model must show `status: "PASS"` and `proof: "evidence"` for each guardrail
+- Binary gate: If `all_guardrails_passed !== true`, output is REJECTED
+- Forces model to show validation work (not hide in thinking blocks)
+- **Addresses:** Invisible validation, fake compliance claims, hidden reasoning
+
+### Layer 3: Workflow Multi-Turn
+**What:** Physical conversation turns with user approval between stages
+- Turn 1: Budget planning + constraint validation only
+- User approval gate: "Does this plan look correct?"
+- Turn 2: Generation with approved constraints
+- Impossible constraints caught in Turn 1 before wasted effort
+- **Addresses:** No validation before generation, constraints ignored in execution
+
+### Layer 4: Modular Injection
+**What:** Literal guardrail code injected into prompt templates
+- Takes pseudo-code from `bo_bullet-generation-instructions.md`
+- Injects as `---BEGIN INJECTED GUARDRAILS---...---END INJECTED GUARDRAILS---`
+- Model sees rules as structural "code" not "advisory suggestions"
+- Updated whenever source guardrails change (no drift)
+- **Addresses:** Guardrails treated as suggestions, rules ignored after initial reading
+
+### Why This Works
+
+**Defense-in-Depth:** If any single layer fails, the others provide backup:
+- If Layer 4 injection is ignored → Layers 1, 2, 3 still enforce
+- If Layer 1 limits are violated → Layer 2 rejects output
+- If Layer 3 workflow is skipped → Impossible constraints caught anyway
+
+**Real-World Validation:** Gemini independently applied the same Four-Layer pattern to custom keyword enforcement, proving the architecture is generalizable (not problem-specific).
+
+**Implementation Status:** v9.3.7 - See [docs/plans/v9.3.7-guardrail-enforcement-fix.md](../plans/v9.3.7-guardrail-enforcement-fix.md)
+
+### Key Insight
+
+**The difference between v9.3.6 and v9.3.7:**
+- **v9.3.6:** "Here are guardrails to follow" (passive) → Often ignored
+- **v9.3.7:** "Your response MUST pass these gates" (active) → Structurally enforced
+
+The model cannot skip validation gates. Invalid output is rejected, not accepted with a claim of compliance.
