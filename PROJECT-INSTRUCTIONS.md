@@ -4362,5 +4362,19 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
     3. If still over, compress bullets in recent positions while preserving metrics.
     4. RE-RUN Checkpoint 3 Validation.
   </fallback_sequence>
+
+  <external_validation priority="MANDATORY">
+    <policy>Fail-Closed Validation Required</policy>
+    <validator>scripts/validate_bullets.py</validator>
+    <enforcement>
+      Before delivering ANY bullet output, validation MUST pass.
+      If validation fails (exit code 1), STOP and fix violations.
+      Do NOT deliver output with failing guardrails.
+    </enforcement>
+    <compliance_tracking>
+      Results automatically logged to docs/governance/compliance_logs.json
+      Platform-specific thresholds: Platform 2 &lt; 50%, Platform 3 &lt; 40%
+    </compliance_tracking>
+  </external_validation>
 </recursive_constraint_validation>
 

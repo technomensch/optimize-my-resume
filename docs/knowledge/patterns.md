@@ -25,6 +25,9 @@
 - [Effective LLM Constraints](#effective-llm-constraints) - Positive constraints and pre-flight checks
 - [3-Stage Validation Checkpoint](#3-stage-validation-checkpoint) - Breaking recursive problems into planning, gated generation, and reconciliation
 - [Hub-and-Spoke Delegation](#hub-and-spoke-delegation) - Centralized logic for multi-interface synchronization
+- [Pipeline Integration Pattern](#pipeline-integration-pattern) - Auto-invoke validators from generators for seamless enforcement
+- [Fail-Closed Enforcement](#fail-closed-enforcement) - Structural validation gates before output delivery
+- [Compliance Tracking Architecture](#compliance-tracking-architecture) - Layer 5 observability for monitoring enforcement drift
 
 ---
 
@@ -219,6 +222,95 @@
 - **Benefit:** Atomic updates and zero logic duplication.
 
 **See:** [ADR-009](../decisions/ADR-009-hub-and-spoke-bullet-generation.md)
+
+---
+
+### Pipeline Integration Pattern
+
+**Problem:** Validators and compliance trackers exist but aren't connected, preventing enforcement drift monitoring.
+**Solution:** Auto-invoke downstream validators from generator outputs, converting results to JSON and logging compliance automatically.
+**When to use:** Multi-layer validation systems, real-time compliance monitoring, enforcement observability.
+
+**Quick Reference:**
+```
+Generator → Validator (JSON output) → Compliance Tracker (auto-invoke)
+                  ↓
+         docs/governance/compliance_logs.json
+```
+
+**Implementation:**
+1. Validator converts ValidationResult objects to JSON dicts
+2. Validator auto-invokes compliance tracker after validation completes
+3. Tracker creates timestamped log entries with per-guardrail status
+4. Platform-aware thresholds: Platform 2 < 50%, Platform 3 < 40%
+
+**Benefit:** Enforcement drift detection without manual orchestration
+
+**See:** [v9.3.7.1 Verification Enhancements Lesson](../lessons-learned/enforcement/v9.3.7.1-verification-enhancements.md#item-7-integrate-compliance_trackerpy-pipeline-)
+
+---
+
+### Fail-Closed Enforcement
+
+**Problem:** Guardrail references don't explicitly mandate external validation, leaving ambiguity about whether failures are optional.
+**Solution:** Add explicit fail-closed language at constraint definition (G40) and execution (workflow) levels.
+**When to use:** Any enforcement policy that requires validation to pass before output delivery.
+
+**Quick Reference:**
+- **Definition Level (G40):** Add `<external_validation priority="MANDATORY">` block
+- **Execution Level (Workflow):** Add "Step X.5" with explicit fix/re-validate instructions
+- **Enforcement:** "IF validation fails (exit code 1), STOP and fix violations"
+
+**Example:**
+```xml
+<external_validation priority="MANDATORY">
+  <enforcement>
+    Before delivering ANY output, validation MUST pass.
+    If validation fails (exit code 1), STOP and fix violations.
+    Do NOT deliver output with failing guardrails.
+  </enforcement>
+</external_validation>
+```
+
+**Benefit:** Users understand validation is mandatory, not optional; prevents accidental delivery of non-compliant output
+
+**See:** [v9.3.7.1 Verification Enhancements Lesson](../lessons-learned/enforcement/v9.3.7.1-verification-enhancements.md#item-9-add-fail-closed-language-)
+
+---
+
+### Compliance Tracking Architecture
+
+**Problem:** No way to monitor enforcement drift over time or detect degradation in guardrail compliance per platform.
+**Solution:** Layer 5 observability logs per-guardrail pass/fail status with timestamp, platform, and compliance rate per session.
+**When to use:** Multi-platform deployments, enforcing SLO-like compliance targets, compliance auditing.
+
+**Quick Reference:**
+```json
+{
+  "timestamp": "2026-01-31T15:33:14.690458",
+  "platform": "Claude Project",
+  "results": [
+    {"guardrail": "G40-Stage1", "passed": true},
+    {"guardrail": "G24", "passed": false}
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 5,
+    "rate": 62.5
+  }
+}
+```
+
+**Monitoring:**
+- Create compliance dashboard visualizing trends per platform/date
+- Alert when compliance rate drops below threshold
+- Identify problematic guardrails (consistently failing)
+
+**Platform Thresholds:**
+- Platform 2 (Claude Project): < 50% (user-friendly, may have gaps)
+- Platform 3 (Google Gemini): < 40% (model-specific limitations)
+
+**See:** [v9.3.7.1 Verification Enhancements Lesson](../lessons-learned/enforcement/v9.3.7.1-verification-enhancements.md#item-12-update-knowledge-graph-with-v9371-patterns)
 
 ---
 

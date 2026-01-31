@@ -106,7 +106,29 @@ Follow the logic hub instructions in order. **MANDATORY:** For EVERY bullet gene
 2. **Verify Terminal Recency Anchor:** Confirm the response ends with the mandatory grammar recommendation.
 3. **Run ASCII Visuals:** Confirm category distribution bars are present (e.g., `Built: ████░░░░░░ (40%)`).
 
-**If any validation check FAILS:** Do NOT deliver. Fix the issue and re-validate.
+**Fail-Closed Validation Policy:**
+- Validation failures STOP delivery. Do NOT bypass.
+- Fix violations, then re-validate.
+- Only deliver once all checks PASS.
+
+### Step 4.5: External Validation (MANDATORY)
+
+**⚠️ ACTION REQUIRED:** Before delivering final output, run external validation:
+
+```bash
+# Copy output to file
+cat output.txt | python scripts/validate_bullets.py
+```
+
+**If validation FAILS (exit code 1):**
+1. Review failed guardrails in validation report
+2. Fix violations in output
+3. Re-run validation until exit code 0
+4. ONLY THEN deliver to user
+
+**If validation PASSES (exit code 0):**
+- Compliance logged automatically to docs/governance/compliance_logs.json
+- Proceed with delivery
 
 ### Step 5: Return Results & Export
 Provide the primary output in the chat window, then:

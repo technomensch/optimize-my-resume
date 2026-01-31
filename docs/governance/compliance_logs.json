@@ -1,0 +1,61 @@
+[
+  {
+    "timestamp": "2026-01-31T15:33:14.690458",
+    "platform": "unknown",
+    "results": [
+      {
+        "guardrail": "G40-Stage1",
+        "passed": true,
+        "description": "Budget Allocation Table present",
+        "details": "Found"
+      },
+      {
+        "guardrail": "G12",
+        "passed": true,
+        "description": "Minimum 5 positions included",
+        "details": "Found 5 positions: [0, 1, 2, 3, 4]"
+      },
+      {
+        "guardrail": "G12",
+        "passed": true,
+        "description": "Positions in chronological order",
+        "details": "Order: [0, 1, 2, 3, 4] (correct)"
+      },
+      {
+        "guardrail": "G40-Stage2",
+        "passed": false,
+        "description": "Per-bullet validation gates visible",
+        "details": "Found 1 indicators (INSUFFICIENT - Stage 2 evidence missing)"
+      },
+      {
+        "guardrail": "G24",
+        "passed": false,
+        "description": "Bullet character limits (100-210)",
+        "details": "VIOLATIONS: ['Position 0: 95 chars', 'Position 1: 95 chars', 'Position 1: 78 chars', 'Position 1: 96 chars', 'Position 2: 80 chars', 'Position 2: 58 chars', 'Position 2: 58 chars', 'Position 3: 63 chars', 'Position 3: 60 chars', 'Position 4: 59 chars', 'Position 4: 29 chars']"
+      },
+      {
+        "guardrail": "G9",
+        "passed": true,
+        "description": "Verb diversity (min 3 categories)",
+        "details": "Categories used: ['Improved', 'Collaborate', 'Lead', 'Managed', 'Built'] (sufficient)"
+      },
+      {
+        "guardrail": "G8",
+        "passed": false,
+        "description": "Word count budget (350-500)",
+        "details": "Estimated 176 words (OUT OF RANGE)"
+      },
+      {
+        "guardrail": "G40-Stage3",
+        "passed": true,
+        "description": "Final Reconciliation Table present",
+        "details": "Found"
+      }
+    ],
+    "summary": {
+      "total": 8,
+      "passed": 5,
+      "rate": 62.5
+    }
+  }
+]
