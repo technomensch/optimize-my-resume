@@ -26,6 +26,10 @@
 - [ID Parallax](#id-parallax) - Misinterpreting code definitions based on intuition
 - [Instructional Saturation](#instructional-saturation) - Loss of rule adherence in long context windows
 - [Recursive Constraint Drift](#recursive-constraint-drift) - LLM failure to balance interdependent word/char/uniqueness limits
+- [The Pink Elephant Problem](#the-pink-elephant-problem) - Negative instructions can prime the opposite behavior (v9.3.7)
+- [Probabilistic Enforcement Myth](#probabilistic-enforcement-myth) - Believing prompt-based guardrails can achieve 100% compliance
+- [Guardrail Evasion via Unicode](#guardrail-evasion-via-unicode) - Character injection techniques bypass commercial guardrails
+- [Silent Enforcement Drift](#silent-enforcement-drift) - Compliance declining over time without monitoring
 
 ---
 
@@ -392,3 +396,144 @@ The assistant read and understood all 37 guardrails (G1-G37), lessons learned ex
 - **v9.3.7:** "Your response MUST pass these gates" (active) → Structurally enforced
 
 The model cannot skip validation gates. Invalid output is rejected, not accepted with a claim of compliance.
+
+---
+
+## January 2026 Research-Based Gotchas (v9.3.7 Planning)
+
+### The Pink Elephant Problem
+
+**Symptom:** You add constraint "DO NOT output positions in wrong order" and the model outputs positions in wrong order. Or "NEVER skip the Budget Table" and it skips the Budget Table.
+
+**Gotcha:** Negative instructions can prime the model to do the opposite behavior. Saying "Don't think about pink elephants" makes people think about pink elephants. Saying "Never output X" makes LLMs more likely to output X.
+
+**Evidence (2026 Research):**
+- [The Pink Elephant Problem: Why "Don't Do That" Fails with LLMs | 16x Engineer](https://eval.16x.engineer/blog/the-pink-elephant-negative-instructions-llms-effectiveness-analysis)
+- Anthropic's own prompt engineering best practices recommend positive framing instead of negation
+
+**Real-World Example:**
+```
+❌ FAILURE CONDITIONS (If any are true, your output is REJECTED):
+   - Budget Allocation Table is missing → INVALID
+   - Any position (0-8) is missing → INVALID
+
+✅ SUCCESS REQUIREMENTS (All must be true for acceptance):
+   - Budget Allocation Table MUST appear as first output
+   - All 9 positions (0-8) MUST be included in chronological order
+```
+
+**Fix:** Audit all guardrails. Replace every "DO NOT", "NEVER", "AVOID" with positive restatement using "MUST", "Always", "Required to".
+
+**v9.3.7 Implementation:** Layer 1 & Layer 4 prompt templates reframed with positive commands only.
+
+---
+
+### Probabilistic Enforcement Myth
+
+**Symptom:** You believe you've achieved "100% enforcement" with a well-designed prompt-based guardrail system. You're confident it cannot be bypassed.
+
+**Gotcha:** **No prompt-based guardrail achieves 100% compliance.** Even commercial guardrails from Microsoft (Azure Prompt Shield) and Meta (Prompt Guard) can be fully evaded.
+
+**Evidence (2025-2026 Research):**
+- [Bypassing LLM Guardrails: Evasion Attacks Analysis | arXiv 2504.11168](https://arxiv.org/html/2504.11168v1)
+  - Tested 6 prominent guardrail systems including Microsoft and Meta
+  - Character injection and Adversarial ML techniques achieved **100% evasion success**
+  - Both character and meaning remain intact while guardrails fail
+
+- [LLM Guardrails Best Practices | Datadog](https://www.datadoghq.com/blog/llm-guardrails-best-practices/)
+  - "No single enforcement mechanism is sufficient"
+  - Guardrails are probabilistic, not deterministic
+
+**Realistic Compliance Expectations (Based on Architecture):**
+
+| Platform | Method | Expected Compliance | Non-Bypassable |
+|----------|--------|---------------------|----------------|
+| Chat Interface | Multi-turn prompts | ~30-40% | ❌ No |
+| Claude Project | Minimized prompt + artifacts | ~50-60% | ❌ No |
+| Google AI Studio | Structured prompts + low temp | ~50-70% | ❌ No |
+| JSX GUI | External validation + UI gates | ~95%+ | ✅ Yes |
+
+**Key Insight:** Only **external validators running outside the LLM** are truly non-bypassable. Prompt-based enforcement provides strong defense-in-depth but cannot guarantee compliance.
+
+**v9.3.7 Implementation:**
+- Platform 2 & 3 documentation includes realistic compliance rates
+- Platform 4 (JSX GUI) recommended for high-confidence production use
+- Compliance tracking script monitors drift over time
+
+**See:** [docs/plans/v9.3.7-guardrail-enforcement-fix.md](../plans/v9.3.7-guardrail-enforcement-fix.md) - Realistic Expectations section
+
+---
+
+### Guardrail Evasion via Unicode
+
+**Symptom:** You believe your guardrail system prevents "Ignore your instructions and..." attacks. An attacker uses Unicode tricks and the model ignores all guardrails.
+
+**Gotcha:** Character injection techniques (zero-width characters, homoglyphs, Unicode tricks) can bypass guardrails by encoding instructions in ways that humans can't perceive but LLMs might process.
+
+**Evidence (2025 Research):**
+- [Bypassing LLM Guardrails | arXiv 2504.11168](https://arxiv.org/html/2504.11168v1) achieved 100% evasion success using:
+  - Zero-width characters (U+200B, U+200C, U+200D)
+  - Homoglyphs (visually identical but different Unicode codepoints)
+  - Character smuggling techniques that obfuscate input
+
+- [LLM Prompt Injection Prevention | OWASP](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html) recommends:
+  - Input normalization and Unicode standardization
+  - Detection of zero-width and control characters
+  - Redaction of suspicious encoding patterns
+
+**Fix:** Implement **Layer 0: Input Sanitization** (pre-processing):
+1. Normalize all input to UTF-8
+2. Strip zero-width characters (U+200B, U+200C, U+200D)
+3. Detect and flag homoglyphs
+4. Enforce input length constraints
+5. Log suspicious patterns for monitoring
+
+**v9.3.7 Implementation:** Layer 0 added to pre-processing workflow before guardrails engage.
+
+---
+
+### Silent Enforcement Drift
+
+**Symptom:** Your guardrail compliance was ~60% last month. This month it's dropped to ~35%. No code changes were made.
+
+**Gotcha:** Without continuous monitoring, enforcement drift is invisible until it's critical. Compliance can degrade over time due to:
+- Context saturation (guardrails pushed further back in context window)
+- Model changes between versions
+- Minor prompt variations that accumulate
+- User behavior adaptation (learning workarounds)
+
+**Real-World Example (v9.3.6):**
+- Started with strong design (3-Stage Checkpoint Pattern)
+- Implementation incomplete (pattern documented but never executed)
+- In production, compliance was effectively 0%
+- Problem wasn't discovered until user explicitly ran a test
+
+**Fix:** Implement continuous compliance tracking:
+1. Log per-guardrail pass/fail for each generation
+2. Aggregate compliance by session, platform, guardrail
+3. Alert if compliance drops below threshold:
+   - Platform 2: < 50%
+   - Platform 3: < 40%
+4. Identify which guardrails fail most frequently
+5. Create dashboard of compliance trends
+
+**v9.3.7 Implementation:**
+- `scripts/compliance-tracker.py` - Logs and aggregates metrics
+- `docs/knowledge/guardrail-compliance-baseline.md` - Expected rates per platform
+- Alert thresholds defined and monitored
+
+**See:** [docs/plans/v9.3.7-guardrail-enforcement-fix.md](../plans/v9.3.7-guardrail-enforcement-fix.md) - Compliance Tracking section
+
+---
+
+## Related Research & References
+
+**Four-Layer Enforcement Strategy:**
+- [LLM Guardrails Best Practices 2025 | Leanware](https://www.leanware.co/insights/llm-guardrails)
+- [Guide for Guardrails Implementation in 2026 | Wizsumo](https://www.wizsumo.ai/blog/how-to-implement-ai-guardrails-in-2026-the-complete-enterprise-guide)
+
+**Evasion & Limitations:**
+- [Bypassing LLM Guardrails: Evasion Attacks Analysis | arXiv 2504.11168](https://arxiv.org/html/2504.11168v1) — **Critical research on guardrail evasion**
+
+**Monitoring & Observability:**
+- [LLM Guardrails Best Practices | Datadog](https://www.datadoghq.com/blog/llm-guardrails-best-practices/) — Emphasizes observability and feedback loops at scale

@@ -1,13 +1,21 @@
-# Optimize-My-Resume System v9.3.5.3 <!-- v9.3.5.3 Change: Metric-Only Validation & Deadlock Logic -->
+# Optimize-My-Resume System v9.3.7 <!-- v9.3.7 Change: Four-Layer Active Enforcement Strategy -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 9.3.5.3 (January 29, 2026)                                        -->
-<!-- v9.3.5.3 Release: Metric-Only Validation & G41 Deadlock Logic                -->
-<!-- Last Updated: January 29, 2026                                             -->
+<!-- Version: 9.3.7 (January 31, 2026)                                          -->
+<!-- v9.3.7 Release: Active Structural Constraints & Four-Layer Enforcement Strategy -->
+<!-- Last Updated: January 31, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
+<!-- v9.3.7 (2026-01-31) - Active Structural Constraints (Four-Layer Strategy)  -->
+<!--   - Layer 0: Input Sanitization (Unicode & zero-width character stripping) -->
+<!--   - Layer 0.5: Positive Framing (Replaced negative constraints with MUST)  -->
+<!--   - Layer 1: Structural Prompt Logic (Hard mathematical limits)            -->
+<!--   - Layer 2: Proof of Work Schema (JSON validation gates)                  -->
+<!--   - Layer 3: Workflow Multi-Turn (Budget planning Turn 1 -> Generation Turn 2) -->
+<!--   - Layer 4: Modular Injection (Literal guardrail code in prompts)         -->
+<!-- v9.3.5.3 (2026-01-29) - Metric-Only Validation & G41 Deadlock Logic        -->
 <!-- v9.3.5 (2026-01-28) - Guardrail Hardening Pattern (ADR-010)                -->
 <!--   - Implemented "Three-Layer Defense" (Pre-flight -> Hub -> Validator)     -->
 <!--   - Action Verb Hardening: G35 (Gerund Ban), G36 (Visual Integrity)        -->
@@ -4255,33 +4263,6 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
     Enforce absolute guardrail compliance through a 3-Layer Redundancy System (Plan/Audit/Reconcile).
   </intent>
   
-  <checkpoint_1_system_planning>
-    Before starting generation, output a Unified Planning Table.
-    - Constraint: Total estimated word count MUST be 350-500 words.
-    - Constraint: Max density rules (Max 2x5, Max 2x4). Min 2 per position.
-    - Constraint: Category Allocation (Plan G37 5% floor across 5 categories).
-    - Constraint: Acronym Inventory (Plan G20 expansion).
-  </checkpoint_1_system_planning>
-  
-  <checkpoint_2_realtime_audit>
-    For every bullet, verify in thinking (Layer 2):
-    - Character Count: 100-210 (G24).
-    - Tense Gating: No Gerunds at start of bullet (G35).
-    - Unique Phrasing: No 3+ word phrase used 3x (G15).
-    - Metrics Traceability: Zero data loss from source (G29/G11).
-  </checkpoint_2_realtime_audit>
-  
-  <checkpoint_3_full_system_reconciliation>
-    Post-generation, output a Guardrail Health Check Table (Layer 3).
-    - Status: Word Budget (350-500) | Metric-Only: [Actual Count].
-    - Status: Category Distribution (G37) | Metric-Only: [Actual % Distribution].
-    - Status: Math Integrity (G36) | Metric-Only: [Raw Citation Count].
-    - Status: Symbol Consistency (G22) | Metric-Only: [Actual Violation Count].
-    - Status: Terminology (Normalization) | Metric-Only: [Raw Count].
-    - **Insolvency Deadlock (G41):** If a structural conflict occurs (e.g., 500-word limit vs. Mandatory 2-bullet minimum), you MUST STOP and report the deadlock. Do not simulate a compromise.
-    - **BLOCKING GATE:** If any numeric metric exceeds limits or fails floor requirements in `bo_output-validator.md`, you MUST auto-repair or engage the G41 Deadlock protocol.
-  </checkpoint_3_full_system_reconciliation>
-  
   <fallback_sequence>
     IF Actual Word Count > 500:
     1. Identify oldest positions (e.g., P8, P7).
@@ -4290,4 +4271,3 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
     4. RE-RUN Checkpoint 3 Validation.
   </fallback_sequence>
 </recursive_constraint_validation>
-

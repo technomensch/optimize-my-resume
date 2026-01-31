@@ -29,6 +29,10 @@
 - [Insolvency Deadlock](#insolvency-deadlock) - Deterministic stopping rules for structural conflicts
 - [Identifier Decoupling](#identifier-decoupling) - Mapping local persistence to platform drift
 - [Layered Defense Strategy](#layered-defense-strategy) - Multiple redundant enforcement mechanisms per platform
+- [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy) - Structural constraints moving from passive documentation to active validation gates (v9.3.7)
+- [Input Sanitization Layer (Layer 0)](#input-sanitization-layer-layer-0) - Unicode normalization and character injection prevention
+- [Compliance Rate Tracking](#compliance-rate-tracking) - Continuous monitoring to detect enforcement drift over time
+- [Positive Constraint Framing](#positive-constraint-framing) - Avoiding Pink Elephant Problem via affirmative commands instead of negation
 
 ---
 
@@ -568,5 +572,123 @@ Keywords → Category:
 
 ---
 
+## v9.3.7 Enforcement Patterns (January 2026 Research)
+
+### Four-Layer Enforcement Strategy
+
+**Problem:** Passive instruction-based guardrails fail in production (v9.3.6 proved this). Documentation alone cannot prevent LLM drift.
+
+**Solution:** Move from passive documentation to active structural constraints across four layers:
+1. **Layer 1:** Hard mathematical limits in prompt template
+2. **Layer 2:** JSON validation gates requiring explicit proof
+3. **Layer 3:** Multi-turn workflow with user approval gates
+4. **Layer 4:** Literal guardrail code injected as pseudo-code
+
+**When to use:**
+- Whenever implementing guardrails that must not be bypassable
+- Building production-grade LLM applications
+- Requiring defense-in-depth with multiple validation layers
+
+**Quick Reference:**
+- Layer 1 addresses: Positions omitted, wrong order, budget ignored
+- Layer 2 addresses: Invisible validation, fake compliance claims
+- Layer 3 addresses: Skipped stages, impossible constraints
+- Layer 4 addresses: Guardrails treated as suggestions
+- Defense-in-depth: Failure of any single layer doesn't cause complete bypass
+- Generalized pattern: Gemini independently applied same architecture to custom keywords (validates universality)
+
+**See:** [docs/plans/v9.3.7-guardrail-enforcement-fix.md](../plans/v9.3.7-guardrail-enforcement-fix.md) - Four-Layer Strategy section
+
+**Related:** [Layered Defense Strategy](#layered-defense-strategy), [3-Stage Validation Checkpoint](#3-stage-validation-checkpoint), [Insolvency Deadlock](#insolvency-deadlock)
+
+---
+
+### Input Sanitization Layer (Layer 0)
+
+**Problem:** Even commercial guardrails (Microsoft Azure Prompt Shield, Meta Prompt Guard) can be bypassed using Unicode tricks, zero-width characters, and homoglyphs.
+
+**Solution:** Pre-process all input with normalization and sanitization:
+1. Normalize Unicode to UTF-8
+2. Strip zero-width characters (U+200B, U+200C, U+200D)
+3. Detect and flag homoglyphs
+4. Enforce input length constraints
+5. Log suspicious patterns for monitoring
+
+**When to use:**
+- Before any critical guardrail processing
+- When accepting user input for high-stakes operations
+- When defending against prompt injection attempts
+
+**Quick Reference:**
+- Research shows character injection achieved 100% evasion against commercial guardrails (arXiv 2504.11168)
+- Normalization alone prevents most Unicode evasion techniques
+- Suspicious patterns logged enable future threat detection
+- Works in conjunction with Layers 1-4
+
+**See:** [Guardrail Evasion via Unicode](../knowledge/gotchas.md#guardrail-evasion-via-unicode) gotcha entry
+
+**Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy)
+
+---
+
+### Compliance Rate Tracking
+
+**Problem:** Enforcement compliance can degrade over time without visibility. Drift is silent until critical (discovered too late).
+
+**Solution:** Implement continuous monitoring:
+1. Log per-guardrail pass/fail for each generation
+2. Track aggregate compliance by session/platform/guardrail
+3. Alert if compliance drops below threshold
+4. Create dashboard of trends over time
+5. Identify which guardrails fail most frequently
+
+**When to use:**
+- After implementing any guardrail system
+- In production or high-stakes applications
+- When compliance is business-critical
+- Every session in iterative development
+
+**Quick Reference:**
+- Expected compliance rates vary by platform (30-95% depending on architecture)
+- Alert thresholds: Platform 2 < 50%, Platform 3 < 40%
+- Tracks drift early before it becomes critical
+- Identifies weak guardrails that need reinforcement
+- Real-world example: v9.3.6 drift from 100% documented compliance to 0% actual compliance
+
+**See:** [Silent Enforcement Drift](../knowledge/gotchas.md#silent-enforcement-drift) gotcha entry
+
+**Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Probabilistic Enforcement Myth](../knowledge/gotchas.md#probabilistic-enforcement-myth)
+
+---
+
+### Positive Constraint Framing
+
+**Problem:** Negative instructions ("Don't output X", "Never skip Y") can prime the model to do the opposite behavior (Pink Elephant Problem).
+
+**Solution:** Reframe all constraints as affirmative commands:
+- **❌ Instead of:** "DO NOT output positions in wrong order"
+- **✅ Use:** "All positions MUST be in chronological order"
+- **❌ Instead of:** "NEVER skip the Budget Table"
+- **✅ Use:** "Budget Table MUST appear as first output"
+
+**When to use:**
+- Writing any guardrail or constraint language
+- Defining system prompts or behavioral requirements
+- Creating validation rules or acceptance criteria
+
+**Quick Reference:**
+- Negative language primes opposite behavior (research-backed)
+- Positive framing improves compliance measurably
+- Anthropic's prompt engineering best practices recommend affirmative language
+- Applies to all guardrail layers (1, 2, 3, 4)
+- Replace "DO NOT", "NEVER", "AVOID" with "MUST", "Always", "Required to"
+
+**See:** [The Pink Elephant Problem](../knowledge/gotchas.md#the-pink-elephant-problem) gotcha entry
+
+**Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Effective LLM Constraints](#effective-llm-constraints)
+
+---
+
 **Maintenance:** Add new patterns as they emerge from practice
 **Created:** 2026-01-02
+**Last Updated:** 2026-01-30 (Added v9.3.7 enforcement patterns)

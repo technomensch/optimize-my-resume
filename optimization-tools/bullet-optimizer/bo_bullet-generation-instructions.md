@@ -14,9 +14,10 @@
     Generates optimized bullets AND customized professional summary.
   </this_workflow>
   <not_this_workflow>
+    Standard Operation:
     If user just completed Resume Analysis and has NO target JD:
-    STOP. Route to: optimization-tools/narrative-generator/ng_summary-generation.md (for Master Summary only).
-    This workflow requires a JD for keyword optimization.
+    Route to: optimization-tools/narrative-generator/ng_summary-generation.md (for Master Summary only).
+    This workflow MUST include a JD for keyword optimization.
   </not_this_workflow>
 </workflow_disambiguation>
 
@@ -28,7 +29,7 @@
 For every numeric metric or specific achievement, perform an internal "source-check":
 1. Identify the **Position ID (N)** being drafted.
 2. Scan ONLY the source data for Position N.
-3. **Hallucination Prevention:** If the metric appears in any other position but NOT in Position N, it is a HALLUCINATION. Do not use it.
+3. **Hallucination Prevention:** Ensure the metric appears in source data for Position N before use.
 4. Citation: Internally note [Metric X traced to Position N].
 
 ### [G20] Acronym Expansion (Step 1.1 - Pre-draft)
@@ -61,7 +62,7 @@ When rewriting or optimizing existing bullets for keywords:
 1. **Audit Logic (Step 0):** BEFORE drafting the final bullet, the agent MUST perform a visible "Data Integrity Audit" in its internal thinking or as a prefatory note:
    - `Original Metrics: [List every integer, %, $, duration from source]`
    - `Target Metrics: [Verify ALL are present in the planned draft]`
-2. **Comparison:** Ensure ALL original metrics are retained in the NEW bullet unless explicitly replaced by a superior validated metric.
+2. **Comparison:** Ensure ALL original metrics are retained in the NEW bullet. Superior validated metrics MUST explicitly replace existing ones rather than deleting them.
 3. **Restoration:** If a metric is lost during rewriting, restore it immediately. **Zero-tolerance for metric loss.**
 
 ---
@@ -81,7 +82,7 @@ To satisfy multiple interdependent constraints and enforce absolute guardrail co
 3. **Stage 3 (Final Reconciliation):** After generation, output a **Guardrail Health Check Table**.
    - **Metric-Only Reporting:** All validation MUST use raw numbers (e.g., "Actual: 492 / Limit: 500"). Subjective ✅/❌ icons are strictly prohibited for primary validation.
    - **Verification Requirement:** Summarize raw metrics for: Budget (G8 word count), Math Integrity (G36 citation count), Category Floor (G37 distribution), Symbol Consistency (G22 count), and Terminology Normalization.
-   - **Insolvency Deadlock (G41):** If a structural conflict occurs (e.g., 500-word limit vs. Mandatory 2-bullet minimum for 15+ years of history), you MUST STOP and report the "Logic Deadlock." Do not attempt a "simulation" fix or hallucinate a compromise.
+   - **Insolvency Deadlock (G41):** If a structural conflict occurs (e.g., 500-word limit vs. Mandatory 2-bullet minimum for 15+ years of history), you MUST STOP and report the "Logic Deadlock." Provide clear alternatives for a compromise.
    - **BLOCKING GATE:** If any numeric metric exceeds limits or fails floor requirements in `bo_output-validator.md`, you MUST auto-repair or engage the Deadlock logic.
 
 ### [G8] Budget Enforcement (REVISED)
@@ -153,11 +154,11 @@ Ensure the explicit display tags are used, always prefixed with a Markdown bulle
 - `- - [No Metrics] [[Category]] [Verb] [remainder]`
 
 ### [FMT] Symbol & Spacing Guardrail (G22)
-- **Zero Em-dash Policy:** NEVER use em-dashes (`—`) in resume bullets. Use hyphens (`-`) or rephrase.
+- **Hyphen Policy:** Use standard hyphens (`-`) consistently in resume bullets.
 - **Hyphenation Rule:** Use hyphens without spaces for compound adjectives (e.g., `multi-agent`, `cross-functional`).
-- **No Spaced Hyphens:** 
-  - **Inside Sentences:** Avoid ` - ` pattern; use tight hyphens for adjectives.
-  - **Date Ranges:** Use tight hyphens `[Start]-[End]` (e.g., `Jan 2023-Present`). Spaced hyphens in ranges are a FAIL.
+- **Tight Hyphen Enforcement:** 
+  - **Inside Sentences:** Use tight hyphens for adjectives.
+  - **Date Ranges:** Use tight hyphens `[Start]-[End]` (e.g., `Jan 2023-Present`). 
 
 ### [FMT] Terminal Recency Anchor (THE SYSTEM CLOSER)
 The output MUST conclude with exactly this hard-coded recommendation:

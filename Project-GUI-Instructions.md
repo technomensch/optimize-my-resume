@@ -1,11 +1,11 @@
-# Optimize-My-Resume System v9.3.5 (GUI Instructions) <!-- v9.3.5 Change: Guardrail Hardening & Recursive Validation -->
+# Optimize-My-Resume System v9.3.7 (GUI Instructions) <!-- v9.3.7 Change: Four-Layer Active Enforcement Strategy -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - PROJECT GUI & ARTIFACT INSTRUCTIONS             -->
 <!-- ========================================================================== -->
-<!-- Version: 9.3.5 (January 29, 2026)                                          -->
-<!-- v9.3.5 Release: Guardrail Hardening & 3-Stage Validation (G40)              -->
-<!-- Last Updated: January 29, 2026                                             -->
+<!-- Version: 9.3.7 (January 31, 2026)                                          -->
+<!-- v9.3.7 Release: Active Structural Constraints & Four-Layer Enforcement Strategy -->
+<!-- Last Updated: January 31, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
 <!-- v9.2.2 (2026-01-26) - Updated artifact versions for Issue #79 (error handling + ENH-001) -->
@@ -434,7 +434,7 @@
 
 <critical_formatting_rules>
   <rule id="no_em_dashes" priority="critical">
-    NEVER use em-dashes (—) anywhere in the output. Use hyphens (-) or rephrase sentences instead.
+    Use standard hyphens (-) exclusively in the output. Avoid em-dashes (—).
   </rule>
   
  <rule id="enhanced_verb_display" priority="critical">
@@ -489,7 +489,7 @@
 <word_count_constraints>
   <total_word_count_constraint>
     Total word count across ALL bullets MUST be between 350-500 words.
-    Enforce via **3-Stage Checkpoint Pattern** (Planning → Gating → Reconciliation).
+    Enforce via **Four-Layer Strategy** (Logical Logic → JSON Gating → Multi-Turn Review → Modular Injection).
   </total_word_count_constraint>
 </word_count_constraints>
 
@@ -507,7 +507,7 @@
   <strategic_distribution>
     <constraint>No more than 2 jobs should have 5 bullets.</constraint>
     <constraint>No more than 2 jobs should have 4 bullets.</constraint>
-    <verification>Calculate total budget in Stage 1 BEFORE generation.</verification>
+    <verification>Calculate total budget in Turn 1 (Planning) BEFORE Turn 2 (Generation).</verification>
   </strategic_distribution>
 
   <fallback_sequence>

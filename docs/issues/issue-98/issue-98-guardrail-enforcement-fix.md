@@ -10,6 +10,12 @@
 
 ---
 
+### Governance Sync Update (Jan 31, 2026)
+- **Status:** Planning refined with structural enforcement.
+- **Sync:** Plan synchronized with Knowledge Graph insights (Vibe-Coding, Pink Elephant, Unicode Evasion).
+- **GitHub:** Linked to continuation issues #97, #99, #101.
+- **Workflow:** Created `governance-sync.md` to automate this process.
+
 ## Problem Statement
 
 ### Executive Summary

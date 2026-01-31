@@ -19,8 +19,37 @@ Context: ENFORCEMENT_STRUCTURAL_SOLUTIONS.md - Solution B1
 
 import sys
 import re
+import unicodedata
 from typing import List, Tuple, Dict
 from dataclasses import dataclass
+
+
+def sanitize_input(text: str) -> str:
+    """
+    Layer 0: Input Sanitization & Normalization (arXiv 2504.11168)
+    1. Normalize to UTF-8 (NFKC)
+    2. Strip zero-width characters (U+200B, U+200C, U+200D)
+    3. Strip other suspicious non-printable characters
+    """
+    # Normalize Unicode characters
+    text = unicodedata.normalize('NFKC', text)
+    
+    # Strip zero-width characters and other hidden control chars
+    # U+200B: Zero Width Space
+    # U+200C: Zero Width Non-Joiner
+    # U+200D: Zero Width Joiner
+    # U+FEFF: Byte Order Mark
+    hidden_chars = ['\u200b', '\u200c', '\u200d', '\ufeff']
+    for char in hidden_chars:
+        text = text.replace(char, '')
+        
+    # Strip non-printable characters (except common ones like \n, \t)
+    text = "".join(ch for ch in text if unicodedata.category(ch)[0] != "C" or ch in ['\n', '\t', '\r'])
+    
+    return text
+
+
+@dataclass
 
 
 @dataclass
@@ -368,6 +397,9 @@ def main():
         print("Usage: python validate_bullets.py [input_file]")
         print("   or: cat output.txt | python validate_bullets.py")
         sys.exit(1)
+
+    # Run sanitization (Layer 0)
+    text = sanitize_input(text)
 
     # Run validation
     results = validate_output(text)
