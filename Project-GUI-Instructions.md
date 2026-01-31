@@ -11,9 +11,9 @@
 <!-- v9.2.2 (2026-01-26) - Updated artifact versions for Issue #79 (error handling + ENH-001) -->
 <!-- v9.2.1 (2026-01-21) - Added README-webgui-artifact.md for artifact upload guide -->
 <!-- v9.2.0 (2026-01-19) - Token Optimization (Issue #TBD)                     -->
-<!--   - Moved keyword_context_validation to optimization-tools/shared/keyword-validation.md -->
-<!--   - Moved keyword_input_handling to optimization-tools/bullet-optimizer/bo-keyword-handling.md -->
-<!--   - Moved artifact_configuration to optimization-tools/webgui/webgui-artifact-config.md -->
+<!--   - Moved keyword_context_validation to optimization-tools/shared/shared_keyword_validation.md -->
+<!--   - Moved keyword_input_handling to optimization-tools/bullet-optimizer/bo_keyword_handling.md -->
+<!--   - Moved artifact_configuration to optimization-tools/webgui/webgui_artifact_config.md -->
 <!--   - Token reduction: ~7,500 tokens (35% reduction)                         -->
 <!-- v9.1.0 (2026-01-19) - Documentation Sync (Issue #65, #66, #68)            -->
 <!--   - Standardized keyword visibility (top 5 matched/missing) in analysis summaries -->
@@ -96,30 +96,40 @@
     For reduced token usage, upload only the modules you need:
     
     <for_resume_analysis>
-      - optimization-tools/resume-analyzer/ra_job-history-creation.md
       - optimization-tools/resume-analyzer/ra_entry-router.md
+      - optimization-tools/resume-analyzer/ra_jd-parsing.md
+      - optimization-tools/resume-analyzer/ra_job-history-creation.md
       - optimization-tools/resume-analyzer/ra_job-history-template.md
+      - optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md
+      - optimization-tools/resume-analyzer/ra_report_structure.md
       - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md
     </for_resume_analysis>
 
     <for_bullet_optimization>
-      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
       - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
+      - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md
+      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
+      - optimization-tools/bullet-optimizer/bo_keyword_handling.md
+      - optimization-tools/bullet-optimizer/bo_output-validator.md
     </for_bullet_optimization>
 
     <for_job_fit_analysis>
       - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md
       - optimization-tools/job-fit-analyzer/jfa_workflow-router.md
+      - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md
+      - optimization-tools/job-fit-analyzer/jfa_re-comparison.md
     </for_job_fit_analysis>
 
     <for_narrative_generation>
       - optimization-tools/narrative-generator/ng_summary-generation.md
     </for_narrative_generation>
     
-    <shared_modules>
-      - optimization-tools/shared/keyword-validation.md
-      - optimization-tools/webgui/webgui-artifact-config.md
-    </shared_modules>
+    <shared_and_webgui>
+      - optimization-tools/shared/shared_core_principles.md
+      - optimization-tools/shared/shared_keyword_validation.md
+      - optimization-tools/shared/shared_verb_taxonomy.md
+      - optimization-tools/webgui/webgui_artifact_config.md
+    </shared_and_webgui>
     
     <for_webgui_artifacts>
       See README-webgui-artifact.md for complete artifact upload requirements.
@@ -159,8 +169,8 @@
     - optimization-tools/narrative-generator/ng_summary-generation.md (v9.1.0: Updated prompt wording and keyword display)
     
     <!-- Shared Modules -->
-    - optimization-tools/shared/keyword-validation.md (v9.2.0: Extracted from main prompt)
-    - optimization-tools/webgui/webgui-artifact-config.md (v9.2.0: Extracted from main prompt)
+    - optimization-tools/shared/shared_keyword_validation.md (v9.2.0: Extracted from main prompt)
+    - optimization-tools/webgui/webgui_artifact_config.md (v9.2.0: Extracted from main prompt)
   </available_modules>
 </v6_foundation_modules>
 
@@ -322,7 +332,7 @@
 
   <report_output_reference>
     For complete report structure and formatting guidelines, see:
-    optimization-tools/resume-analyzer/ra_report-structure.md
+    optimization-tools/resume-analyzer/ra_report_structure.md
   </report_output_reference>
 
   <job_history_creation_reference>
@@ -342,7 +352,7 @@
 <!-- ========================================================================== -->
 <!-- v9.2.0 Change: Modularized artifact configuration -->
 
-<modular_reference file="optimization-tools/webgui/webgui-artifact-config.md">
+<modular_reference file="optimization-tools/webgui/webgui_artifact_config.md">
   <component name="model_selection_in_artifacts" />
   <component name="token_usage_guidance" />
   <component name="error_handling_guidelines" />
@@ -374,7 +384,7 @@
 <!-- ========================================================================== -->
 <!-- v9.2.0 Change: Modularized keyword input handling -->
 
-<modular_reference file="optimization-tools/bullet-optimizer/bo-keyword-handling.md">
+<modular_reference file="optimization-tools/bullet-optimizer/bo_keyword_handling.md">
   <component name="user_keyword_preferences" />
   <component name="timing_scenarios" />
   <component name="scenario_1_keywords_with_jd" />
@@ -389,7 +399,7 @@
 <!-- ========================================================================== -->
 <!-- v9.2.0 Change: Modularized keyword context validation -->
 
-<modular_reference file="optimization-tools/shared/keyword-validation.md">
+<modular_reference file="optimization-tools/shared/shared_keyword_validation.md">
   <component name="core_principle" />
   <component name="validation_process" />
   <component name="evidence_tiers" />
@@ -525,7 +535,7 @@
 <!-- ACTION VERB TAXONOMY                                                       -->
 <!-- ========================================================================== -->
 
-<modular_reference file="optimization-tools/shared/shared_verb-taxonomy.md">
+<modular_reference file="optimization-tools/shared/shared_verb_taxonomy.md">
   <components>
     - 5 verb categories (Built, Lead, Managed, Improved, Collaborate)
     - Color coding scheme for UI display

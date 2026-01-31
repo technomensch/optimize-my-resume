@@ -67,25 +67,40 @@
     For reduced token usage, upload only the modules you need:
     
     <for_resume_analyzer>
-      - optimization-tools/resume-analyzer/ra_job-history-creation.md
       - optimization-tools/resume-analyzer/ra_entry-router.md
+      - optimization-tools/resume-analyzer/ra_jd-parsing.md
+      - optimization-tools/resume-analyzer/ra_job-history-creation.md
       - optimization-tools/resume-analyzer/ra_job-history-template.md
+      - optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md
+      - optimization-tools/resume-analyzer/ra_report_structure.md
       - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md
     </for_resume_analyzer>
 
     <for_bullet_optimizer>
-      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
+      - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
       - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md
+      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
+      - optimization-tools/bullet-optimizer/bo_keyword_handling.md
+      - optimization-tools/bullet-optimizer/bo_output-validator.md
     </for_bullet_optimizer>
 
     <for_job_fit_analyzer>
-      - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md (Analysis logic)
+      - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md
       - optimization-tools/job-fit-analyzer/jfa_workflow-router.md
+      - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md
+      - optimization-tools/job-fit-analyzer/jfa_re-comparison.md
     </for_job_fit_analyzer>
 
     <for_narrative_generator>
       - optimization-tools/narrative-generator/ng_summary-generation.md
     </for_narrative_generator>
+
+    <shared_and_webgui>
+      - optimization-tools/shared/shared_core_principles.md
+      - optimization-tools/shared/shared_keyword_validation.md
+      - optimization-tools/shared/shared_verb_taxonomy.md
+      - optimization-tools/webgui/webgui_artifact_config.md
+    </shared_and_webgui>
   </modular_setup>
 </upload_guide>
 
@@ -106,21 +121,33 @@
 
   <available_modules>
     <!-- Resume Analyzer: Foundation -->
-    - optimization-tools/resume-analyzer/ra_job-history-creation.md (12-section schema)
-    - optimization-tools/resume-analyzer/ra_jd-parsing.md (JD parsing protocol)
     - optimization-tools/resume-analyzer/ra_entry-router.md (5-scenario routing logic)
+    - optimization-tools/resume-analyzer/ra_jd-parsing.md (JD parsing protocol)
+    - optimization-tools/resume-analyzer/ra_job-history-creation.md (12-section schema)
+    - optimization-tools/resume-analyzer/ra_job-history-template.md (XML/MD mapping)
+    - optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md (G32-G41 enforcement)
+    - optimization-tools/resume-analyzer/ra_report_structure.md (Report formatting)
+    - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md (Visual UI layout)
 
     <!-- Bullet Optimizer: Core Integration -->
-    - optimization-tools/bullet-optimizer/bo_evidence-matching.md (requirement-by-requirement gap analysis)
     - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md (consolidated logic hub)
+    - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md (Summary & impact rules)
+    - optimization-tools/bullet-optimizer/bo_evidence-matching.md (gap analysis)
+    - optimization-tools/bullet-optimizer/bo_keyword_handling.md (preference logic)
+    - optimization-tools/bullet-optimizer/bo_output-validator.md (G-Gate enforcement)
 
     <!-- Job Fit Analyzer: Router & Workflows -->
-    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (complete 8-scenario routing system)
-    - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md (add/edit/remove positions)
-    - optimization-tools/job-fit-analyzer/jfa_re-comparison.md (JD re-comparison with diff output)
+    - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md (Core comparison logic)
+    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (Complete 8-scenario system)
+    - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md (Add/edit positions)
+    - optimization-tools/job-fit-analyzer/jfa_re-comparison.md (JD diff output)
 
-    <!-- Narrative Generator: Summary & Polish -->
-    - optimization-tools/narrative-generator/ng_summary-generation.md (master + per-JD summary customization)
+    <!-- Narrative Generator & Shared -->
+    - optimization-tools/narrative-generator/ng_summary-generation.md (Custom summary)
+    - optimization-tools/shared/shared_core_principles.md (System behavior)
+    - optimization-tools/shared/shared_keyword_validation.md (Evidence tiers)
+    - optimization-tools/shared/shared_verb_taxonomy.md (Color categories)
+    - optimization-tools/webgui/webgui_artifact_config.md (UI configuration)
   </available_modules>
 
   <v6_0_0_release_notes>
