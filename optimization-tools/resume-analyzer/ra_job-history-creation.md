@@ -50,7 +50,7 @@ This protocol guides the creation of a comprehensive job history file that serve
 - Key achievements or differentiators]
 ```
 
-**Purpose:** Master summary that can be customized per-JD in Job Fit Analyzer.
+**Purpose:** Master summary for general career overview; Project 2 handles its own tailored summary logic.
 
 **Guidelines:**
 - Keep factual and evidence-based

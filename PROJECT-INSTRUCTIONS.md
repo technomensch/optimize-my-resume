@@ -74,6 +74,7 @@
       - optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md
       - optimization-tools/resume-analyzer/ra_report_structure.md
       - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md
+      - optimization-tools/narrative-generator/ng_summary-generation.md
     </for_resume_analyzer>
 
     <for_bullet_optimizer>
@@ -91,9 +92,7 @@
       - optimization-tools/job-fit-analyzer/jfa_re-comparison.md
     </for_job_fit_analyzer>
 
-    <for_narrative_generator>
-      - optimization-tools/narrative-generator/ng_summary-generation.md
-    </for_narrative_generator>
+    <for_narrative_generator />
 
     <shared_and_webgui>
       - optimization-tools/shared/shared_core_principles.md
