@@ -601,7 +601,7 @@ EXAMPLE OUTPUT:
 
 ## Evidence Matching Quality Gates (Guardrails)
 
-### Guardrail #5: honest_limitations Enforcement
+### G5: honest_limitations Enforcement
 
 > **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (secondary).
 
@@ -626,7 +626,7 @@ EXAMPLE OUTPUT:
 </honest_limitations_guardrail>
 ```
 
-### Guardrail #21: Skill Inventory Context Verification
+### G21: Skill Inventory Context Verification
 
 > **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md).
 
@@ -648,7 +648,7 @@ EXAMPLE OUTPUT:
 </skill_context_guardrail>
 ```
 
-### Guardrail #24: Alternatives Presentation Consistency
+### G24: Alternatives Presentation Consistency
 
 > **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [verb-categories.md](core/verb-categories.md) (secondary).
 
@@ -679,7 +679,7 @@ EXAMPLE OUTPUT:
 </alternatives_presentation_guardrail>
 ```
 
-### Guardrail #16: Master Skills Inventory Protection (Secondary)
+### G16: Master Skills Inventory Protection (Secondary)
 
 > **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_incremental-updates.md](optimization-tools/job-fit-analyzer/jfa_incremental-updates.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (secondary).
 
@@ -692,7 +692,7 @@ EXAMPLE OUTPUT:
 </inventory_protection_guardrail>
 ```
 
-### Guardrail #1: Metric Isolation & Traceability (Secondary)
+### G1: Metric Isolation & Traceability (Secondary)
 
 > **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (secondary).
 

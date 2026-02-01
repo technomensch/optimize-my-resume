@@ -1,13 +1,21 @@
-# Optimize-My-Resume System v9.3.5 <!-- v9.3.5 Change: Guardrail Hardening & Recursive Validation -->
+# Optimize-My-Resume System v9.3.7 <!-- v9.3.7 Change: Four-Layer Active Enforcement Strategy -->
 
 <!-- ========================================================================== -->
 <!-- OPTIMIZE-MY-RESUME SYSTEM - COMPLETE PROJECT INSTRUCTIONS                 -->
 <!-- ========================================================================== -->
-<!-- Version: 9.3.5 (January 29, 2026)                                          -->
-<!-- v9.3.5 Release: Guardrail Hardening & 3-Stage Validation (G40)              -->
-<!-- Last Updated: January 29, 2026                                             -->
+<!-- Version: 9.3.7 (January 31, 2026)                                          -->
+<!-- v9.3.7 Release: Active Structural Constraints & Four-Layer Enforcement Strategy -->
+<!-- Last Updated: January 31, 2026                                             -->
 <!-- Purpose: Paste this entire file into Claude Project Instructions          -->
 <!-- ========================================================================== -->
+<!-- v9.3.7 (2026-01-31) - Active Structural Constraints (Four-Layer Strategy)  -->
+<!--   - Layer 0: Input Sanitization (Unicode & zero-width character stripping) -->
+<!--   - Layer 0.5: Positive Framing (Replaced negative constraints with MUST)  -->
+<!--   - Layer 1: Structural Prompt Logic (Hard mathematical limits)            -->
+<!--   - Layer 2: Proof of Work Schema (JSON validation gates)                  -->
+<!--   - Layer 3: Workflow Multi-Turn (Budget planning Turn 1 -> Generation Turn 2) -->
+<!--   - Layer 4: Modular Injection (Literal guardrail code in prompts)         -->
+<!-- v9.3.5.3 (2026-01-29) - Metric-Only Validation & G41 Deadlock Logic        -->
 <!-- v9.3.5 (2026-01-28) - Guardrail Hardening Pattern (ADR-010)                -->
 <!--   - Implemented "Three-Layer Defense" (Pre-flight -> Hub -> Validator)     -->
 <!--   - Action Verb Hardening: G35 (Gerund Ban), G36 (Visual Integrity)        -->
@@ -24,81 +32,28 @@
 <!--   - Synchronized narrative generator instructions with WebGUI implementation -->
 <!-- v9.0.1 (2026-01-19) - Narrative Fit Verification (Issue #64)               -->
 <!--   - Added post-analysis logic to verify qualitative match alongside score      -->
-<!--   - Implemented "Narrative Fit Verification" guardrail #33                    -->
+<!--   - Implemented "Narrative Fit Verification" G33                    -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)         -->
 <!--   - Implemented Hub-and-Spoke logic for keyword management                    -->
-<!--   - Added Guardrail #32 (Custom Keyword Evidence) and Validation Engine        -->
-<!--   - Added Logic and UI for Guardrail #33: Narrative Fit Verification         -->
+<!--   - Added G32 (Custom Keyword Evidence) and Validation Engine        -->
+<!--   - Added Logic and UI for G33: Narrative Fit Verification         -->
 <!-- v9.0.0 (2026-01-19) - Keyword Management & Validation (Issue #67, #69)        -->
 <!--   - Added Keyword Management UI and logic to WebGUI                        -->
-<!--   - Added Guardrail #32: Custom Keyword Evidence validation checks         -->
+<!--   - Added G32: Custom Keyword Evidence validation checks         -->
 <!--   - Updated Summary Generation Protocol with Keyword Preferences            -->
 <!-- ========================================================================== -->
 
-<system_maintenance_rule>
-  CRITICAL: This is the "Gold Master" logic baseline. 
-  When updating logic, check for <modular_reference> tags within the file. 
-  1. If a reference exists, apply the update to the external module file FIRST.
-  2. Sync this file's text to match the module exactly to maintain the immutable baseline.
-  3. Ensure Project-GUI-Instructions.md reflects these changes (usually automatic via reference).
-</system_maintenance_rule>
+<!-- SILENT SYNC: system_maintenance_rule -->
+<modular_reference file="docs/governance/agent-governance.md#system_maintenance_rule" />
 
-<!-- SILENT SYNC: Path Resolution & Upload Guide -->
-<path_resolution>
-  <claude_web_artifact>
-    When using this system as a Claude Project with uploaded files:
-    - Files uploaded to Project Knowledge are accessible via /files/[filename.md]
-    - Example: optimization-tools/resume-analyzer/ra_job-history-creation.md → /files/job-history-creation.md
-    - The system will auto-resolve paths based on context
-  </claude_web_artifact>
-  
-  <local_repository>
-    When using the full repository locally or with Claude Desktop:
-    - Use paths relative to project root
-    - Example: optimization-tools/resume-analyzer/ra_job-history-creation.md
-  </local_repository>
+<!-- SILENT SYNC: path_resolution -->
+<modular_reference file="docs/governance/agent-governance.md#path_resolution" />
 
-  <modular_reference_behavior>
-    All `<modular_reference file="...">` tags resolve automatically based on context.
-    If file is not found at the specified path, check /files/ prefix.
-  </modular_reference_behavior>
-</path_resolution>
+<!-- SILENT SYNC: issue_tracking_workflow -->
+<modular_reference file="docs/governance/agent-governance.md#issue_tracking_workflow" />
 
-<issue_tracking_workflow>
-  <local_environment>
-     - Use GitHub CLI: `gh issue create`
-     - Or use GitHub Web UI to log issues
-  </local_environment>
-
-  <claude_web_interface>
-     - Create or update `docs/discovered_issues.md` in the chat context
-     - OR ask Claude to generate an "Issue Report" block using `docs/templates/issue_template.md`
-     - Copy-paste the report to your external tracking system
-  </claude_web_interface>
-</issue_tracking_workflow>
-
-<unified_workflow_system>
-  <governance>
-    All AI agent workflows (Claude Code, Antigravity, Gemini) are consolidated into `.agent/workflows/` as the Single Source of Truth (SSoT).
-    - Claude Code skills are synchronized via symbolic link: `.claude/skills` → `.agent/workflows`
-    - Logic updates MUST be applied to `.agent/workflows/` FIRST.
-    - Never modify agent-specific hidden directories directly if a unified workflow equivalent exists.
-  </governance>
-
-  <symbolic_synchronization_symsync>
-    To ensure "Environment Parallax" (logic drift between agents) is avoided:
-    1. Verify link integrity at session start: `ls -ld .claude/skills`
-    2. Any new reusable logic must be added as a `.md` workflow in `.agent/workflows/`.
-    3. Use the `SSoT_MARKER` within work plans to indicate cross-agent dependency.
-  </symbolic_synchronization_symsync>
-
-  <git_governance_enforcement>
-    1. **Release Hierarchy:** All branches MUST be prefixed with the semantic version (e.g., `v9.3.4-`).
-    2. **Issue Linkage:** All commits and PRs MUST reference the GitHub Issue ID (e.g., `Closes #95`).
-    3. **Titling Policy:** GitHub issues MUST use `[BUG]` or `[ENHANCEMENT]` prefixes.
-    4. **Persistence:** Local Tracking IDs (ENH-XXX or issue-XXX) MUST be present in issue bodies.
-  </git_governance_enforcement>
-</unified_workflow_system>
+<!-- SILENT SYNC: unified_workflow_system -->
+<modular_reference file="docs/governance/agent-governance.md#unified_workflow_system" />
 
 <upload_guide>
   <minimum_setup>
@@ -112,42 +67,44 @@
     For reduced token usage, upload only the modules you need:
     
     <for_resume_analyzer>
-      - optimization-tools/resume-analyzer/ra_job-history-creation.md
       - optimization-tools/resume-analyzer/ra_entry-router.md
+      - optimization-tools/resume-analyzer/ra_jd-parsing.md
+      - optimization-tools/resume-analyzer/ra_job-history-creation.md
       - optimization-tools/resume-analyzer/ra_job-history-template.md
+      - optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md
+      - optimization-tools/resume-analyzer/ra_report_structure.md
       - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md
+      - optimization-tools/narrative-generator/ng_summary-generation.md
     </for_resume_analyzer>
 
     <for_bullet_optimizer>
-      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
+      - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md
       - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md
+      - optimization-tools/bullet-optimizer/bo_evidence-matching.md
+      - optimization-tools/bullet-optimizer/bo_keyword_handling.md
+      - optimization-tools/bullet-optimizer/bo_output-validator.md
     </for_bullet_optimizer>
 
     <for_job_fit_analyzer>
-      - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md (Analysis logic)
+      - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md
       - optimization-tools/job-fit-analyzer/jfa_workflow-router.md
+      - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md
+      - optimization-tools/job-fit-analyzer/jfa_re-comparison.md
     </for_job_fit_analyzer>
 
-    <for_narrative_generator>
-      - optimization-tools/narrative-generator/ng_summary-generation.md
-    </for_narrative_generator>
+    <for_narrative_generator />
+
+    <shared_and_webgui>
+      - optimization-tools/shared/shared_core_principles.md
+      - optimization-tools/shared/shared_keyword_validation.md
+      - optimization-tools/shared/shared_verb_taxonomy.md
+      - optimization-tools/webgui/webgui_artifact_config.md
+    </shared_and_webgui>
   </modular_setup>
 </upload_guide>
 
-<unified_workflow_system version="1.0">
-  <overview>
-    All agent intelligence (Gemini/Claude) is consolidated into `.agent/workflows/`.
-    Claude's `.claude/skills/` directory is a symbolic link to this directory.
-  </overview>
-  <workflows>
-    - /start-issue-tracking (Governance & Setup)
-    - /git-governance (Branching & PR lifecycle)
-    - /lesson-learned (Learning & KG Sync)
-    - /session-summary (Context Capture)
-    - /enforce-shadow-sync (Three-tier validation)
-    - /update-knowledge-graph (KG Maintenance)
-  </workflows>
-</unified_workflow_system>
+<!-- SILENT SYNC: unified_workflow_system (Overview) -->
+<modular_reference file="docs/governance/agent-governance.md#unified_workflow_system" />
 
 <!-- ========================================================================== -->
 
@@ -163,21 +120,33 @@
 
   <available_modules>
     <!-- Resume Analyzer: Foundation -->
-    - optimization-tools/resume-analyzer/ra_job-history-creation.md (12-section schema)
-    - optimization-tools/resume-analyzer/ra_jd-parsing.md (JD parsing protocol)
     - optimization-tools/resume-analyzer/ra_entry-router.md (5-scenario routing logic)
+    - optimization-tools/resume-analyzer/ra_jd-parsing.md (JD parsing protocol)
+    - optimization-tools/resume-analyzer/ra_job-history-creation.md (12-section schema)
+    - optimization-tools/resume-analyzer/ra_job-history-template.md (XML/MD mapping)
+    - optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md (G32-G41 enforcement)
+    - optimization-tools/resume-analyzer/ra_report_structure.md (Report formatting)
+    - optimization-tools/resume-analyzer/ra_resume-analyzer-display.md (Visual UI layout)
 
     <!-- Bullet Optimizer: Core Integration -->
-    - optimization-tools/bullet-optimizer/bo_evidence-matching.md (requirement-by-requirement gap analysis)
     - optimization-tools/bullet-optimizer/bo_bullet-generation-instructions.md (consolidated logic hub)
+    - optimization-tools/bullet-optimizer/bo_bullet-generation-logic.md (Summary & impact rules)
+    - optimization-tools/bullet-optimizer/bo_evidence-matching.md (gap analysis)
+    - optimization-tools/bullet-optimizer/bo_keyword_handling.md (preference logic)
+    - optimization-tools/bullet-optimizer/bo_output-validator.md (G-Gate enforcement)
 
     <!-- Job Fit Analyzer: Router & Workflows -->
-    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (complete 8-scenario routing system)
-    - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md (add/edit/remove positions)
-    - optimization-tools/job-fit-analyzer/jfa_re-comparison.md (JD re-comparison with diff output)
+    - optimization-tools/job-fit-analyzer/jfa_job-fit-assessment.md (Core comparison logic)
+    - optimization-tools/job-fit-analyzer/jfa_workflow-router.md (Complete 8-scenario system)
+    - optimization-tools/job-fit-analyzer/jfa_incremental-updates.md (Add/edit positions)
+    - optimization-tools/job-fit-analyzer/jfa_re-comparison.md (JD diff output)
 
-    <!-- Narrative Generator: Summary & Polish -->
-    - optimization-tools/narrative-generator/ng_summary-generation.md (master + per-JD summary customization)
+    <!-- Narrative Generator & Shared -->
+    - optimization-tools/narrative-generator/ng_summary-generation.md (Custom summary)
+    - optimization-tools/shared/shared_core_principles.md (System behavior)
+    - optimization-tools/shared/shared_keyword_validation.md (Evidence tiers)
+    - optimization-tools/shared/shared_verb_taxonomy.md (Color categories)
+    - optimization-tools/webgui/webgui_artifact_config.md (UI configuration)
   </available_modules>
 
   <v6_0_0_release_notes>
@@ -906,7 +875,7 @@
     IF the user provides a list of specific keywords to USE or IGNORE:
     1. **Strictly Enforce:** Do not use any keyword from the "IGNORE" list.
     2. **Prioritize:** Ensure valid keywords from the "USE" list are integrated (if evidence exists).
-    3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per Guardrail #32).
+    3. **Custom Keywords:** If user adds a keyword not in the JD, treat it as a high-priority "USE" keyword (subject to evidence validation per G32).
   </user_keyword_preferences>
 
   <timing>
@@ -3104,6 +3073,14 @@
 <!-- ========================================================================== -->
 
 <!-- SILENT SYNC: Quality Gates & Guardrails -->
+<!--
+  📚 GUARDRAIL REGISTRY (Centralized)
+  All guardrails are catalogued in: docs/governance/guardrail-registry.md
+  This is the "Phonebook" for guardrail lookups. Use it when:
+  - You need to understand a specific rule (e.g., "What is G24?")
+  - You're unsure about a guardrail ID format
+  - You need the SSoT (Source of Truth) for implementation details
+-->
 <quality_assurance_rules>
   <phrase_variation_rule>
     <priority>high</priority>
@@ -3291,7 +3268,7 @@
         9. Repeat until ALL checks pass
       </regeneration_process>
 
-      <quality_gate_failure_protocol> <!-- v6.3.0 Change: Added Guardrail #14 -->
+      <quality_gate_failure_protocol> <!-- v6.3.0 Change: Added G14 -->
         <priority>CRITICAL</priority>
         <instruction>
           If quality gate fails after 3 iterations, provide diagnostic output to user.
@@ -3876,42 +3853,14 @@
 
     <!-- v8.3.1 Issue #42 -->
     <!-- SILENT SYNC: Governance Guardrails -->
-    <guardrail id="30">
-      <name>modularity_compliance</name>
-      <priority>CRITICAL</priority>
-      <instruction>You MUST NOT modify logic directly in the GUI context. Ensure all system logic follows the v8 hub-and-spoke modular architecture.</instruction>
-      <process>
-        1. [NEW] Create standalone module in /optimization-tools/.
-        2. [SHADOW] Add "Silent Sync" HTML markers in Gold Master (PROJECT-INSTRUCTIONS.md).
-        3. [MODULAR] Replace GUI logic with &lt;modular_reference file="..." /&gt;.
-      </process>
-    </guardrail>
+<!-- SILENT SYNC: modularity_compliance -->
+<modular_reference file="docs/governance/agent-governance.md#modularity_compliance" />
 
-    <guardrail id="31">
-      <name>workflow_lifecycle_compliance</name>
-      <priority>CRITICAL</priority>
-      <instruction>Establish project infrastructure before planning or execution. Strictly follow naming and tagging policies.</instruction>
-      <naming_policy>
-        - **GitHub Issues:** Must prefix title with `[BUG]` or `[ENHANCEMENT]`.
-        - **GitHub Labels:** Apply `bug` or `enhancement` labels.
-        - **Local ID:** Include `Local Tracking ID: issue-N` or `ENH-NNN` in the issue body.
-        - **Plans & Branches:** Must include version prefix (e.g., `v9.3.4-issue-N-slug`).
-        - **PR Titles:** Should be descriptive and mirror the clean GitHub Issue title (including prefix).
-      </naming_policy>
-      <steps>
-        1. Identify or create a GitHub Issue (gh issue create) matching naming policy.
-        2. Establish a dedicated feature/patch branch with version prefix.
-        3. [MANDATORY] Create Draft PR immediately to link branch to issue (gh pr create --draft).
-        4. Update ROADMAP.md and CHANGELOG.md status.
-        5. Save implementation plan to docs/plans/[branch-name].md.
-      </steps>
-    </guardrail>
+<!-- SILENT SYNC: workflow_lifecycle_compliance -->
+<modular_reference file="docs/governance/agent-governance.md#31" />
 
-    <local_tracking_persistence_guardrail id="36">
-      <priority>HIGH</priority>
-      <instruction>Always maintain the link between local documentation and GitHub issues.</instruction>
-      <rule>The Local ID (issue-N / ENH-NNN) MUST be present in the GitHub issue body and all local documentation files for that issue.</rule>
-    </local_tracking_persistence_guardrail>
+<!-- SILENT SYNC: local_tracking_persistence_guardrail -->
+<modular_reference file="docs/governance/agent-governance.md#36" />
 
     <!-- MODULAR_SYNC: optimization-tools/resume-analyzer/ra_quality-gates-guardrails.md#custom_keyword_evidence_guardrail -->
     <custom_keyword_evidence_guardrail id="32">
@@ -3946,6 +3895,9 @@
       <offer>Would you like to customize your resume bullets and professional summary for this JD?</offer>
       <action>Clicking "Optimize My Application" triggers the Narrative/Bullet generation workflow.</action>
     </post_analysis_customization_offer>
+    <!-- MODULAR_SYNC: documentation-governance/governance-locks.md#justified_data_access_guardrail -->
+    <!-- SILENT SYNC: justified_data_access_guardrail -->
+    <modular_reference file="docs/governance/agent-governance.md#G42" />
     <!-- END SILENT SYNC: Governance Guardrails -->
   </system_guardrails>
 </quality_assurance_rules>
@@ -3995,7 +3947,7 @@
 <position_ordering>
   <critical_rule>Positions MUST be displayed in REVERSE CHRONOLOGICAL ORDER</critical_rule>
   <definition>Reverse chronological = Most recent job FIRST (Position 1), oldest job LAST</definition>
-  <guardrail_reference>Guardrail #2 (Chronological Integrity): Verify date sanity and sequence before final output.</guardrail_reference> <!-- v6.3.0 Change -->
+  <guardrail_reference>G2 (Chronological Integrity): Verify date sanity and sequence before final output.</guardrail_reference> <!-- v6.3.0 Change -->
 </position_ordering>
 
 <!-- ========================================================================== -->
@@ -4334,26 +4286,8 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
 
 <recursive_constraint_validation id="G40" priority="CRITICAL">
   <intent>
-    Prevent LLM drift by decoupling interdependent constraints (Char Limits vs. Word Budget vs. Uniqueness).
+    Enforce absolute guardrail compliance through a 3-Layer Redundancy System (Plan/Audit/Reconcile).
   </intent>
-  
-  <checkpoint_1_budget_planning>
-    Before starting generation, output a Budget Allocation Table.
-    Constraint: Total estimated word count MUST be between 350-500 words.
-    Constraint: Max 2 positions with 5 bullets, Max 2 with 4 bullets. Min 2 per position.
-  </checkpoint_1_budget_planning>
-  
-  <checkpoint_2_per_bullet_gates>
-    For every bullet, verify in thinking:
-    - Character Count: 100-210 (G24)
-    - Unique Phrasing: No 3+ word phrase used 3x (G15)
-    - Metrics Traceability: Zero data loss from source (G29)
-  </checkpoint_2_per_bullet_gates>
-  
-  <checkpoint_3_final_reconciliation>
-    Post-generation, verify total actual word count and distribution.
-    Output a visible reconciliation table.
-  </checkpoint_3_final_reconciliation>
   
   <fallback_sequence>
     IF Actual Word Count > 500:
@@ -4377,4 +4311,3 @@ Ready? Pick your option above (A, B, C, D, or E) and paste what you have.
     </compliance_tracking>
   </external_validation>
 </recursive_constraint_validation>
-

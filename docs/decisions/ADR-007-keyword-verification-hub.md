@@ -50,7 +50,7 @@ Any keyword in the "USE" list triggers a background scan of the Job History (spe
 - **Verified:** Evidence found in history.
 - **Unverified:** No documented evidence found. Shows visual warning.
 
-### 4. Guardrail #32 (The Safety Gate)
+### 4. G32 (The Safety Gate)
 If "Unverified" keywords are selected for generation, the system triggers a blocking modal. The user must explicitly confirm they want to proceed, acknowledging the interview risk.
 
 ## Consequences
@@ -76,4 +76,4 @@ If "Unverified" keywords are selected for generation, the system triggers a bloc
 ## Related ADRs & Lessons
 - **ADR-004:** Shadow Modularization (The Hub-and-Spoke pattern).
 - **Lesson:** [Relative File Paths](../lessons-learned/architecture/Lessons_Learned_Relative_File_Paths.md)
-- **Rule:** [Guardrail #32](../../PROJECT-INSTRUCTIONS.md#guardrail-32)
+- **Rule:** [G32](../../PROJECT-INSTRUCTIONS.md#guardrail-32)

@@ -497,7 +497,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 
 ## Workflow Routing Quality Gates (Guardrails)
 
-### Guardrail #18: Skill/Metric Conflict Resolution
+### G18: Skill/Metric Conflict Resolution
 
 > **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
@@ -517,7 +517,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 </conflict_resolution_guardrail>
 ```
 
-### Guardrail #23: User State Persistence Consistency
+### G23: User State Persistence Consistency
 
 > **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
@@ -540,7 +540,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 </state_persistence_guardrail>
 ```
 
-### Guardrail #25: Confirmation Tracking Guardrail
+### G25: Confirmation Tracking Guardrail
 
 > **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
@@ -562,7 +562,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 </confirmation_tracking_guardrail>
 ```
 
-### Guardrail #27: Output Format Consistency Scanner
+### G27: Output Format Consistency Scanner
 
 > **Implementation Target:** Add to [optimization-tools/job-fit-analyzer/jfa_workflow-router.md](optimization-tools/job-fit-analyzer/jfa_workflow-router.md).
 
@@ -613,7 +613,7 @@ Add to PROJECT-INSTRUCTIONS.md before phase detection section:
 - Added two-step clarification process
 
 **v9.1.0 (2026-01-19):**
-- Documentation Sync - Added post-analysis customization offer trigger (Guardrail #35) <!-- v9.1.0 Change -->
+- Documentation Sync - Added post-analysis customization offer trigger (G35) <!-- v9.1.0 Change -->
 
 **v9.3.5 (2026-01-28):**
 - **Hardening (Fix 4):** Added aggressive disambiguation for "Optimize my resume" to prevent conflation between Master Summary and Per-JD logic. Forced choice gate between Scenario 3 and Master Summary.

@@ -1,102 +1,119 @@
-# Issue #85 - Solution Approach
+# Solution Approach: Layered Defense Strategy (v9.3.6)
 
-**Last Updated:** 2026-01-28
-
----
-
-## Chosen Approach: Multi-Layer Hardening
-
-Move rules from passive memory to active execution gates using three complementary strategies.
+**Previous Approach (v9.3.5.x):** Unified Redundancy Framework - **FAILED**
+**New Approach (v9.3.6):** Layered Defense Strategy - **ACTIVE**
 
 ---
 
-## Layer 1: Pre-flight Rule Mapping (Step 0)
+## Critical Update: Production Failure (Jan 29, 21:00 UTC)
 
-### Implementation Steps
+The original v9.3.5.x approach (documentation-based enforcement) was **completely bypassed** during production testing:
+- ALL 37 documented guardrails (G1-G37) were ignored
+- 3-Stage Checkpoint Pattern was completely bypassed
+- Model claimed compliance without evidence
 
-**Step 1: Add Pre-flight Table to generate-bullets.md**
-Force the agent to output a visible guardrail checklist BEFORE any bullet generation.
+**Root Cause:** Documentation-based enforcement CANNOT force compliance. The model can read, understand, and completely ignore any instruction.
 
-```markdown
-| ID | Guardrail | Integration Status |
-| :--- | :--- | :--- |
-| **G1** | Metric Traceability | [ ] Referenced from history |
-| **G9** | Verb Diversity | [ ] 1 category per position |
-| **G12** | Recency Rule | [ ] All 2020-2026 roles included |
-| **FMT** | Header Format | [ ] 2-line schema plan |
-| **EXT** | Plain Text Export | [ ] Target path confirmed |
+**See:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](../../knowledge/ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
+
+---
+
+## New Strategy: Layered Defense
+
+Instead of single enforcement mechanisms per platform, implement **MULTIPLE redundant layers** that build on each other.
+
+### Core Principle
+
+```
+Layer 1 fails → Layer 2 catches
+Layers 1+2 fail → Layer 3 catches
+Combined compliance > any single layer
 ```
 
-### Files Modified
-- `.agent/workflows/generate-bullets.md` (lines 22-30) ✅ DONE
+### Platform-Specific Layering
+
+**Platform 1: Chat Interface (~30-40% → ~60-70% with layers)**
+
+| Layer | Mechanism | Implementation |
+|-------|-----------|----------------|
+| 1 | Multi-turn prompts | Each stage = separate conversation turn |
+| 2 | User verification checklist | Standalone file user checks before approval |
+| 3 | Copy-paste validation prompts | User validates output against checklist |
+| 4 | Human approval gates | User must explicitly approve before next stage |
+
+**Platform 2: Claude Project (~50-60% → ~70-80% with layers)**
+
+| Layer | Mechanism | Implementation |
+|-------|-----------|----------------|
+| 1 | Minimized context | Reduce attached files to essential only |
+| 2 | Artifact output templates | Pre-structured output format |
+| 3 | Pre-generation checklist | Visible checklist before generation |
+| 4 | Recency anchors | Critical instructions at prompt end |
 
 ---
 
-## Layer 2: External Validation Module (Negative Checklist)
+## Implementation Plan (For Gemini)
 
-### Implementation Steps
+### Artifacts to Create
 
-**Step 1: Create bo_output-validator.md**
-An 8-point "Negative Checklist" that defines explicit FAIL conditions.
+**1. Layered Enforcement Workflow File** (Modular, NOT in generate-bullets.md)
+- Location: `docs/workflows/layered-enforcement-chat.md`
+- Contains: Copy-paste ready prompts for each stage
+- Purpose: User follows this workflow for chat interfaces
 
-### Files Created
-- `optimization-tools/bullet-optimizer/bo_output-validator.md` ✅ DONE
+**2. User Verification Checklist** (Standalone)
+- Location: `docs/checklists/bullet-generation-verification.md`
+- Contains: All guardrails user should verify
+- References: SSOT in `bo_output-validator.md`
+- Purpose: User validates output before approval
 
----
+**3. Claude Project Minimized Prompt File**
+- Location: `optimization-tools/bullet-optimizer/bo_claude-project-prompt.md`
+- Contains: Minimal instructions for Claude Project use
+- Purpose: Reduce context saturation
 
-## Layer 3: Recency Anchor (System Closer)
+**4. Files to Update/Harden for Claude Project**
+- `bo_bullet-generation-instructions.md` - Add recency anchors
+- `bo_output-validator.md` - Add user verification format
+- `PROJECT-INSTRUCTIONS.md` - Add layered defense references
 
-### Implementation Steps
+### Implementation Sequence
 
-**Step 1: Append <final_recency_anchor> to PROJECT-INSTRUCTIONS.md**
-Place critical terminal instructions at the absolute END of the prompt.
+```
+Phase 1: Chat Interface Layers
+├── Create layered-enforcement-chat.md
+├── Create bullet-generation-verification.md
+└── Test: Multi-turn workflow with verification checklist
 
-### Files Modified
-- `PROJECT-INSTRUCTIONS.md` (lines 4285-4296) ✅ DONE
+Phase 2: Claude Project Layers
+├── Create bo_claude-project-prompt.md
+├── Update bo_bullet-generation-instructions.md with recency anchors
+├── Update bo_output-validator.md with user verification format
+└── Test: Full generation with all layers active
+```
 
----
+### Success Criteria
 
-## Layer 4: Knowledge Graph Updates
-
-### Implementation Steps
-
-**Step 1: Document patterns and gotchas**
-
-### Files Modified
-- `docs/knowledge/patterns.md` - Added "Pre-flight Rule Mapping" and "Recency Anchor" patterns ✅ DONE
-- `docs/knowledge/gotchas.md` - Added "Vibe-Coding Drift" entry ✅ DONE
-- `docs/lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md` - Updated to v1.1 ✅ DONE
-
----
-
-## Remaining Work
-
-### Task 4.1: Verify Recency Anchor Content
-- Confirm `<final_recency_anchor>` includes all critical constraints
-- Currently contains: terminology check, mandatory EOF string
-
-### Task 5.1: Shadow Sync Verification
-- Run `/enforce-shadow-sync --auto`
-- Fix remaining "Phase 1" terminology in:
-  - `ra_job-history-template.md`
-  - `ra_quality-gates-guardrails.md`
-  - `ra_job-history-creation.md`
-
-### Task 5.2: Functional Testing
-- Test bullet generation with Position 0 (personal project) and Position 1 (most recent W2)
-- Verify all 8 validation points pass
+| Metric | Target |
+|--------|--------|
+| Chat Interface Compliance | >60% (up from ~30-40%) |
+| Claude Project Compliance | >70% (up from ~50-60%) |
+| User Verification Catches | >80% of violations |
 
 ---
 
-## Estimated Time
-- Development: 1 hour (mostly complete)
-- Testing: 30 minutes
-- Documentation: 15 minutes
-- **Total:** ~2 hours
+## Why This Approach Works
+
+1. **No Single Point of Failure:** Multiple layers catch different failure modes
+2. **Human-in-the-Loop:** Active enforcement via user verification
+3. **Modular Files:** Easy to update individual layers without affecting others
+4. **Progressive Enhancement:** Can add more layers as needed
 
 ---
 
-## Risk Assessment
-- **Low Risk:** Knowledge graph updates (documentation only)
-- **Medium Risk:** Workflow changes could affect existing generation flows
-- **Low Risk:** Recency anchor adds no new logic, only reinforcement
+## Related Documentation
+
+- **Pattern:** [Layered Defense Strategy](../../knowledge/patterns.md#layered-defense-strategy)
+- **Concept:** [Passive vs Active Enforcement](../../knowledge/concepts.md#passive-vs-active-enforcement)
+- **Incident Analysis:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](../../knowledge/ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
+- **Platform Solutions:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](../../knowledge/ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)

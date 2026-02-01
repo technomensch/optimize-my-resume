@@ -2,8 +2,30 @@
 
 **Purpose:** Quick-reference navigation across all knowledge domains
 
-**Last Updated:** 2026-01-19
-**Total Entries:** 14 concepts, 15 patterns, 10 gotchas, 8 workflows
+**Last Updated:** 2026-01-30
+**Total Entries:** 16 concepts, 24 patterns, 10 gotchas, 9 workflows
+**Critical Reference:** [Enforcement Failure Analysis & Solutions](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - Jan 29 incident learnings
+
+---
+
+## ⚠️ CRITICAL: Start Here for Enforcement Understanding
+
+**[ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)** is the consolidated reference for understanding why guardrail enforcement failed on Jan 29 and how to prevent regression. This document:
+- Explains the incident timeline (21:00-21:40 UTC)
+- Documents 4+ critical failures that were supposed to be prevented
+- Maps failures to specific guardrails (G1-G37) and lessons learned
+- Explains why documentation-based enforcement cannot force compliance
+- References all related institutional knowledge in one place
+
+**[ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)** proposes structural changes that address the enforcement gap:
+- Human-in-the-loop gates (user approval between stages)
+- External validation scripts (non-bypassable by LLM)
+- Prompt architecture improvements (recency anchors, templates)
+- Combined layered defense strategy
+
+**[scripts/validate_bullets.py](../../scripts/validate_bullets.py)** - External validation script (runs outside LLM, cannot be bypassed)
+
+**Read these if you're implementing any guardrail-dependent workflows.**
 
 ---
 
@@ -13,6 +35,8 @@
 - **[Patterns](patterns.md)** - Reusable design patterns
 - **[Gotchas](gotchas.md)** - Common pitfalls and solutions
 - **[Workflows](workflows.md)** - Step-by-step processes
+- **[Enforcement Failure Analysis](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)** - Why enforcement failed (Jan 29 incident)
+- **[Enforcement Structural Solutions](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)** - How to prevent recurrence (proposals)
 
 ---
 
@@ -32,6 +56,14 @@ Optimize-My-Resume Project
 │  ├─ Knowledge Graph → [concepts.md#knowledge-graph]
 │  └─ Session Summaries → [concepts.md#sessions]
 │
+├─ Enforcement (CRITICAL)
+│  ├─ Passive vs Active → [concepts.md#passive-vs-active-enforcement]
+│  ├─ Platform-Specific → [patterns.md#platform-specific-enforcement]
+│  ├─ Layered Defense → [patterns.md#layered-defense-strategy]
+│  ├─ Multi-Turn Workflow → [workflows.md#multi-turn-enforcement]
+│  ├─ Incident Analysis → [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md]
+│  └─ Solutions → [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md]
+│
 └─ Workflows
    ├─ Documentation Update → [workflows.md#doc-update]
    ├─ Plan Mode → [workflows.md#plan-mode]
@@ -44,20 +76,34 @@ Optimize-My-Resume Project
 ## Quick Links
 
 **Most Referenced:**
+- **[Enforcement Failure Analysis & Solutions](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)** ← START HERE (2026-01-30)
+- **[Layered Defense Strategy](patterns.md#layered-defense-strategy)** - Multiple redundant mechanisms per platform
+- **[Platform-Specific Enforcement](patterns.md#platform-specific-enforcement)** - Compliance expectations by platform
+- **[Passive vs Active Enforcement](concepts.md#passive-vs-active-enforcement)** - Why documentation alone fails
+- [The Vibe-Coding Drift](gotchas.md#the-vibe-coding-drift) - Why guardrails failed
+- [3-Stage Checkpoint Pattern](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md#what-the-3-stage-checkpoint-pattern-was-designed-to-prevent) - How to prevent regression
+- [Multi-Turn Enforcement](workflows.md#multi-turn-enforcement) - Chat interface enforcement workflow
 - Shadow Modularization → [concepts.md#shadow-modularization]
 - Action Verb Categories → [concepts.md#action-verb-categories]
 - Surgical Updates → [concepts.md#surgical-updates]
 
-**Common Gotchas:**
+**Critical Gotchas (Enforcement):**
+- [The Vibe-Coding Drift](gotchas.md#the-vibe-coding-drift) - Model reverts to training bias in saturated context
+- [Instructional Saturation](gotchas.md#instructional-saturation) - Rules lose priority in long context windows
+- [Recursive Constraint Drift](gotchas.md#recursive-constraint-drift) - Interdependent constraints cause failures
 - Skills Not Appearing → [gotchas.md#skills-not-appearing]
 - Unverified Skill Hallucination → [gotchas.md#unverified-skill-hallucination]
 - Lost Content in Updates → [gotchas.md#lost-content-in-updates]
 
-**Recent Additions:**
+**Recent Additions (2026-01-30):**
+- Layered Defense Strategy Pattern (2026-01-30) - Multiple redundant enforcement mechanisms per platform
+- Platform-Specific Enforcement Pattern (2026-01-30) - Compliance expectations by platform (~30-95%)
+- Passive vs Active Enforcement Concept (2026-01-30) - Why documentation alone cannot force compliance
+- Multi-Turn Enforcement Workflow (2026-01-30) - Chat interface stage separation
+- Enforcement Structural Solutions v2.0 (2026-01-30) - 4 platform-specific solution options
+- Enforcement Failure Analysis & Solutions (2026-01-30) - Consolidated incident reference
 - Application Optimization Workflow (2026-01-19)
 - Custom Keyword Hub (2026-01-19)
-- Interactive Tag Toggling Pattern (2026-01-19)
-- Memory System Architecture (2026-01-02)
 
 ---
 

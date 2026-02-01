@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-29
-**Entries:** 23
+**Last Updated:** 2026-01-30
+**Entries:** 24
 
 ---
 
@@ -25,9 +25,17 @@
 - [Effective LLM Constraints](#effective-llm-constraints) - Positive constraints and pre-flight checks
 - [3-Stage Validation Checkpoint](#3-stage-validation-checkpoint) - Breaking recursive problems into planning, gated generation, and reconciliation
 - [Hub-and-Spoke Delegation](#hub-and-spoke-delegation) - Centralized logic for multi-interface synchronization
+- [Metric-Only Reporting](#metric-only-reporting) - Hardening validation against AI momentum drift
+- [Insolvency Deadlock](#insolvency-deadlock) - Deterministic stopping rules for structural conflicts
+- [Identifier Decoupling](#identifier-decoupling) - Mapping local persistence to platform drift
+- [Layered Defense Strategy](#layered-defense-strategy) - Multiple redundant enforcement mechanisms per platform
+- [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy) - Structural constraints moving from passive documentation to active validation gates (v9.3.7)
+- [Input Sanitization Layer (Layer 0)](#input-sanitization-layer-layer-0) - Unicode normalization and character injection prevention
 - [Pipeline Integration Pattern](#pipeline-integration-pattern) - Auto-invoke validators from generators for seamless enforcement
 - [Fail-Closed Enforcement](#fail-closed-enforcement) - Structural validation gates before output delivery
 - [Compliance Tracking Architecture](#compliance-tracking-architecture) - Layer 5 observability for monitoring enforcement drift
+- [Compliance Rate Tracking](#compliance-rate-tracking) - Continuous monitoring to detect enforcement drift over time
+- [Positive Constraint Framing](#positive-constraint-framing) - Avoiding Pink Elephant Problem via affirmative commands instead of negation
 
 ---
 
@@ -163,6 +171,36 @@
 
 ---
 
+### Metric-Only Reporting (Layer 3 Hardening)
+
+**Problem:** Subjective "Pass/Fail" (vibe-checking) allows the agent to "approve" its own violations due to Completion Bias.
+**Solution:** Prohibit Boolean status icons without accompanying raw metrics (e.g., `Actual Count vs Limit`).
+**When to use:** Final stage reconciliation tables, budget enforcement audits.
+
+**Quick Reference:**
+- **Bad:** `Budget: ✅`
+- **Good:** `Budget: 512 words / 500 limit | FAIL`
+- **Logic:** If the numbers don't support the status, the audit is a hallucination.
+
+**See:** [Agentic Momentum Lesson](../lessons-learned/process/Lessons_Learned_Agentic_Momentum_Governance.md)
+
+---
+
+### Insolvency Deadlock
+
+**Problem:** Structural constraints (e.g., word count vs. mandatory bullet counts) become mathematically impossible to satisfy.
+**Solution:** Implement explicit "Deterministic Stop" rules that force the agent to report the conflict rather than faking a compromise.
+**When to use:** Deep-history resume generation (15+ years) or high-density guardrail environments.
+
+**Quick Reference:**
+- **Trigger:** If Rule A and Rule B are mutually exclusive in current context.
+- **Action:** STOP. State the logical deadlock. Do not attempt "simulation" or "best effort."
+- **Policy:** The agent is authorized to fail the task to preserve the integrity of the logic core.
+
+**See:** [Agentic Momentum Lesson](../lessons-learned/process/Lessons_Learned_Agentic_Momentum_Governance.md)
+
+---
+
 ### Recency Anchor
 
 **Problem:** In long context windows (4,000+ lines), instructions placed at the start or middle lose attention weight/priority (The "Lost in the Middle" problem).
@@ -172,6 +210,76 @@
 **Quick Reference:**
 - Every prompt should have a "Hardened Exit Clause" at the bottom.
 - Prevents the agent from "forgetting" the format while processing the bulk content.
+
+**Limitation (Jan 29, 2026):** Recency anchors alone are insufficient. During production testing, all recency anchors were in place but still bypassed. Must combine with human-in-the-loop gates or external validation.
+
+**See:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
+
+---
+
+### Platform-Specific Enforcement
+
+**Problem:** Documentation-based enforcement fails across all platforms because LLMs can read, understand, and still ignore instructions. Different platforms have different enforcement capabilities.
+**Solution:** Match enforcement strategy to platform capabilities, from weakest (chat interfaces) to strongest (programmatic GUIs).
+**When to use:** Selecting enforcement approach for any guardrail-dependent workflow.
+
+**Quick Reference:**
+
+| Platform | Enforcement Method | Expected Compliance |
+|----------|-------------------|---------------------|
+| Chat Interface | Forced multi-turn prompts | ~30-40% |
+| Claude Project | Minimized context + artifacts | ~50-60% |
+| Google AI Studio | Structured prompts + low temp | ~50-70% |
+| JSX GUI | External validation + UI gates | ~95%+ |
+
+**Key Insight:**
+- Platforms 1-3 are ALL probabilistic - model CAN still ignore instructions
+- Platform 4 (JSX GUI) is the ONLY option with true enforcement
+- For production use, invest in programmatic validation
+
+**Evidence (Jan 30, 2026):** All previous documentation-based attempts (template-forcing, recency anchors, 3-stage checkpoints, Claude Projects with full guardrails) were tried and ALL failed.
+
+**See:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md#platform-specific-solution-options)
+
+---
+
+### Layered Defense Strategy
+
+**Problem:** Single enforcement mechanisms fail unpredictably. Platform-Specific Enforcement shows compliance ranges (30-95%), but within each platform, single solutions have high variance.
+**Solution:** Implement MULTIPLE redundant enforcement mechanisms per platform that build on each other, so failure of one layer doesn't cause complete bypass.
+**When to use:** Any guardrail-dependent workflow where compliance must be maximized within platform constraints.
+
+**Quick Reference:**
+
+**The Principle:** Each enforcement layer adds to previous layers, not replaces them:
+- Layer 1 fails → Layer 2 catches
+- Layers 1+2 fail → Layer 3 catches
+- Combined compliance > any single layer
+
+**Platform Layering Examples:**
+
+| Platform | Layer 1 | Layer 2 | Layer 3 | Layer 4 |
+|----------|---------|---------|---------|---------|
+| Chat Interface | Multi-turn prompts | User verification checklist | Copy-paste validation | Human approval gates |
+| Claude Project | Minimized context | Artifact output templates | Pre-generation checklist | Recency anchors |
+| Google AI Studio | Low temperature | Structured output | System instruction hardening | Multi-turn structure |
+| JSX GUI | UI-level gates | External validation script | State machine workflow | Human approval UI |
+
+**Why Layers > Single Solutions:**
+- Single solution at 60% compliance: 40% failure rate
+- 3 independent layers at 60% each: ~6.4% failure rate (0.4³)
+- Layers aren't fully independent, but combined effect is still significantly better
+
+**Implementation Approach:**
+1. Start with highest-impact layer for platform
+2. Add next layer only after first is working
+3. Test combined compliance before adding more
+4. Document which layer catches which failure modes
+
+**Evidence (Jan 30, 2026):** Previous single-solution attempts all failed. Multi-layered approach proposed after production failure analysis.
+
+**See:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)
+**Related:** [Platform-Specific Enforcement](#platform-specific-enforcement), [Passive vs Active Enforcement](concepts.md#passive-vs-active-enforcement)
 
 ---
 
@@ -187,25 +295,25 @@
 - **Critical for:** Enforcement of G14 (Density), G24 (Char Limits), and G29 (Metric Preservation/Data Integrity).
 
 **See:** [Lesson: Effective LLM Constraints](../lessons-learned/process/Lessons_Learned_Effective_LLM_Constraints.md)
-+
-+---
-+
-+### 3-Stage Validation Checkpoint
-+
-+**Problem:** LLMs fail to satisfy multiple interdependent/recursive constraints (e.g., Char limits vs. Word budget) in a single-pass monolithic validation.
-+**Solution:** Decouple validation into three sequential, visible stages: Planning → Gating → Reconciliation.
-+**When to use:** Multi-position resume generation, complex summarization with hard length and uniqueness constraints.
-+
-+**Quick Reference:**
-+1. **Stage 1 (Budget Planning):** Force LLM to allocate resources (bullets/words) across all units BEFORE generation starts.
-+2. **Stage 2 (Incremental Gates):** Require visible "Pass/Fail" indicators for each unit during the token stream.
-+3. **Stage 3 (Final Reconciliation):** Verify total output against global budgets and provide explicit fallback logic (e.g., "If over budget, delete from oldest first").
-+
-+**Benefit:** Prevents "Generate Then Panic" drift where the LLM realizes it failed a constraint and makes destructive retroactive edits.
-+
-+**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
-+
-+---
+
+---
+
+### 3-Stage Validation Checkpoint
+
+**Problem:** LLMs fail to satisfy multiple interdependent/recursive constraints (e.g., Char limits vs. Word budget) in a single-pass monolithic validation.
+**Solution:** Decouple validation into three sequential, visible stages: Planning → Gating → Reconciliation.
+**When to use:** Multi-position resume generation, complex summarization with hard length and uniqueness constraints.
+
+**Quick Reference:**
+1. **Stage 1 (Budget Planning):** Force LLM to allocate resources (bullets/words) across all units BEFORE generation starts.
+2. **Stage 2 (Incremental Gates):** Require visible "Pass/Fail" indicators for each unit during the token stream.
+3. **Stage 3 (Final Reconciliation):** Verify total output against global budgets and provide explicit fallback logic (e.g., "If over budget, delete from oldest first").
+
+**Benefit:** Prevents "Generate Then Panic" drift where the LLM realizes it failed a constraint and makes destructive retroactive edits.
+
+**See:** [Lesson: Recursive Constraint Validation](../lessons-learned/process/Lessons_Learned_Recursive_Constraint_Validation.md)
+
+---
 +
 
 ---
@@ -448,6 +556,19 @@ Keywords → Category:
 
 **See:** [Guardrail #31](../../PROJECT-INSTRUCTIONS.md)
 
+### Identifier Decoupling (Dual-ID Policy)
+
+**Problem:** Local context (folders/branches) drifts from platform serial numbering (GitHub Issues), causing confusing renames.
+**Solution:** Map local persistent IDs to platform serial IDs instead of attempting to align them.
+**When to use:** Project management across local and cloud platforms.
+
+**Quick Reference:**
+- **Local ID:** `issue-85` (Logical, persistent, used for file paths/branches).
+- **Platform ID:** `#97` (Serial, drifts, used for tracking).
+- **Policy:** Never rename local assets to match platform drift. Always maintain a mapping matrix in metadata.
+
+**See:** [Identifier Decoupling Lesson](../lessons-learned/process/Lessons_Learned_Identifier_Decoupling.md)
+
 ---
 
 ## Interaction Patterns
@@ -543,5 +664,123 @@ Keywords → Category:
 
 ---
 
+## v9.3.7 Enforcement Patterns (January 2026 Research)
+
+### Four-Layer Enforcement Strategy
+
+**Problem:** Passive instruction-based guardrails fail in production (v9.3.6 proved this). Documentation alone cannot prevent LLM drift.
+
+**Solution:** Move from passive documentation to active structural constraints across four layers:
+1. **Layer 1:** Hard mathematical limits in prompt template
+2. **Layer 2:** JSON validation gates requiring explicit proof
+3. **Layer 3:** Multi-turn workflow with user approval gates
+4. **Layer 4:** Literal guardrail code injected as pseudo-code
+
+**When to use:**
+- Whenever implementing guardrails that must not be bypassable
+- Building production-grade LLM applications
+- Requiring defense-in-depth with multiple validation layers
+
+**Quick Reference:**
+- Layer 1 addresses: Positions omitted, wrong order, budget ignored
+- Layer 2 addresses: Invisible validation, fake compliance claims
+- Layer 3 addresses: Skipped stages, impossible constraints
+- Layer 4 addresses: Guardrails treated as suggestions
+- Defense-in-depth: Failure of any single layer doesn't cause complete bypass
+- Generalized pattern: Gemini independently applied same architecture to custom keywords (validates universality)
+
+**See:** [docs/plans/v9.3.7-guardrail-enforcement-fix.md](../plans/v9.3.7-guardrail-enforcement-fix.md) - Four-Layer Strategy section
+
+**Related:** [Layered Defense Strategy](#layered-defense-strategy), [3-Stage Validation Checkpoint](#3-stage-validation-checkpoint), [Insolvency Deadlock](#insolvency-deadlock)
+
+---
+
+### Input Sanitization Layer (Layer 0)
+
+**Problem:** Even commercial guardrails (Microsoft Azure Prompt Shield, Meta Prompt Guard) can be bypassed using Unicode tricks, zero-width characters, and homoglyphs.
+
+**Solution:** Pre-process all input with normalization and sanitization:
+1. Normalize Unicode to UTF-8
+2. Strip zero-width characters (U+200B, U+200C, U+200D)
+3. Detect and flag homoglyphs
+4. Enforce input length constraints
+5. Log suspicious patterns for monitoring
+
+**When to use:**
+- Before any critical guardrail processing
+- When accepting user input for high-stakes operations
+- When defending against prompt injection attempts
+
+**Quick Reference:**
+- Research shows character injection achieved 100% evasion against commercial guardrails (arXiv 2504.11168)
+- Normalization alone prevents most Unicode evasion techniques
+- Suspicious patterns logged enable future threat detection
+- Works in conjunction with Layers 1-4
+
+**See:** [Guardrail Evasion via Unicode](../knowledge/gotchas.md#guardrail-evasion-via-unicode) gotcha entry
+
+**Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy)
+
+---
+
+### Compliance Rate Tracking
+
+**Problem:** Enforcement compliance can degrade over time without visibility. Drift is silent until critical (discovered too late).
+
+**Solution:** Implement continuous monitoring:
+1. Log per-guardrail pass/fail for each generation
+2. Track aggregate compliance by session/platform/guardrail
+3. Alert if compliance drops below threshold
+4. Create dashboard of trends over time
+5. Identify which guardrails fail most frequently
+
+**When to use:**
+- After implementing any guardrail system
+- In production or high-stakes applications
+- When compliance is business-critical
+- Every session in iterative development
+
+**Quick Reference:**
+- Expected compliance rates vary by platform (30-95% depending on architecture)
+- Alert thresholds: Platform 2 < 50%, Platform 3 < 40%
+- Tracks drift early before it becomes critical
+- Identifies weak guardrails that need reinforcement
+- Real-world example: v9.3.6 drift from 100% documented compliance to 0% actual compliance
+
+**See:** [Silent Enforcement Drift](../knowledge/gotchas.md#silent-enforcement-drift) gotcha entry
+
+**Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Probabilistic Enforcement Myth](../knowledge/gotchas.md#probabilistic-enforcement-myth)
+
+---
+
+### Positive Constraint Framing
+
+**Problem:** Negative instructions ("Don't output X", "Never skip Y") can prime the model to do the opposite behavior (Pink Elephant Problem).
+
+**Solution:** Reframe all constraints as affirmative commands:
+- **❌ Instead of:** "DO NOT output positions in wrong order"
+- **✅ Use:** "All positions MUST be in chronological order"
+- **❌ Instead of:** "NEVER skip the Budget Table"
+- **✅ Use:** "Budget Table MUST appear as first output"
+
+**When to use:**
+- Writing any guardrail or constraint language
+- Defining system prompts or behavioral requirements
+- Creating validation rules or acceptance criteria
+
+**Quick Reference:**
+- Negative language primes opposite behavior (research-backed)
+- Positive framing improves compliance measurably
+- Anthropic's prompt engineering best practices recommend affirmative language
+- Applies to all guardrail layers (1, 2, 3, 4)
+- Replace "DO NOT", "NEVER", "AVOID" with "MUST", "Always", "Required to"
+
+**See:** [The Pink Elephant Problem](../knowledge/gotchas.md#the-pink-elephant-problem) gotcha entry
+
+**Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Effective LLM Constraints](#effective-llm-constraints)
+
+---
+
 **Maintenance:** Add new patterns as they emerge from practice
 **Created:** 2026-01-02
+**Last Updated:** 2026-01-30 (Added v9.3.7 enforcement patterns)

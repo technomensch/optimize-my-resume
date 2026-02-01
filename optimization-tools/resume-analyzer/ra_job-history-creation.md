@@ -50,7 +50,7 @@ This protocol guides the creation of a comprehensive job history file that serve
 - Key achievements or differentiators]
 ```
 
-**Purpose:** Master summary that can be customized per-JD in Job Fit Analyzer.
+**Purpose:** Master summary for general career overview; Project 2 handles its own tailored summary logic.
 
 **Guidelines:**
 - Keep factual and evidence-based
@@ -608,7 +608,7 @@ Before marking job history as complete:
 
 ## Job History Quality Gates (Guardrails)
 
-### Guardrail #1: Metric Isolation & Traceability
+### G1: Metric Isolation & Traceability
 
 > **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (primary) and [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (secondary).
 
@@ -636,7 +636,7 @@ Before marking job history as complete:
 </metric_isolation_guardrail>
 ```
 
-### Guardrail #17: Scope Attribution Validation
+### G17: Scope Attribution Validation
 
 > **Implementation Target:** Add to [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md).
 
@@ -660,7 +660,7 @@ Before marking job history as complete:
 </scope_attribution_guardrail>
 ```
 
-### Guardrail #5: honest_limitations Enforcement (Secondary)
+### G5: honest_limitations Enforcement (Secondary)
 
 > **Implementation Target:** Add to [evidence-matching.md](optimization-tools/bullet-optimizer/bo_evidence-matching.md) (primary) and [job-history-creation.md](optimization-tools/resume-analyzer/ra_job-history-creation.md) (secondary).
 
@@ -677,6 +677,41 @@ Before marking job history as complete:
       REDUCE claim to match limitation.
   </validation>
 </honest_limitations_enforcement>
+```
+
+### G43: Positional Anchoring (Format Agnostic)
+
+**Instruction Text:**
+```xml
+<positional_anchoring_logic id="G43">
+  <context>Handling raw/non-standard resume inputs or legacy job history files.</context>
+  <priority>CRITICAL</priority>
+  <instruction>
+    IF the input data does not follow the v12.1+ Job History XML/Markdown schema:
+    1. **Scan:** Identify distinct employment blocks (Company + Title + Dates).
+    2. **Tag:** Assign a sequential anchor ID starting from [P1] (most recent) to [Pn] (oldest).
+    3. **Citation Mandate:** Every skill extracted into Section 12 MUST be accompanied by at least one [Pn] tag in internal thinking and output validation.
+    4. **Persistence:** These [Pn] tags serve as the Source of Truth for all downstream Evidence Gating (ENH-007).
+  </instruction>
+</positional_anchoring_logic>
+```
+
+### G44: Skills Evidence Gate (Section 12 Hardening)
+
+**Instruction Text:**
+```xml
+<skills_evidence_gate_rule id="G44">
+  <intent>Prevent unverified skill claims in the Master Skills Inventory (Section 12).</intent>
+  <priority>CRITICAL</priority>
+  <rule>
+    For every skill proposed for Section 12:
+    1. **Verification:** The agent MUST search ALL achievements and responsibilities in Section 7 (Job History) for the specific skill or its immediate synonyms.
+    2. **Gating:** IF no evidence is found in any position [P1-Pn]:
+       - BLOCK the skill from being added to the Master Inventory.
+       - ALERT the user: "I cannot find evidence of [Skill] in your work history. You must first add a bullet or achievement that demonstrates this skill before I can include it in Section 12."
+    3. **Citation:** Every approved skill MUST be listed with its supporting P-IDs (e.g., "Python [P1, P3]").
+  </rule>
+</skills_evidence_gate_rule>
 ```
 
 ---

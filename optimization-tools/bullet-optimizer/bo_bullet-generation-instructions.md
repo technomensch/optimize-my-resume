@@ -14,9 +14,10 @@
     Generates optimized bullets AND customized professional summary.
   </this_workflow>
   <not_this_workflow>
+    Standard Operation:
     If user just completed Resume Analysis and has NO target JD:
-    STOP. Route to: optimization-tools/narrative-generator/ng_summary-generation.md (for Master Summary only).
-    This workflow requires a JD for keyword optimization.
+    Route to: optimization-tools/narrative-generator/ng_summary-generation.md (for Master Summary only).
+    This workflow MUST include a JD for keyword optimization.
   </not_this_workflow>
 </workflow_disambiguation>
 
@@ -28,7 +29,7 @@
 For every numeric metric or specific achievement, perform an internal "source-check":
 1. Identify the **Position ID (N)** being drafted.
 2. Scan ONLY the source data for Position N.
-3. **Hallucination Prevention:** If the metric appears in any other position but NOT in Position N, it is a HALLUCINATION. Do not use it.
+3. **Hallucination Prevention:** Ensure the metric appears in source data for Position N before use.
 4. Citation: Internally note [Metric X traced to Position N].
 
 ### [G20] Acronym Expansion (Step 1.1 - Pre-draft)
@@ -61,19 +62,28 @@ When rewriting or optimizing existing bullets for keywords:
 1. **Audit Logic (Step 0):** BEFORE drafting the final bullet, the agent MUST perform a visible "Data Integrity Audit" in its internal thinking or as a prefatory note:
    - `Original Metrics: [List every integer, %, $, duration from source]`
    - `Target Metrics: [Verify ALL are present in the planned draft]`
-2. **Comparison:** Ensure ALL original metrics are retained in the NEW bullet unless explicitly replaced by a superior validated metric.
+2. **Comparison:** Ensure ALL original metrics are retained in the NEW bullet. Superior validated metrics MUST explicitly replace existing ones rather than deleting them.
 3. **Restoration:** If a metric is lost during rewriting, restore it immediately. **Zero-tolerance for metric loss.**
 
 ---
 
 ## 2. Structural & Recursive Constraints
 
-### [G40] 3-Stage Validation Checkpoint (The Anti-Drift Pattern)
-To satisfy multiple interdependent constraints (Char Limits vs. Word Budget), follow this mandatory sequence:
+### [G40] 3-Stage Validation Checkpoint (Unified System Hardening)
+To satisfy multiple interdependent constraints and enforce absolute guardrail compliance, the agent MUST follow this mandatory sequence for every generation set. This provides **multi-check redundancy** (Layer 1: Plan, Layer 2: Think, Layer 3: Reconcile).
 
-1. **Stage 1 (Budget Planning):** Before generation, output a **Budget Allocation Table**. Estimate word counts per position. Total MUST be 350-500 words.
-2. **Stage 2 (Incremental Gating):** For EVERY bullet, verify in thinking: 100-210 chars, No 3+ word phrase repeats (G15), and Metric Preservation (G29).
-3. **Stage 3 (Final Reconciliation):** Output a visible reconciliation table after all bullets. Verify word count and density distribution.
+1. **Stage 1 (System Planning):** Before generation, output a **Unified Planning Table**.
+   - **Metrics:** Est. Word Count (Total 350-500) | Density per Pos (G14).
+   - **Rules:** Category Allocation (Plan G37 floor) | Acronym Inventory (G20).
+
+2. **Stage 2 (Incremental Gating):** For EVERY bullet line, perform a **Real-time Thinking Audit**:
+   - `[Length: 100-210 chars] | [Tense: No Gerunds/G35] | [Trace: Source-Check/G31] | [Repetition: Unique/G15]`
+
+3. **Stage 3 (Final Reconciliation):** After generation, output a **Guardrail Health Check Table**.
+   - **Metric-Only Reporting:** All validation MUST use raw numbers (e.g., "Actual: 492 / Limit: 500"). Subjective ✅/❌ icons are strictly prohibited for primary validation.
+   - **Verification Requirement:** Summarize raw metrics for: Budget (G8 word count), Math Integrity (G36 citation count), Category Floor (G37 distribution), Symbol Consistency (G22 count), and Terminology Normalization.
+   - **Insolvency Deadlock (G41):** If a structural conflict occurs (e.g., 500-word limit vs. Mandatory 2-bullet minimum for 15+ years of history), you MUST STOP and report the "Logic Deadlock." Provide clear alternatives for a compromise.
+   - **BLOCKING GATE:** If any numeric metric exceeds limits or fails floor requirements in `bo_output-validator.md`, you MUST auto-repair or engage the Deadlock logic.
 
 ### [G8] Budget Enforcement (REVISED)
 - **Total Word Count:** 350-500 words across all work experience sections.
@@ -144,11 +154,11 @@ Ensure the explicit display tags are used, always prefixed with a Markdown bulle
 - `- - [No Metrics] [[Category]] [Verb] [remainder]`
 
 ### [FMT] Symbol & Spacing Guardrail (G22)
-- **Zero Em-dash Policy:** NEVER use em-dashes (`—`) in resume bullets. Use hyphens (`-`) or rephrase.
+- **Hyphen Policy:** Use standard hyphens (`-`) consistently in resume bullets.
 - **Hyphenation Rule:** Use hyphens without spaces for compound adjectives (e.g., `multi-agent`, `cross-functional`).
-- **No Spaced Hyphens:** 
-  - **Inside Sentences:** Avoid ` - ` pattern; use tight hyphens for adjectives.
-  - **Date Ranges:** Use tight hyphens `[Start]-[End]` (e.g., `Jan 2023-Present`). Spaced hyphens in ranges are a FAIL.
+- **Tight Hyphen Enforcement:** 
+  - **Inside Sentences:** Use tight hyphens for adjectives.
+  - **Date Ranges:** Use tight hyphens `[Start]-[End]` (e.g., `Jan 2023-Present`). 
 
 ### [FMT] Terminal Recency Anchor (THE SYSTEM CLOSER)
 The output MUST conclude with exactly this hard-coded recommendation:
@@ -157,6 +167,9 @@ The output MUST conclude with exactly this hard-coded recommendation:
 ---
 
 ## Version History
+- **9.3.5.5 (2026-01-29):** Agent Governance module extraction (ENH-008). Modularized dev-only rules to docs/governance/agent-governance.md. <!-- ENH-008 -->
+- **9.3.5.4 (2026-01-29):** Format-agnostic Skills Inventory prep (ENH-007). Baseline for on-the-fly positional tagging and evidence gating. <!-- ENH-007 prep -->
+- **9.3.5.3 (2026-01-29):** Implemented Metric-Only Reporting and G41 Insolvency Deadlock rules. <!-- issue-85 hotfix -->
 - **9.3.5 (2026-01-28):** Hardened formatting gates and added bo_output-validator reference. <!-- issue-85 fix -->
 - **9.3.2.1 (2026-01-28):** Added G5, G11, G12, G21 to complete guardrail consolidation.
 - **9.3.2 (2026-01-28):** Initial creation with G1, G8, G9, G29, G30, G33.

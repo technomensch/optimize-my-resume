@@ -1,7 +1,7 @@
 # Workflow Quick References
 
-**Last Updated:** 2026-01-19
-**Entries:** 8
+**Last Updated:** 2026-01-30
+**Entries:** 9
 
 ---
 
@@ -15,6 +15,7 @@
 - [Session Summary](#session-summary) - Preserve context before limits
 - [Governance Lifecycle](#governance-lifecycle) - Mandatory project management steps
 - [Application Optimization](#application-optimization) - End-to-end fit and customization flow
+- [Multi-Turn Enforcement](#multi-turn-enforcement) - Forced stage separation for chat interfaces
 
 ---
 
@@ -269,6 +270,67 @@ cp .claude/skills/*.md ~/.claude/commands/   # Install skills
 
 **See:** [Pattern: Two-Step Verification](patterns.md#two-step-verification)
 **Implementation:** `Should-I-Apply-webgui.jsx` v1.3.0+
+
+---
+
+### Multi-Turn Enforcement
+
+**Purpose:** Enforce stage separation in chat interfaces where external scripts cannot run
+
+**Context:** After the Jan 29, 2026 enforcement failure, analysis showed that documentation-based enforcement fails in chat interfaces. The ONLY enforceable mechanism is conversation structure itself.
+
+**Quick Steps:**
+
+**Stage 1 Prompt (Budget Planning ONLY):**
+```
+TASK: Generate ONLY a Budget Allocation Table for resume bullets.
+
+JD: [paste JD]
+Job History: [paste or reference]
+
+CRITICAL: Output ONLY the table. Do NOT generate any bullets.
+STOP after the table and wait for approval.
+```
+
+**User reviews, then:**
+
+**Stage 2 Prompt (Per Position):**
+```
+APPROVED allocation: [paste Stage 1 table]
+
+Generate bullets for Position 0 ONLY.
+For each bullet show: [text] - [X chars] - [verb category]
+
+STOP after Position 0. Do not generate Position 1.
+```
+
+**Repeat for each position, then:**
+
+**Stage 3 Prompt (Reconciliation):**
+```
+Here are all generated bullets: [paste all Stage 2 outputs]
+
+Create ONLY a Final Reconciliation Table.
+If ANY check fails, identify which bullets need fixing.
+```
+
+**Why This Works:**
+- Model CANNOT skip stages because each stage is a separate prompt
+- User sees all intermediate outputs
+- Violations caught before they compound
+- No context saturation (each prompt is small)
+
+**Trade-offs:**
+- Slower (10+ prompts for full workflow)
+- Requires active user participation
+- ~30-40% compliance (relies on user vigilance)
+
+**When to use:**
+- Chat interfaces (Claude Chat, Gemini, ChatGPT)
+- When external validation scripts cannot run
+- When Claude Project approach has failed
+
+**See:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md#platform-1-chat-interface-claude-chat-gemini-chatgpt)
 
 ---
 

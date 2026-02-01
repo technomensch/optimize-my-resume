@@ -16,19 +16,6 @@
 1. **Unified Planning Table:**
    - Position ID | Est. Word Count | Bullet Count Allocation.
    - Summed total MUST be <= word budget.
-
-   **Example:**
-   ```
-   | Position | Recency | Bullets | Est. Words |
-   |----------|---------|---------|------------|
-   | 0        | Recent  | 5       | 150        |
-   | 1        | Prior   | 4       | 120        |
-   | 2        | Prior   | 3       | 100        |
-   | 3        | Prior   | 2       | 75         |
-   | 4        | Prior   | 1       | 55         |
-   | TOTAL    |         | 15      | 500        |
-   ```
-
 2. **Chronological Map:**
    - Position order (0, 1, 2...) sorted by Start Date DESC.
 3. **Keyword Distribution Plan:**
@@ -54,19 +41,6 @@
    - Every bullet must show its own internal audit.
 3. **Final Reconciliation Table:**
    - Compare Actual vs. Planned numbers from Turn 1.
-
-   **Example:**
-   ```
-   | Position | Planned Words | Actual Words | Bullets | Status |
-   |----------|---------------|--------------|---------|--------|
-   | 0        | 150           | 148          | 5       | ✓      |
-   | 1        | 120           | 122          | 4       | ✓      |
-   | 2        | 100           | 98           | 3       | ✓      |
-   | 3        | 75            | 76           | 2       | ✓      |
-   | 4        | 55            | 56           | 1       | ✓      |
-   | TOTAL    | 500           | 500          | 15      | ✓      |
-   ```
-
 4. **Compliance Sentinel:**
    - Conclude with the terminal recency anchor.
 

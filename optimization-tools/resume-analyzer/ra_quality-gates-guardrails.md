@@ -374,7 +374,7 @@
   </secondary_grammar_check_rule>
 
   <system_guardrails> <!-- v6.3.0 Change: Replaced checklist with exact XML for all 27 guardrails -->
-    <bullet_grouping_verification_guardrail id="28">
+    <bullet_grouping_verification_guardrail id="G28">
       <priority>CRITICAL</priority>
       <trigger>Before displaying any bullet set in Resume Analysis, Bullet Optimizer, or Job Fit Analyzer</trigger>
       
@@ -407,7 +407,7 @@
         4. Re-run verification before retrying
       </failure_protocol>
     </bullet_grouping_verification_guardrail>
-    <metric_traceability_guardrail id="1">
+    <metric_traceability_guardrail id="G1">
       <instruction>
         For every numeric metric or specific achievement included in the output, you must perform an internal "source-check" before finalizing the draft.
       </instruction>
@@ -419,7 +419,7 @@
       </verification_steps>
     </metric_traceability_guardrail>
 
-    <chronological_validation_guardrail id="2">
+    <chronological_validation_guardrail id="G2">
       <priority>CRITICAL</priority>
       <pre_draft_step>
         Before drafting ANY position content, generate a "Sort Validation Table" in your internal thinking process:
@@ -432,7 +432,7 @@
       </pre_draft_step>
     </chronological_validation_guardrail>
 
-    <summary_abstraction_guardrail id="3">
+    <summary_abstraction_guardrail id="G3">
       <instruction>
         The Professional Summary must function as an "Executive Synthesis," not a "Bullet Echo."
       </instruction>
@@ -443,7 +443,7 @@
       </constraints>
     </summary_abstraction_guardrail>
 
-    <validity_heuristic_check id="4">
+    <validity_heuristic_check id="G4">
       <instruction>
         Perform a "Common Sense Audit" on metric-role pairings.
       </instruction>
@@ -454,7 +454,7 @@
       </audit_questions>
     </validity_heuristic_check>
 
-    <limitation_enforcement_guardrail id="5">
+    <limitation_enforcement_guardrail id="G5">
       <priority>CRITICAL</priority>
       <instruction>
         Before finalizing any bullet point, cross-reference the generated content against the <honest_limitations> section of the target Position.
@@ -467,7 +467,7 @@
       </verification_logic>
     </limitation_enforcement_guardrail>
 
-    <data_loss_prevention_guardrail id="6"> <!-- v6.3.0 Change: Restored original with additions merged -->
+    <data_loss_prevention_guardrail id="G6"> <!-- v6.3.0 Change: Restored original with additions merged -->
       <priority>CRITICAL</priority>
       <trigger>When executing /update-history or modifying existing positions</trigger>
       <instruction>
@@ -502,7 +502,7 @@
       </validation_logic>
     </data_loss_prevention_guardrail>
 
-    <skill_classification_guardrail id="7">
+    <skill_classification_guardrail id="G7">
       <instruction>
         A single skill term cannot exist in both <hard_skills_demonstrated> and <soft_skills_demonstrated> within the same position.
       </instruction>
@@ -513,7 +513,7 @@
       </auto_correction>
     </skill_classification_guardrail>
 
-    <budget_enforcement_guardrail id="8">
+    <budget_enforcement_guardrail id="G8">
       <priority>HIGH</priority>
       <trigger>Before presenting final output</trigger>
       <per_bullet_validation>
@@ -533,7 +533,7 @@
       </total_word_count_validation>
     </budget_enforcement_guardrail>
 
-    <position_verb_diversity_guardrail id="9">
+    <position_verb_diversity_guardrail id="G9">
       <priority>HIGH</priority>
       <instruction>
         Within a SINGLE position, no verb category may be used more than once.
@@ -554,7 +554,7 @@
       </exception>
     </position_verb_diversity_guardrail>
 
-    <keyword_density_guardrail id="10">
+    <keyword_density_guardrail id="G10">
       <priority>MODERATE</priority>
       <instruction>
         Validate that JD keywords are distributed naturally across bullets and summary.
@@ -572,7 +572,7 @@
       </density_rules>
     </keyword_density_guardrail>
 
-    <metric_plausibility_guardrail id="11">
+    <metric_plausibility_guardrail id="G11">
       <priority>HIGH</priority>
       <instruction>
         Apply common-sense validation to numeric claims before output.
@@ -584,7 +584,7 @@
       </plausibility_checks>
     </metric_plausibility_guardrail>
 
-    <recency_weighting_guardrail id="12">
+    <recency_weighting_guardrail id="G12">
       <priority>MODERATE</priority>
       <instruction>
         Allocate bullets based on position recency and JD relevance.
@@ -601,7 +601,7 @@
       </allocation_rules>
     </recency_weighting_guardrail>
 
-    <summary_metric_reconciliation_guardrail id="13">
+    <summary_metric_reconciliation_guardrail id="G13">
       <priority>HIGH</priority>
       <instruction>
         Every quantified claim in the Professional Summary must be traceable to at least one bullet point.
@@ -614,14 +614,14 @@
       </validation_process>
     </summary_metric_reconciliation_guardrail>
 
-    <quality_gate_failure_protocol id="14">
+    <quality_gate_failure_protocol id="G14">
       <priority>CRITICAL</priority>
       <instruction>
         If quality gate fails after 3 iterations, provide diagnostic output to user.
       </instruction>
     </quality_gate_failure_protocol>
 
-    <phrase_repetition_enforcement_guardrail id="15">
+    <phrase_repetition_enforcement_guardrail id="G15">
       <priority>HIGH</priority>
       <instruction>
         Scan ALL bullets and summary for repeated multi-word phrases (3+ words).
@@ -634,7 +634,7 @@
       </detection_logic>
     </phrase_repetition_enforcement_guardrail>
 
-    <master_skills_inventory_guardrail id="16">
+    <master_skills_inventory_guardrail id="G16">
       <priority>CRITICAL</priority>
       <instruction>
         Never add a skill to the <master_skills_inventory> unless it is explicitly and literally supported by a <key_achievement> or <core_responsibility> in the Job History. 
@@ -655,7 +655,7 @@
       </quarantine_logic>
     </master_skills_inventory_guardrail>
 
-    <scope_attribution_guardrail id="17">
+    <scope_attribution_guardrail id="G17">
       <priority>HIGH</priority>
       <instruction>
         Verify that claimed achievements match the user's actual scope of control.
@@ -666,21 +666,21 @@
       </attribution_rules>
     </scope_attribution_guardrail>
 
-    <cross_phase_consistency_guardrail id="18">
+    <cross_phase_consistency_guardrail id="G18">
       <priority>CRITICAL</priority>
       <instruction>
         Job history generated in Resume Analysis is immutable unless user explicitly updates it.
       </instruction>
     </cross_phase_consistency_guardrail>
 
-    <fit_score_consistency_guardrail id="19">
+    <fit_score_consistency_guardrail id="G19">
       <priority>MODERATE</priority>
       <instruction>
         Fit assessment score must be mathematically consistent with identified gaps.
       </instruction>
     </fit_score_consistency_guardrail>
 
-    <acronym_expansion_guardrail id="20">
+    <acronym_expansion_guardrail id="G20">
       <priority>MODERATE</priority>
       <instruction>
         Spell out domain-specific acronyms on first use.
@@ -692,14 +692,14 @@
       </verification_logic>
     </acronym_expansion_guardrail>
 
-    <limitation_bullet_cross_check_guardrail id="21">
+    <limitation_bullet_cross_check_guardrail id="G21">
       <priority>CRITICAL</priority>
       <instruction>
         Check honest_limitations BEFORE recommending bullets for each position.
       </instruction>
     </limitation_bullet_cross_check_guardrail>
 
-    <em_dash_validation_guardrail id="22">
+    <em_dash_validation_guardrail id="G22">
       <priority>HIGH</priority>
       <instruction>
         Scan ALL output text for em-dash characters (—) or spaced hyphens ( - ) before presenting to user.
@@ -713,14 +713,14 @@
       </verification_logic>
     </em_dash_validation_guardrail>
 
-    <user_state_persistence_guardrail id="23">
+    <user_state_persistence_guardrail id="G23">
       <priority>CRITICAL</priority>
       <instruction>
         User-stated preferences (location, remote preference, target roles) must be retained and applied across all phases.
       </instruction>
     </user_state_persistence_guardrail>
 
-    <alternatives_presentation_guardrail id="24">
+    <alternatives_presentation_guardrail id="G24">
       <priority>HIGH</priority>
       <instruction>
         When optimizing bullets, present at least 2 alternatives that respect existing verb category usage.
@@ -731,28 +731,28 @@
       </loop_prevention_principles>
     </alternatives_presentation_guardrail>
 
-    <confirmation_tracking_guardrail id="25">
+    <confirmation_tracking_guardrail id="G25">
       <priority>MODERATE</priority>
       <instruction>
         Track user confirmations within session to avoid redundant questions.
       </instruction>
     </confirmation_tracking_guardrail>
 
-    <output_structure_consistency_guardrail id="26">
+    <output_structure_consistency_guardrail id="G26">
       <priority>HIGH</priority>
       <instruction>
         All phase outputs must follow their defined structure templates.
       </instruction>
     </output_structure_consistency_guardrail>
 
-    <input_type_detection_guardrail id="27">
+    <input_type_detection_guardrail id="G27">
       <priority>HIGH</priority>
       <instruction>
         Before processing user input, classify input type with confidence score.
       </instruction>
     </input_type_detection_guardrail>
 
-    <metric_preservation_guardrail id="29">
+    <metric_preservation_guardrail id="G29">
       <priority>CRITICAL</priority>
       <trigger>When rewriting, optimizing, or editing existing bullets (especially for keyword inclusion)</trigger>
       
@@ -781,7 +781,7 @@
     </metric_preservation_guardrail>
 
     <!-- v8.3.1 Issue #42 -->
-    <guardrail id="30">
+    <guardrail id="G30">
       <name>modularity_compliance</name>
       <priority>CRITICAL</priority>
       <instruction>You MUST NOT modify logic directly in the GUI context. Ensure all system logic follows the v8 hub-and-spoke modular architecture.</instruction>
@@ -792,7 +792,7 @@
       </process>
     </guardrail>
 
-    <guardrail id="31">
+    <guardrail id="G31">
       <name>workflow_lifecycle_compliance</name>
       <priority>CRITICAL</priority>
       <instruction>You MUST NOT proceed to planning or execution without first establishing the necessary project management infrastructure.</instruction>
@@ -804,7 +804,7 @@
       </steps>
     </guardrail>
 
-    <custom_keyword_evidence_guardrail id="32">
+    <custom_keyword_evidence_guardrail id="G32">
       <priority>HIGH</priority>
       <trigger>When a user manually requests a keyword that is NOT found in their job history</trigger>
       <logic>
@@ -822,7 +822,7 @@
        </instruction>
     </narrative_fit_verification>
 
-    <markdown_bullet_enforcement id="34">
+    <markdown_bullet_enforcement id="G34">
       <priority>HIGH</priority>
       <instruction>
         Ensure every optimized bullet in chat output is prefixed with a Markdown bullet character (- ) to force list rendering.
@@ -834,7 +834,7 @@
       </logic>
     </markdown_bullet_enforcement>
 
-    <visual_math_integrity_guardrail id="36">
+    <visual_math_integrity_guardrail id="G36">
       <priority>CRITICAL</priority>
       <instruction>
         The visible ASCII distribution bars MUST mathematically match the actual verb count in the text.
@@ -846,7 +846,7 @@
       </logic>
     </visual_math_integrity_guardrail>
 
-    <verb_distribution_threshold_guardrail id="37">
+    <verb_distribution_threshold_guardrail id="G37">
       <priority>HIGH</priority>
       <instruction>
         Ensure no verb category is left behind. Every category must represent at least 5% of the total bullets.

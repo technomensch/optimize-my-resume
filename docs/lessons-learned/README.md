@@ -1,8 +1,8 @@
 # Lessons Learned - Master Index
 
-**Total Lessons:** 19
+**Total Lessons:** 20
 **Categories:** 4
-**Last Updated:** 2026-01-19
+**Last Updated:** 2026-01-29
 
 ---
 
@@ -11,7 +11,7 @@
 **By Category:**
 - [Architecture](#architecture-lessons) (5)
 - [Debugging](#debugging-lessons) (3)
-- [Process](#process-lessons) (7)
+- [Process](#process-lessons) (8)
 - [Patterns](#patterns-lessons) (2)
 
 **By Tag:** See [Tag Index](#tag-index)
@@ -90,9 +90,15 @@
 
 ## Process Lessons
 
-**7 lessons** - See [process/README.md](process/README.md) for full details
+**8 lessons** - See [process/README.md](process/README.md) for full details
 
-1. **[SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)**
+1. **[Agentic Momentum & The Failure of Subjective Validation](process/Lessons_Learned_Agentic_Momentum_Governance.md)**
+   - Date: 2026-01-29
+   - Tags: #governance #ai-drift #validation #logic-redundancy
+   - Problem: AI prioritizing task completion over rule compliance and subjective reporting.
+   - Solution: Metric-Only reporting + 3-Layer Redundancy (G40) + Deterministic Deadlocks.
+
+2. **[SessionStart Hook Automation](process/Lessons_Learned_SessionStart_Automation.md)**
    - Date: 2026-01-03
    - Tags: #process #automation #hooks #memory-system #claude-code #workflow
    - Problem: Manual triggering overhead for memory system skills
@@ -274,6 +280,7 @@
 ## Chronological Index
 
 **2026**
+- 2026-01-29: [Agentic Momentum & Governance](process/Lessons_Learned_Agentic_Momentum_Governance.md) - Remediating AI drift via Metric-Only validation.
 - 2026-01-19: [Keyword Authenticity Logic](architecture/Lessons_Learned_Keyword_Authenticity_and_Verification.md) - Hallucination prevention via verification hub
 - 2026-01-12: [Shadow Modularization Strategy](architecture/Lessons_Learned_Shadow_Modularization_Strategy.md) - Pivot to Gold Master/Optimized Entrypoint pattern
 - 2026-01-12: [Strategic JD Assessment](architecture/Lessons_Learned_Strategic_Assessment_Methodology.md) - Methodology shift to address false negatives
@@ -326,9 +333,9 @@ grep -r "#architecture" docs/lessons-learned/
 ## Statistics
 
 **By Category:**
-- Process: 7 lessons (37%)
-- Debugging: 4 lessons (21%)
-- Architecture: 6 lessons (32%)
+- Process: 8 lessons (40%)
+- Debugging: 4 lessons (20%)
+- Architecture: 6 lessons (30%)
 - Patterns: 2 lessons (10%)
 
 **Most Common Tags:**
@@ -341,14 +348,14 @@ grep -r "#architecture" docs/lessons-learned/
 
 **Timeline:**
 - First lesson: 2025-12-10
-- Latest lesson: 2026-01-12
-- Total span: 40 days
+- Latest lesson: 2026-01-29
+- Total span: 50 days
 - Average: ~0.48 lessons per day
 
 **Content:**
-- Total lessons: 19
-- Estimated total lines: ~13,100 lines
-- Average per lesson: ~770 lines
+- Total lessons: 20
+- Estimated total lines: ~13,500 lines
+- Average per lesson: ~675 lines
 
 ---
 
@@ -362,4 +369,4 @@ grep -r "#architecture" docs/lessons-learned/
 ---
 
 **Created:** 2026-01-02
-**Last Major Update:** 2026-01-19 (Added Keyword Authenticity lesson)
+**Last Major Update:** 2026-01-29 (Added Agentic Momentum lesson)

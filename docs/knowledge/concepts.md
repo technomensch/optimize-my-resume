@@ -1,7 +1,7 @@
 # Core Concepts
 
-**Last Updated:** 2026-01-28
-**Entries:** 15
+**Last Updated:** 2026-01-30
+**Entries:** 16
 
 ---
 
@@ -24,6 +24,7 @@
 - [Custom Keyword Hub](#custom-keyword-hub) - Centralized skill management logic
 - [Synthetic Metric Attribution](#synthetic-metric-attribution) - Value-driven metrics for solo portfolio projects
 - [Guardrail Hardening Pattern](#guardrail-hardening-pattern) - Active enforcement strategies for LLM compliance
+- [Passive vs Active Enforcement](#passive-vs-active-enforcement) - Why documentation alone cannot force compliance
 
 ---
 
@@ -600,10 +601,61 @@ In long context windows (4,000+ lines), LLMs suffer from "Instructional Saturati
 
 Do not trust the LLM's memory. Trust its ability to audit itself when forced to read a checklist.
 
+**⚠️ CRITICAL UPDATE (Jan 29, 2026):**
+This 3-layer approach was completely bypassed during production testing. The model can read, understand, and STILL ignore instructions. **Documentation-based enforcement is necessary but NOT sufficient.** True enforcement requires:
+1. Human approval gates between stages
+2. External validation scripts (non-bypassable)
+3. UI-level enforcement (for JSX GUIs)
+
 #### Cross-References
 
 - **Lesson:** `Lessons_Learned_Effective_LLM_Constraints.md`
 - **Issue:** `issue-85-harden-guardrail-enforcement`
+- **⚠️ Incident Analysis:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
+- **Solutions:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)
+
+---
+
+### Passive vs Active Enforcement
+
+**Category:** Concept
+**Tags:** #enforcement #llm-engineering #compliance #critical
+
+#### Quick Summary
+
+The distinction between passive enforcement (documentation that CAN be ignored) and active enforcement (mechanisms that CANNOT be bypassed).
+
+#### Details
+
+**Passive Enforcement (Insufficient):**
+- Documentation, guardrails, system prompts
+- Templates, recency anchors, pre-flight checklists
+- Claude Projects with attached files
+- Any instruction the LLM can read and ignore
+
+**Active Enforcement (Required for Production):**
+- Human-in-the-loop gates (user must approve before proceeding)
+- External validation scripts (run outside LLM, non-bypassable)
+- UI-level gates (button disabled until validation passes)
+- Forced multi-turn conversation structure
+
+**Evidence (Jan 29, 2026):**
+All passive enforcement methods were tried and failed:
+- 37 documented guardrails (G1-G37) → IGNORED
+- 3-Stage Checkpoint Pattern → COMPLETELY BYPASSED
+- Recency anchors → INSUFFICIENT
+- Template-forcing → LINES IGNORED
+- Claude Project with all files → FAILED
+
+#### Key Insight
+
+**Documentation cannot force compliance.** The model can read, understand, and completely ignore any instruction. Enforcement requires mechanisms the LLM cannot bypass.
+
+#### Cross-References
+
+- **Incident Analysis:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
+- **Solutions:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)
+- **Pattern:** [Platform-Specific Enforcement](patterns.md#platform-specific-enforcement)
 
 ---
 

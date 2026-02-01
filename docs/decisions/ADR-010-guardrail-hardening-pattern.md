@@ -5,6 +5,7 @@
 - **Deciders:** mkaplan, Antigravity
 - **Consulted:** Issue #97, Issue #85
 - **Related:** ADR-009 (Hub-and-Spoke), ADR-005 (Recency Anchors)
+- **⚠️ INCIDENT (2026-01-29):** This ADR's three-layer pattern was completely bypassed during production testing on 2026-01-29, 21:00-21:40 UTC. **See [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](../../knowledge/ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) for incident analysis proving that architectural specification alone cannot force implementation.**
 
 ---
 

@@ -3,13 +3,19 @@
 ## Version History <!-- v1.0 Addition -->
 - v1.0: v7.0.0 Local Dev Environment tracking, Multi-Agent moved to v8.0.0 <!-- v1.0 Addition -->
 
-## Current Version: v9.3.5 (Complete) <!-- v9.3.5 Release -->
+## Current Version: v9.3.5.3 (Complete) <!-- v9.3.5.3 Release -->
 
 ---
 
 ## v9.3.5 - Guardrail Hardening & Recursive Validation (COMPLETE)
 **Branch:** `v9.3.5-issue-85-harden-guardrail-enforcement` | **Status:** Complete | **Date:** 2026-01-29
 **Plan:** [v9.3.5 Implementation Plan](docs/plans/v9.3.5-issue-85-harden-guardrail-enforcement.md)
+
+### v9.3.5.3 Hotfix: Metric-Only Validation & Deadlock Logic
+**Branch:** `v9.3.5.3-issue-85-metric-validation` | **Status:** Complete | **Date:** 2026-01-29
+**Plan:** [v9.3.5.3 Implementation Plan](docs/plans/v9.3.5.3-issue-85-metric-validation.md)
+
+**Implementation Approach:** Solved the **Self-Reporting Hallucination** problem by mandating **Metric-Only Reporting** (actual counts vs symbolic icons) and implementing **G41 Insolvency Deadlock** logic. Decoupled internal logic IDs from platform serial IDs (GitHub) via the **Dual-ID Policy**.
 
 **Implementation Approach:** Implemented a "Three-Layer Defense" strategy and solved the **Recursive Constraint Satisfaction** problem (Char Limits vs. Word Budget) using an adaptive 3-Stage Checkpoint Pattern (Budget Planning → Gating → Reconciliation).
 

@@ -1,8 +1,8 @@
 # Session Summaries Index
 
-**Total Sessions:** 13
-**Last Session:** 2026-01-28
-**Last Updated:** 2026-01-28
+**Total Sessions:** 14
+**Last Session:** 2026-01-29
+**Last Updated:** 2026-01-29
 
 ---
 
@@ -38,7 +38,10 @@ docs/sessions/
 
 ---
 
-## 2026-01 (12 sessions)
+## 2026-01 (13 sessions)
+
+### 2026-01-29
+- [Unified Guardrail Hardening & Governance Correction](2026-01/2026-01-29_unified-guardrail-hardening.md) - Remediated Agentic Momentum drift and implemented Unified 3-Layer Redundancy (G40) for all system guardrails (Issue #85 Hotfix).
 
 ### 2026-01-28
 - [Hardened Guardrail Enforcement & Terminology Normalization](2026-01/2026-01-28_harden-guardrail-enforcement.md) - Remediated "Vibe-Coding Drift" with pre-flight gates, recency anchors, and G22/G29 hardening (Issue #85).
