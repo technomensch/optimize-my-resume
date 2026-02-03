@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-01-30
-**Entries:** 24
+**Last Updated:** 2026-02-02
+**Entries:** 25
 
 ---
 
@@ -36,6 +36,7 @@
 - [Compliance Tracking Architecture](#compliance-tracking-architecture) - Layer 5 observability for monitoring enforcement drift
 - [Compliance Rate Tracking](#compliance-rate-tracking) - Continuous monitoring to detect enforcement drift over time
 - [Positive Constraint Framing](#positive-constraint-framing) - Avoiding Pink Elephant Problem via affirmative commands instead of negation
+- [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern) - Structured documentation for complex, multi-attempt problems (v9.3.8)
 
 ---
 
@@ -778,6 +779,58 @@ Keywords → Category:
 **See:** [The Pink Elephant Problem](../knowledge/gotchas.md#the-pink-elephant-problem) gotcha entry
 
 **Related:** [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Effective LLM Constraints](#effective-llm-constraints)
+
+---
+
+### Meta-Issue Tracking Pattern
+
+**Problem:** Complex problems span multiple versions and require 3+ solution attempts with evolving understanding. Single-issue tracking doesn't capture root cause evolution or cross-attempt patterns.
+
+**Solution:** Create structured meta-issue directory with:
+1. **Core files:** README (navigation), description (living document), implementation-log (all attempts), test-cases (validation)
+2. **Attempt folders:** Numbered sequentially with solution-approach, plan-reference, attempt-results
+3. **Analysis files:** Root-cause evolution (understanding shifts), timeline, lessons
+4. **Related issues:** Links to GitHub issues/PRs
+5. **Bidirectional KG:** Links to patterns, gotchas, lessons learned
+
+**When to use:**
+- 3+ distinct solution attempts required
+- Root cause shifts as attempts reveal new insights
+- Spans multiple version iterations
+- Multiple related GitHub issues
+- Investigation takes weeks/months
+
+**Quick Reference:**
+- **Directory:** `docs/issues/[meta-issue-name]/`
+- **Naming:** `[version-range]-[domain]-saga/` (e.g., `v9.3.x-enforcement-saga/`)
+- **Structure:** README, description, implementation-log, test-cases, attempts/, analysis/, related-issues/
+- **SOPs:** SOP 0 (creating), SOP 1 (new attempt), SOP 2 (results), SOP 3 (KG update), SOP 4 (troubleshooting)
+- **Reusable:** Generalized templates support ANY meta-issue type (enforcement, performance, migration, etc.)
+
+**Real-World Example:**
+- **v9.3.x Enforcement Saga:** 9 attempts across v9.3.4-v9.3.7.1+
+  - Started: "Better docs will fix it"
+  - Shifted: "Structural constraints work"
+  - Shifted: "Four-layer architecture will fix it"
+  - Shifted: "External validation required"
+  - Current: "Human-in-loop gates necessary"
+  - Root cause: LLM vibe-coding drift (behavioral, not capability limitation)
+
+**Benefits:**
+- Complete audit trail of investigation
+- Root cause evolution documented
+- Pattern discovery across attempts (what works, what doesn't)
+- Bidirectional KG integration (patterns link to attempts, attempts link to patterns)
+- Reusable for future meta-issues
+
+**Trade-offs:**
+- Higher initial setup cost (templates, SOPs)
+- Requires discipline to maintain bidirectional links
+- More comprehensive than single-issue tracking
+
+**See:** [v9.3.8 Meta-Issue Case Study Structure](../plans/v9.3.8-meta-issue-case-study-structure.md)
+
+**Related:** [Root Cause Evolution (Enforcement Saga)](../issues/v9.3.x-enforcement-saga/analysis/root-cause-evolution.md), [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Compliance Rate Tracking](#compliance-rate-tracking)
 
 ---
 
