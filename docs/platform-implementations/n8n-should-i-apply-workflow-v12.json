@@ -1,0 +1,849 @@
+{
+  "name": "Should-I-Apply - External Enforcement v9.3.8 (v10 Improved Prompts)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "optimize-resume",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a8d3fbe5-af83-4d19-886a-8620336034f8",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        -30880,
+        7296
+      ],
+      "webhookId": "2aea1a6e-72b9-4280-a3e1-8429ed1942ca"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse user input - expect JSON with resume_text and jd_text\nconst input = $input.first().json;\nconst body = input.body || input;\n\nconst resume_text = body.resume_text || '';\nconst jd_text = body.jd_text || '';\n\nif (resume_text.length > 100 && jd_text.length > 100) {\n  return {\n    resume_text: resume_text,\n    jd_text: jd_text,\n    jd_url: '',\n    has_resume: true,\n    has_url: false,\n    has_jd: true,\n    fetch_url: false,\n    error: false\n  };\n}\n\nreturn {\n  error: true,\n  message: 'Missing or invalid resume_text/jd_text in request'\n};"
+      },
+      "id": "0885dc1f-6d1f-4fe2-8113-bd90b33afd69",
+      "name": "Parse Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -30656,
+        7296
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-resume-check",
+              "leftValue": "={{ $json.has_resume }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "30f0760e-ec48-413c-a984-a63b57cc326d",
+      "name": "Has Resume?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -30432,
+        7296
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "15ac95b2-b2b0-4ca6-8f27-93ea3e521bb4",
+      "name": "Error: No Resume",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -30208,
+        7392
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "has-url-check",
+              "leftValue": "={{ $json.fetch_url }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "61352876-b7e6-4a10-8e0e-22226e87a855",
+      "name": "Has URL?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -30208,
+        7200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.jd_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          },
+          "timeout": 30000
+        }
+      },
+      "id": "7efb21f5-be6f-41f4-bb70-3a676aadbaaf",
+      "name": "Fetch JD from URL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -29984,
+        7248
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst body = response.body || response.data || '';\nconst textContent = body\n  .replace(/<script[^>]*>.*?<\\/script>/gi, '')\n  .replace(/<style[^>]*>.*?<\\/style>/gi, '')\n  .replace(/<[^>]+>/g, ' ')\n  .replace(/\\s+/g, ' ')\n  .trim();\n\nreturn {\n  extracted_text: textContent.substring(0, 5000),\n  success: textContent.length > 100\n};"
+      },
+      "id": "83c94fab-c502-4c9a-a43d-abb6037a9c6d",
+      "name": "Extract URL Text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -29760,
+        7248
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "url-success-check",
+              "leftValue": "={{ $json.success }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "c3981f81-d52c-42a1-b09b-a597422c644f",
+      "name": "URL Fetch Successful?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -29536,
+        7248
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3d676622-ad97-4ca9-8cf9-43b587684d3d",
+      "name": "Error: URL Fetch Failed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -29312,
+        7248
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "let jd_final = '';\n\nif ($json.extracted_text && $json.extracted_text.length > 100) {\n  jd_final = $json.extracted_text;\n} else if ($('Parse Input').first().json.has_jd) {\n  jd_final = $('Parse Input').first().json.jd_text;\n}\n\nif (!jd_final || jd_final.length < 100) {\n  return { error: true, message: 'No valid JD found' };\n}\n\nreturn {\n  jd_final: jd_final,\n  resume_text: $('Parse Input').first().json.resume_text,\n  source: $json.extracted_text ? 'url_fetch' : 'pasted'\n};"
+      },
+      "id": "e6c1497e-b01e-40a6-9d80-24699bcf3cdc",
+      "name": "Finalize JD",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -29312,
+        7056
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/.n8n-files/optimize-my-resume/optimization-tools/shared/shared_verb_taxonomy.md",
+        "options": {}
+      },
+      "id": "a60528f1-d89a-4673-b114-52e55f79db88",
+      "name": "Read Verb Taxonomy",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -29088,
+        6912
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"total_words_used\": 0,\n  \"total_bullets_generated\": 0,\n  \"completed_positions\": [],\n  \"verb_distribution\": {\n    \"Built\": 0,\n    \"Led\": 0,\n    \"Managed\": 0,\n    \"Improved\": 0,\n    \"Collaborated\": 0\n  },\n  \"all_bullets\": [],\n  \"stage1_plan\": null\n}",
+        "options": {}
+      },
+      "id": "f5374681-0924-455f-9a50-6657099433bc",
+      "name": "Initialize State",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -29088,
+        7104
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const jd_final = $('Finalize JD').first().json.jd_final;\nconst resume_text = $('Finalize JD').first().json.resume_text;\n\nconst fullPrompt = `**CRITICAL CONSTRAINTS - DO NOT VIOLATE:**\n\n1. Total word budget: 350-500 words ONLY\n2. Bullet distribution rules (STRICT):\n   - MAXIMUM 2 positions can have 5 bullets\n   - MAXIMUM 2 positions can have 4 bullets\n   - All other positions must have 2 or 3 bullets\n3. Position ordering: High recency → Medium → Low (descending)\n4. Each position: MINIMUM 2 bullets\n\n**YOUR TASK:**\nAnalyze the resume and job description below. Create a budget allocation plan that assigns bullets to each resume position based on relevance to the JD.\n\n**RESUME:**\n${resume_text}\n\n**JOB DESCRIPTION:**\n${jd_final}\n\n**EXAMPLE VALID OUTPUT:**\n{\n  \"positions\": [\n    {\"id\": \"P1\", \"title\": \"Senior Engineer\", \"recency_weight\": \"High\", \"jd_relevance_percent\": 95, \"allocated_bullets\": 5, \"estimated_words\": 110},\n    {\"id\": \"P2\", \"title\": \"Engineer\", \"recency_weight\": \"High\", \"jd_relevance_percent\": 85, \"allocated_bullets\": 4, \"estimated_words\": 90},\n    {\"id\": \"P3\", \"title\": \"Junior\", \"recency_weight\": \"Medium\", \"jd_relevance_percent\": 70, \"allocated_bullets\": 3, \"estimated_words\": 70},\n    {\"id\": \"P4\", \"title\": \"Intern\", \"recency_weight\": \"Low\", \"jd_relevance_percent\": 50, \"allocated_bullets\": 2, \"estimated_words\": 50}\n  ],\n  \"total_estimated_words\": 320,\n  \"distribution_check\": {\n    \"positions_with_5_bullets\": 1,\n    \"positions_with_4_bullets\": 1\n  }\n}\n\n**Return ONLY valid JSON. No markdown, no explanation.**`;\n\nreturn { prompt: fullPrompt };"
+      },
+      "id": "41310ad9-ea2c-41f1-a058-9a3785456e65",
+      "name": "Build Stage 1 Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -28864,
+        7056
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nlet stage1;\n\ntry {\n  // Try multiple possible response formats\n  let text = '';\n  \n  if (Array.isArray(response)) {\n    // Format: [{ content: { parts: [{ text: \"...\" }] } }]\n    text = response[0]?.content?.parts?.[0]?.text || '';\n  } else if (response.text) {\n    // Format: { text: \"...\" }\n    text = response.text;\n  } else if (response.content) {\n    // Format: { content: { parts: [{ text: \"...\" }] } }\n    text = response.content?.parts?.[0]?.text || '';\n  }\n  \n  if (!text) {\n    return { \n      valid: false, \n      errors: ['No text found in response'], \n      debug_response: JSON.stringify(response).substring(0, 500)\n    };\n  }\n  \n  stage1 = JSON.parse(text);\n} catch (e) {\n  return { \n    valid: false, \n    errors: ['Failed to parse: ' + e.message],\n    debug_response: JSON.stringify(response).substring(0, 500)\n  };\n}\n\nconst errors = [];\n\nif (stage1.total_estimated_words < 350 || stage1.total_estimated_words > 500) {\n  errors.push(`Word budget ${stage1.total_estimated_words} outside 350-500`);\n}\n\nif ((stage1.distribution_check?.positions_with_5_bullets || 0) > 2) {\n  errors.push(`Too many 5-bullet positions: ${stage1.distribution_check.positions_with_5_bullets}`);\n}\n\nif ((stage1.distribution_check?.positions_with_4_bullets || 0) > 2) {\n  errors.push(`Too many 4-bullet positions: ${stage1.distribution_check.positions_with_4_bullets}`);\n}\n\nconst weights = stage1.positions?.map(p => p.recency_weight) || [];\nconst weightOrder = { \"High\": 3, \"Medium\": 2, \"Low\": 1 };\nfor (let i = 1; i < weights.length; i++) {\n  if (weightOrder[weights[i]] > weightOrder[weights[i-1]]) {\n    errors.push(`Position order violation at position ${i+1}`);\n  }\n}\n\nfor (const pos of (stage1.positions || [])) {\n  if (pos.allocated_bullets < 2 || pos.allocated_bullets > 5) {\n    errors.push(`${pos.id}: bullets must be 2-5, got ${pos.allocated_bullets}`);\n  }\n}\n\nreturn {\n  valid: errors.length === 0,\n  errors: errors,\n  stage1_data: stage1\n};\n"
+      },
+      "id": "f5ed8ac7-fa55-4d16-b3da-f0ea60130dc6",
+      "name": "Validate Stage 1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -28288,
+        7056
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "stage1-valid-check",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "45dc474c-d7a7-4768-8e0e-3abcede46adb",
+      "name": "Stage 1 Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -28064,
+        7056
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "90800c11-eca4-46be-ab75-d96361320454",
+      "name": "Error: Stage 1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -27840,
+        7104
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const validated = $input.first().json;\n\nreturn {\n  total_words_used: 0,\n  total_bullets_generated: 0,\n  completed_positions: [],\n  verb_distribution: {\n    Built: 0,\n    Led: 0,\n    Managed: 0,\n    Improved: 0,\n    Collaborated: 0\n  },\n  all_bullets: [],\n  stage1_plan: validated.stage1_data\n};"
+      },
+      "id": "b9a0cb39-27cf-4baf-9ad2-a603302c0e1e",
+      "name": "Store Stage 1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -27840,
+        6912
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const stage1 = $input.first().json.stage1_plan;\nreturn stage1.positions.map((pos, i) => ({\n  json: { position: pos, index: i, total: stage1.positions.length }\n}));"
+      },
+      "id": "8d4dc1ea-24a2-4d03-af19-b6fe78e6e7f3",
+      "name": "Prepare Loop",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -27616,
+        6912
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "b78bdeed-ebba-4699-949c-d451863ee07f",
+      "name": "Loop Positions",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -27392,
+        6912
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const pos = $input.first().json.position;\nconst state = $('Store Stage 1').first().json;\nconst resume = $('Finalize JD').first().json.resume_text;\nconst jd = $('Finalize JD').first().json.jd_final;\n\nconst systemPrompt = `**CRITICAL CONSTRAINTS - DO NOT VIOLATE:**\n\n1. Generate EXACTLY ${pos.allocated_bullets} bullets for \"${pos.title}\"\n2. Character count: EACH bullet MUST be 100-210 characters (STRICT)\n3. Verb categories: Built, Led, Managed, Improved, Collaborated\n   - Use ONE verb per bullet\n   - NO REPEATS within this position\n   - First word must be the verb (past tense)\n4. NO gerunds (-ing words) at start of bullet\n5. REQUIRED: Specific metrics, percentages, or quantifiable outcomes\n6. Target word count for position: ~${pos.estimated_words} words\n\n**EXAMPLE VALID BULLETS:**\n{\n  \"position_id\": \"${pos.id}\",\n  \"bullets\": [\n    {\n      \"text\": \"Built automated deployment pipeline reducing release cycle time by 60% through CI/CD integration with Jenkins and Docker containerization\",\n      \"char_count\": 145,\n      \"word_count\": 20,\n      \"verb_category\": \"Built\",\n      \"first_word\": \"Built\"\n    },\n    {\n      \"text\": \"Led cross-functional team of 8 engineers to deliver microservices architecture migration, improving system scalability by 3x\",\n      \"char_count\": 125,\n      \"word_count\": 17,\n      \"verb_category\": \"Led\",\n      \"first_word\": \"Led\"\n    }\n  ],\n  \"position_word_count\": 37\n}\n\n**RETURN ONLY VALID JSON. NO MARKDOWN. NO EXPLANATION.**`;\n\nconst userPrompt = `**POSITION TO OPTIMIZE:**\nTitle: ${pos.title}\nAllocated Bullets: ${pos.allocated_bullets}\nTarget Words: ${pos.estimated_words}\n\n**JOB DESCRIPTION (extract key requirements):**\n${jd.substring(0, 1500)}\n\n**RESUME HISTORY FOR THIS POSITION:**\n${resume.substring(0, 1500)}\n\n**YOUR TASK:**\nGenerate ${pos.allocated_bullets} bullets that:\n- Match JD requirements with specific evidence\n- Include quantifiable metrics\n- Stay within 100-210 char range EACH\n- Use unique verb categories (no repeats)\n- Start with past tense verb (NOT -ing words)`;\n\nreturn { system_prompt: systemPrompt, user_prompt: userPrompt, position: pos };"
+      },
+      "id": "fe1492cc-2b67-4963-839b-d67411265632",
+      "name": "Build Stage 2 Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -27168,
+        7008
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.first().json;\nconst state = $('Store Stage 1').first().json;\nlet bullets;\n\ntry {\n  const text = response[0]?.content?.parts?.[0]?.text || '';\n  bullets = JSON.parse(text);\n} catch (e) {\n  return { valid: false, errors: ['Parse error'], should_retry: true };\n}\n\nconst errors = [];\n\nfor (const b of (bullets.bullets || [])) {\n  if (b.char_count < 100 || b.char_count > 210) {\n    errors.push(`Bullet char count ${b.char_count} outside 100-210`);\n  }\n  if (b.first_word?.toLowerCase().endsWith('ing')) {\n    errors.push(`Gerund start: ${b.first_word}`);\n  }\n  const validVerbs = ['Built', 'Led', 'Managed', 'Improved', 'Collaborated'];\n  if (!validVerbs.includes(b.verb_category)) {\n    errors.push(`Invalid verb: ${b.verb_category}`);\n  }\n}\n\nconst verbs = (bullets.bullets || []).map(b => b.verb_category);\nconst unique = [...new Set(verbs)];\nif (unique.length < verbs.length) {\n  errors.push('Duplicate verb categories');\n}\n\nconst newTotal = (state.total_words_used || 0) + (bullets.position_word_count || 0);\nif (newTotal > 520) {\n  errors.push(`Word total ${newTotal} exceeds 500`);\n}\n\nreturn {\n  valid: errors.length === 0,\n  errors: errors,\n  bullets: bullets,\n  position: $('Build Stage 2 Prompt').first().json.position,\n  new_word_total: newTotal\n};"
+      },
+      "id": "96e80118-1bb1-4ae6-891c-29a8f0b49656",
+      "name": "Validate Stage 2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -26720,
+        7008
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "stage2-valid-check",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6c59b7c6-1443-47da-aa39-dd1dcdbf03ae",
+      "name": "Stage 2 Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -26496,
+        7008
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const validation = $input.first().json;\nconst state = $('Store Stage 1').first().json;\nconst bullets = validation.bullets;\n\nconst newVerbDist = { ...(state.verb_distribution || {}) };\nfor (const b of (bullets.bullets || [])) {\n  newVerbDist[b.verb_category] = (newVerbDist[b.verb_category] || 0) + 1;\n}\n\nconst completedPos = {\n  id: bullets.position_id,\n  title: validation.position?.title,\n  bullet_count: bullets.bullets?.length || 0,\n  word_count: bullets.position_word_count || 0\n};\n\nreturn {\n  total_words_used: validation.new_word_total,\n  total_bullets_generated: (state.total_bullets_generated || 0) + (bullets.bullets?.length || 0),\n  completed_positions: [...(state.completed_positions || []), completedPos],\n  verb_distribution: newVerbDist,\n  all_bullets: [...(state.all_bullets || []), ...bullets.bullets],\n  stage1_plan: state.stage1_plan\n};"
+      },
+      "id": "136507fb-927d-4a26-aa3f-5a2ef5b6c30e",
+      "name": "Accumulate State",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -26272,
+        7088
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "894729db-478d-48af-a4e4-5688b8028b3c",
+      "name": "Error: Stage 2",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -26272,
+        7280
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = $input.first().json;\nconst stage1 = state.stage1_plan;\n\nlet output = '# ✅ Resume Optimization Complete\\n\\n';\n\noutput += '## 📋 Plan Summary\\n';\noutput += `- Positions: ${stage1.positions.length}\\n`;\noutput += `- Total estimated words: ${stage1.total_estimated_words}\\n`;\noutput += `- Distribution: ${stage1.distribution_check.positions_with_5_bullets} with 5 bullets, ${stage1.distribution_check.positions_with_4_bullets} with 4 bullets\\n\\n`;\n\noutput += '## 📊 Results\\n';\noutput += `- ✅ Total words generated: ${state.total_words_used}\\n`;\noutput += `- ✅ Total bullets: ${state.total_bullets_generated}\\n`;\noutput += `- ✅ Positions completed: ${state.completed_positions.length}\\n\\n`;\n\noutput += '## 🎯 Verb Distribution\\n';\nfor (const [verb, count] of Object.entries(state.verb_distribution || {})) {\n  if (count > 0) {\n    const pct = ((count / state.total_bullets_generated) * 100).toFixed(1);\n    output += `- ${verb}: ${count} (${pct}%)\\n`;\n  }\n}\n\noutput += '\\n## 💡 Optimized Bullets\\n';\nfor (let i = 0; i < state.all_bullets.length; i++) {\n  const b = state.all_bullets[i];\n  output += `\\n**Bullet ${i+1}** (${b.char_count} chars)\\n`;\n  output += `> ${b.text}\\n`;\n  output += `- Verb: ${b.verb_category}\\n`;\n}\n\noutput += '\\n---\\n';\noutput += '**[RECOMMENDED]** Perform a final grammar check in Google Docs or Word.\\n';\n\nreturn { output };"
+      },
+      "id": "f6e459d1-d3d1-4d28-ace7-60871ba1552b",
+      "name": "Final Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -27168,
+        6816
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6af6ab41-a3e6-4c99-aef7-88683a7bf0d1",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        -26944,
+        6816
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Analyze this resume and job description. Create a budget plan allocating bullets across resume positions to match the JD requirements.\n\nRESUME:\n{{ $json.resume_text }}\n\nJOB DESCRIPTION:\n{{ $json.jd_text }}\n\nReturn ONLY valid JSON (no markdown):\n{\"positions\": [{\"id\": \"P1\", \"title\": \"position title\", \"recency_weight\": \"High/Medium/Low\", \"jd_relevance_percent\": 0-100, \"allocated_bullets\": 2-5, \"estimated_words\": 0}], \"total_estimated_words\": 350-500, \"distribution_check\": {\"positions_with_5_bullets\": 0, \"positions_with_4_bullets\": 0}}\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -28640,
+        7056
+      ],
+      "id": "6809c118-9090-42b4-95ec-49c02f25763f",
+      "name": "Message a model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "wcyxQwtHsGSViono",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={\n  \"contents\": [{\"role\": \"user\", \"parts\": [{\"text\": {{ JSON.stringify($json.user_prompt) }}}]}],\n  \"systemInstruction\": {\"parts\": [{\"text\": {{ JSON.stringify($json.system_prompt) }}}]},\n  \"generationConfig\": {\"temperature\": 0.4, \"topP\": 0.8, \"maxOutputTokens\": 2048, \"responseMimeType\": \"application/json\"}\n}"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        -27008,
+        7008
+      ],
+      "id": "d4f20013-9f05-4cf8-b6c4-2b0b3a16c3a0",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "wcyxQwtHsGSViono",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Input": {
+      "main": [
+        [
+          {
+            "node": "Has Resume?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Resume?": {
+      "main": [
+        [
+          {
+            "node": "Has URL?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error: No Resume",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has URL?": {
+      "main": [
+        [
+          {
+            "node": "Fetch JD from URL",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Finalize JD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch JD from URL": {
+      "main": [
+        [
+          {
+            "node": "Extract URL Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract URL Text": {
+      "main": [
+        [
+          {
+            "node": "URL Fetch Successful?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "URL Fetch Successful?": {
+      "main": [
+        [
+          {
+            "node": "Finalize JD",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error: URL Fetch Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize JD": {
+      "main": [
+        [
+          {
+            "node": "Read Verb Taxonomy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Initialize State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Verb Taxonomy": {
+      "main": [
+        [
+          {
+            "node": "Build Stage 1 Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Initialize State": {
+      "main": [
+        [
+          {
+            "node": "Build Stage 1 Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Stage 1 Prompt": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Stage 1": {
+      "main": [
+        [
+          {
+            "node": "Stage 1 Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stage 1 Valid?": {
+      "main": [
+        [
+          {
+            "node": "Store Stage 1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error: Stage 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Stage 1": {
+      "main": [
+        [
+          {
+            "node": "Prepare Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Positions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Positions": {
+      "main": [
+        [
+          {
+            "node": "Build Stage 2 Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Final Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Stage 2 Prompt": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Stage 2": {
+      "main": [
+        [
+          {
+            "node": "Stage 2 Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Stage 2 Valid?": {
+      "main": [
+        [
+          {
+            "node": "Accumulate State",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error: Stage 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accumulate State": {
+      "main": [
+        [
+          {
+            "node": "Loop Positions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Output": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Validate Stage 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Validate Stage 2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "05432b79-1395-47fd-a44b-42c157b1a1a0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "19e99a025bc5f8ba84a25103c99a5f4e551eb2cd9c5c789067f03ae809c67818"
+  },
+  "id": "r2vBw8QbM2N09Px3HvCY5",
+  "tags": [
+    {
+      "updatedAt": "2026-02-01T20:17:16.448Z",
+      "createdAt": "2026-02-01T20:17:16.448Z",
+      "id": "1JRfZ3xxcmJDr2Tz",
+      "name": "external-enforcement"
+    },
+    {
+      "updatedAt": "2026-02-01T20:17:16.451Z",
+      "createdAt": "2026-02-01T20:17:16.451Z",
+      "id": "K2XKiEuNXD6mXodJ",
+      "name": "v9.3.8"
+    }
+  ]
+}
