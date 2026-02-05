@@ -828,7 +828,7 @@ Keywords → Category:
 - Requires discipline to maintain bidirectional links
 - More comprehensive than single-issue tracking
 
-**See:** [v9.3.8 Meta-Issue Case Study Structure](../plans/v9.3.8-meta-issue-case-study-structure.md)
+**See:** [Lesson: Meta-Issue Tracking System v9.3.8](../lessons-learned/knowledge-capture/v9.3.8-meta-issue-tracking-system.md)
 
 **Related:** [Root Cause Evolution (Enforcement Saga)](../issues/v9.3.x-enforcement-saga/analysis/root-cause-evolution.md), [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Compliance Rate Tracking](#compliance-rate-tracking)
 
