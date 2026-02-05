@@ -2,8 +2,8 @@
 
 **Purpose:** Quick-reference navigation across all knowledge domains
 
-**Last Updated:** 2026-01-30
-**Total Entries:** 16 concepts, 24 patterns, 10 gotchas, 9 workflows
+**Last Updated:** 2026-02-05
+**Total Entries:** 20 concepts, 28 patterns, 10 gotchas, 9 workflows
 **Critical Reference:** [Enforcement Failure Analysis & Solutions](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md) - Jan 29 incident learnings
 
 ---
@@ -95,15 +95,17 @@ Optimize-My-Resume Project
 - Unverified Skill Hallucination → [gotchas.md#unverified-skill-hallucination]
 - Lost Content in Updates → [gotchas.md#lost-content-in-updates]
 
-**Recent Additions (2026-01-30):**
+**Recent Additions (2026-02-05):**
+- 5-Plane Guardrail Taxonomy Concept (2026-02-05) - Classification into identity, authority, design, language, change-control planes
+- Local Guardrail Overlay vs Canonical Registry Concept (2026-02-05) - Namespace separation for project-local vs system-wide constraints
+- Resume-as-Governed-System Concept (2026-02-05) - Treating resume as infrastructure with formal constraints
+- Job Title Evolution Strategy Concept (2026-02-05) - Target positioning for emerging AI-infrastructure roles
+- Guardrail Freeze Protocol Pattern (2026-02-05) - Fixed guardrail count, no additions policy
+- Context Handoff Protocol Pattern (2026-02-05) - Cross-platform state transfer via `.codex-ai-context/`
+- Project Memory System Pattern (2026-02-05) - Persistent governance memory for Claude Code agents
+- Meta-Issue Tracking Pattern Link Update (2026-02-05) - Fixed cross-reference to lesson file
 - Layered Defense Strategy Pattern (2026-01-30) - Multiple redundant enforcement mechanisms per platform
 - Platform-Specific Enforcement Pattern (2026-01-30) - Compliance expectations by platform (~30-95%)
-- Passive vs Active Enforcement Concept (2026-01-30) - Why documentation alone cannot force compliance
-- Multi-Turn Enforcement Workflow (2026-01-30) - Chat interface stage separation
-- Enforcement Structural Solutions v2.0 (2026-01-30) - 4 platform-specific solution options
-- Enforcement Failure Analysis & Solutions (2026-01-30) - Consolidated incident reference
-- Application Optimization Workflow (2026-01-19)
-- Custom Keyword Hub (2026-01-19)
 
 ---
 

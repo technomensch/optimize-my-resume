@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
-**Last Updated:** 2026-02-02
-**Entries:** 25
+**Last Updated:** 2026-02-05
+**Entries:** 29
 
 ---
 
@@ -37,6 +37,10 @@
 - [Compliance Rate Tracking](#compliance-rate-tracking) - Continuous monitoring to detect enforcement drift over time
 - [Positive Constraint Framing](#positive-constraint-framing) - Avoiding Pink Elephant Problem via affirmative commands instead of negation
 - [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern) - Structured documentation for complex, multi-attempt problems (v9.3.8)
+- [Guardrail Freeze Protocol](#guardrail-freeze-protocol) - Fixed guardrail count with no additions, only enforcement (v9.3.8)
+- [Context Handoff Protocol](#context-handoff-protocol) - Cross-platform context transfer via `.codex-ai-context/` snapshots (v9.3.8)
+- [Project Memory System](#project-memory-system) - Persistent governance memory for Claude Code agents (v9.3.8)
+- [Knowledge Graph ↔ Memory Bidirectional Sync](#knowledge-graph--memory-bidirectional-sync) - Automated memory updates during knowledge discovery (v9.3.8)
 
 ---
 
@@ -828,12 +832,168 @@ Keywords → Category:
 - Requires discipline to maintain bidirectional links
 - More comprehensive than single-issue tracking
 
-**See:** [v9.3.8 Meta-Issue Case Study Structure](../plans/v9.3.8-meta-issue-case-study-structure.md)
+**See:** [Lesson: Meta-Issue Tracking System v9.3.8](../lessons-learned/knowledge-capture/v9.3.8-meta-issue-tracking-system.md)
 
 **Related:** [Root Cause Evolution (Enforcement Saga)](../issues/v9.3.x-enforcement-saga/analysis/root-cause-evolution.md), [Four-Layer Enforcement Strategy](#four-layer-enforcement-strategy), [Compliance Rate Tracking](#compliance-rate-tracking)
 
 ---
 
+### Guardrail Freeze Protocol
+
+**Problem:** Guardrail sets grow unbounded, become inconsistent, and lose enforcement discipline
+**Solution:** Freeze guardrail count at a fixed number (e.g., 37). No new guardrails added; only enforcement, auditing, and controlled edits allowed.
+**When to use:**
+- When guardrail set reaches stable maturity
+- To prevent scope creep of constraints
+- When enforcement needs to be focused vs. comprehensive
+- To establish a "golden contract" version
+
+**Quick Reference:**
+- **Frozen Count:** Project defines fixed guardrail set (1-37, G#, etc.)
+- **No Additions:** New concerns must refactor existing, not add new guardrails
+- **Allowed Operations:** Enforcement work, auditing, clarification (not expansion)
+- **Declaration:** Every edit must state which guardrails it satisfies/stresses
+- **Audit Trail:** All modifications tracked against the frozen set
+
+**Real-World Example:**
+- Enforce 37 guardrails consistently rather than growing to 100+
+- Prevents "guardrail creep" that dilutes enforcement
+- Focuses team on deep compliance vs. breadth of constraints
+
+**Benefits:**
+- Clear scope boundary for governance
+- Prevents guardrail inflation
+- Enforces disciplined constraint design
+- Creates stable "contract" with stakeholders
+
+**Trade-offs:**
+- Requires upfront analysis to identify complete set
+- Must refactor rather than expand when new concerns arise
+- Needs strong discipline to maintain freeze
+
+**See:** [Feb 3 ChatGPT Session](../../chat-history/2026-02/2026-02-03-chatgpt.md)
+
+**Related:** [5-Plane Guardrail Taxonomy](concepts.md#5-plane-guardrail-taxonomy), [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern)
+
+---
+
+### Context Handoff Protocol
+
+**Problem:** Cross-platform work (ChatGPT → Claude Code → Codex, etc.) loses context between sessions
+**Solution:** Maintain private state snapshots in `.codex-ai-context/` directory (gitignored), containing guardrails, current status, and context files for each platform.
+**When to use:**
+- Working across multiple AI platforms
+- Need to preserve context between platform switches
+- Sharing knowledge with different AI tools while maintaining consistency
+
+**Quick Reference:**
+- **Directory:** `.codex-ai-context/` (gitignored, local-only)
+- **Contents:** `guardrails.md`, `current-resume.md`, `resume-context.md`
+- **Purpose:** Each file is a "state snapshot" for the receiving platform
+- **Constraint:** Never commit these files (local platform state only)
+- **Update:** Before switching platforms, refresh snapshots with latest state
+
+**Real-World Example:**
+- ChatGPT session: Analyze resume, extract insights → save to `.codex-ai-context/`
+- Claude Code session: Load context from `.codex-ai-context/` → continue work
+- Codex session: Use snapshot to understand current state → make improvements
+
+**Benefits:**
+- Seamless context transfer between platforms
+- Each platform sees consistent, current state
+- No need to copy/paste context manually
+- Reduces re-explanation overhead
+
+**Trade-offs:**
+- Must remember to update snapshots when switching
+- Adds intermediate file maintenance burden
+- Requires discipline to keep snapshots current
+
+**See:** [Feb 3 ChatGPT Session](../../chat-history/2026-02/2026-02-03-chatgpt.md)
+
+**Related:** [Dual-Format Strategy](patterns.md#dual-format-strategy), [Resume-as-Governed-System](concepts.md#resume-as-governed-system)
+
+---
+
+### Project Memory System
+
+**Problem:** Claude Code agents lack persistent memory across sessions, causing repeated mistakes and lost governance context
+**Solution:** Structured memory system at `~/.claude/projects/[project]/memory/MEMORY.md` containing governance patterns, project structure, version context, and common failures.
+**When to use:**
+- Multi-session projects requiring consistency
+- Complex governance workflows (git discipline, plan execution, shadow sync)
+- Projects where agent error patterns repeat
+- Need to enforce architectural patterns across sessions
+
+**Quick Reference:**
+- **Location:** `~/.claude/projects/[project]/memory/MEMORY.md`
+- **Auto-loaded:** System prompt loads automatically each session
+- **Content:** Governance patterns, structure mapping, version context, failure fixes
+- **Organization:** Keep concise (200 lines), link to detail files
+- **Updates:** Discover and record patterns as you work
+
+**Structure Example:**
+```
+# Project Memory
+- Core Governance Patterns (Git, Shadow Sync, Plan Execution)
+- Project Structure & Documentation Tiers
+- Version Context (current, completed work)
+- Workflow Skills Reference Table
+- Common Failure Patterns & Fixes
+- Best Practice Checklists
+```
+
+**Real-World Example:**
+- Session 1: Learn git-governance patterns, create MEMORY.md
+- Session 2: Load MEMORY.md → immediately know branch hierarchy, commit format
+- Session 3: Discover new failure pattern → record in MEMORY.md for future
+
+**Benefits:**
+- Eliminates learning curve across sessions
+- Prevents repeated mistakes
+- Maintains governance consistency
+- Speeds up complex processes (plan execution, etc.)
+- Makes patterns explicit and reusable
+
+**Trade-offs:**
+- Requires discipline to maintain and update
+- Memory file can become stale if not refreshed
+- Need to balance conciseness (200 lines) with comprehensiveness
+
+**See:** [Project Memory System](../../.claude/projects/-Users-mkaplan-Documents-GitHub-optimize-my-resume/memory/MEMORY.md)
+
+**Related:** [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern), [Governance Lifecycle](#governance-lifecycle)
+
+---
+
+### Knowledge Graph ↔ Memory Bidirectional Sync
+
+**Problem:** Project memory provides governance context but falls out of sync when new patterns are discovered during knowledge graph extraction
+**Solution:** Formalize Step 7 in `/update-knowledge-graph` skill to automatically check if MEMORY.md needs updating when entries are created
+**When to use:**
+- After discovering new patterns, gotchas, or best practices
+- When `/update-knowledge-graph` completes entry creation
+- Before committing knowledge graph changes
+- When patterns impact governance workflows
+
+**Quick Reference:**
+- **Memory Update Triggers**: New gotchas, best practices, failure patterns, workflow changes, architecture decisions
+- **Memory Categories**: Use table from skill workflow (gotchas → Common Failure Patterns, practices → Best Practices, workflows → Workflow Skills table, architecture → Core Governance Patterns)
+- **Memory Limits**: Keep MEMORY.md under 250 lines; link to detail files for deep context
+- **Bidirectional Links**: KG entry links to memory (via "See:"), memory references KG entry
+- **Single Commit**: Stage KG entry + memory update + lesson-learned together for traceability
+
+**Why This Matters:**
+- Memory file is loaded into Claude Code system prompt → must stay current
+- Prevents knowledge drift between quick-reference (KG) and persistent guidance (Memory)
+- Closes feedback loop: discover → document → persist → use next session
+
+**See:** [Step 7 in update-knowledge-graph.md](../../.agent/workflows/update-knowledge-graph.md#step-7-check-project-memory-sync-requirements)
+**Related:** [Project Memory System](#project-memory-system) - Persistent governance memory architecture, [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern) - Complex problem documentation
+**ADR:** [ADR-011: Bidirectional Sync Between Knowledge Graph and Project Memory](../decisions/ADR-011-knowledge-graph-memory-sync.md)
+
+---
+
 **Maintenance:** Add new patterns as they emerge from practice
 **Created:** 2026-01-02
-**Last Updated:** 2026-01-30 (Added v9.3.7 enforcement patterns)
+**Last Updated:** 2026-02-05 (Added guardrail, context handoff, memory patterns)

@@ -57,3 +57,14 @@ pnpm-debug.log*
 # OS files
 Thumbs.db
 job-summary-update-v8.0.md
+
+# Ignore the n8n-builder (separate git project)
+# This is a sibling directory that has its own git repo
+../n8n-builder/
+
+# Local AI context files (Codex integration)
+.codex-ai-context/
+
+# Local research and archive (working files, historical reference)
+.local-research/
+.local-archive/
