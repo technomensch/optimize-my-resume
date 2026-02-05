@@ -1,4 +1,4 @@
-# Optimize My Resume v8.4.2
+# Optimize My Resume v9.3.8
 
 **An AI-powered resume optimization system that works with any chatbot (Claude, ChatGPT, Gemini, Copilot, and more)**
 
@@ -433,12 +433,23 @@ optimize-my-resume/                    ← Main folder (you downloaded this)
 
 ## 📝 Version Information
 
-**Current Version:** 8.4.0 (January 13, 2026) <!-- v8.4.0 issue #31 -->
-**Released:** January 13, 2026
+**Current Version:** 9.3.7 (January 31, 2026) <!-- v9.3.7 issue #31 -->
+**Released:** January 31, 2026
 
 ### What's New in v8.4.0:
 - **Job History Template Extraction** - Extracted the 13-section XML job history structure into a dedicated module to reduce token consumption and improve maintainability. (Issue #31)
 - **Shadow Modularization (ADR-004)** - Gold Master maintains a synchronized copy while the GUI uses a lightweight reference.
+
+### What's New in v9.3.8:
+- **Four-Layer Active Enforcement** - Structural constraints for guardrail compliance (ADR-010)
+- **Metric Preservation Guardrails** - Enhanced validation for quantitative data integrity
+- **Knowledge Graph System** - Centralized pattern and concept documentation
+- **Meta-Issue Case Studies** - Systematic failure analysis and lesson capture
+
+### What's New in v9.3.4:
+- **Unified Workflow System** - Single source of truth: .agent/workflows (ENH-006)
+- **GitHub Issue Governance** - [BUG]/[ENHANCEMENT] titling, local ID tracking
+- **Cross-Platform Skills** - Synchronized Gemini and Claude command workflows
 
 ### What's New in v7.1.1:
 - **Metric Preservation Guardrail** - New CRITICAL guardrail ensuring hard metrics are preserved during re-writes. (Issue #34)
