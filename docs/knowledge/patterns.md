@@ -1,7 +1,7 @@
 # Design Patterns Catalog
 
 **Last Updated:** 2026-02-05
-**Entries:** 28
+**Entries:** 29
 
 ---
 
@@ -40,6 +40,7 @@
 - [Guardrail Freeze Protocol](#guardrail-freeze-protocol) - Fixed guardrail count with no additions, only enforcement (v9.3.8)
 - [Context Handoff Protocol](#context-handoff-protocol) - Cross-platform context transfer via `.codex-ai-context/` snapshots (v9.3.8)
 - [Project Memory System](#project-memory-system) - Persistent governance memory for Claude Code agents (v9.3.8)
+- [Knowledge Graph ↔ Memory Bidirectional Sync](#knowledge-graph--memory-bidirectional-sync) - Automated memory updates during knowledge discovery (v9.3.8)
 
 ---
 
@@ -962,6 +963,34 @@ Keywords → Category:
 **See:** [Project Memory System](../../.claude/projects/-Users-mkaplan-Documents-GitHub-optimize-my-resume/memory/MEMORY.md)
 
 **Related:** [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern), [Governance Lifecycle](#governance-lifecycle)
+
+---
+
+### Knowledge Graph ↔ Memory Bidirectional Sync
+
+**Problem:** Project memory provides governance context but falls out of sync when new patterns are discovered during knowledge graph extraction
+**Solution:** Formalize Step 7 in `/update-knowledge-graph` skill to automatically check if MEMORY.md needs updating when entries are created
+**When to use:**
+- After discovering new patterns, gotchas, or best practices
+- When `/update-knowledge-graph` completes entry creation
+- Before committing knowledge graph changes
+- When patterns impact governance workflows
+
+**Quick Reference:**
+- **Memory Update Triggers**: New gotchas, best practices, failure patterns, workflow changes, architecture decisions
+- **Memory Categories**: Use table from skill workflow (gotchas → Common Failure Patterns, practices → Best Practices, workflows → Workflow Skills table, architecture → Core Governance Patterns)
+- **Memory Limits**: Keep MEMORY.md under 250 lines; link to detail files for deep context
+- **Bidirectional Links**: KG entry links to memory (via "See:"), memory references KG entry
+- **Single Commit**: Stage KG entry + memory update + lesson-learned together for traceability
+
+**Why This Matters:**
+- Memory file is loaded into Claude Code system prompt → must stay current
+- Prevents knowledge drift between quick-reference (KG) and persistent guidance (Memory)
+- Closes feedback loop: discover → document → persist → use next session
+
+**See:** [Step 7 in update-knowledge-graph.md](../../.agent/workflows/update-knowledge-graph.md#step-7-check-project-memory-sync-requirements)
+**Related:** [Project Memory System](#project-memory-system) - Persistent governance memory architecture, [Meta-Issue Tracking Pattern](#meta-issue-tracking-pattern) - Complex problem documentation
+**ADR:** [ADR-011: Bidirectional Sync Between Knowledge Graph and Project Memory](../decisions/ADR-011-knowledge-graph-memory-sync.md)
 
 ---
 
