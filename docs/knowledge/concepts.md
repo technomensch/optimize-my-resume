@@ -1,7 +1,7 @@
 # Core Concepts
 
-**Last Updated:** 2026-01-30
-**Entries:** 16
+**Last Updated:** 2026-02-05
+**Entries:** 20
 
 ---
 
@@ -25,6 +25,10 @@
 - [Synthetic Metric Attribution](#synthetic-metric-attribution) - Value-driven metrics for solo portfolio projects
 - [Guardrail Hardening Pattern](#guardrail-hardening-pattern) - Active enforcement strategies for LLM compliance
 - [Passive vs Active Enforcement](#passive-vs-active-enforcement) - Why documentation alone cannot force compliance
+- [5-Plane Guardrail Taxonomy](#5-plane-guardrail-taxonomy) - Classification of guardrails into identity, authority, design, language, and change-control planes
+- [Local Guardrail Overlay vs Canonical Registry](#local-guardrail-overlay-vs-canonical-registry) - Namespace separation for project-local vs system-wide constraints
+- [Resume-as-Governed-System](#resume-as-governed-system) - Treating resume as infrastructure, not prose
+- [Job Title Evolution Strategy](#job-title-evolution-strategy) - Target positioning for emerging AI-infrastructure roles
 
 ---
 
@@ -656,6 +660,148 @@ All passive enforcement methods were tried and failed:
 - **Incident Analysis:** [ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md](ENFORCEMENT_FAILURE_ANALYSIS_AND_SOLUTIONS.md)
 - **Solutions:** [ENFORCEMENT_STRUCTURAL_SOLUTIONS.md](ENFORCEMENT_STRUCTURAL_SOLUTIONS.md)
 - **Pattern:** [Platform-Specific Enforcement](patterns.md#platform-specific-enforcement)
+
+---
+
+### 5-Plane Guardrail Taxonomy
+
+**Category:** Concept
+**Tags:** #guardrails #architecture #enforcement #framework
+
+#### Quick Summary
+
+A formal classification system for organizing guardrails into five distinct planes, each addressing different aspects of LLM constraint enforcement.
+
+#### Details
+
+**The Five Planes:**
+1. **Identity Guardrails** - Who you are / are not (role, authority, persona boundaries)
+2. **Authority Guardrails** - What power you do/don't claim (scope of decisions, approval authority)
+3. **System Design Guardrails** - How work is framed (patterns, architectures, workflow structure)
+4. **Language & Signal Guardrails** - How things sound (tone, terminology, communication patterns)
+5. **Change-Control Guardrails** - How edits are allowed (governance, approval gates, versioning)
+
+#### Key Insight
+
+Guardrails are most effective when classified by plane, allowing targeted enforcement strategies for each dimension rather than treating all constraints identically.
+
+#### Cross-References
+
+- **Source:** [Feb 3 ChatGPT Session](../../chat-history/2026-02/2026-02-03-chatgpt.md)
+- **Related:** [Passive vs Active Enforcement](#passive-vs-active-enforcement)
+- **Pattern:** [Guardrail Freeze Protocol](patterns.md#guardrail-freeze-protocol)
+
+---
+
+### Local Guardrail Overlay vs Canonical Registry
+
+**Category:** Concept
+**Tags:** #guardrails #architecture #namespace #id-management
+
+#### Quick Summary
+
+Distinction between project-local guardrails (resume-specific constraints) and a canonical global guardrail registry (system-wide standards), preventing ID collisions and scope confusion.
+
+#### Details
+
+**Local Guardrail Overlay (`guardrails.md`):**
+- Resume-specific constraints (1-37 numbering)
+- Frozen contract (no additions)
+- Represents what THIS project enforces
+- Example: G5 = "Metric preservation rule for resume bullets"
+
+**Canonical Guardrail Registry (`guardrail-registry.md`):**
+- Project-wide canonical G# IDs
+- System-level standards
+- Applies across all projects
+- Example: G#CORE-142 = "Universal metric preservation"
+
+**Key Design Principle:**
+Local overlay must reference canonical registry G# IDs OR use distinct namespace to prevent ID collision.
+
+#### Key Insight
+
+Never conflate local project constraints with system-wide standards. Clear namespace separation prevents confusion and allows reuse across contexts.
+
+#### Cross-References
+
+- **Source:** [Feb 3 ChatGPT Session](../../chat-history/2026-02/2026-02-03-chatgpt.md)
+- **Related:** [Shadow Sync Protocol](patterns.md#shadow-sync-protocol)
+- **Pattern:** [Guardrail Hardening Pattern](#guardrail-hardening-pattern)
+
+---
+
+### Resume-as-Governed-System
+
+**Category:** Concept
+**Tags:** #philosophy #governance #resume #infrastructure
+
+#### Quick Summary
+
+Treating the resume as infrastructure subject to formal constraints, rather than as prose that can be edited freely. Every change is traceable to a governing rule.
+
+#### Details
+
+**Core Principle:**
+Resume edits are NOT creative writing—they are infrastructure changes governed by formal constraints.
+
+**Three Key Implications:**
+1. **Documentation-as-Code** - Resume structure is deterministic, versioned, and auditable
+2. **"Vibe Drift" Prevention** - Structural freeze prevents gradual deviation from guardrails
+3. **Traceability** - Every edit must reference which guardrail it satisfies or stresses
+
+**Practical Implications:**
+- Can't edit "because it sounds better"
+- Must justify changes through guardrail lens
+- Patterns become reproducible, not subjective
+- Reduces LLM drift through human-enforced structure
+
+#### Key Insight
+
+The resume is infrastructure, not prose. Treating it as code—with guardrails, versioning, and audit trails—prevents the subtle decay that happens when LLMs are given creative freedom.
+
+#### Cross-References
+
+- **Source:** [Feb 3 ChatGPT Session](../../chat-history/2026-02/2026-02-03-chatgpt.md)
+- **Related:** [Passive vs Active Enforcement](#passive-vs-active-enforcement)
+- **Pattern:** [Meta-Issue Tracking Pattern](patterns.md#meta-issue-tracking-pattern)
+
+---
+
+### Job Title Evolution Strategy
+
+**Category:** Concept
+**Tags:** #career #strategy #positioning #future
+
+#### Quick Summary
+
+Target title evolution based on work analysis and emerging job categories, not title inflation.
+
+#### Details
+
+**Evolution Path:**
+- **Phase 1:** Technical Writer (current, existing market)
+- **Phase 2:** Product Operations Manager (intermediate, bridge role)
+- **Phase 3:** AI Context Specialist (emerging category)
+
+**What "AI Context Specialist" Means:**
+Not an "AI expert" claim, but rather: designing systems that make AI usable, reliable, and governance-aware.
+
+**Positioning Logic:**
+- Grounded in actual work analysis
+- Maps to emerging AI-infrastructure job categories
+- Explains career progression in terms of job market evolution
+- Avoids title inflation; shows pattern recognition instead
+
+#### Key Insight
+
+Don't claim titles that don't exist in the market. Instead, position your work as contributing to emerging categories that companies are beginning to hire for.
+
+#### Cross-References
+
+- **Source:** [Feb 3 ChatGPT Session](../../chat-history/2026-02/2026-02-03-chatgpt.md)
+- **Related:** [Portfolio Employment Safety](#portfolio-employment-safety)
+- **Lesson:** [v9.3.8 Meta-Issue Tracking System](../lessons-learned/knowledge-capture/v9.3.8-meta-issue-tracking-system.md)
 
 ---
 
