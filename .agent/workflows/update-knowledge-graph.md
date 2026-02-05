@@ -294,6 +294,87 @@ grep -i "shadow sync protocol\|Silent Sync" docs/knowledge/patterns.md
 
 ---
 
+## Step 7: Check Project Memory Sync Requirements
+
+After each entry is successfully created or updated, determine if project memory (MEMORY.md) should be updated:
+
+### 7.1 Memory Update Triggers
+
+Update `~/.claude/projects/[project]/memory/MEMORY.md` when newly discovered patterns match these criteria:
+
+- **New Gotcha Pattern**: Common pitfall/failure mode discovered
+- **New Best Practice**: Proven technique or workflow improvement
+- **New Common Failure Pattern**: Repeated error with documented fix
+- **Workflow Enhancement**: Change to existing skill/process
+- **Architecture Decision**: New structural decision affecting governance
+
+**Do NOT update memory for:** One-time project-specific patterns, career strategy concepts (keep in KG only), informational concepts without process impact
+
+### 7.2 Memory Update Categories
+
+Update the appropriate MEMORY.md section:
+
+| Discovery | Memory Section | Update Type |
+|-----------|---|---|
+| New failure pattern | Common Failure Patterns & Fixes | Add table row |
+| New best practice | Best Practices | Add checklist item |
+| New workflow skill | Workflow Skills & Their Purpose | Add table row |
+| New process pattern | Core Governance Patterns | Add subsection with pattern |
+| Architecture insight | Project Structure & Patterns | Update relevant section |
+
+### 7.3 Implementation Steps
+
+1. **Read** the relevant MEMORY.md section
+2. **Identify** the correct subsection for the new pattern
+3. **Update** with consistent formatting (tables, checklists, cross-references)
+4. **Link** back to knowledge graph entry and lesson-learned source
+5. **Verify** line count (total should stay under ~250 lines, link to detail files for 200+)
+6. **Stage** the memory update along with KG entry for single commit
+
+### 7.4 Example: Project Memory Update for New Pattern
+
+**Discovery:** New pattern found - "Knowledge Graph ↔ Memory Bidirectional Sync"
+
+**Memory Update Location:** `~/.claude/projects/[project]/memory/MEMORY.md` → Workflow Skills section
+
+**Original Entry:**
+```markdown
+| `/update-knowledge-graph` | Extract structured insights from lessons learned | update-knowledge-graph.md |
+```
+
+**Updated Entry:**
+```markdown
+| `/update-knowledge-graph` | Extract structured insights & sync to memory (Step 7) | update-knowledge-graph.md |
+```
+
+**Additional note in "Core Governance Patterns":**
+```markdown
+### Knowledge Graph ↔ Memory Synchronization
+- When new patterns/gotchas/best practices discovered → update both KG AND memory
+- Memory provides persistent governance context (loaded in system prompt)
+- KG provides quick-reference discovery mechanism
+- Bidirectional sync prevents knowledge drift
+```
+
+### 7.5 Verification
+
+```bash
+# 1. Verify MEMORY.md was updated
+git diff ~/.claude/projects/.../memory/MEMORY.md
+
+# 2. Verify knowledge graph entry exists
+grep -n "Knowledge Graph.*Memory\|Memory.*Knowledge Graph" docs/knowledge/patterns.md
+
+# 3. Verify bidirectional links
+# - Knowledge graph entry should reference MEMORY.md via "See:" section
+# - MEMORY.md should reference knowledge graph pattern
+
+# 4. Verify line count remains reasonable
+wc -l ~/.claude/projects/.../memory/MEMORY.md  # Should stay under 300 lines
+```
+
+---
+
 ## Knowledge Graph Organization
 
 ### Category Structure
